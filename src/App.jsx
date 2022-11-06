@@ -1,4 +1,4 @@
-import GlobalStyle from './shared/GlobalStyle';
+import GlobalStyle from './styles/GlobalStyle';
 import Router from './shared/router/Router';
 
 export default function App() {

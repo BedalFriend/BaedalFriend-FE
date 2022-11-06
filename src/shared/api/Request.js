@@ -1,6 +1,6 @@
 import axios from 'axios';
-import store from '../redux/config/ConfigStore';
-import { getCookieToken } from './Cookie';
+import store from '../../redux/config/ConfigStore';
+import { getCookieToken } from '../storage/Cookie';
 
 export default function getInstance() {
   const authorization = store.getState()?.token?.accessToken;

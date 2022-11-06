@@ -7,14 +7,14 @@ import {
   setRefreshToken,
   getCookieToken,
   removeCookieToken,
-} from '../shared/Cookie';
+} from '../shared/storage/Cookie';
 
 import {
   signupUser,
   loginUser,
   logoutUser,
   requestToken,
-} from '../shared/Users';
+} from '../shared/api/Users';
 
 export default function TestPage(props) {
   const dispatch = useDispatch();

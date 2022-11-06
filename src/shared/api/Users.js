@@ -23,12 +23,12 @@ const getPromise = async (requestPromise) => {
   return await Promise.race([requestPromise(), timeoutPromise()]);
 };
 
-// --- Sign Logic ---
+//! --- Signature / Certification Logic ---
 //* 회원가입
 export const signupUser = async (signupInfo) => {
   const requestPromise = () => {
     return getInstance().post(
-      `${basePath}/member/signup`,
+      `${basePath}/members/signup`,
       JSON.stringify(signupInfo)
     );
   };
@@ -58,7 +58,7 @@ export const signupUser = async (signupInfo) => {
 export const loginUser = async (credentials) => {
   const requestPromise = () => {
     return getInstance().post(
-      `${basePath}/member/login`,
+      `${basePath}/members/login`,
       JSON.stringify(credentials)
     );
   };
@@ -89,7 +89,7 @@ export const loginUser = async (credentials) => {
 //* 로그아웃
 export const logoutUser = async () => {
   const requestPromise = () => {
-    return getInstance().post(`${basePath}/member/logout`);
+    return getInstance().post(`${basePath}/members/logout`);
   };
 
   const data = await getPromise(requestPromise).catch(() => {
