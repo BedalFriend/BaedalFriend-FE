@@ -3,32 +3,32 @@ import { createSlice } from '@reduxjs/toolkit';
 export const userSlice = createSlice({
   name: 'authUser',
   initialState: {
-    memberId: null,
+    id: null,
     email: null,
     nickname: null,
     address: null,
-    profileUrl: null,
+    profileURL: null,
     role: null,
     createdAt: null,
     modifiedAt: null,
   },
   reducers: {
     SET_USER: (state, action) => {
-      state.memberId = action.payload.memberId;
+      state.id = action.payload.id;
       state.email = action.payload.email;
       state.nickname = action.payload.nickname;
       state.address = action.payload.address;
-      state.profileUrl = action.payload.profileUrl;
+      state.profileURL = action.payload.profileURL;
       state.role = action.payload.role;
       state.createdAt = action.payload.createdAt;
       state.modifiedAt = action.payload.modifiedAt;
     },
     DELETE_USER: (state) => {
-      state.memberId = null;
+      state.id = null;
       state.email = null;
       state.nickname = null;
       state.address = null;
-      state.profileUrl = null;
+      state.profileURL = null;
       state.role = null;
       state.createdAt = null;
       state.modifiedAt = null;
