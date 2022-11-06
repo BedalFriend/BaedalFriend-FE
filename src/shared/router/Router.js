@@ -4,6 +4,7 @@ import GlobalRoute from './GlobalRoute';
 // import PrivateRoute from './PrivateRoute';
 
 import TestPage from '../../pages/TestPage';
+import KakaoLoginPage from '../../pages/KakaoLoginPage';
 
 const Router = () => {
   return (
@@ -13,7 +14,8 @@ const Router = () => {
           <Route path='/test' element={<TestPage />} />
         </Route>
 
-        {/* <Route path='*' element={<HomePage />} /> */}
+        <Route path='/kakaoLogin' element={<KakaoLoginPage />} />
+        <Route path='*' element={<TestPage />} />
       </Routes>
     </BrowserRouter>
   );

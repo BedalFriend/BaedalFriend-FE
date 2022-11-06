@@ -14,7 +14,10 @@ import {
   loginUser,
   logoutUser,
   requestToken,
+  getKakaoToken,
 } from '../shared/api/Users';
+
+import kakaoPath from '../imgs/kakao_login/ko/kakao_login_medium_wide.png';
 
 export default function TestPage(props) {
   const dispatch = useDispatch();
@@ -67,13 +70,23 @@ export default function TestPage(props) {
     console.log(response);
   };
 
+  const onGetKakaoToken = async () => {
+    const response = await getKakaoToken();
+    console.log(response);
+  };
+
   return (
     <div>
       <h1>THIS IS TEST PAGE</h1>
-      <button onClick={onSignupHandler}>SIGNUP TEST BUTTON</button>
-      <button onClick={onLoginHandler}>LOGIN TEST BUTTON</button>
-      <button onClick={onLogoutHandler}>LOGOUT TEST BUTTON</button>
-      <button onClick={onReissueHandler}>REISSUE TEST BUTTON</button>
+      <div
+        style={{ display: 'flex', flexFlow: 'column nowrap', width: '400px' }}
+      >
+        <button onClick={onSignupHandler}>SIGNUP TEST BUTTON</button>
+        <button onClick={onLoginHandler}>LOGIN TEST BUTTON</button>
+        <button onClick={onLogoutHandler}>LOGOUT TEST BUTTON</button>
+        <button onClick={onReissueHandler}>REISSUE TEST BUTTON</button>
+        <img src={kakaoPath} alt='kakao login' onClick={onGetKakaoToken} />
+      </div>
     </div>
   );
 }

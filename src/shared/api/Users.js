@@ -1,4 +1,5 @@
 import getInstance from './Request';
+import getKakaoInstance from './KakaoRequest';
 import { basePath } from './Request';
 
 const TIME_OUT = 300 * 1000;
@@ -66,7 +67,7 @@ export const loginUser = async (credentials) => {
   const data = await getPromise(requestPromise).catch(() => {
     return statusError;
   });
-  console.log(data);
+
   if (parseInt(Number(data.status) / 100) === 2) {
     const status = data.data.success;
     const code = data.status;
@@ -121,8 +122,6 @@ export const requestToken = async () => {
     return statusError;
   });
 
-  console.log(data);
-
   if (parseInt(Number(data.status) / 100) === 2) {
     const status = data.data.success;
     const code = data.status;
@@ -141,4 +140,19 @@ export const requestToken = async () => {
   } else {
     return statusError;
   }
+};
+//? Kakao
+//* 카카오 로그인
+export const getKakaoToken = async () => {
+  const requestPromise = () => {
+    return getKakaoInstance().get(
+      `/oauth/authorize?response_type=code&client_id=3c30041ed764537acbbbc4f1bd53a12e&redirect_uri=http://localhost:3000/kakaoLogin`
+    );
+  };
+
+  const data = await getPromise(requestPromise).catch(() => {
+    return statusError;
+  });
+
+  console.log(data);
 };
