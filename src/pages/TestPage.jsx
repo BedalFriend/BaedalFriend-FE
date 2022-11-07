@@ -20,6 +20,8 @@ import {
 import kakaoPath from '../imgs/kakao_login/ko/kakao_login_medium_wide.png';
 import styled from 'styled-components';
 
+import Layout from '../components/layout/Layout';
+
 export default function TestPage(props) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
@@ -77,17 +79,19 @@ export default function TestPage(props) {
   };
 
   return (
-    <div>
-      <h1>THIS IS TEST PAGE</h1>
-      <Box>
-        버튼을 눌러 테스트 해보세요.
-        <Button onClick={onSignupHandler}>SIGNUP TEST BUTTON</Button>
-        <Button onClick={onLoginHandler}>LOGIN TEST BUTTON</Button>
-        <Button onClick={onLogoutHandler}>LOGOUT TEST BUTTON</Button>
-        <Button onClick={onReissueHandler}>REISSUE TEST BUTTON</Button>
-        <img src={kakaoPath} alt='kakao login' onClick={onGetKakaoCode} />
-      </Box>
-    </div>
+    <Layout>
+      <div>
+        <h1>THIS IS TEST PAGE</h1>
+        <Box>
+          버튼을 눌러 테스트 해보세요.
+          <Button onClick={onSignupHandler}>SIGNUP TEST BUTTON</Button>
+          <Button onClick={onLoginHandler}>LOGIN TEST BUTTON</Button>
+          <Button onClick={onLogoutHandler}>LOGOUT TEST BUTTON</Button>
+          <Button onClick={onReissueHandler}>REISSUE TEST BUTTON</Button>
+          <img src={kakaoPath} alt='kakao login' onClick={onGetKakaoCode} />
+        </Box>
+      </div>
+    </Layout>
   );
 }
 
@@ -95,7 +99,6 @@ const Box = styled.div`
   display: flex;
   flex-flow: column nowrap;
   width: 300px;
-  font-family: 'Pretendard';
   font-weight: 700;
   font-display: swap;
 `;
@@ -106,4 +109,7 @@ const Button = styled.button`
   border-radius: 10px;
   background-color: black;
   color: white;
+  font-family: 'Pretendard';
+  font-weight: 500;
+  font-display: swap;
 `;

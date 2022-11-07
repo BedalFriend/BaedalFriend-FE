@@ -8,7 +8,7 @@ const GlobalStyle = createGlobalStyle`
     --color-black: #000000;
 
     /* Font size */
-    --font-very-large: 60px;
+    --font-huge: 60px;
     --font-large: 48px;
     --font-medium: 28px;
     --font-regular: 22px;
