@@ -15,7 +15,7 @@ export const bar = styled.div`
   margin: 0 12px;
   width: 100%;
   height: 100%;
-  background: var(--color-black);
+  background: var(--color-white);
   box-shadow: 0px 0px 10px rgba(187, 187, 187, 0.32);
   border-radius: 99px;
 

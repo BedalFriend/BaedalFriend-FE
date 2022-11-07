@@ -10,8 +10,9 @@ export default function KakaoLoginPage() {
   const KAKAO_ERROR = PARAMS.get('error');
 
   const onProperCodeHandler = async () => {
-    //* Proper Code인 경우 response에 kakao token이 담긴 return을 받는다.
+    //* Proper Code인 경우 codeResponse에 kakao token이 담긴 return을 받는다.
     const codeResponse = await getKakaoToken(KAKAO_CODE);
+    console.log(codeResponse);
     //TODO: 받은 response를 이용해 서비스 서버로 요청보내기
     const response = await sendKaKaoToken(
       'Bearer ' + codeResponse.datas.access_token

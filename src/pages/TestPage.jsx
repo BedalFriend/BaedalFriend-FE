@@ -99,7 +99,7 @@ const Box = styled.div`
   display: flex;
   flex-flow: column nowrap;
   width: 300px;
-  font-weight: 700;
+  font-weight: 300;
   font-display: swap;
 `;
 
