@@ -14,7 +14,7 @@ import {
   loginUser,
   logoutUser,
   requestToken,
-  getKakaoToken,
+  getKakaoCode,
 } from '../shared/api/Users';
 
 import kakaoPath from '../imgs/kakao_login/ko/kakao_login_medium_wide.png';
@@ -33,6 +33,7 @@ export default function TestPage(props) {
     passwordConfirm: 'qwer1234*',
     nickname: 'test1234',
     address: '경북 포항시 남구 중흥로152번길 26-2',
+    role: 1,
   };
 
   const loginInfo = {
@@ -70,9 +71,8 @@ export default function TestPage(props) {
     console.log(response);
   };
 
-  const onGetKakaoToken = async () => {
-    const response = await getKakaoToken();
-    console.log(response);
+  const onGetKakaoCode = async () => {
+    await getKakaoCode();
   };
 
   return (
@@ -85,7 +85,7 @@ export default function TestPage(props) {
         <button onClick={onLoginHandler}>LOGIN TEST BUTTON</button>
         <button onClick={onLogoutHandler}>LOGOUT TEST BUTTON</button>
         <button onClick={onReissueHandler}>REISSUE TEST BUTTON</button>
-        <img src={kakaoPath} alt='kakao login' onClick={onGetKakaoToken} />
+        <img src={kakaoPath} alt='kakao login' onClick={onGetKakaoCode} />
       </div>
     </div>
   );

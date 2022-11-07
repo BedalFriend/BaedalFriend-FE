@@ -141,18 +141,40 @@ export const requestToken = async () => {
     return statusError;
   }
 };
+
 //? Kakao
-//* 카카오 로그인
-export const getKakaoToken = async () => {
+const client_id = process.env.REACT_APP_KAKAO_KEY;
+const redirect_uri = 'http://localhost:3000/kakaoLogin';
+//* 카카오 인가코드 받기
+export const getKakaoCode = async () => {
+  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${client_id}&redirect_uri=${redirect_uri}&response_type=code`;
+  window.location.href = KAKAO_AUTH_URL;
+};
+//* 카카오 토큰 요청하기
+export const getKakaoToken = async (KAKAO_CODE) => {
   const requestPromise = () => {
-    return getKakaoInstance().get(
-      `/oauth/authorize?response_type=code&client_id=3c30041ed764537acbbbc4f1bd53a12e&redirect_uri=http://localhost:3000/kakaoLogin`
-    );
+    return getKakaoInstance().post(`/oauth/token`, {
+      grant_type: 'authorization_code',
+      client_id: client_id,
+      redirect_uri: redirect_uri,
+      code: KAKAO_CODE,
+    });
   };
 
   const data = await getPromise(requestPromise).catch(() => {
     return statusError;
   });
 
-  console.log(data);
+  if (parseInt(Number(data.status) / 100) === 2) {
+    const code = data.status;
+    const text = JSON.stringify(data.data);
+    const datas = text.length ? JSON.parse(text) : '';
+
+    return {
+      code,
+      datas,
+    };
+  } else {
+    return statusError;
+  }
 };
