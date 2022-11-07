@@ -178,3 +178,35 @@ export const getKakaoToken = async (KAKAO_CODE) => {
     return statusError;
   }
 };
+//* 카카오 토큰 보내기
+export const sendKaKaoToken = async (token) => {
+  const requestPromise = () => {
+    return getInstance().post(`${basePath}/kakao/callback`, {
+      Authorization: token,
+    });
+  };
+
+  const data = await getPromise(requestPromise).catch(() => {
+    return statusError;
+  });
+
+  console.log(data);
+  // if (parseInt(Number(data.status) / 100) === 2) {
+  //   const status = data.data.success;
+  //   const code = data.status;
+  //   const text = status
+  //     ? JSON.stringify(data.headers)
+  //     : JSON.stringify(data.data.error);
+  //   const headers = text.length ? JSON.parse(text) : '';
+  //   const userInfo = data.data.data;
+
+  //   return {
+  //     status,
+  //     code,
+  //     headers,
+  //     userInfo,
+  //   };
+  // } else {
+  //   return statusError;
+  // }
+};

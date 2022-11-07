@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "배달프렌드",
+  "name": "배달프렌드",
   "icons": [
     {
       "src": "favicon.ico",
@@ -20,6 +20,8 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#ff6915",
+  "background_color": "#ffffff",
+  "description": "당신이 사는 곳 근처에서 최고의 배달프렌드를 찾아보세요!",
+  "lang": "ko"
 }
