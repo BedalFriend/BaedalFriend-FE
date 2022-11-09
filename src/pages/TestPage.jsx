@@ -132,5 +132,5 @@ const Button = styled.button`
 `;
 
 const Init = styled.div`
-  margin-top: 96px;
+  margin-top: 60px;
 `;

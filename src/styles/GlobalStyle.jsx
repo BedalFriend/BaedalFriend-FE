@@ -8,7 +8,7 @@ const GlobalStyle = createGlobalStyle`
     --color-dark-white: #f6f6f6;
 
     --color-black: #000000;
-    
+
     --color-orange: #FF6915;
     --color-yellow: #FFBA09;
 
@@ -29,7 +29,7 @@ const GlobalStyle = createGlobalStyle`
     --animation-duration: 300ms;
 
     /* Responsive Width */
-    --responsive-width: 400px;
+    --responsive-width: 630px;
   }
 
   /* Universal tags */

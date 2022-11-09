@@ -8,13 +8,13 @@ export const Box = styled.div`
     rgba(255, 255, 255, 0) -5.89%,
     #ffffff 31.92%
   );
-  height: 92px;
+  height: 136px;
 
-  @media screen and (min-width: 400px) {
+  @media screen and (min-width: 630px) {
     width: var(--responsive-width);
   }
 
-  @media screen and (max-width: 400px) {
+  @media screen and (max-width: 630px) {
     width: 100%;
   }
 `;
@@ -22,7 +22,7 @@ export const Box = styled.div`
 export const Bar = styled.div`
   position: absolute;
   height: 84px;
-  top: -28px;
+  top: 16px;
   left: 12px;
 
   background: var(--color-white);
@@ -35,11 +35,11 @@ export const Bar = styled.div`
 
   z-index: 900;
 
-  @media screen and (min-width: 400px) {
+  @media screen and (min-width: 630px) {
     width: calc(var(--responsive-width) - 24px);
   }
 
-  @media screen and (max-width: 400px) {
+  @media screen and (max-width: 630px) {
     width: calc(100% - 24px);
   }
 `;
