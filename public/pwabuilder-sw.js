@@ -16,6 +16,7 @@ self.addEventListener('message', (event) => {
 });
 
 self.addEventListener('install', async (event) => {
+  console.log('서비스워커 설치 됨! (install)');
   event.waitUntil(
     caches.open(CACHE).then((cache) => cache.add(offlineFallbackPage))
   );

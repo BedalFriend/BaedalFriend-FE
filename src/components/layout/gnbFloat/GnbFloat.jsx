@@ -4,7 +4,11 @@ import * as GnbST from './GnbFloatStyle';
 function GnbFloat(props) {
   return (
     <GnbST.Box>
-      <GnbST.bar></GnbST.bar>
+      <GnbST.Bar
+        onClick={() => {
+          console.log('click!');
+        }}
+      ></GnbST.Bar>
     </GnbST.Box>
   );
 }

@@ -1,22 +1,26 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { Navigate, useLocation } from 'react-router';
 
-import { getKakaoToken, sendKaKaoToken } from '../shared/api/Users';
+import { sendKaKaoToken } from '../shared/api/Users';
+
+import { SET_TOKEN } from '../redux/modules/AuthSlice';
+import { SET_USER } from '../redux/modules/UserSlice';
+import { setRefreshToken } from '../shared/storage/Cookie';
 
 export default function KakaoLoginPage() {
   const location = useLocation();
+  const dispatch = useDispatch();
   const PARAMS = new URL(document.location).searchParams;
   const KAKAO_CODE = PARAMS.get('code');
   const KAKAO_ERROR = PARAMS.get('error');
 
   const onProperCodeHandler = async () => {
-    //* Proper Code인 경우 codeResponse에 kakao token이 담긴 return을 받는다.
-    const codeResponse = await getKakaoToken(KAKAO_CODE);
-    console.log(codeResponse);
-    //TODO: 받은 response를 이용해 서비스 서버로 요청보내기
-    const response = await sendKaKaoToken(
-      'Bearer ' + codeResponse.datas.access_token
-    );
+    //TODO: 받은 인가코드를 서비스 서버로 보내기
+    const response = await sendKaKaoToken(KAKAO_CODE);
+    setRefreshToken(response.headers.refresh_token);
+    dispatch(SET_TOKEN(response.headers.authorization));
+    dispatch(SET_USER(response.userInfo));
   };
 
   if (KAKAO_ERROR) {

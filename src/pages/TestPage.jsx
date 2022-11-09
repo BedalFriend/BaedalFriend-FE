@@ -21,6 +21,7 @@ import kakaoPath from '../imgs/kakao_login/ko/kakao_login_medium_wide.png';
 import styled from 'styled-components';
 
 import Layout from '../components/layout/Layout';
+import Timer from '../components/elements/timer/Timer';
 
 export default function TestPage(props) {
   const dispatch = useDispatch();
@@ -35,8 +36,8 @@ export default function TestPage(props) {
     password: 'qwer1234*',
     passwordConfirm: 'qwer1234*',
     nickname: 'test1234',
-    address: '경북 포항시 남구 중흥로152번길 26-2',
-    role: 1,
+    // address: '경북 포항시 남구 중흥로152번길 26-2',
+    role: 0,
   };
 
   const loginInfo = {
@@ -52,11 +53,12 @@ export default function TestPage(props) {
   const onLoginHandler = async () => {
     console.log('lets login~');
     const response = await loginUser(loginInfo);
-    //console.log(response);
 
     setRefreshToken(response.headers.refresh_token);
     dispatch(SET_TOKEN(response.headers.authorization));
     dispatch(SET_USER(response.userInfo));
+
+    //Todo: 받아온 userInfo의 채팅방 구독하기
   };
   const onLogoutHandler = async () => {
     console.log('lets logout?');
@@ -80,7 +82,7 @@ export default function TestPage(props) {
 
   return (
     <Layout>
-      <div>
+      <Init>
         <h1>THIS IS TEST PAGE</h1>
         <Box>
           버튼을 눌러 테스트 해보세요.
@@ -90,7 +92,22 @@ export default function TestPage(props) {
           <Button onClick={onReissueHandler}>REISSUE TEST BUTTON</Button>
           <img src={kakaoPath} alt='kakao login' onClick={onGetKakaoCode} />
         </Box>
-      </div>
+      </Init>
+
+      <Timer limit='10' />
+      <h1>Scroll Generator...</h1>
+      <h1>Scroll Generator...</h1>
+      <h1>Scroll Generator...</h1>
+      <h1>Scroll Generator...</h1>
+      <h1>Scroll Generator...</h1>
+      <h1>Scroll Generator...</h1>
+      <h1>Scroll Generator...</h1>
+      <h1>Scroll Generator...</h1>
+      <h1>Scroll Generator...</h1>
+      <h1>Scroll Generator...</h1>
+      <h1>Scroll Generator...</h1>
+      <h1>Scroll Generator...</h1>
+      <h1>Scroll Generator...</h1>
     </Layout>
   );
 }
@@ -112,4 +129,8 @@ const Button = styled.button`
   font-family: 'Pretendard';
   font-weight: 500;
   font-display: swap;
+`;
+
+const Init = styled.div`
+  margin-top: 96px;
 `;

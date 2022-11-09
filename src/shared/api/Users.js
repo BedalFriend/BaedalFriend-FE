@@ -150,15 +150,12 @@ export const getKakaoCode = async () => {
   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${client_id}&redirect_uri=${redirect_uri}&response_type=code`;
   window.location.href = KAKAO_AUTH_URL;
 };
-//* 카카오 토큰 요청하기
-export const getKakaoToken = async (KAKAO_CODE) => {
+//* 카카오 인가코드 서비스 서버로 보내기
+export const sendKaKaoToken = async (code) => {
   const requestPromise = () => {
-    return getKakaoInstance().post(`/oauth/token`, {
-      grant_type: 'authorization_code',
-      client_id: client_id,
-      redirect_uri: redirect_uri,
-      code: KAKAO_CODE,
-    });
+    return getInstance().post(
+      `${basePath}/members/kakao/callback?code=${code}`
+    );
   };
 
   const data = await getPromise(requestPromise).catch(() => {
@@ -166,47 +163,21 @@ export const getKakaoToken = async (KAKAO_CODE) => {
   });
 
   if (parseInt(Number(data.status) / 100) === 2) {
+    const status = data.data.success;
     const code = data.status;
-    const text = JSON.stringify(data.data);
-    const datas = text.length ? JSON.parse(text) : '';
+    const text = status
+      ? JSON.stringify(data.headers)
+      : JSON.stringify(data.data.error);
+    const headers = text.length ? JSON.parse(text) : '';
+    const userInfo = data.data.data;
 
     return {
+      status,
       code,
-      datas,
+      headers,
+      userInfo,
     };
   } else {
     return statusError;
   }
-};
-//* 카카오 토큰 보내기
-export const sendKaKaoToken = async (token) => {
-  const requestPromise = () => {
-    return getInstance().post(`${basePath}/kakao/callback`, {
-      Authorization: token,
-    });
-  };
-
-  const data = await getPromise(requestPromise).catch(() => {
-    return statusError;
-  });
-
-  console.log(data);
-  // if (parseInt(Number(data.status) / 100) === 2) {
-  //   const status = data.data.success;
-  //   const code = data.status;
-  //   const text = status
-  //     ? JSON.stringify(data.headers)
-  //     : JSON.stringify(data.data.error);
-  //   const headers = text.length ? JSON.parse(text) : '';
-  //   const userInfo = data.data.data;
-
-  //   return {
-  //     status,
-  //     code,
-  //     headers,
-  //     userInfo,
-  //   };
-  // } else {
-  //   return statusError;
-  // }
 };

@@ -5,7 +5,12 @@ const GlobalStyle = createGlobalStyle`
   :root {
     /* Color */
     --color-white: #ffffff;
+    --color-dark-white: #f6f6f6;
+
     --color-black: #000000;
+    
+    --color-orange: #FF6915;
+    --color-yellow: #FFBA09;
 
     /* Font size */
     --font-huge: 60px;
@@ -22,6 +27,9 @@ const GlobalStyle = createGlobalStyle`
 
     /* Animation Duration */
     --animation-duration: 300ms;
+
+    /* Responsive Width */
+    --responsive-width: 400px;
   }
 
   /* Universal tags */
