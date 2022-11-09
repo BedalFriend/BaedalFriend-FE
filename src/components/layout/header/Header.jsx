@@ -17,6 +17,7 @@ export default function Header(props) {
             fill='#FF6915'
           />
         </HeadST.MarkSVG>
+        <HeadST.AdrText>서울시 마포구 양화로 12길</HeadST.AdrText>
       </HeadST.Address>
       <HeadST.ChatBtn>
         <HeadST.ChatSVG

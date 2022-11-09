@@ -24,12 +24,26 @@ export const Address = styled.div`
 
   background: var(--color-dark-white);
   border-radius: 99px;
+  overflow: hidden;
 `;
 export const MarkSVG = styled.svg`
   position: absolute;
   bottom: 9.11px;
   left: 18.67px;
 `;
+
+export const AdrText = styled.span`
+  position: absolute;
+  left: 36px;
+  top: 8px;
+
+  color: var(--color-dark-grey);
+  font-weight: var(--weight-regular);
+  font-size: var(--font-small);
+  font-display: swap;
+  height: 17px;
+`;
+
 export const ChatSVG = styled.svg``;
 
 export const ChatBtn = styled.button`

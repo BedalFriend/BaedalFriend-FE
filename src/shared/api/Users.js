@@ -1,5 +1,4 @@
 import getInstance from './Request';
-import getKakaoInstance from './KakaoRequest';
 import { basePath } from './Request';
 
 const TIME_OUT = 300 * 1000;
