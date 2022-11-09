@@ -9,21 +9,27 @@ const GlobalStyle = createGlobalStyle`
 
     --color-black: #000000;
 
+    --color-grey: #939393;
+    --color-light-grey: #959595;
+
     --color-orange: #FF6915;
+    --color-light-orange: #FFDFCD;
+
     --color-yellow: #FFBA09;
+    --color-light-yellow: #FFEAB5;
 
     /* Font size */
     --font-huge: 60px;
     --font-large: 48px;
     --font-medium: 28px;
-    --font-regular: 22px;
-    --font-small: 16px;
-    --font-micro: 14px;
+    --font-regular: 16px;
+    --font-small: 14px;
+    --font-micro: 12px;
 
     /* Font weight */
     --weight-bold: 700;
     --weight-semi-bold: 600;
-    --weight-regular: 400;
+    --weight-regular: 500;
 
     /* Animation Duration */
     --animation-duration: 300ms;

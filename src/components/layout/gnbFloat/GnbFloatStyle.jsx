@@ -30,8 +30,10 @@ export const Bar = styled.div`
   border-radius: 99px;
 
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  padding: 0 36px;
 
   z-index: 900;
 
