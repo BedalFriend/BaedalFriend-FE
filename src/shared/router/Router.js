@@ -18,7 +18,7 @@ const Router = () => {
 
         <Route path='/kakaoLogin' element={<KakaoLoginPage />} />
 
-        <Route path='*' element={<TestPage />} />
+        <Route path='*' element={<MainPage />} />
       </Routes>
     </BrowserRouter>
   );
