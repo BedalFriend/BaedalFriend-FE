@@ -1,4 +1,5 @@
 import getInstance from './Request';
+import getKakaoInstance from './KakaoRequest';
 import { basePath } from './Request';
 
 const TIME_OUT = 300 * 1000;
@@ -66,7 +67,7 @@ export const loginUser = async (credentials) => {
   const data = await getPromise(requestPromise).catch(() => {
     return statusError;
   });
-  console.log(data);
+
   if (parseInt(Number(data.status) / 100) === 2) {
     const status = data.data.success;
     const code = data.status;
@@ -121,7 +122,45 @@ export const requestToken = async () => {
     return statusError;
   });
 
-  console.log(data);
+  if (parseInt(Number(data.status) / 100) === 2) {
+    const status = data.data.success;
+    const code = data.status;
+    const text = status
+      ? JSON.stringify(data.headers)
+      : JSON.stringify(data.data.error);
+    const headers = text.length ? JSON.parse(text) : '';
+    const userInfo = data.data.data;
+
+    return {
+      status,
+      code,
+      headers,
+      userInfo,
+    };
+  } else {
+    return statusError;
+  }
+};
+
+//? Kakao
+const client_id = process.env.REACT_APP_KAKAO_KEY;
+const redirect_uri = 'http://localhost:3000/kakaoLogin';
+//* 카카오 인가코드 받기
+export const getKakaoCode = async () => {
+  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${client_id}&redirect_uri=${redirect_uri}&response_type=code`;
+  window.location.href = KAKAO_AUTH_URL;
+};
+//* 카카오 인가코드 서비스 서버로 보내기
+export const sendKaKaoToken = async (code) => {
+  const requestPromise = () => {
+    return getInstance().post(
+      `${basePath}/members/kakao/callback?code=${code}`
+    );
+  };
+
+  const data = await getPromise(requestPromise).catch(() => {
+    return statusError;
+  });
 
   if (parseInt(Number(data.status) / 100) === 2) {
     const status = data.data.success;

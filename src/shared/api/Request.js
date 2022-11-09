@@ -28,4 +28,4 @@ export default function getInstance() {
   });
 }
 
-export const basePath = '/api';
+export const basePath = '/v1';
