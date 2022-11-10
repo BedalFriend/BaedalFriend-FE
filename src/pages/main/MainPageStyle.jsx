@@ -33,4 +33,76 @@ export const SearchText = styled.span`
   font-display: swap;
 `;
 
-export const CtgBox = styled.div``;
+export const CtgText = styled.span`
+  border-radius: 99px;
+  padding: 4px 8px;
+  height: 22px;
+
+  font-weight: var(--weight-bold);
+  font-size: var(--font-micro);
+  font-display: swap;
+  color: var(--color-grey);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const CtgPath = styled.path``;
+
+export const CtgBox = styled.div`
+  width: 68px;
+  height: 70px;
+
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 24px;
+
+  &:hover ${CtgText} {
+    background-color: var(--color-light-orange);
+    color: var(--color-orange);
+  }
+  &:hover ${CtgPath} {
+    fill: var(--color-orange);
+  }
+`;
+
+export const CtgSection = styled.section`
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  margin: 0 14px;
+  //width: calc(100% - 28px);
+`;
+
+export const CtgVac = styled.div`
+  width: 68px;
+  height: 24px;
+`;
+
+export const Line = styled.hr`
+  margin-bottom: 44px;
+`;
+
+export const LimitBox = styled.div`
+  width: calc(100% - 32px);
+  display: flex;
+  flex-flow: column wrap;
+`;
+
+export const LimitAdr = styled.div`
+  display: inline;
+  padding: 4px 8px;
+  height: 20px;
+
+  background-color: var(--color-dark-white);
+  border-radius: 99px;
+
+  color: var(--color-light-grey);
+  font-weight: var(--weight-bold);
+  font-size: var(--font-minor);
+  font-display: swap;
+`;

@@ -21,24 +21,40 @@ export const Address = styled.div`
   height: 32px;
   left: 16px;
   top: 20px;
-
+  cursor: pointer;
   background: var(--color-dark-white);
   border-radius: 99px;
+  overflow: hidden;
 `;
 export const MarkSVG = styled.svg`
   position: absolute;
   bottom: 9.11px;
   left: 18.67px;
 `;
+
+export const AdrText = styled.span`
+  position: absolute;
+  left: 36px;
+  top: 8px;
+
+  color: var(--color-dark-grey);
+  font-weight: var(--weight-regular);
+  font-size: var(--font-small);
+  font-display: swap;
+  height: 17px;
+`;
+
 export const ChatSVG = styled.svg``;
 
-export const ChatBtn = styled.button`
+export const ChatBox = styled.div`
   position: absolute;
   top: 12px;
   right: 16px;
 
   width: 48px;
   height: 48px;
+
+  cursor: pointer;
 
   display: flex;
   justify-content: center;

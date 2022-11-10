@@ -87,7 +87,13 @@ export default function TestPage(props) {
       </Init>
 
       <Timer limit='10' />
-      <h1>Scroll Generator...</h1>
+      <h1
+        onClick={() => {
+          console.log(new Date('2022-11-10 17:30:25') - new Date());
+        }}
+      >
+        Date Generator!
+      </h1>
       <h1>Scroll Generator...</h1>
       <h1>Scroll Generator...</h1>
       <h1>Scroll Generator...</h1>

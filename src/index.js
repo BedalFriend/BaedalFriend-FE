@@ -6,6 +6,7 @@ import App from './App';
 import store from './redux/config/ConfigStore';
 import { Provider } from 'react-redux';
 import { TabProvider } from './context/TabContext';
+import { SocketProvider } from './context/SocketContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -14,7 +15,9 @@ root.render(
   // </React.StrictMode>
   <Provider store={store}>
     <TabProvider>
-      <App />
+      <SocketProvider>
+        <App />
+      </SocketProvider>
     </TabProvider>
   </Provider>
 );
