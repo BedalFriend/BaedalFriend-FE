@@ -47,7 +47,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    //background-color: var(--color-orange);
+    background-color: var(--color-orange);
     margin : 0;
     padding : 0;
     font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui,

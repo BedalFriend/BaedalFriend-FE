@@ -9,24 +9,18 @@
       "purpose": "any"
     },
     {
-      "src": "logo192.png",
-      "type": "image/png",
-      "sizes": "192x192",
-      "purpose": "monochrome"
-    },
-    {
       "src": "logo512.png",
       "type": "image/png",
       "sizes": "512x512",
-      "purpose": "maskable"
+      "purpose": "maskable monochrome"
     }
   ],
   "start_url": ".",
   "display": "standalone",
   "display_override": ["standalone"],
   "orientation": "portrait",
-  "theme_color": "#ffba09",
-  "background_color": "#ffffff",
+  "theme_color": "#FFBA09",
+  "background_color": "#FF6915",
   "description": "당신이 사는 곳 근처에서 최고의 배달프렌드를 찾아보세요!",
   "lang": "ko",
   "dir": "ltr",
