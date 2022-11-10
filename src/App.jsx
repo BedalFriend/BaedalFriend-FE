@@ -1,5 +1,11 @@
-function App() {
-  return <div>hi!!</div>;
-}
+import GlobalStyle from './styles/GlobalStyle';
+import Router from './shared/router/Router';
 
-export default App;
+export default function App() {
+  return (
+    <>
+      <GlobalStyle />
+      <Router />
+    </>
+  );
+}

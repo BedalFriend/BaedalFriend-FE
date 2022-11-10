@@ -1,25 +1,34 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "배달프렌드",
+  "name": "배달프렌드",
   "icons": [
     {
       "src": "favicon.ico",
       "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+      "type": "image/x-icon",
+      "purpose": "any"
     },
     {
       "src": "logo192.png",
       "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "192x192",
+      "purpose": "maskable"
     },
     {
       "src": "logo512.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "512x512",
+      "purpose": "maskable"
     }
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "display_override": ["standalone"],
+  "orientation": "portrait",
+  "theme_color": "#ffba09",
+  "background_color": "#ffffff",
+  "description": "당신이 사는 곳 근처에서 최고의 배달프렌드를 찾아보세요!",
+  "lang": "ko",
+  "dir": "ltr",
+  "categories": ["food", "social"]
 }
