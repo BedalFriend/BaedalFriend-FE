@@ -8,6 +8,7 @@ const GlobalStyle = createGlobalStyle`
     --color-dark-white: #f6f6f6;
 
     --color-black: #000000;
+    --color-light-black: #333333;
 
     --color-grey: #939393;
     --color-light-grey: #959595;
@@ -21,11 +22,12 @@ const GlobalStyle = createGlobalStyle`
 
     /* Font size */
     --font-huge: 60px;
-    --font-large: 48px;
-    --font-medium: 28px;
+    --font-large: 22px;
+    --font-medium: 18px;
     --font-regular: 16px;
     --font-small: 14px;
     --font-micro: 12px;
+    --font-minor: 10px;
 
     /* Font weight */
     --weight-bold: 700;
@@ -68,6 +70,31 @@ const GlobalStyle = createGlobalStyle`
     border: none;
     outline: none;
   }
+
+  hr {
+    margin: 0;
+    padding: 0;
+    border: none;
+    outline: none;
+
+    width: 100%;
+    height: 4px;
+    background-color: var(--color-dark-white);
+  }
+
+  /* Typography */
+/* h1 {
+  font-size: var(--font-large);
+  font-weight: var(--weight-bold);
+  margin: 0px 0px;
+} */
+
+h2 {
+  font-size: var(--font-large);
+  font-weight: var(--weight-bold);
+  font-display: swap;
+  margin: 0px 0px;
+}
 `;
 
 export default GlobalStyle;

@@ -11,7 +11,6 @@ export function SocketProvider({ children }) {
   const authorization = useSelector((state) => state.token.accessToken);
   const refreshToken = getCookieToken();
 
-  //const [stompClient, setStompClient] = useState();
   const client = useRef({});
 
   const connect = () => {

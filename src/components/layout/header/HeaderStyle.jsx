@@ -21,7 +21,7 @@ export const Address = styled.div`
   height: 32px;
   left: 16px;
   top: 20px;
-
+  cursor: pointer;
   background: var(--color-dark-white);
   border-radius: 99px;
   overflow: hidden;
@@ -46,13 +46,15 @@ export const AdrText = styled.span`
 
 export const ChatSVG = styled.svg``;
 
-export const ChatBtn = styled.button`
+export const ChatBox = styled.div`
   position: absolute;
   top: 12px;
   right: 16px;
 
   width: 48px;
   height: 48px;
+
+  cursor: pointer;
 
   display: flex;
   justify-content: center;

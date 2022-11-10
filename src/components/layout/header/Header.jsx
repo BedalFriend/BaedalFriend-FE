@@ -19,7 +19,7 @@ export default function Header(props) {
         </HeadST.MarkSVG>
         <HeadST.AdrText>서울시 마포구 양화로 12길</HeadST.AdrText>
       </HeadST.Address>
-      <HeadST.ChatBtn>
+      <HeadST.ChatBox>
         <HeadST.ChatSVG
           width='24'
           height='26'
@@ -32,7 +32,7 @@ export default function Header(props) {
             fill='#939393'
           />
         </HeadST.ChatSVG>
-      </HeadST.ChatBtn>
+      </HeadST.ChatBox>
     </HeadST.Area>
   );
 }
