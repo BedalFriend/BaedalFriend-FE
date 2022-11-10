@@ -33,7 +33,7 @@ export function SocketProvider({ children }) {
       },
     });
 
-    client.current.activate();
+    //client.current.activate();
   };
 
   const subscribe = () => {

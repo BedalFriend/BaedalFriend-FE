@@ -35,7 +35,7 @@ export const SearchText = styled.span`
 
 export const CtgText = styled.span`
   border-radius: 99px;
-  width: 100%;
+  padding: 4px 8px;
   height: 22px;
 
   font-weight: var(--weight-bold);
