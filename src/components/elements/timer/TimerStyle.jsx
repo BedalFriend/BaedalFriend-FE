@@ -6,7 +6,7 @@ export const Box = styled.div`
 
   width: 61px;
   height: 27px;
-  padding: 4px 8px;
+  padding: 4px 12px;
 
   display: flex;
   justify-content: center;

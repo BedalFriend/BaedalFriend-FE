@@ -5,6 +5,7 @@ import Layout from '../../components/layout/Layout';
 
 import { TabContext } from '../../context/TabContext';
 import { useEffect } from 'react';
+import Card from '../../components/elements/card/Card';
 
 export default function MainPage(props) {
   const { setTab } = useContext(TabContext);
@@ -326,13 +327,17 @@ export default function MainPage(props) {
       <MainST.Line />
 
       <MainST.LimitBox>
-        <div>
+        <div style={{ marginBottom: '4px' }}>
           <MainST.LimitAdr>서울시 마포구 양화로 12길 근처</MainST.LimitAdr>
           <h2 style={{ color: 'var(--color-light-black)', marginTop: '8px' }}>
             <span style={{ color: 'var(--color-orange)' }}>주문 임박!</span> 곧
             마감되는 공구에요.
           </h2>
         </div>
+
+        <ul>
+          <Card />
+        </ul>
       </MainST.LimitBox>
 
       <div style={{ width: '100%', height: '136px' }}></div>
