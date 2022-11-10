@@ -25,7 +25,7 @@
   "display": "standalone",
   "display_override": ["standalone"],
   "orientation": "portrait",
-  "theme_color": "#ff6915",
+  "theme_color": "#ffba09",
   "background_color": "#ffffff",
   "description": "당신이 사는 곳 근처에서 최고의 배달프렌드를 찾아보세요!",
   "lang": "ko",
