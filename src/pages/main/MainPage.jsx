@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import * as MainST from './MainPageStyle';
 
 import Layout from '../../components/layout/Layout';
-import Carousel from '../main/Carousel'
+import Carousel from '../../components/carousel/Carousel'
 
 import { TabContext } from '../../context/TabContext';
 import { useEffect } from 'react';
