@@ -19,10 +19,9 @@ export const Text = styled.span`
   height: 19px;
 
   font-family: 'Pretendard';
-  font-weight: 600;
+  font-weight: var(--weight-regular);
   font-display: swap;
-  font-size: 16px;
-  line-height: 19px;
+  font-size: var(--font-regular);
 
   color: var(--color-white);
 

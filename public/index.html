@@ -7,16 +7,16 @@
     <link rel="manifest" href="manifest.json" />
     <title>배달 프렌드</title>
     <script type="module">
-      import 'https://cdn.jsdelivr.net/npm/@pwabuilder/pwaupdate';
-      const el = document.createElement('pwa-update');
-      document.body.appendChild(el);
+      // import 'https://cdn.jsdelivr.net/npm/@pwabuilder/pwaupdate';
+      // const el = document.createElement('pwa-update');
+      // document.body.appendChild(el);
 
-      // if ('serviceWorker' in navigator) {
-      //   navigator.serviceWorker
-      //     .register('./pwabuilder-sw.js')
-      //     .then((pSW) => console.log('서비스 워커가 등록됨!', pSW))
-      //     .catch((pErr) => console.log('서비스 워커가 등록이 안됨!', pErr));
-      // }
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker
+          .register('./pwabuilder-sw.js')
+          .then((pSW) => console.log('서비스 워커가 등록됨!', pSW))
+          .catch((pErr) => console.log('서비스 워커가 등록이 안됨!', pErr));
+      }
     </script>
   </head>
   <body>

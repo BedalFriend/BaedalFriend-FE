@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const Box = styled.div`
   display: flex;
   flex-flow: column nowrap;
+  align-items: center;
 
   margin-top: 20px;
   padding: 20px 24px;
@@ -16,9 +17,11 @@ export const Line = styled.hr`
   width: calc(100% + 8px);
   height: 2px;
   border-radius: 99px;
+  margin: 16px 0px;
 `;
 
 export const NameBox = styled.div`
+  width: 100%;
   height: 21px;
   margin: 12px 0px;
 
@@ -28,4 +31,64 @@ export const NameBox = styled.div`
   align-items: flex-end;
 `;
 
-export const CardHead = styled.div``;
+export const CardHead = styled.div`
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+`;
+export const CardAdr = styled.div`
+  padding: 4px 8px;
+  height: 20px;
+  background-color: var(--color-dark-white);
+  border-radius: 99px;
+
+  color: var(--color-grey);
+  font-weight: var(--weight-regular);
+  font-size: var(--font-minor);
+  font-display: swap;
+`;
+export const CardTimer = styled.div`
+  position: absolute;
+  right: -4px;
+`;
+
+export const Party = styled.div`
+  width: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+`;
+
+export const PtNum = styled.div`
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+
+  color: var(--color-grey);
+  font-weight: var(--weight-regular);
+  font-size: var(--font-small);
+  font-display: swap;
+`;
+export const PtLogo = styled.div`
+  width: 49px;
+  height: 20px;
+  padding: 4px 8px;
+  margin-right: 8px;
+
+  background-color: var(--color-light-orange);
+  border-radius: 99px;
+
+  color: var(--color-orange);
+  font-weight: var(--weight-bold);
+  font-size: var(--font-minor);
+
+  display: flex;
+  justify-content: center;
+`;
+
+export const PtPic = styled.div`
+  display: flex;
+  height: 36px;
+  margin-left: 4px;
+  gap: 4px;
+`;

@@ -33,6 +33,7 @@ const GlobalStyle = createGlobalStyle`
     --weight-bold: 700;
     --weight-semi-bold: 600;
     --weight-regular: 500;
+    --weight-thin: 400;
 
     /* Animation Duration */
     --animation-duration: 300ms;
@@ -94,7 +95,7 @@ const GlobalStyle = createGlobalStyle`
 
 h2 {
   font-size: var(--font-large);
-  font-weight: var(--weight-bold);
+  font-weight: var(--weight-regular);
   font-display: swap;
   margin: 0px 0px;
 }
