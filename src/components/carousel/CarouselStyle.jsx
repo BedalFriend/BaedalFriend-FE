@@ -82,10 +82,10 @@ export const ImgDes = styled.div`
   justify-content: center;
   text-align: center;
 
-  width: 500px;
-  height: 100px;
+  width: 350px;
+  height: 80px;
   border-radius: 20px;
-  background-color: #ffffff;
+  background-color: #FFDFCD;
   color: #FF6915;
 
   top: 70%;

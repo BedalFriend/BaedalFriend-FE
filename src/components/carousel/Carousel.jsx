@@ -25,7 +25,7 @@ function Slider() {
   //슬라이드 애니메이션 효과(x만큼 이동하는 css)
   const [x, setX] = useState(0);
 
-  //드래그로 슬라이드 넘기기
+  //마우스 드래그로 슬라이드 넘기기
 
   //드래그 시작했는지 체크
   const [isClick, setIsClick] = useState(false);
@@ -34,17 +34,22 @@ function Slider() {
   //마우스 뗀 지점의 x좌표
   const [mouseUpClientX, setMouseUpClientX] = useState(0);
 
+  //모바일 터치로 슬라이드 넘기기
+  const [isTouch, setIsTouch] = useState(false);
+  const [tochedX, setTochedX] = useState(0);
+  const [tochedY, setTochedY] = useState(0);
+
   const increaseClick = async () => {
     if (isSlide) {
       return;
     }
-    setX(-65);
+    setX(-135);
     setIsSlide(true);
     await setTimeout(() => {
       setIndex((prev) => (prev === (BannerImg.length-1) ? 0 : prev + 1));
       setX(0);
       setIsSlide(false);
-    }, 400);
+    }, 500);
     //setIndex((prev) => (prev === 7 ? 0 : prev + 1));
   };
 
@@ -52,13 +57,13 @@ function Slider() {
     if (isSlide) {
       return;
     }
-    setX(+65);
+    setX(+135);
     setIsSlide(true);
     await setTimeout(() => {
       setIndex((prev) => (prev === 0 ? (BannerImg.length-1) : prev - 1));
       setX(0);
       setIsSlide(false);
-    }, 400);
+    }, 500);
   };
 
 
@@ -101,24 +106,42 @@ function Slider() {
     }
   };
 
+  const onTouchStart = (e) => {
+    setIsTouch(true);
+    setTochedX(e.changedTouches[0].pageX);
+    setTochedY(e.changedTouches[0].pageY);
+  };
+  const onTouchEnd = (e) => {
+    setIsTouch(false);
+    const distanceX = tochedX - e.changedTouches[0].pageX;
+    const distanceY = tochedY - e.changedTouches[0].pageY;
+    const vector = Math.abs(distanceX / distanceY);
+
+    if (distanceX > 30 && vector > 2) {
+      increaseClick();
+    } else if (distanceX < -30 && vector > 2) {
+      decreaseClick();
+    }
+  };
+
   //자동 슬라이드
   useEffect(() => {
-    if (isClick===false) {
+    if ((isClick&&isTouch)===false) {
       const autoPage = setTimeout(() => {
-        setX(-65);
+        setX(-135);
         setIsSlide(true);
         setTimeout(() => {
           setIndex((prev) => (prev === (BannerImg.length-1) ? 0 : prev + 1));
           setX(0);
           setIsSlide(false);
-        }, 400);
+        }, 500);
       }, 4000);
     
       return () => {
         clearTimeout(autoPage);
       };
     }
-  }, [index, isClick]);
+  }, [index, isClick, isTouch]);
 
 
   return (
@@ -131,6 +154,8 @@ function Slider() {
         onMouseUp={onMouseUp}
         onMouseLeave={onMouseLeave}
         onMouseMove={onMouseMove}
+        onTouchEnd={onTouchEnd}
+        onTouchStart={onTouchStart}
         style={{transform: `translateX(${x}vw)`}}
         >
 
