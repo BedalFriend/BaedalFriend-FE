@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Area = styled.div`
   position: fixed;
   height: 60px;
-
+  z-index: 900;
   background-color: var(--color-white);
 
   @media screen and (min-width: 630px) {

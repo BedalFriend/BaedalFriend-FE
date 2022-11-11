@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import * as MainST from './MainPageStyle';
 
 import Layout from '../../components/layout/Layout';
+import Carousel from '../../components/carousel/Carousel'
 
 import { TabContext } from '../../context/TabContext';
 import { useEffect } from 'react';
@@ -17,7 +18,7 @@ export default function MainPage(props) {
 
   return (
     <Layout>
-      <MainST.Top>{/* 배너 캐러셀 */}</MainST.Top>
+      <MainST.Top><Carousel/></MainST.Top>
 
       <MainST.Search>
         <svg

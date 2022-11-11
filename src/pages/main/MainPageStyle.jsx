@@ -6,6 +6,7 @@ export const Top = styled.div`
   background: var(--color-white);
   box-shadow: 0px 0px 10px rgba(187, 187, 187, 0.32);
   border-radius: 0px 0px 24px 24px;
+  overflow: hidden;
 
   margin-bottom: 44px; ;
 `;
