@@ -2,10 +2,10 @@ import { useState, useRef, useEffect } from "react";
 import * as CaroST from './CarouselStyle';
 
 const BannerImg = [
-  "https://velog.velcdn.com/images/mingki831/post/6ec2dd60-bee9-452d-a920-ac5f00905710/image.png",
-  "https://velog.velcdn.com/images/mingki831/post/f78d4ab2-75d6-4396-8653-2c674f1ff531/image.png",
-  "https://velog.velcdn.com/images/mingki831/post/70775d87-40ae-4e8f-8fa7-70c56a879ee4/image.png",
-  "https://velog.velcdn.com/images/mingki831/post/f78d4ab2-75d6-4396-8653-2c674f1ff531/image.png",
+  "https://velog.velcdn.com/images/mingki831/post/70622c1e-fd50-492e-a9da-2da314d86aae/image.png",
+  "https://velog.velcdn.com/images/mingki831/post/69da211d-081e-48f1-a3d3-6edaa3627171/image.png",
+  "https://velog.velcdn.com/images/mingki831/post/66f07ef5-35eb-4577-88f9-a0748c8ef326/image.png",
+  "https://velog.velcdn.com/images/mingki831/post/b7f09093-6b82-4cb0-aa2f-2ff711454634/image.png"
 ];
 
 const Content = [
@@ -20,7 +20,6 @@ function Slider() {
   const slideRef = useRef(null);
   //슬라이드 인덱스
   const [index, setIndex] = useState(0);
-  const page = index+1;
   //슬라이드 중인지 체크, 슬라이드 중 여러번 빠르게 클릭 방지
   const [isSlide, setIsSlide] = useState(false);
   //슬라이드 애니메이션 효과(x만큼 이동하는 css)
@@ -39,13 +38,13 @@ function Slider() {
     if (isSlide) {
       return;
     }
-    setX(-98);
+    setX(-65);
     setIsSlide(true);
     await setTimeout(() => {
       setIndex((prev) => (prev === (BannerImg.length-1) ? 0 : prev + 1));
       setX(0);
       setIsSlide(false);
-    }, 500);
+    }, 400);
     //setIndex((prev) => (prev === 7 ? 0 : prev + 1));
   };
 
@@ -53,13 +52,13 @@ function Slider() {
     if (isSlide) {
       return;
     }
-    setX(+98);
+    setX(+65);
     setIsSlide(true);
     await setTimeout(() => {
       setIndex((prev) => (prev === 0 ? (BannerImg.length-1) : prev - 1));
       setX(0);
       setIsSlide(false);
-    }, 500);
+    }, 400);
   };
 
 
@@ -83,11 +82,11 @@ function Slider() {
     setIsClick(false);
     const imgX = mouseDownClientX - mouseUpClientX;
     // console.log(imgX);
-    if (imgX <= -100) {
+    if (imgX <= -50) {
       slideRef.current.style.transform = `translateX(${imgX}px)`;
       decreaseClick();
-    } else if (imgX > 100) {
-      slideRef.current.style.transform = `translateX(${imgX}px)`;
+    } else if (imgX > 50) {
+      slideRef.current.style.transform = `translateX(-${imgX}px)`;
       increaseClick();
     }
   };
@@ -106,14 +105,14 @@ function Slider() {
   useEffect(() => {
     if (isClick===false) {
       const autoPage = setTimeout(() => {
-        setX(-98);
+        setX(-65);
         setIsSlide(true);
         setTimeout(() => {
           setIndex((prev) => (prev === (BannerImg.length-1) ? 0 : prev + 1));
           setX(0);
           setIsSlide(false);
-        }, 500);
-      }, 2000);
+        }, 400);
+      }, 4000);
     
       return () => {
         clearTimeout(autoPage);
@@ -132,7 +131,8 @@ function Slider() {
         onMouseUp={onMouseUp}
         onMouseLeave={onMouseLeave}
         onMouseMove={onMouseMove}
-        style={{transform: `translateX(${x}vw)`}}>
+        style={{transform: `translateX(${x}vw)`}}
+        >
 
         <CaroST.Container>
           <CaroST.PrivewImg
