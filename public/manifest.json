@@ -12,7 +12,7 @@
       "src": "logo192.png",
       "type": "image/png",
       "sizes": "192x192",
-      "purpose": "maskable"
+      "purpose": "any"
     },
     {
       "src": "logo512.png",
@@ -25,9 +25,9 @@
   "display": "standalone",
   "display_override": ["standalone"],
   "orientation": "portrait",
-  "theme_color": "#ffba09",
-  "background_color": "#ffffff",
-  "description": "당신이 사는 곳 근처에서 최고의 배달프렌드를 찾아보세요!",
+  "theme_color": "#FFBA09",
+  "background_color": "#FF6915",
+  "description": "Bestie is your Baedal Friend",
   "lang": "ko",
   "dir": "ltr",
   "categories": ["food", "social"]

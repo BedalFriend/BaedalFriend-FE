@@ -13,11 +13,10 @@ root.render(
   // <React.StrictMode>
 
   // </React.StrictMode>
+  // <SocketProvider></SocketProvider>
   <Provider store={store}>
     <TabProvider>
-      <SocketProvider>
-        <App />
-      </SocketProvider>
+      <App />
     </TabProvider>
   </Provider>
 );

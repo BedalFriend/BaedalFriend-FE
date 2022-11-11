@@ -33,6 +33,7 @@ const GlobalStyle = createGlobalStyle`
     --weight-bold: 700;
     --weight-semi-bold: 600;
     --weight-regular: 500;
+    --weight-thin: 400;
 
     /* Animation Duration */
     --animation-duration: 300ms;
@@ -47,6 +48,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
+    background-color: var(--color-orange);
     margin : 0;
     padding : 0;
     font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui,
@@ -60,6 +62,8 @@ const GlobalStyle = createGlobalStyle`
   }
 
   ul {
+    margin: 0;
+    padding: 0;
     list-style: none;
     padding-left: 0;
   }
@@ -91,6 +95,13 @@ const GlobalStyle = createGlobalStyle`
 
 h2 {
   font-size: var(--font-large);
+  font-weight: var(--weight-regular);
+  font-display: swap;
+  margin: 0px 0px;
+}
+
+h3 {
+  font-size: var(--font-medium);
   font-weight: var(--weight-bold);
   font-display: swap;
   margin: 0px 0px;

@@ -16,11 +16,10 @@ export const Search = styled.div`
   height: 56px;
 
   background: var(--color-white);
-  box-shadow: 0px 0px 8px rgba(187, 187, 187, 0.4);
+  box-shadow: 0px 0px 8px rgba(187, 187, 187, 0.32);
   border-radius: 99px;
 
   display: flex;
-  justify-content: space-between;
   align-items: center;
 
   padding: 0 24px;
@@ -28,10 +27,11 @@ export const Search = styled.div`
 `;
 
 export const SearchText = styled.span`
-  color: var(--color-light-grey);
+  color: var(--color-grey);
   font-weight: var(--weight-regular);
   font-size: var(--font-regular);
   font-display: swap;
+  margin-left: 4px;
 `;
 
 export const CtgText = styled.span`
@@ -39,10 +39,10 @@ export const CtgText = styled.span`
   padding: 4px 8px;
   height: 22px;
 
-  font-weight: var(--weight-bold);
+  font-weight: var(--weight-regular);
   font-size: var(--font-micro);
   font-display: swap;
-  color: var(--color-grey);
+  color: var(--color-dark-grey);
 
   display: flex;
   justify-content: center;
@@ -65,6 +65,7 @@ export const CtgBox = styled.div`
   &:hover ${CtgText} {
     background-color: var(--color-light-orange);
     color: var(--color-orange);
+    font-weight: var(--weight-bold);
   }
   &:hover ${CtgPath} {
     fill: var(--color-orange);
