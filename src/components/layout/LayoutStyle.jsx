@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const Box = styled.div`
+  background-color: var(--color-white);
   position: relative;
 
   display: flex;
