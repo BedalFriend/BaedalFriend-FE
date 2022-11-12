@@ -14,7 +14,7 @@ export const IndicatorWrapper = styled.div`
   align-items: center;
   justify-content: center;
   position: absolute;
-  top: 90%;
+  top: 92%;
   left: 50%;
   transform: translate(-50%, -50%);
 `
@@ -54,6 +54,10 @@ export const Row = styled.div`
   transition: all 0.5s ease-in-out;
 `;
 
+export const ImgWrapper = styled.div`
+  position: relative;
+`;
+
 export const Img = styled.img`
   //border-radius: 7px;
   //margin: 0 20px;
@@ -64,17 +68,6 @@ export const Img = styled.img`
   height: 370px;
 `;
 
-export const PrivewImg = styled.img`
-  transition: all 0.5s linear;
-  width: 631px;
-  height: 370px;
-  //border-radius: 7px;
-`;
-
-export const ImgWrapper = styled.div`
-  position: relative;
-`;
-
 export const ImgDes = styled.div`
   position: absolute;
   display: flex;
@@ -82,10 +75,11 @@ export const ImgDes = styled.div`
   justify-content: center;
   text-align: center;
 
-  width: 350px;
-  height: 80px;
-  border-radius: 20px;
-  background-color: #FFDFCD;
+  width: 358px;
+  height: 92px;
+  border: 1px solid #FF6915;
+  border-radius: 12px;
+  background-color: #ffffff;
   color: #FF6915;
 
   top: 70%;
@@ -95,9 +89,25 @@ export const ImgDes = styled.div`
   cursor: pointer;
 `;
 
+export const MiniBox = styled.div`
+  position: relative;
+  width: 116px;
+  height: 33px;
+  left: 7%;
+  //top: 344px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 8px 12px;
+  gap: 10px;
+
+  background: #FFDFCD;
+  border-radius: 99px;
+`
+
 export const DesContent = styled.span`
-  //padding-left: 20px;
-  font-size: 20px;
-  font-weight: 600;
-  //margin-bottom: 14px;
+  font-weight: 700;
+  font-size: 14px;
+  color: #FF6915;
 `;

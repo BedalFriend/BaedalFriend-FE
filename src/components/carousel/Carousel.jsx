@@ -1,22 +1,38 @@
 import { useState, useRef, useEffect } from "react";
 import * as CaroST from './CarouselStyle';
+import img1 from '../carousel/img/1.png';
+import img2 from '../carousel/img/2.png';
+import img3 from '../carousel/img/3.png';
 
-const BannerImg = [
-  "https://velog.velcdn.com/images/mingki831/post/70622c1e-fd50-492e-a9da-2da314d86aae/image.png",
-  "https://velog.velcdn.com/images/mingki831/post/69da211d-081e-48f1-a3d3-6edaa3627171/image.png",
-  "https://velog.velcdn.com/images/mingki831/post/66f07ef5-35eb-4577-88f9-a0748c8ef326/image.png",
-  "https://velog.velcdn.com/images/mingki831/post/b7f09093-6b82-4cb0-aa2f-2ff711454634/image.png"
-];
+const One = () => {
+  return (
+  <>
+  <CaroST.Img src={img1} alt='첫번째배너'/>
+  <CaroST.ImgDes>
+    <CaroST.MiniBox>
+      <CaroST.DesContent>배프 만나러 가기</CaroST.DesContent>
+    </CaroST.MiniBox>
+  </CaroST.ImgDes>
+  </>
+  )
+}
 
-const Content = [
-  "내 근처 배프 만나러가기",
-];
+const Two = () => {
+  return <CaroST.Img src={img2} alt='두번째배너'/>
+}
 
-function Slider() {
+const Three = () => {
+  return <CaroST.Img src={img3} alt='세번째배너'/>
+}
 
-  //슬라이드
+//배너 페이지
+const BannerImg = [ One, Two, Three ];
 
-  //슬라이드 useRef
+function Carousel() {
+
+  //슬라이드 관련 state
+
+  //슬라이드 Ref
   const slideRef = useRef(null);
   //슬라이드 인덱스
   const [index, setIndex] = useState(0);
@@ -25,7 +41,7 @@ function Slider() {
   //슬라이드 애니메이션 효과(x만큼 이동하는 css)
   const [x, setX] = useState(0);
 
-  //마우스 드래그로 슬라이드 넘기기
+  //마우스 인식 관련 state
 
   //드래그 시작했는지 체크
   const [isClick, setIsClick] = useState(false);
@@ -34,16 +50,20 @@ function Slider() {
   //마우스 뗀 지점의 x좌표
   const [mouseUpClientX, setMouseUpClientX] = useState(0);
 
-  //모바일 터치로 슬라이드 넘기기
+  //터치 인식 관련 state
+
+  //터치 중인지 체크
   const [isTouch, setIsTouch] = useState(false);
+  //터치 시작한 지점의 x좌표
   const [tochedX, setTochedX] = useState(0);
+  //터치 시작한 지점의 y좌표
   const [tochedY, setTochedY] = useState(0);
 
   const increaseClick = async () => {
     if (isSlide) {
       return;
     }
-    setX(-135);
+    setX(-155);
     setIsSlide(true);
     await setTimeout(() => {
       setIndex((prev) => (prev === (BannerImg.length-1) ? 0 : prev + 1));
@@ -57,7 +77,7 @@ function Slider() {
     if (isSlide) {
       return;
     }
-    setX(+135);
+    setX(+155);
     setIsSlide(true);
     await setTimeout(() => {
       setIndex((prev) => (prev === 0 ? (BannerImg.length-1) : prev - 1));
@@ -66,13 +86,12 @@ function Slider() {
     }, 500);
   };
 
-
   const morePrevImg = index === 1 ? (BannerImg.length-1) : index === 0 ? (BannerImg.length-2) : index - 2;
   const PrevImg = index === 0 ? (BannerImg.length-1) : index - 1;
   const NextImg = index === (BannerImg.length-1) ? 0 : index + 1;
   const moreNextImg = index === (BannerImg.length-1) ? 1 : index === (BannerImg.length-2) ? 0 : index + 2;
 
-
+  //마우스 인식 관련 함수
   const onMouseDown = (event) => {
     setIsClick(true);
     setMouseDownClientX(event.pageX);
@@ -106,6 +125,7 @@ function Slider() {
     }
   };
 
+  //터치 인식 관련 함수
   const onTouchStart = (e) => {
     setIsTouch(true);
     setTochedX(e.changedTouches[0].pageX);
@@ -128,7 +148,7 @@ function Slider() {
   useEffect(() => {
     if ((isClick&&isTouch)===false) {
       const autoPage = setTimeout(() => {
-        setX(-135);
+        setX(-155);
         setIsSlide(true);
         setTimeout(() => {
           setIndex((prev) => (prev === (BannerImg.length-1) ? 0 : prev + 1));
@@ -146,62 +166,43 @@ function Slider() {
 
   return (
     <CaroST.Banner>
-    <CaroST.Wrapper>
-      <CaroST.Row
-        key={index}
-        ref={slideRef}
-        onMouseDown={onMouseDown}
-        onMouseUp={onMouseUp}
-        onMouseLeave={onMouseLeave}
-        onMouseMove={onMouseMove}
-        onTouchEnd={onTouchEnd}
-        onTouchStart={onTouchStart}
-        style={{transform: `translateX(${x}vw)`}}
-        >
+      <CaroST.Wrapper>
+        <CaroST.Row
+          key={index}
+          ref={slideRef}
+          onMouseDown={onMouseDown}
+          onMouseUp={onMouseUp}
+          onMouseLeave={onMouseLeave}
+          onMouseMove={onMouseMove}
+          onTouchEnd={onTouchEnd}
+          onTouchStart={onTouchStart}
+          style={{transform: `translateX(${x}vw)`}}>
 
-        <CaroST.Container>
-          <CaroST.PrivewImg
-            src={BannerImg[morePrevImg]}
-          ></CaroST.PrivewImg>
-        </CaroST.Container>
+          <CaroST.Container>
+              {BannerImg[morePrevImg]()} 
+          </CaroST.Container>
 
-        <CaroST.Container>
-          <CaroST.PrivewImg
-            src={BannerImg[PrevImg]}
-          ></CaroST.PrivewImg>
-        </CaroST.Container>
+          <CaroST.Container> 
+              {BannerImg[PrevImg]()}
+          </CaroST.Container>
 
-        <CaroST.ImgWrapper>
-          <CaroST.Img
-            src={BannerImg[index]}
-          />
+          <CaroST.ImgWrapper>
+              {BannerImg[index]()}        
+          </CaroST.ImgWrapper>
 
-          {(index===0) ? (
-            <CaroST.ImgDes>
-              <CaroST.DesContent>{Content[index]}</CaroST.DesContent>
-            </CaroST.ImgDes>
-          ) : null}
+          <CaroST.Container>
+              {BannerImg[NextImg]()}
+          </CaroST.Container>
+
+          <CaroST.Container>
+              {BannerImg[moreNextImg]()}
+          </CaroST.Container>
           
-        </CaroST.ImgWrapper>
-
-        <CaroST.Container>
-          <CaroST.PrivewImg
-            src={BannerImg[NextImg]}
-          ></CaroST.PrivewImg>
-        </CaroST.Container>
-
-        <CaroST.Container>
-          <CaroST.PrivewImg
-            src={BannerImg[moreNextImg]}
-          ></CaroST.PrivewImg>
-        </CaroST.Container>
-        
-      </CaroST.Row>
-      
-    </CaroST.Wrapper>
+        </CaroST.Row>
+      </CaroST.Wrapper>
     
-    {/* indicator */}
-    <CaroST.IndicatorWrapper>
+      {/* indicator */}
+      <CaroST.IndicatorWrapper>
         {Array.from({length: BannerImg.length}, (_, i) => i).map((i) => (
           <CaroST.Indicator
             key={`indicator_${i}`} 
@@ -212,4 +213,4 @@ function Slider() {
   );
 }
 
-export default Slider;
+export default Carousel;
