@@ -1,23 +1,25 @@
-import { createContext, useEffect, useRef, useState } from 'react';
+import { createContext, useEffect, useRef } from 'react';
 import SockJS from 'sockjs-client';
 import * as StompJS from '@stomp/stompjs';
 import { getCookieToken } from '../shared/storage/Cookie';
-import { useSelector } from 'react-redux';
+import store from '../redux/config/ConfigStore';
 
 export const SocketContext = createContext();
 
 export function SocketProvider({ children }) {
-  const user = useSelector((state) => state.user);
-  const authorization = useSelector((state) => state.token.accessToken);
-  const refreshToken = getCookieToken();
-
   const client = useRef({});
 
   const connect = () => {
+    const user = store.getState()?.user;
+    const authorization = store.getState()?.token?.accessToken;
+    const refreshToken = getCookieToken();
     client.current = new StompJS.Client({
       webSocketFactory: () =>
         new SockJS(`${process.env.REACT_APP_API_URL}/ws/chat`),
-      connectHeaders: {},
+      connectHeaders: {
+        Authorization: authorization,
+        Refresh_Token: refreshToken,
+      },
       debug: (str) => {
         console.log(str);
       },
@@ -33,31 +35,44 @@ export function SocketProvider({ children }) {
       },
     });
 
-    //client.current.activate();
+    client.current.activate();
   };
 
   const subscribe = () => {
-    client.current.subscribe(
-      `/sub/chat/room/1`,
-      (e) => {
-        console.log('yes!');
-        console.log(JSON.parse(e));
-      },
-      { id: `sub-1` }
-    );
+    if (client.current.connected) {
+      client.current.subscribe(
+        `/sub/chat/room/1`,
+        () => {
+          console.log('receive!');
+        },
+        {
+          id: `sub-1`,
+        }
+      );
+    }
+  };
+
+  const onMessageReceived = (payload) => {
+    console.log('Received!');
   };
 
   const publish = (message) => {
+    const user = store.getState()?.user;
+    const authorization = store.getState()?.token?.accessToken;
+    const refreshToken = getCookieToken();
+    //console.log(user, authorization, refreshToken);
     if (!client.current.connected) return;
 
     client.current.publish({
-      destination: '/chat/message',
+      destination: '/sub/chat/message',
       body: JSON.stringify({
         type: 'TALK',
-        roomId: '1',
+        roomId: 1,
+        memberId: 4,
         sender: 'kim',
         message,
       }),
+      headers: { Authorization: authorization, Refresh_Token: refreshToken },
     });
   };
 
@@ -67,6 +82,7 @@ export function SocketProvider({ children }) {
       publish('안녕하세요!');
     }, 3000);
     //return () => disconnect();
+    // eslint-disable-next-line
   }, []);
 
   return (
