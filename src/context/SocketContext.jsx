@@ -13,6 +13,7 @@ export function SocketProvider({ children }) {
     const user = store.getState()?.user;
     const authorization = store.getState()?.token?.accessToken;
     const refreshToken = getCookieToken();
+
     client.current = new StompJS.Client({
       webSocketFactory: () =>
         new SockJS(`${process.env.REACT_APP_API_URL}/ws/chat`),
@@ -27,8 +28,14 @@ export function SocketProvider({ children }) {
       heartbeatIncoming: 4000,
       heartbeatOutgoing: 4000,
       onConnect: () => {
-        console.log('Connect...!');
+        //console.log('Connect...!');
         subscribe();
+      },
+      onDisconnect: (e) => {
+        console.log('Disconnect...!', e);
+      },
+      onChangeState: (e) => {
+        //console.log('change', e);
       },
       onStompError: (frame) => {
         console.error(frame);
@@ -39,6 +46,7 @@ export function SocketProvider({ children }) {
   };
 
   const subscribe = () => {
+    //console.log(client.current);
     if (client.current.connected) {
       client.current.subscribe(
         `/sub/chat/room/1`,
@@ -60,16 +68,26 @@ export function SocketProvider({ children }) {
     const user = store.getState()?.user;
     const authorization = store.getState()?.token?.accessToken;
     const refreshToken = getCookieToken();
-    //console.log(user, authorization, refreshToken);
+    console.log(`user: ${user.id} & ${user.nickname},
+    Authorization: ${authorization},
+    Refresh_Token: ${refreshToken}`);
+
+    console.log(
+      JSON.stringify({
+        type: 'TALK',
+        roomId: '1',
+        sender: 'test1234',
+        message,
+      })
+    );
     if (!client.current.connected) return;
 
     client.current.publish({
       destination: '/sub/chat/message',
       body: JSON.stringify({
         type: 'TALK',
-        roomId: 1,
-        memberId: 4,
-        sender: 'kim',
+        roomId: '1',
+        sender: 'test1234',
         message,
       }),
       headers: { Authorization: authorization, Refresh_Token: refreshToken },
@@ -86,7 +104,7 @@ export function SocketProvider({ children }) {
   }, []);
 
   return (
-    <SocketContext.Provider value={{ client }}>
+    <SocketContext.Provider value={{ client, publish }}>
       {children}
     </SocketContext.Provider>
   );
