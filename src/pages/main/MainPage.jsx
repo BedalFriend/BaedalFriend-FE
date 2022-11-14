@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { Navigate, useNavigate } from 'react-router-dom';
 import * as MainST from './MainPageStyle';
 
 import Layout from '../../components/layout/Layout';
@@ -9,6 +10,9 @@ import { useEffect } from 'react';
 import Card from '../../components/elements/card/Card';
 
 export default function MainPage(props) {
+
+  const navigate = useNavigate();
+  
   const { setTab } = useContext(TabContext);
 
   useEffect(() => {
@@ -20,7 +24,7 @@ export default function MainPage(props) {
     <Layout>
       <MainST.Top><Carousel/></MainST.Top>
 
-      <MainST.Search>
+      <MainST.Search onClick={() => {navigate("/search")}}>
         <svg
           width='24'
           height='24'
