@@ -21,7 +21,7 @@ export const IndicatorWrapper = styled.div`
 
 export const Indicator = styled.div`
   margin: 0px 4px;
-  background-color: ${(props) => (props.focused ? '#FF6915' : '#FFDFCD')};
+  background-color: ${(props) => (props.focused ? 'var(--color-orange)' : 'var(--color-light-orange)')};
   transition: all ease 0.4s 0s;
   width: ${(props) => (props.focused ? '24px' : '8px')};
   height: 8px;
@@ -39,7 +39,6 @@ export const Wrapper = styled.div`
 export const Container = styled.div`
   //border-radius: 7px;
   display: flex;
-  //align-items: center;
   //margin: 0 12px;
   cursor: pointer;
   position: relative;
@@ -77,10 +76,10 @@ export const ImgDes = styled.div`
 
   width: 358px;
   height: 92px;
-  border: 1px solid #FF6915;
+  border: 1px solid var(--color-orange);
   border-radius: 12px;
   background-color: #ffffff;
-  color: #FF6915;
+  color: var(--color-orange);
 
   top: 70%;
   left: 50%;
@@ -94,7 +93,6 @@ export const MiniBox = styled.div`
   width: 116px;
   height: 33px;
   left: 7%;
-  //top: 344px;
 
   display: flex;
   flex-direction: row;
@@ -102,12 +100,12 @@ export const MiniBox = styled.div`
   padding: 8px 12px;
   gap: 10px;
 
-  background: #FFDFCD;
+  background: var(--color-light-orange);
   border-radius: 99px;
 `
 
 export const DesContent = styled.span`
   font-weight: 700;
   font-size: 14px;
-  color: #FF6915;
+  color: var(--color-orange);
 `;
