@@ -14,14 +14,14 @@ export const IndicatorWrapper = styled.div`
   align-items: center;
   justify-content: center;
   position: absolute;
-  top: 90%;
+  top: 92%;
   left: 50%;
   transform: translate(-50%, -50%);
 `
 
 export const Indicator = styled.div`
   margin: 0px 4px;
-  background-color: ${(props) => (props.focused ? '#FF6915' : '#FFDFCD')};
+  background-color: ${(props) => (props.focused ? 'var(--color-orange)' : 'var(--color-light-orange)')};
   transition: all ease 0.4s 0s;
   width: ${(props) => (props.focused ? '24px' : '8px')};
   height: 8px;
@@ -39,7 +39,6 @@ export const Wrapper = styled.div`
 export const Container = styled.div`
   //border-radius: 7px;
   display: flex;
-  //align-items: center;
   //margin: 0 12px;
   cursor: pointer;
   position: relative;
@@ -54,6 +53,10 @@ export const Row = styled.div`
   transition: all 0.5s ease-in-out;
 `;
 
+export const ImgWrapper = styled.div`
+  position: relative;
+`;
+
 export const Img = styled.img`
   //border-radius: 7px;
   //margin: 0 20px;
@@ -64,17 +67,6 @@ export const Img = styled.img`
   height: 370px;
 `;
 
-export const PrivewImg = styled.img`
-  transition: all 0.5s linear;
-  width: 631px;
-  height: 370px;
-  //border-radius: 7px;
-`;
-
-export const ImgWrapper = styled.div`
-  position: relative;
-`;
-
 export const ImgDes = styled.div`
   position: absolute;
   display: flex;
@@ -82,11 +74,12 @@ export const ImgDes = styled.div`
   justify-content: center;
   text-align: center;
 
-  width: 500px;
-  height: 100px;
-  border-radius: 20px;
+  width: 358px;
+  height: 92px;
+  border: 1px solid var(--color-orange);
+  border-radius: 12px;
   background-color: #ffffff;
-  color: #FF6915;
+  color: var(--color-orange);
 
   top: 70%;
   left: 50%;
@@ -95,9 +88,24 @@ export const ImgDes = styled.div`
   cursor: pointer;
 `;
 
+export const MiniBox = styled.div`
+  position: relative;
+  width: 116px;
+  height: 33px;
+  left: 7%;
+
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 8px 12px;
+  gap: 10px;
+
+  background: var(--color-light-orange);
+  border-radius: 99px;
+`
+
 export const DesContent = styled.span`
-  //padding-left: 20px;
-  font-size: 20px;
-  font-weight: 600;
-  //margin-bottom: 14px;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--color-orange);
 `;
