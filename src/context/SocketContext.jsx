@@ -83,7 +83,7 @@ export function SocketProvider({ children }) {
     if (!client.current.connected) return;
 
     client.current.publish({
-      destination: '/sub/chat/message',
+      destination: '/pub/chat/message',
       body: JSON.stringify({
         type: 'TALK',
         roomId: '1',
