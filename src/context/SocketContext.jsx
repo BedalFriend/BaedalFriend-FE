@@ -1,6 +1,7 @@
 import { createContext, useEffect, useRef } from 'react';
 import SockJS from 'sockjs-client';
 import * as StompJS from '@stomp/stompjs';
+
 import { getCookieToken } from '../shared/storage/Cookie';
 import store from '../redux/config/ConfigStore';
 
@@ -9,18 +10,18 @@ export const SocketContext = createContext();
 export function SocketProvider({ children }) {
   const client = useRef({});
 
-  const connect = () => {
+  const getInfo = () => {
     const user = store.getState()?.user;
     const authorization = store.getState()?.token?.accessToken;
     const refreshToken = getCookieToken();
+    return { user, authorization, refreshToken };
+  };
 
+  const connect = () => {
     client.current = new StompJS.Client({
       webSocketFactory: () =>
         new SockJS(`${process.env.REACT_APP_API_URL}/ws/chat`),
-      connectHeaders: {
-        Authorization: authorization,
-        Refresh_Token: refreshToken,
-      },
+      connectHeaders: {},
       debug: (str) => {
         console.log(str);
       },
@@ -28,66 +29,43 @@ export function SocketProvider({ children }) {
       heartbeatIncoming: 4000,
       heartbeatOutgoing: 4000,
       onConnect: () => {
-        //console.log('Connect...!');
         subscribe();
       },
       onDisconnect: (e) => {
         console.log('Disconnect...!', e);
       },
       onChangeState: (e) => {
-        //console.log('change', e);
+        console.log('change', e);
       },
       onStompError: (frame) => {
         console.error(frame);
       },
     });
 
-    client.current.activate();
+    //client.current.activate();
   };
 
   const subscribe = () => {
-    //console.log(client.current);
-    if (client.current.connected) {
-      client.current.subscribe(
-        `/sub/chat/room/1`,
-        () => {
-          console.log('receive!');
-        },
-        {
-          id: `sub-1`,
-        }
-      );
-    }
+    if (!client.current.connected) return;
+    client.current.subscribe(`/sub/chat/room/1`, onMessageReceived, {
+      id: `sub-1`,
+    });
   };
 
   const onMessageReceived = (payload) => {
-    console.log('Received!');
+    console.log(JSON.parse(payload.body));
   };
 
   const publish = (message) => {
-    const user = store.getState()?.user;
-    const authorization = store.getState()?.token?.accessToken;
-    const refreshToken = getCookieToken();
-    console.log(`user: ${user.id} & ${user.nickname},
-    Authorization: ${authorization},
-    Refresh_Token: ${refreshToken}`);
+    const { user, authorization, refreshToken } = getInfo();
 
-    console.log(
-      JSON.stringify({
-        type: 'TALK',
-        roomId: '1',
-        sender: 'test1234',
-        message,
-      })
-    );
     if (!client.current.connected) return;
-
     client.current.publish({
       destination: '/pub/chat/message',
       body: JSON.stringify({
         type: 'TALK',
         roomId: '1',
-        sender: 'test1234',
+        sender: user.nickname,
         message,
       }),
       headers: { Authorization: authorization, Refresh_Token: refreshToken },
@@ -104,7 +82,7 @@ export function SocketProvider({ children }) {
   }, []);
 
   return (
-    <SocketContext.Provider value={{ client, publish }}>
+    <SocketContext.Provider value={{ client, subscribe, publish }}>
       {children}
     </SocketContext.Provider>
   );

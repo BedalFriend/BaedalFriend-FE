@@ -24,9 +24,9 @@ export default function KakaoLoginPage() {
   };
 
   if (KAKAO_ERROR) {
-    return <Navigate to='/test' state={{ from: location }} />;
+    return <Navigate to='/sign' state={{ from: location }} />;
   } else if (KAKAO_CODE) {
     onProperCodeHandler();
-    return <Navigate to='/test' state={{ from: location }} />;
+    return <Navigate to='/' state={{ from: location }} />;
   }
 }
