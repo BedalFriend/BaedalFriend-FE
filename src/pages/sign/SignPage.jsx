@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
 import * as SignST from './SingPageStyle';
+import { useNavigate } from 'react-router-dom';
 
 import LoginForm from './LoginForm';
 
 export default function SignPage(props) {
+  const navigate = useNavigate();
   const [inLogin, setInLogin] = useState(true);
   const toggleInLogin = () => {
     setInLogin((prev) => !prev);
+  };
+  const pageBack = () => {
+    navigate(-1);
   };
 
   return (
@@ -32,7 +37,11 @@ export default function SignPage(props) {
         />
       </SignST.LogoSVG>
 
-      {inLogin ? <LoginForm toggle={toggleInLogin} /> : <div>SignUp Form</div>}
+      {inLogin ? (
+        <LoginForm toggle={toggleInLogin} pageBack={pageBack} />
+      ) : (
+        <div>SignUp Form</div>
+      )}
     </SignST.Box>
   );
 }

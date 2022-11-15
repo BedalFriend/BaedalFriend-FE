@@ -1,11 +1,13 @@
 import React, { useContext } from 'react';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { TabContext } from '../../../context/TabContext';
 import { getCookieToken } from '../../../shared/storage/Cookie';
 import * as HeadST from './HeaderStyle';
 
 export default function Header() {
   const { tab } = useContext(TabContext);
+  const navigate = useNavigate();
   const user = useSelector((state) => state.user);
   const refreshToken = getCookieToken();
 
@@ -18,6 +20,9 @@ export default function Header() {
         fill='none'
         xmlns='http://www.w3.org/2000/svg'
         style={{ position: 'absolute', bottom: '0px', marginLeft: '16px' }}
+        onClick={() => {
+          navigate(-1);
+        }}
       >
         <g mask='url(#mask0_243_490)'>
           <path
@@ -44,8 +49,8 @@ export default function Header() {
         </HeadST.MarkSVG>
 
         <HeadST.AdrText>
-          {refreshToken
-            ? user.address
+          {refreshToken !== null && refreshToken !== undefined
+            ? user.address !== null && user.address !== undefined
               ? user.address
               : '주소를 입력해주세요!'
             : '로그인이 필요해요!'}
@@ -73,6 +78,9 @@ export default function Header() {
         viewBox='0 0 48 48'
         fill='none'
         xmlns='http://www.w3.org/2000/svg'
+        onClick={() => {
+          navigate('/chat');
+        }}
       >
         <g mask='url(#mask0_159_110)'>
           <path

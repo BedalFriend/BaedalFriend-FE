@@ -47,7 +47,7 @@ export const InputWrapper = styled.div`
 
   background: var(--color-white);
   border: 1px solid var(--color-orange);
-  border-radius: 12px;
+  border-radius: 999px;
 
   display: flex;
   align-items: center;
@@ -106,4 +106,9 @@ export const KakaoLogo = styled.img`
   height: 32px;
   position: absolute;
   left: 20px;
+`;
+
+export const NavSet = styled.div`
+  display: flex;
+  gap: 16px;
 `;
