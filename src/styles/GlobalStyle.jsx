@@ -40,7 +40,7 @@ const GlobalStyle = createGlobalStyle`
     --animation-duration: 300ms;
 
     /* Responsive Width */
-    --responsive-width: 630px;
+    --responsive-width: 764px;
   }
 
   /* Universal tags */

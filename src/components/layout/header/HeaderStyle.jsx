@@ -6,11 +6,11 @@ export const Area = styled.div`
   z-index: 900;
   background-color: var(--color-white);
 
-  @media screen and (min-width: 630px) {
+  @media screen and (min-width: 764px) {
     width: var(--responsive-width);
   }
 
-  @media screen and (max-width: 630px) {
+  @media screen and (max-width: 764px) {
     width: 100%;
   }
 `;
