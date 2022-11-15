@@ -16,7 +16,9 @@ root.render(
   // <SocketProvider></SocketProvider>
   <Provider store={store}>
     <TabProvider>
-      <App />
+      <SocketProvider>
+        <App />
+      </SocketProvider>
     </TabProvider>
   </Provider>
 );

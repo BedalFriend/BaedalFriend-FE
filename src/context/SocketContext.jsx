@@ -1,17 +1,21 @@
-import { createContext, useEffect, useRef, useState } from 'react';
+import { createContext, useEffect, useRef } from 'react';
 import SockJS from 'sockjs-client';
 import * as StompJS from '@stomp/stompjs';
+
 import { getCookieToken } from '../shared/storage/Cookie';
-import { useSelector } from 'react-redux';
+import store from '../redux/config/ConfigStore';
 
 export const SocketContext = createContext();
 
 export function SocketProvider({ children }) {
-  const user = useSelector((state) => state.user);
-  const authorization = useSelector((state) => state.token.accessToken);
-  const refreshToken = getCookieToken();
-
   const client = useRef({});
+
+  const getInfo = () => {
+    const user = store.getState()?.user;
+    const authorization = store.getState()?.token?.accessToken;
+    const refreshToken = getCookieToken();
+    return { user, authorization, refreshToken };
+  };
 
   const connect = () => {
     client.current = new StompJS.Client({
@@ -25,8 +29,13 @@ export function SocketProvider({ children }) {
       heartbeatIncoming: 4000,
       heartbeatOutgoing: 4000,
       onConnect: () => {
-        console.log('Connect...!');
         subscribe();
+      },
+      onDisconnect: (e) => {
+        console.log('Disconnect...!', e);
+      },
+      onChangeState: (e) => {
+        console.log('change', e);
       },
       onStompError: (frame) => {
         console.error(frame);
@@ -37,27 +46,29 @@ export function SocketProvider({ children }) {
   };
 
   const subscribe = () => {
-    client.current.subscribe(
-      `/sub/chat/room/1`,
-      (e) => {
-        console.log('yes!');
-        console.log(JSON.parse(e));
-      },
-      { id: `sub-1` }
-    );
+    if (!client.current.connected) return;
+    client.current.subscribe(`/sub/chat/room/1`, onMessageReceived, {
+      id: `sub-1`,
+    });
+  };
+
+  const onMessageReceived = (payload) => {
+    console.log(JSON.parse(payload.body));
   };
 
   const publish = (message) => {
-    if (!client.current.connected) return;
+    const { user, authorization, refreshToken } = getInfo();
 
+    if (!client.current.connected) return;
     client.current.publish({
-      destination: '/chat/message',
+      destination: '/pub/chat/message',
       body: JSON.stringify({
         type: 'TALK',
         roomId: '1',
-        sender: 'kim',
+        sender: user.nickname,
         message,
       }),
+      headers: { Authorization: authorization, Refresh_Token: refreshToken },
     });
   };
 
@@ -67,10 +78,11 @@ export function SocketProvider({ children }) {
       publish('안녕하세요!');
     }, 3000);
     //return () => disconnect();
+    // eslint-disable-next-line
   }, []);
 
   return (
-    <SocketContext.Provider value={{ client }}>
+    <SocketContext.Provider value={{ client, subscribe, publish }}>
       {children}
     </SocketContext.Provider>
   );
