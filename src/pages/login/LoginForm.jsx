@@ -94,6 +94,7 @@ export default function LoginForm() {
           viewBox='0 0 152 36'
           fill='none'
           xmlns='http://www.w3.org/2000/svg'
+          style={{ cursor: 'pointer' }}
           onClick={() => {
             navigate(-1);
           }}
@@ -111,6 +112,7 @@ export default function LoginForm() {
           viewBox='0 0 73 36'
           fill='none'
           xmlns='http://www.w3.org/2000/svg'
+          style={{ cursor: 'pointer' }}
           onClick={() => {
             navigate('/sign');
           }}

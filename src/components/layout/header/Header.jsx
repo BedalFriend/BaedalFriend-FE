@@ -38,7 +38,15 @@ export default function Header() {
         </g>
       </svg>
 
-      <HeadST.Address tab={tab}>
+      <HeadST.Address
+        tab={tab}
+        onClick={() => {
+          if (refreshToken !== null && refreshToken !== undefined) {
+          } else {
+            navigate('/login');
+          }
+        }}
+      >
         <HeadST.MarkSVG
           width='16'
           height='16'

@@ -56,6 +56,7 @@ export const InputWrapper = styled.div`
 export const Input = styled.input`
   margin-left: 24px;
   height: 21px;
+  width: calc(100% - 80px);
 
   font-family: 'Pretendard';
   font-size: var(--font-regular);
@@ -71,6 +72,7 @@ export const Input = styled.input`
 export const InviSVG = styled.svg`
   position: absolute;
   right: 20px;
+  cursor: pointer;
 `;
 
 export const LoginBtn = styled.button`
