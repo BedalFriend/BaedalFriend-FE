@@ -25,7 +25,7 @@ const Router = () => {
         </Route>
 
         <Route path='/kakaoLogin' element={<KakaoLoginPage />} />
-        <Route path='/chat/:id' element={<ChatPage />} />
+        <Route path='/chat' element={<ChatPage />} />
 
         <Route element={<GlobalRoute />}>
           <Route path='/' element={<MainPage />} />
