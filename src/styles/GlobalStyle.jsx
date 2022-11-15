@@ -5,6 +5,7 @@ const GlobalStyle = createGlobalStyle`
   :root {
     /* Color */
     --color-white: #ffffff;
+    --color-blur-white: #DCDCDC;
     --color-dark-white: #f6f6f6;
 
     --color-black: #000000;
@@ -14,8 +15,8 @@ const GlobalStyle = createGlobalStyle`
     --color-light-grey: #959595;
     --color-dark-grey: #585858;
 
-    --color-orange: #FF6915;
-    --color-light-orange: #FFDFCD;
+    --color-orange: #FF5B15;
+    --color-light-orange: #FFDCCD;
 
     --color-yellow: #FFBA09;
     --color-light-yellow: #FFEAB5;
@@ -39,7 +40,7 @@ const GlobalStyle = createGlobalStyle`
     --animation-duration: 300ms;
 
     /* Responsive Width */
-    --responsive-width: 630px;
+    --responsive-width: 764px;
   }
 
   /* Universal tags */
@@ -48,7 +49,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    background-color: var(--color-orange);
+    background-color: var(--color-black);
     margin : 0;
     padding : 0;
     font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui,
@@ -59,6 +60,14 @@ const GlobalStyle = createGlobalStyle`
     -moz-user-select:none;
     -ms-user-select:none;
     user-select:none;
+  }
+
+  input {
+    margin: 0;
+    padding: 0;
+    border: none;
+    outline: none;
+    background-color: transparent;
   }
 
   ul {

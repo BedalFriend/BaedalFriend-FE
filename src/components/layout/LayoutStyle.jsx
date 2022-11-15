@@ -8,12 +8,12 @@ export const Box = styled.div`
   flex-flow: column nowrap;
   align-items: center;
 
-  @media screen and (min-width: 630px) {
+  @media screen and (min-width: 764px) {
     width: var(--responsive-width);
     //left: calc(100vw - var(--responsive-width));
   }
 
-  @media screen and (max-width: var(--responsive-width)) {
+  @media screen and (max-width: 764px) {
     width: 100vw;
   }
 `;

@@ -92,3 +92,31 @@ export const PtPic = styled.div`
   margin-left: 4px;
   gap: 4px;
 `;
+
+export const InfoBox = styled.div`
+  display: flex;
+  flex-flow: row nowrap;
+  width: 100%;
+  gap: 40px;
+`;
+
+export const InfoColumn = styled.div`
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: flex-start;
+  gap: 9px;
+`;
+
+export const InfoLine = styled.div`
+  display: flex;
+  align-items: center;
+
+  color: var(--color-dark-grey);
+  font-weight: var(--weight-regular);
+  font-size: var(--font-small);
+  font-display: swap;
+`;
+
+export const InfoSVG = styled.svg`
+  margin-right: 4px;
+`;
