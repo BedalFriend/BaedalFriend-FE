@@ -6,7 +6,7 @@ import PrivateRoute from './PrivateRoute';
 
 import TestPage from '../../pages/TestPage';
 import KakaoLoginPage from '../../pages/KakaoLoginPage';
-import SignPage from '../../pages/sign/SignPage';
+import LoginPage from '../../pages/login/LoginPage';
 import MainPage from '../../pages/main/MainPage';
 import ChatPage from '../../pages/chat/ChatPage';
 
@@ -17,7 +17,7 @@ const Router = () => {
         <Route element={<PrivateRoute />}></Route>
 
         <Route element={<PublicRoute />}>
-          <Route path='/sign' element={<SignPage />} />
+          <Route path='/login' element={<LoginPage />} />
         </Route>
 
         <Route path='/kakaoLogin' element={<KakaoLoginPage />} />

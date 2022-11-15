@@ -326,6 +326,7 @@ export default function MainPage(props) {
         <MainST.CtgVac />
         <MainST.CtgVac />
         <MainST.CtgVac />
+        <MainST.CtgVac />
       </MainST.CtgSection>
 
       <MainST.Line />
@@ -349,10 +350,12 @@ export default function MainPage(props) {
           </h2>
         </div>
 
-        <ul>
+        <MainST.LimitList>
           <Card />
           <Card />
-        </ul>
+          <Card />
+          <Card />
+        </MainST.LimitList>
       </MainST.LimitBox>
 
       <div style={{ width: '100%', height: '152px' }}></div>

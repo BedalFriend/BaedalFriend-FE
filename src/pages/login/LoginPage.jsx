@@ -1,19 +1,9 @@
-import React, { useState } from 'react';
-import * as SignST from './SingPageStyle';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
+import * as SignST from './LoginPageStyle';
 
 import LoginForm from './LoginForm';
 
-export default function SignPage(props) {
-  const navigate = useNavigate();
-  const [inLogin, setInLogin] = useState(true);
-  const toggleInLogin = () => {
-    setInLogin((prev) => !prev);
-  };
-  const pageBack = () => {
-    navigate(-1);
-  };
-
+export default function LoginPage(props) {
   return (
     <SignST.Box>
       <SignST.LogoSVG
@@ -37,11 +27,7 @@ export default function SignPage(props) {
         />
       </SignST.LogoSVG>
 
-      {inLogin ? (
-        <LoginForm toggle={toggleInLogin} pageBack={pageBack} />
-      ) : (
-        <div>SignUp Form</div>
-      )}
+      <LoginForm />
     </SignST.Box>
   );
 }
