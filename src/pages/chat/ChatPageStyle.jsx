@@ -4,11 +4,18 @@ export const BottomBox = styled.div`
   position: fixed;
   bottom: 0;
 
-  width: 100%;
   height: 120px;
   padding: 16px;
 
   background-color: var(--color-white);
+
+  @media screen and (min-width: 764px) {
+    width: var(--responsive-width);
+  }
+
+  @media screen and (max-width: 764px) {
+    width: 100%;
+  }
 `;
 
 export const InputBox = styled.div`
@@ -41,11 +48,18 @@ export const Input = styled.input`
 export const TopBox = styled.div`
   position: fixed;
   top: 60px;
-  width: 100%;
   height: 76px;
 
   background-color: var(--color-white);
   border-radius: 0px 0px 24px 24px;
+
+  @media screen and (min-width: 764px) {
+    width: var(--responsive-width);
+  }
+
+  @media screen and (max-width: 764px) {
+    width: 100%;
+  }
 `;
 
 export const Body = styled.div`

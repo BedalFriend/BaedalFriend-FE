@@ -17,7 +17,7 @@ export default function ChatPage(props) {
     <Layout>
       <ChatST.TopBox></ChatST.TopBox>
 
-      <ChatST.Body></ChatST.Body>
+      <ChatST.Body>HI!!</ChatST.Body>
 
       <ChatST.BottomBox>
         <ChatST.InputBox>
