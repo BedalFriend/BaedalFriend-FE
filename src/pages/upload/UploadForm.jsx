@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { __addPostThunk, __getThunk } from '../../redux/modules/PostSlice';
 
-import styled from 'styled-components';
+import * as UploadST from './UploadPageStyle';
 import * as MainST from '../main/MainPageStyle';
 
 import SearchMap from '../../components/kakaoMap/SearchStoreMap';
@@ -50,15 +50,15 @@ const PostForm = () => {
 
   return (
     <div>
-      <FormContainer onSubmit={onSubmitHandler}>
+      <UploadST.FormContainer onSubmit={onSubmitHandler}>
         {index === 0 ? (
-          <StepOneBox>
-            <StepOneBox_Header>
+          <UploadST.StepOneBox>
+            <UploadST.StepOneHeader>
               <div>
                 <div>Step 1.</div>
               </div>
               <div>공구를 진행할 가게 정보를 입력해주세요.</div>
-            </StepOneBox_Header>
+            </UploadST.StepOneHeader>
             <div>음식점 선택</div>
             <input
               name='store'
@@ -107,7 +107,7 @@ const PostForm = () => {
             >
               다음 단계
             </button>
-          </StepOneBox>
+          </UploadST.StepOneBox>
         ) : null}
         {index === 1 ? (
           <SearchMap setIndex={setIndex} setAddress={setAddress} />
@@ -418,7 +418,7 @@ const PostForm = () => {
           </div>
         ) : null}
         {index === 4 ? <SearchPartyMap setIndex={setIndex} /> : null}
-      </FormContainer>
+      </UploadST.FormContainer>
       {/* <button>글쓰기 수정</button>
       <div>
         {Array.isArray(posts.data)
@@ -441,15 +441,3 @@ const PostForm = () => {
 };
 
 export default PostForm;
-
-const FormContainer = styled.form`
-  width: 100%;
-`;
-
-const StepOneBox = styled.div`
-  background-color: blueviolet;
-`;
-
-const StepOneBox_Header = styled.div`
-  background-color: skyblue;
-`;

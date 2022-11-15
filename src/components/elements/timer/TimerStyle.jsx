@@ -6,7 +6,7 @@ export const Box = styled.div`
 
   width: 61px;
   height: 27px;
-  padding: 4px 8px;
+  padding: 4px 12px;
 
   display: flex;
   justify-content: center;
@@ -19,10 +19,9 @@ export const Text = styled.span`
   height: 19px;
 
   font-family: 'Pretendard';
-  font-weight: 600;
+  font-weight: var(--weight-regular);
   font-display: swap;
-  font-size: 16px;
-  line-height: 19px;
+  font-size: var(--font-regular);
 
   color: var(--color-white);
 

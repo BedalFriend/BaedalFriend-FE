@@ -1,10 +1,8 @@
 import React, { useContext, useEffect } from 'react';
-
-import styled from 'styled-components';
-
 import UploadForm from './UploadForm';
 import { TabContext } from '../../context/TabContext';
 import Layout from '../../components/layout/Layout';
+import * as UploadST from './UploadPageStyle';
 
 const Post = ({ address }) => {
   const { setTab } = useContext(TabContext);
@@ -15,16 +13,11 @@ const Post = ({ address }) => {
   }, []);
   return (
     <Layout>
-      <PostBox>
+      <UploadST.PostBox>
         <UploadForm address={address} />
-      </PostBox>
+      </UploadST.PostBox>
     </Layout>
   );
 };
 
 export default Post;
-
-const PostBox = styled.div`
-  margin-top: 60px;
-  width: calc(100% - 32px);
-`;
