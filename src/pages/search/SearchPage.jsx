@@ -1,11 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import * as SearchST from './SearchPageStyle';
 
 import Layout from '../../components/layout/Layout';
+import SearchModal from './SearchModal';
 import Card from '../../components/elements/card/Card';
 
 
 export default function SearchPage() {
+
+    const [isOpen, setIsOpen] = useState(false);
+
+    const onClickButton = () => {
+        setIsOpen(true);
+    }
+
     return (
         <Layout>
             <SearchST.Search>
@@ -42,6 +50,7 @@ export default function SearchPage() {
                         height="13"
                         viewBox="0 0 12 13"
                         fill="none"
+                        cursor="pointer"
                         xmlns="http://www.w3.org/2000/svg">
                         <path d="M2 10.9853L10.4853 2.50001" stroke="#FF9D73" stroke-width="2" stroke-linecap="round"/>
                         <path d="M10.4853 10.9853L2.00001 2.50001" stroke="#FF9D73" stroke-width="2" stroke-linecap="round"/>
@@ -68,7 +77,11 @@ export default function SearchPage() {
 
             <SearchST.Line />
 
-            <SearchST.DropDownSection>
+            <SearchST.DropDownSection onClick={onClickButton}>
+                {isOpen && (<SearchModal
+                                open={isOpen}
+                                onClose={() => {setIsOpen(false);}}/>)}
+                
                 <SearchST.DropDownText>마감 임박 순</SearchST.DropDownText>
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <mask id="mask0_536_236" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="-2" width="16" height="18">
@@ -82,6 +95,8 @@ export default function SearchPage() {
 
             <SearchST.ResultBox>
             <ul>
+                <Card />
+                <Card />
                 <Card />
                 <Card />
             </ul>

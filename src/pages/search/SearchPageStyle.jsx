@@ -77,6 +77,8 @@ export const RecentBox = styled.div`
 
     background: #FFEBE3;
     border-radius: 99px;
+
+    cursor: pointer;
 `;
 
 export const RecentWord = styled.div`
@@ -104,6 +106,7 @@ export const DropDownSection = styled.div`
     flex-direction: row;
 
     background-color: var(--color-white);
+    cursor: pointer;
 `;
 
 export const DropDownText = styled.div`
