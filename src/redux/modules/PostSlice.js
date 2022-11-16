@@ -67,10 +67,10 @@ export const postsSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
+    //get
     [__getThunk.pending]: (state) => {
       state.posts.isLoading = true;
     },
-
     [__getThunk.rejected]: (state, action) => {
       state.posts.isLoading = false;
       state.posts.error = action.payload;
@@ -79,10 +79,11 @@ export const postsSlice = createSlice({
       state.posts.isLoading = false;
       state.posts.data = action.payload;
     },
+
+    //get Detail
     [__getDetailThunk.pending]: (state) => {
       state.post.isLoading = true;
     },
-
     [__getDetailThunk.rejected]: (state, action) => {
       state.post.isLoading = false;
       state.post.error = action.payload;
@@ -92,18 +93,20 @@ export const postsSlice = createSlice({
       state.post.data = action.payload;
     },
 
+    //add Post
     [__addPostThunk.pending]: (state) => {
       state.posts.isLoading = true;
     },
     [__addPostThunk.fulfilled]: (state, action) => {
       state.posts.isLoading = false;
-
       state.posts.data.push(action.payload);
       // console.log('state.posts.data', current(state.posts.data));
     },
     [__addPostThunk.rejected]: (state, action) => {
       state.posts.isLoading = false;
     },
+
+    //delete Post
     [__deletePost.pending]: (state) => {
       state.posts.isLoading = true;
     },
