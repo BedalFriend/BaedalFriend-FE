@@ -40,6 +40,22 @@ export const BtnSet = styled.div`
   margin-bottom: 28px;
 `;
 
+export const InputHelp = styled.div`
+  display: flex;
+  align-items: center;
+
+  margin-top: -4px;
+  margin-left: 24px;
+`;
+
+export const HelpText = styled.div`
+  margin-left: 4px;
+  font-display: swap;
+  font-weight: var(--weight-bold);
+  font-size: var(--font-micro);
+  color: var(--color-white);
+`;
+
 export const InputWrapper = styled.div`
   position: relative;
   width: 100%;
@@ -112,5 +128,6 @@ export const KakaoLogo = styled.img`
 
 export const NavSet = styled.div`
   display: flex;
+  justify-content: center;
   gap: 16px;
 `;

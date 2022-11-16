@@ -1,8 +1,15 @@
 import React, { useState } from 'react';
+import useMultipleInput from '../../hooks/useMultipleInput';
 import * as SignST from './SignPageStyle';
 
 export default function SignPage() {
   const [index, setIndex] = useState(0);
+  const [signInfo, setSignInfo, signInfoHandler] = useMultipleInput({
+    email: '',
+    password: '',
+    passwordConfirm: '',
+    nickname: '',
+  });
 
   const textArr = [
     ['로그인에 사용할 이메일', '을', '입력해주세요.'],
