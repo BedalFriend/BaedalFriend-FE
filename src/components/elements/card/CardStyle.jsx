@@ -11,6 +11,14 @@ export const Box = styled.div`
   background-color: var(--color-white);
   box-shadow: 0px 0px 8px rgba(187, 187, 187, 0.32);
   border-radius: 12px;
+
+  @media screen and (min-width: 764px) {
+    width: 358px;
+  }
+
+  @media screen and (max-width: 763px) {
+    width: 100%;
+  }
 `;
 
 export const Line = styled.hr`

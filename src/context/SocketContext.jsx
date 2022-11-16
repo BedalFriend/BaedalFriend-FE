@@ -73,7 +73,7 @@ export function SocketProvider({ children }) {
   };
 
   useEffect(() => {
-    connect();
+    //connect();
     window.setTimeout(() => {
       publish('안녕하세요!');
     }, 3000);

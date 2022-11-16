@@ -17,6 +17,7 @@ const GlobalStyle = createGlobalStyle`
 
     --color-orange: #FF5B15;
     --color-light-orange: #FFDCCD;
+    --color-blur-orange: #FFEBE3;
 
     --color-yellow: #FFBA09;
     --color-light-yellow: #FFEAB5;
@@ -60,6 +61,8 @@ const GlobalStyle = createGlobalStyle`
     -moz-user-select:none;
     -ms-user-select:none;
     user-select:none;
+
+    -webkit-tap-highlight-color:  rgba(255, 255, 255, 0);
   }
 
   input {
