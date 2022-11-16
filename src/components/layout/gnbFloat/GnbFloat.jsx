@@ -65,7 +65,7 @@ function GnbFloat() {
           fill='none'
           xmlns='http://www.w3.org/2000/svg'
           onClick={() => {
-            navigate('/test');
+            navigate('/post');
           }}
         >
           <path
@@ -89,7 +89,7 @@ function GnbFloat() {
           fill='none'
           xmlns='http://www.w3.org/2000/svg'
           onClick={() => {
-            setTab('Mypage');
+            navigate('/test');
           }}
         >
           <path

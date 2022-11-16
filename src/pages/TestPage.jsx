@@ -68,7 +68,7 @@ export default function TestPage(props) {
   };
 
   useEffect(() => {
-    setTab('Upload');
+    setTab('Mypage');
     // eslint-disable-next-line
   }, []);
 

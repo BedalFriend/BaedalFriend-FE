@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import GlobalRoute from './GlobalRoute';
 import PublicRoute from './PublicRoute';
@@ -9,6 +9,8 @@ import KakaoLoginPage from '../../pages/KakaoLoginPage';
 import LoginPage from '../../pages/login/LoginPage';
 import SignPage from '../../pages/sign/SignPage';
 import MainPage from '../../pages/main/MainPage';
+import UploadPage from '../../pages/upload/UploadPage';
+import DetailPage from '../../pages/DetailPage';
 import ChatPage from '../../pages/chat/ChatPage';
 
 const Router = () => {
@@ -29,6 +31,8 @@ const Router = () => {
           <Route path='/' element={<MainPage />} />
           <Route path='/test' element={<TestPage />} />
           <Route path='*' element={<MainPage />} />
+          <Route path='/post' element={<UploadPage />} />
+          <Route path='/detail/:id' element={<DetailPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
