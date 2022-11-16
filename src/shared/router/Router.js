@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import GlobalRoute from './GlobalRoute';
 import PublicRoute from './PublicRoute';
@@ -6,9 +6,11 @@ import PrivateRoute from './PrivateRoute';
 
 import TestPage from '../../pages/TestPage';
 import KakaoLoginPage from '../../pages/KakaoLoginPage';
+import LoginPage from '../../pages/login/LoginPage';
 import SignPage from '../../pages/sign/SignPage';
 import MainPage from '../../pages/main/MainPage';
-import SearchPage from '../../pages/search/SearchPage';
+import UploadPage from '../../pages/upload/UploadPage';
+import DetailPage from '../../pages/DetailPage';
 import ChatPage from '../../pages/chat/ChatPage';
 
 const Router = () => {
@@ -18,6 +20,7 @@ const Router = () => {
         <Route element={<PrivateRoute />}></Route>
 
         <Route element={<PublicRoute />}>
+          <Route path='/login' element={<LoginPage />} />
           <Route path='/sign' element={<SignPage />} />
         </Route>
 
@@ -29,6 +32,8 @@ const Router = () => {
           <Route path='/test' element={<TestPage />} />
           <Route path='/search' element={<SearchPage />} />
           <Route path='*' element={<MainPage />} />
+          <Route path='/post' element={<UploadPage />} />
+          <Route path='/detail/:id' element={<DetailPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

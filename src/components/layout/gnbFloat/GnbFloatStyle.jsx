@@ -45,3 +45,7 @@ export const Bar = styled.div`
     width: calc(100% - 24px);
   }
 `;
+
+export const GnbSVG = styled.svg`
+  cursor: pointer;
+`;

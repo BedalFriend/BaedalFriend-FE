@@ -30,6 +30,8 @@ export const Address = styled.div`
   display: flex;
   align-items: center;
   transition: all var(--animation-duration) ease-in;
+
+  cursor: pointer;
 `;
 export const MarkSVG = styled.svg`
   margin-right: 4px;
@@ -48,4 +50,5 @@ export const ChatSVG = styled.svg`
   position: absolute;
   top: 12px;
   right: 16px;
+  cursor: pointer;
 `;

@@ -1,24 +1,25 @@
 import React from 'react';
 import { useContext } from 'react';
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { TabContext } from '../../../context/TabContext';
 import * as GnbST from './GnbFloatStyle';
 
 function GnbFloat() {
   const { tab, setTab } = useContext(TabContext);
+  const location = useLocation();
   const navigate = useNavigate();
 
   return (
     <GnbST.Box>
       <GnbST.Bar>
-        <svg
+        <GnbST.GnbSVG
           width='48'
           height='63'
           viewBox='0 0 48 63'
           fill='none'
           xmlns='http://www.w3.org/2000/svg'
           onClick={() => {
-            navigate('/');
+            if (location.pathname !== '/') navigate('/');
           }}
         >
           <path
@@ -31,9 +32,9 @@ function GnbFloat() {
               fill={tab === 'Home' ? 'var(--color-orange)' : '#DCDCDC'}
             />
           </g>
-        </svg>
+        </GnbST.GnbSVG>
 
-        <svg
+        <GnbST.GnbSVG
           width='48'
           height='63'
           viewBox='0 0 48 63'
@@ -55,16 +56,16 @@ function GnbFloat() {
               fill={tab === 'Nearby' ? 'var(--color-orange)' : '#DCDCDC'}
             />
           </g>
-        </svg>
+        </GnbST.GnbSVG>
 
-        <svg
+        <GnbST.GnbSVG
           width='48'
           height='63'
           viewBox='0 0 48 63'
           fill='none'
           xmlns='http://www.w3.org/2000/svg'
           onClick={() => {
-            navigate('/test');
+            navigate('/post');
           }}
         >
           <path
@@ -79,16 +80,16 @@ function GnbFloat() {
               fill={tab === 'Upload' ? 'var(--color-orange)' : '#DCDCDC'}
             />
           </g>
-        </svg>
+        </GnbST.GnbSVG>
 
-        <svg
+        <GnbST.GnbSVG
           width='48'
           height='63'
           viewBox='0 0 48 63'
           fill='none'
           xmlns='http://www.w3.org/2000/svg'
           onClick={() => {
-            setTab('Mypage');
+            navigate('/test');
           }}
         >
           <path
@@ -103,7 +104,7 @@ function GnbFloat() {
               fill={tab === 'Mypage' ? 'var(--color-orange)' : '#DCDCDC'}
             />
           </g>
-        </svg>
+        </GnbST.GnbSVG>
       </GnbST.Bar>
     </GnbST.Box>
   );

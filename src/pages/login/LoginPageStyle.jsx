@@ -9,11 +9,11 @@ export const Box = styled.div`
   flex-flow: column nowrap;
   align-items: center;
 
-  @media screen and (min-width: 630px) {
+  @media screen and (min-width: 764px) {
     width: var(--responsive-width);
   }
 
-  @media screen and (max-width: var(--responsive-width)) {
+  @media screen and (max-width: 764px) {
     width: 100vw;
   }
 `;
@@ -40,6 +40,22 @@ export const BtnSet = styled.div`
   margin-bottom: 28px;
 `;
 
+export const InputHelp = styled.div`
+  display: flex;
+  align-items: center;
+
+  margin-top: -4px;
+  margin-left: 24px;
+`;
+
+export const HelpText = styled.div`
+  margin-left: 4px;
+  font-display: swap;
+  font-weight: var(--weight-bold);
+  font-size: var(--font-micro);
+  color: var(--color-white);
+`;
+
 export const InputWrapper = styled.div`
   position: relative;
   width: 100%;
@@ -56,6 +72,7 @@ export const InputWrapper = styled.div`
 export const Input = styled.input`
   margin-left: 24px;
   height: 21px;
+  width: calc(100% - 80px);
 
   font-family: 'Pretendard';
   font-size: var(--font-regular);
@@ -71,6 +88,7 @@ export const Input = styled.input`
 export const InviSVG = styled.svg`
   position: absolute;
   right: 20px;
+  cursor: pointer;
 `;
 
 export const LoginBtn = styled.button`
@@ -110,5 +128,6 @@ export const KakaoLogo = styled.img`
 
 export const NavSet = styled.div`
   display: flex;
+  justify-content: center;
   gap: 16px;
 `;

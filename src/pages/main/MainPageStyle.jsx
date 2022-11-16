@@ -89,6 +89,10 @@ export const CtgVac = styled.div`
 
 export const Line = styled.hr`
   margin-bottom: 44px;
+
+  @media screen and (min-width: 708px) {
+    margin-top: 24px;
+  }
 `;
 
 export const LimitBox = styled.div`
@@ -109,4 +113,10 @@ export const LimitAdr = styled.div`
   font-weight: var(--weight-bold);
   font-size: var(--font-minor);
   font-display: swap;
+`;
+
+export const LimitList = styled.ul`
+  display: flex;
+  flex-flow: row wrap;
+  gap: 16px;
 `;
