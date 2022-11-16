@@ -1,4 +1,14 @@
-import styled from 'styled-components';
+import styled, {keyframes} from 'styled-components';
+
+
+const fadeIn = keyframes`
+  from {
+    background: rgba(0, 0, 0, 0);
+  }
+  to {
+    background: rgba(0, 0, 0, 0.5);
+  }
+`;
 
 export const Overlay = styled.div`
     position: fixed;
@@ -9,6 +19,10 @@ export const Overlay = styled.div`
     right: 0;
     background: rgba(0, 0, 0, 0.5);
     z-index: 910;
+
+    animation-duration: 0.5s;
+    animation-timing-function: ease-out;
+    animation-name: ${fadeIn};
 
     @media screen and (min-width: 764px) {
         width: var(--responsive-width);
@@ -39,14 +53,13 @@ export const SelectBox = styled.div`
     height: 50px;
     border-radius: 12px;
     background-color: var(--color-white);
-    
     text-align: center;
 `;
 
 export const SelectText = styled.div`
     font-size: var(--weight-small);
-    font-weight: var(--weight-regular);
-    color: var(--color-dark-grey);
+    font-weight: ${(props) => (props.focused ? 'var(--weight-bold)' : 'var(--weight-regular)')};
+    color: ${(props) => (props.focused ? 'var(--color-orange)' : 'var(--color-dark-grey)')};
 
     position: relative;
     top: 50%;

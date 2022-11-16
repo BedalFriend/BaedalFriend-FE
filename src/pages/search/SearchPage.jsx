@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as SearchST from './SearchPageStyle';
 
 import Layout from '../../components/layout/Layout';
@@ -10,9 +10,19 @@ export default function SearchPage() {
 
     const [isOpen, setIsOpen] = useState(false);
 
-    const onClickButton = () => {
+    const openModal = () => {
         setIsOpen(true);
     }
+
+    const closeModal = () => {
+        setIsOpen(false);
+    }
+
+    const [select, setSelect] = useState("마감 임박 순");
+
+    useEffect (() => {
+        setIsOpen(false)
+    }, [select])
 
     return (
         <Layout>
@@ -77,12 +87,14 @@ export default function SearchPage() {
 
             <SearchST.Line />
 
-            <SearchST.DropDownSection onClick={onClickButton}>
+            <SearchST.DropDownSection onClick={openModal}>
                 {isOpen && (<SearchModal
-                                open={isOpen}
-                                onClose={() => {setIsOpen(false);}}/>)}
+                                closeModal={closeModal}
+                                setSelect={setSelect}
+                                select={select}
+                                setIsOpen={setIsOpen}/>)}
                 
-                <SearchST.DropDownText>마감 임박 순</SearchST.DropDownText>
+                <SearchST.DropDownText>{select}</SearchST.DropDownText>
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <mask id="mask0_536_236" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="-2" width="16" height="18">
                         <rect y="16" width="17.4545" height="16" transform="rotate(-90 0 16)" fill="#D9D9D9"/>
