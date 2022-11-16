@@ -7,14 +7,18 @@ export const PostBox = styled.div`
 `;
 
 export const FormContainer = styled.div`
-dif`;
+  display: flex;
+  justify-content: center;
+`;
 
 export const StepOneBox = styled.div`
-  /* background-color: blueviolet; */
+  width: 100%;
+`;
+export const StepTwoBox = styled.div`
+  width: 100%;
 `;
 
 export const StepOneHeader = styled.div`
-  /* background-color: skyblue; */
   height: 71px;
   margin-top: 24px;
   margin-bottom: 25px;
@@ -28,6 +32,7 @@ export const StepOneTitle = styled.div`
 `;
 
 export const StepOneContent = styled.div`
+  width: 100%;
   font-family: 'Pretendard';
   font-size: 16px;
   color: var(--color-dark-grey);
@@ -132,6 +137,7 @@ export const CancelBtn = styled.button`
   background-color: var(--color-blur-white);
   color: white;
 
+  font-family: 'Pretendard';
   font-weight: var(--weight-bold);
   font-size: var(--font-regular);
 `;
@@ -145,6 +151,7 @@ export const NextBtn = styled.button`
   background-color: var(--color-orange);
   color: white;
 
+  font-family: 'Pretendard';
   font-weight: var(--weight-bold);
   font-size: var(--font-regular);
 `;
@@ -158,11 +165,14 @@ export const StayBtn = styled.button`
   background-color: var(--color-grey);
   color: white;
 
+  font-family: 'Pretendard';
   font-weight: var(--weight-bold);
   font-size: var(--font-regular);
 `;
 
-export const SelectBox = styled.div``;
+export const SelectBox = styled.div`
+  position: relative;
+`;
 
 export const LimitTimeBox = styled.div`
   display: flex;
@@ -178,6 +188,7 @@ export const UploadBtn = styled.button`
   background-color: var(--color-orange);
   color: white;
 
+  font-family: 'Pretendard';
   font-weight: var(--weight-bold);
   font-size: var(--font-regular);
 `;
