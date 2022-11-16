@@ -5,7 +5,7 @@ import styled from 'styled-components';
 //스크립트로 kakao maps api를 심어서 가져오면 window전역 객체에 들어가게 된다. 그리고 그걸 사용하려면 window에서 kakao객체를 뽑아서 사용하면 된다.
 const { kakao } = window;
 
-const SearchMap = ({ setIndex }) => {
+const SearchMap = ({ setIndex, setData, data }) => {
   const nevigate = useNavigate();
 
   const [Places, setPlaces] = useState([]);
@@ -25,9 +25,14 @@ const SearchMap = ({ setIndex }) => {
   };
 
   const saveAddressHandler = () => {
-    const element = document.getElementById('my_div');
-    // setAddress(element.innerHTML);
-    setIndex(3);
+    const storeName = document.getElementById('storeName');
+    const storeAddress = document.getElementById('storeAddress');
+    setData({
+      ...data,
+      targetName: storeName.innerHTML,
+      targetAddress: storeAddress.innerHTML,
+    });
+    setIndex(0);
   };
 
   useEffect(() => {
@@ -159,14 +164,14 @@ const SearchMap = ({ setIndex }) => {
                 <span>{i + 1}</span>
                 <button onClick={saveAddressHandler}>선택</button>
                 <div>
-                  <h5 id='my_div'>{item.place_name}</h5>
+                  <h5 id='storeName'>{item.place_name}</h5>
                   {item.road_address_name ? (
                     <div>
-                      <span>{item.road_address_name}</span>
+                      <span id='storeAddress'>{item.road_address_name}</span>
                       <span>{item.address_name}</span>
                     </div>
                   ) : (
-                    <span>{item.address_name}</span>
+                    <span id='storeAddress'>{item.address_name}</span>
                   )}
                   <span>{item.phone}</span>
                 </div>
@@ -186,6 +191,7 @@ const SearchMapBox = styled.div`
   position: relative;
   width: 100%;
   height: 1000px;
+  box-sizing: border-box;
   z-index: 1;
 `;
 

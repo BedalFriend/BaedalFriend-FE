@@ -20,8 +20,6 @@ const Router = () => {
 
         <Route element={<PublicRoute />}>
           <Route path='/sign' element={<SignPage />} />
-          <Route path='/post' element={<UploadPage />} />
-          <Route path='/detail/:id' element={<DetailPage />} />
         </Route>
 
         <Route path='/kakaoLogin' element={<KakaoLoginPage />} />
@@ -31,6 +29,8 @@ const Router = () => {
           <Route path='/' element={<MainPage />} />
           <Route path='/test' element={<TestPage />} />
           <Route path='*' element={<MainPage />} />
+          <Route path='/post' element={<UploadPage />} />
+          <Route path='/detail/:id' element={<DetailPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
