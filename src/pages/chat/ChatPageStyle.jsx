@@ -107,7 +107,6 @@ export const TopThird = styled.div`
   position: fixed;
   top: ${(props) => (props.isDroped ? '95px' : '0px')};
   padding: 0px 32px 20px 32px;
-  width: 100%;
   height: 136px;
   z-index: 800;
 
@@ -120,6 +119,14 @@ export const TopThird = styled.div`
   border-radius: 0px 0px 24px 24px;
 
   transition: all var(--animation-duration) ease-in;
+
+  @media screen and (min-width: 764px) {
+    width: var(--responsive-width);
+  }
+
+  @media screen and (max-width: 764px) {
+    width: 100%;
+  }
 `;
 export const TopLine = styled.hr`
   position: absolute;

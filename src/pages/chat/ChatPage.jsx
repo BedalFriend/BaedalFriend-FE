@@ -5,8 +5,9 @@ import Layout from '../../components/layout/Layout';
 
 import { TabContext } from '../../context/TabContext';
 import ProfilePic from '../../components/elements/profilePic/ProfilePic';
+import Chat from './Chat';
 
-export default function ChatPage(props) {
+export default function ChatPage({ room }) {
   const { setTab } = useContext(TabContext);
   const [isDroped, setIsDroped] = useState(false);
   const toggleDroped = () => {
@@ -128,7 +129,7 @@ export default function ChatPage(props) {
 
       <ChatST.Body>
         <div style={{ height: '136px' }}></div>
-        HI!!
+        <Chat />
         <div style={{ height: '120px' }}></div>
       </ChatST.Body>
 

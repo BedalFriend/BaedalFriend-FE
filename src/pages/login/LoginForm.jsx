@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import KakaoPath from '../../imgs/icon-kakao.png';
 import { useDispatch } from 'react-redux';
 import useMultipleInput from '../../hooks/useMultipleInput';
-import * as SignST from './LoginPageStyle';
+import * as LoginST from './LoginPageStyle';
 
 import { getKakaoCode, loginUser } from '../../shared/api/Users';
 import { setRefreshToken } from '../../shared/storage/Cookie';
@@ -40,25 +40,25 @@ export default function LoginForm() {
 
   return (
     <>
-      <SignST.SetBox>
-        <SignST.InputSet>
-          <SignST.InputWrapper>
-            <SignST.Input
+      <LoginST.SetBox>
+        <LoginST.InputSet>
+          <LoginST.InputWrapper>
+            <LoginST.Input
               placeholder='이메일을 입력해주세요.'
               type='text'
               name='email'
               onChange={loginInfoHandler}
             />
-          </SignST.InputWrapper>
+          </LoginST.InputWrapper>
 
-          <SignST.InputWrapper>
-            <SignST.Input
+          <LoginST.InputWrapper>
+            <LoginST.Input
               placeholder='비밀번호를 입력해주세요.'
               type={isInvisible ? 'password' : 'text'}
               name='password'
               onChange={loginInfoHandler}
             />
-            <SignST.InviSVG
+            <LoginST.InviSVG
               width='24'
               height='24'
               viewBox='0 0 24 24'
@@ -74,20 +74,22 @@ export default function LoginForm() {
                   fill={isInvisible ? '#FF9D73' : 'var(--color-grey'}
                 />
               </g>
-            </SignST.InviSVG>
-          </SignST.InputWrapper>
-        </SignST.InputSet>
+            </LoginST.InviSVG>
+          </LoginST.InputWrapper>
+        </LoginST.InputSet>
 
-        <SignST.BtnSet>
-          <SignST.LoginBtn onClick={onLoginHandler}>로그인하기</SignST.LoginBtn>
-          <SignST.KakaoBtn onClick={onKakaoHandler}>
-            <SignST.KakaoLogo src={KakaoPath} alt='kakao logo' />
+        <LoginST.BtnSet>
+          <LoginST.LoginBtn onClick={onLoginHandler}>
+            로그인하기
+          </LoginST.LoginBtn>
+          <LoginST.KakaoBtn onClick={onKakaoHandler}>
+            <LoginST.KakaoLogo src={KakaoPath} alt='kakao logo' />
             카카오로 시작하기
-          </SignST.KakaoBtn>
-        </SignST.BtnSet>
-      </SignST.SetBox>
+          </LoginST.KakaoBtn>
+        </LoginST.BtnSet>
+      </LoginST.SetBox>
 
-      <SignST.NavSet>
+      <LoginST.NavSet>
         <svg
           width='152'
           height='36'
@@ -123,7 +125,7 @@ export default function LoginForm() {
           />
           <path d='M12 28H61' stroke='white' strokeLinecap='round' />
         </svg>
-      </SignST.NavSet>
+      </LoginST.NavSet>
     </>
   );
 }
