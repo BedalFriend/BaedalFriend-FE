@@ -4,8 +4,6 @@ export const PostBox = styled.div`
   padding-top: 60px;
   width: calc(100% - 32px);
   height: 100vh;
-  display: flex;
-  justify-content: center;
 `;
 
 export const FormContainer = styled.div`

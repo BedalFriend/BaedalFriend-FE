@@ -41,7 +41,7 @@ const Post = () => {
 
   const [addressManager, setAddressManager] = useState(false);
 
-  const [nextStepOne, setNextStepOne] = useState(false);
+  const [nextStepOne, setNextStepOne] = useState(true);
   const [nextStepTwo, setNextStepTwo] = useState(true);
 
   const nevigate = useNavigate();
