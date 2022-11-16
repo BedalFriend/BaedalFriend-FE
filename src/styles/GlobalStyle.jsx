@@ -22,6 +22,9 @@ const GlobalStyle = createGlobalStyle`
     --color-yellow: #FFBA09;
     --color-light-yellow: #FFEAB5;
 
+    --color-system-error: #FF6651;
+    --color-system-success: #51D486;
+
     /* Font size */
     --font-huge: 60px;
     --font-large: 22px;

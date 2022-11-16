@@ -27,7 +27,7 @@ export const InputBox = styled.div`
 export const InputWrapper = styled.div`
   width: calc(100% - 44px - 8px);
   height: 52px;
-  background: #ffebe3;
+  background: var(--color-blur-orange);
   border-radius: 999px;
   display: flex;
   align-items: center;
@@ -93,7 +93,7 @@ export const TopBtn = styled.button`
   padding: 8px 12px;
   width: 79px;
   height: 30px;
-  background: #ffebe3;
+  background: var(--color-blur-orange);
   border-radius: 99px;
 
   font-family: 'Pretendard';
@@ -131,7 +131,6 @@ export const TopThird = styled.div`
 export const TopLine = styled.hr`
   position: absolute;
   top: 71px;
-  /* width: calc(100% - 32px); */
   width: ${(props) => (props.isDroped ? 'calc(100% - 32px)' : '0px')};
   transition: all var(--animation-duration) ease-in;
   height: 2px;
@@ -160,6 +159,7 @@ export const Nickname = styled.span`
 
 export const Body = styled.div`
   width: 100%;
+  padding: 0 16px;
   min-height: 100vh;
   background-color: var(--color-dark-white);
 `;
