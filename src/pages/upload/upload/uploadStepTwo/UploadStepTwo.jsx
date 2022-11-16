@@ -8,7 +8,8 @@ import * as UploadST from '../../UploadPageStyle';
 import Party from '../../../../imgs/upload/Party.png';
 import Time from '../../../../imgs/upload/Party.png';
 import MeetingLoca from '../../../../imgs/upload/MeetingLoca.png';
-import Select from './select/Select';
+import Select from '../../../../components/select/Select';
+import styled from 'styled-components';
 
 const UploadStepTwo = ({
   data,
@@ -21,8 +22,6 @@ const UploadStepTwo = ({
 }) => {
   const [isTime, setIsTime] = useState('PM');
 
-  console.log(isTime);
-
   const today = new Date();
   const year = today.getFullYear();
   const month = ('0' + (today.getMonth() + 1)).slice(-2);
@@ -33,6 +32,20 @@ const UploadStepTwo = ({
     const { value, name } = e.target;
     setNowTime({ ...nowTime, [name]: value });
   };
+  const optionData = [
+    { value: 1 },
+    { value: 2 },
+    { value: 3 },
+    { value: 4 },
+    { value: 5 },
+  ];
+
+  const [currentValue, setCurrentValue] = useState(5);
+  const [showOptions, setShowOptions] = useState(false);
+
+  // useEffect(() => {
+  //   setData({ ...data, participantNumber: currentValue });
+  // }, [currentValue]);
   useEffect(() => {
     if (isTime === 'AM') {
       const dateString =
@@ -47,7 +60,7 @@ const UploadStepTwo = ({
         nowTime.minute +
         '-' +
         '00';
-      console.log('dateString', nowTime);
+
       setData({ ...data, limitTime: dateString });
     } else {
       const dateString =
@@ -62,13 +75,13 @@ const UploadStepTwo = ({
         nowTime.minute +
         '-' +
         '00';
-      console.log('dateString', nowTime);
+
       setData({ ...data, limitTime: dateString });
     }
   }, [nowTime, isTime]);
 
   return (
-    <div>
+    <UploadST.StepTwoBox>
       <UploadST.StepOneHeader>
         <div>
           <UploadST.StepOneTitle>Step 2.</UploadST.StepOneTitle>
@@ -83,10 +96,17 @@ const UploadStepTwo = ({
         <UploadST.MenuTitle>함께 할 인원</UploadST.MenuTitle>
       </UploadST.MenuBox>
       <UploadST.SelectBox>
+        <SelectInput onClick={() => setShowOptions((prev) => !prev)}>
+          {currentValue}
+        </SelectInput>
         <Select
-          data={data}
-          setData={setData}
-          stepTwoCheckHandler={stepTwoCheckHandler}
+          width='152px'
+          left='0px'
+          top='45px'
+          optionData={optionData}
+          setCurrentValue={setCurrentValue}
+          showOptions={showOptions}
+          setShowOptions={setShowOptions}
         />
       </UploadST.SelectBox>
 
@@ -142,8 +162,35 @@ const UploadStepTwo = ({
           stepTwoCheckHandler={stepTwoCheckHandler}
         />
       </div>
-    </div>
+    </UploadST.StepTwoBox>
   );
 };
 
 export default UploadStepTwo;
+
+const SelectInput = styled.div`
+  position: relative;
+  width: 152px;
+  height: 40px;
+
+  border-radius: 25px;
+  background-color: var(--color-dark-white);
+  align-self: center;
+
+  cursor: pointer;
+  &::before {
+    content: '⌵';
+    position: absolute;
+    top: 3px;
+    left: 18px;
+    color: var(--color-orange);
+    font-size: 20px;
+  }
+`;
+
+// const Label = styled.label`
+//   font-size: 14px;
+//   margin-left: 35px;
+//   text-align: center;
+//   color: var(--color-dark-grey);
+// `;
