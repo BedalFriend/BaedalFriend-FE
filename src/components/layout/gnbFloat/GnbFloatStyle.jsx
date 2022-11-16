@@ -10,11 +10,11 @@ export const Box = styled.div`
   );
   height: 136px;
 
-  @media screen and (min-width: 630px) {
+  @media screen and (min-width: 764px) {
     width: var(--responsive-width);
   }
 
-  @media screen and (max-width: 630px) {
+  @media screen and (max-width: 764px) {
     width: 100%;
   }
 `;
@@ -37,11 +37,15 @@ export const Bar = styled.div`
 
   z-index: 900;
 
-  @media screen and (min-width: 630px) {
+  @media screen and (min-width: 764px) {
     width: calc(var(--responsive-width) - 24px);
   }
 
-  @media screen and (max-width: 630px) {
+  @media screen and (max-width: 764px) {
     width: calc(100% - 24px);
   }
+`;
+
+export const GnbSVG = styled.svg`
+  cursor: pointer;
 `;

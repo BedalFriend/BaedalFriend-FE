@@ -1,12 +1,13 @@
 import React, { useContext } from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { TabContext } from '../../../context/TabContext';
 import { getCookieToken } from '../../../shared/storage/Cookie';
 import * as HeadST from './HeaderStyle';
 
 export default function Header() {
   const { tab } = useContext(TabContext);
+  const location = useLocation();
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
   const refreshToken = getCookieToken();
@@ -19,7 +20,12 @@ export default function Header() {
         viewBox='0 0 44 48'
         fill='none'
         xmlns='http://www.w3.org/2000/svg'
-        style={{ position: 'absolute', bottom: '0px', marginLeft: '16px' }}
+        style={{
+          position: 'absolute',
+          bottom: '0px',
+          marginLeft: '16px',
+          cursor: 'pointer',
+        }}
         onClick={() => {
           navigate(-1);
         }}
@@ -32,7 +38,15 @@ export default function Header() {
         </g>
       </svg>
 
-      <HeadST.Address tab={tab}>
+      <HeadST.Address
+        tab={tab}
+        onClick={() => {
+          if (refreshToken !== null && refreshToken !== undefined) {
+          } else {
+            navigate('/login');
+          }
+        }}
+      >
         <HeadST.MarkSVG
           width='16'
           height='16'
@@ -79,7 +93,7 @@ export default function Header() {
         fill='none'
         xmlns='http://www.w3.org/2000/svg'
         onClick={() => {
-          navigate('/chat');
+          if (location.pathname !== '/chat') navigate('/chat');
         }}
       >
         <g mask='url(#mask0_159_110)'>

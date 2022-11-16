@@ -17,9 +17,13 @@ const GlobalStyle = createGlobalStyle`
 
     --color-orange: #FF5B15;
     --color-light-orange: #FFDCCD;
+    --color-blur-orange: #FFEBE3;
 
     --color-yellow: #FFBA09;
     --color-light-yellow: #FFEAB5;
+
+    --color-system-error: #FF6651;
+    --color-system-success: #51D486;
 
     /* Font size */
     --font-huge: 60px;
@@ -40,7 +44,7 @@ const GlobalStyle = createGlobalStyle`
     --animation-duration: 300ms;
 
     /* Responsive Width */
-    --responsive-width: 630px;
+    --responsive-width: 764px;
   }
 
   /* Universal tags */
@@ -60,6 +64,8 @@ const GlobalStyle = createGlobalStyle`
     -moz-user-select:none;
     -ms-user-select:none;
     user-select:none;
+
+    -webkit-tap-highlight-color:  rgba(255, 255, 255, 0);
   }
 
   input {
