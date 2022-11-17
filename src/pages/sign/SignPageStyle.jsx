@@ -7,7 +7,6 @@ export const Body = styled.div`
 
   display: flex;
   flex-flow: column nowrap;
-  align-items: center;
 
   @media screen and (min-width: 764px) {
     width: var(--responsive-width);
@@ -19,7 +18,6 @@ export const Body = styled.div`
 `;
 
 export const TitleBox = styled.div`
-  width: 100%;
   height: 58px;
   padding: 0 24px;
   margin-top: 128px;
@@ -42,13 +40,14 @@ export const Highlight = styled.span`
   font-weight: var(--weight-bold);
 `;
 export const InputSection = styled.section`
-  width: 100%;
-  padding: 0 24px;
+  transition: all var(--animation-duration) ease-in;
 `;
 
 export const InputWrapper = styled.div`
+  position: relative;
   background: var(--color-dark-white);
   border-radius: 999px;
+  width: 100%;
   height: 52px;
   padding: 0 20px;
 
@@ -57,10 +56,12 @@ export const InputWrapper = styled.div`
 `;
 
 export const Input = styled.input`
+  width: 100%;
   color: var(--color-light-black);
   font-family: 'Pretendard';
   font-weight: var(--weight-regular);
   font-size: var(--font-regular);
+  line-height: 130%;
   font-display: swap;
 
   &::placeholder {
@@ -69,6 +70,88 @@ export const Input = styled.input`
 `;
 
 export const InputSet = styled.div`
+  position: relative;
+  padding: 0 24px;
+  width: 100vw;
+  min-width: 100vw;
   display: flex;
   gap: 16px;
+`;
+
+export const DropSVG = styled.svg`
+  margin-left: -4px;
+  margin-right: 4px;
+  transform: ${(props) => (props.isDrop ? '' : 'rotate(180deg)')};
+`;
+
+export const HelpBox = styled.div`
+  width: 300px;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top: 68px;
+  left: 0px;
+`;
+
+export const HelpText = styled.span`
+  font-weight: var(--weight-bold);
+  font-size: var(--font-micro);
+  font-display: swap;
+  color: ${(props) =>
+    props.isFail ? 'var(--color-system-error)' : 'var(--color-system-success)'};
+
+  margin-left: 4px;
+`;
+
+export const BtnSet = styled.div`
+  position: absolute;
+  bottom: 56px;
+  padding: 0 16px;
+  display: flex;
+  gap: 16px;
+`;
+
+export const CancelBtn = styled.button`
+  font-family: 'Pretendard';
+  font-weight: var(--weight-bold);
+  font-size: var(--font-regular);
+  font-display: swap;
+  line-height: 19px;
+  color: var(--color-white);
+
+  width: 171px;
+  width: calc((100vw - 32px - 16px) / 2);
+  max-width: 358px;
+  height: 52px;
+  border-radius: 12px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: var(--color-blur-white);
+`;
+
+export const NavBtn = styled.button`
+  font-family: 'Pretendard';
+  font-weight: var(--weight-bold);
+  font-size: var(--font-regular);
+  font-display: swap;
+  line-height: 19px;
+  color: var(--color-white);
+
+  width: calc((100vw - 32px - 16px) / 2);
+  max-width: 358px;
+  height: 52px;
+  border-radius: 12px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: var(--color-orange);
+
+  &:disabled {
+    background-color: var(--color-grey);
+  }
 `;

@@ -30,9 +30,9 @@ const Router = () => {
         <Route element={<GlobalRoute />}>
           <Route path='/' element={<MainPage />} />
           <Route path='/test' element={<TestPage />} />
-          <Route path='*' element={<MainPage />} />
           <Route path='/post' element={<UploadPage />} />
           <Route path='/detail/:id' element={<DetailPage />} />
+          <Route path='*' element={<MainPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
