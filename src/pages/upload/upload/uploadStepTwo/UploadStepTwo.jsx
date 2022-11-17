@@ -40,12 +40,10 @@ const UploadStepTwo = ({
     { value: 5 },
   ];
 
-  const [currentValue, setCurrentValue] = useState(5);
+  const [currentValue, setCurrentValue] = useState('');
   const [showOptions, setShowOptions] = useState(false);
 
-  // useEffect(() => {
-  //   setData({ ...data, participantNumber: currentValue });
-  // }, [currentValue]);
+  useEffect(() => {}, [currentValue]);
   useEffect(() => {
     if (isTime === 'AM') {
       const dateString =
@@ -61,7 +59,11 @@ const UploadStepTwo = ({
         '-' +
         '00';
 
-      setData({ ...data, limitTime: dateString });
+      setData({
+        ...data,
+        limitTime: dateString,
+        participantNumber: currentValue,
+      });
     } else {
       const dateString =
         year +
@@ -76,9 +78,13 @@ const UploadStepTwo = ({
         '-' +
         '00';
 
-      setData({ ...data, limitTime: dateString });
+      setData({
+        ...data,
+        limitTime: dateString,
+        participantNumber: currentValue,
+      });
     }
-  }, [nowTime, isTime]);
+  }, [nowTime, isTime, currentValue]);
 
   return (
     <UploadST.StepTwoBox>
@@ -96,9 +102,9 @@ const UploadStepTwo = ({
         <UploadST.MenuTitle>함께 할 인원</UploadST.MenuTitle>
       </UploadST.MenuBox>
       <UploadST.SelectBox>
-        <SelectInput onClick={() => setShowOptions((prev) => !prev)}>
-          {currentValue}
-        </SelectInput>
+        <UploadST.SelectInput onClick={() => setShowOptions((prev) => !prev)}>
+          <UploadST.SelectValue>{currentValue}명</UploadST.SelectValue>
+        </UploadST.SelectInput>
         <Select
           width='152px'
           left='0px'
@@ -167,30 +173,3 @@ const UploadStepTwo = ({
 };
 
 export default UploadStepTwo;
-
-const SelectInput = styled.div`
-  position: relative;
-  width: 152px;
-  height: 40px;
-
-  border-radius: 25px;
-  background-color: var(--color-dark-white);
-  align-self: center;
-
-  cursor: pointer;
-  &::before {
-    content: '⌵';
-    position: absolute;
-    top: 3px;
-    left: 18px;
-    color: var(--color-orange);
-    font-size: 20px;
-  }
-`;
-
-// const Label = styled.label`
-//   font-size: 14px;
-//   margin-left: 35px;
-//   text-align: center;
-//   color: var(--color-dark-grey);
-// `;

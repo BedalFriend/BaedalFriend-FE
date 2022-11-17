@@ -44,7 +44,7 @@ const Post = () => {
   const [nextStepOne, setNextStepOne] = useState(true);
   const [nextStepTwo, setNextStepTwo] = useState(true);
 
-  const nevigate = useNavigate();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const onSubmitHandler = (e) => {
@@ -98,7 +98,13 @@ const Post = () => {
                 lengthLimit={lengthLimit}
               />
               <UploadST.ButtonBox>
-                <UploadST.CancelBtn>취소하기</UploadST.CancelBtn>
+                <UploadST.CancelBtn
+                  onClick={() => {
+                    navigate('/');
+                  }}
+                >
+                  취소하기
+                </UploadST.CancelBtn>
                 {nextStepOne ? (
                   <UploadST.NextBtn
                     onClick={() => {
