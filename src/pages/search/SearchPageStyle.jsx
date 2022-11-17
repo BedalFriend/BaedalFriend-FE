@@ -1,5 +1,16 @@
 import styled from 'styled-components';
 
+export const SearchBg = styled.div`
+    background-color: var(--color-white);
+    width: 100%;
+    height: 100vh;
+    
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    position: relative;
+`
+
 export const Search = styled.div`
   position: relative;
   width: calc(100% - 32px);
@@ -12,6 +23,7 @@ export const Search = styled.div`
 
   display: flex;
   align-items: center;
+  justify-content: center;
 
   padding: 0 24px;
   margin-top: 85px;
@@ -19,7 +31,6 @@ export const Search = styled.div`
 `;
 
 export const SearchText = styled.input`
-
     all: unset;
     font-weight: var(--weight-regular);
     font-size: var(--font-regular);
@@ -51,6 +62,7 @@ export const RecentTitle = styled.div`
 `;
 
 export const RecentDisplay = styled.div`
+    position: relative;
     display: flex;
     flex-direction: row;
 `;
@@ -66,6 +78,7 @@ export const Recent = styled.div`
 `;
 
 export const RecentBox = styled.div`
+    position: relative;
     display: flex;
     flex-direction: row;
     align-items: flex-start;
@@ -90,6 +103,8 @@ export const RecentWord = styled.div`
 `;
 
 export const Line = styled.hr`
+    position: relative;
+
     margin-top: 20px;
     margin-bottom: 20px;
 
@@ -118,7 +133,9 @@ export const DropDownText = styled.div`
 `
 
 export const ResultBox = styled.div`
-  width: calc(100% - 32px);
-  display: flex;
-  flex-flow: column wrap;
+    position: relative;
+    width: calc(100% - 32px);
+    display: flex;
+    flex-flow: row wrap;
+    gap: 16px;
 `;

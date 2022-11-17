@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import * as SearchST from './SearchPageStyle';
 
 import Layout from '../../components/layout/Layout';
 import SearchModal from './SearchModal';
+import useInput from '../../hooks/useInput';
 import Card from '../../components/elements/card/Card';
+
+import {__getSearchThunk} from '../../redux/modules/PostSlice'
 
 
 export default function SearchPage() {
@@ -29,20 +33,43 @@ export default function SearchPage() {
     }, [select])
 
 
-    //검색어
-    const [searchTerm, setSearchTerm] = useState("");
-    console.log(searchTerm);
-    
+    //검색어 관련
+
+    const [searchTerm, setSearchTerm, searchHandler] = useInput("");
+    //console.log(searchTerm);
+
+    const dispatch = useDispatch();
+
     //enter키로 검색
     const onSubmitSearch = (e) => {
         if (e.key === "Enter") {
             //엔터 눌렀을 때 동작할 코드
+            dispatch(
+                __getSearchThunk(searchTerm)
+            )
         }
     }
+
+    // useEffect(() => {
+    //     dispatch(__getSearchThunk(searchTerm))
+    // }, [dispatch])
+
+    const posts = useSelector((state) => state.post.posts);
+    console.log(posts);
+
+    //검색된 posts가 없을때
+    if (posts.data === [])
+        //return <div><h2>아직 개설된 채팅방이 없습니다.</h2></div>
+        return console.log("아직 개설된 채팅방이 없습니다.")
+    //에러 발생했을때
+    if (posts.error)
+        return <div><h2>알 수 없는 에러가 발생했습니다.</h2></div>
     
 
     return (
         <Layout>
+            <SearchST.SearchBg>
+
             <SearchST.Search>
                 <svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
                 <g mask='url(#mask0_329_44)'>
@@ -56,18 +83,9 @@ export default function SearchPage() {
                 <SearchST.SearchText
                     type="search"
                     placeholder='검색어를 입력해주세요.'
-                    onChange={(e) => {setSearchTerm(e.target.value);}}
+                    onChange={searchHandler}
                     onKeyPress={onSubmitSearch}
-                />
-{/* 
-                {dummyData.filter((val) => {
-                        if(searchTerm == "") {
-                            return val;
-                        } else if (val.title.toLowerCase().includes(searchTerm.toLowerCase())){
-                            return val;
-                        }}
-                    ).map(data => { return <p>dummyData.title</p>})} */}
-                
+                />                
             </SearchST.Search>
 
             <SearchST.RecentSection>
@@ -85,8 +103,8 @@ export default function SearchPage() {
                         fill="none"
                         cursor="pointer"
                         xmlns="http://www.w3.org/2000/svg">
-                        <path d="M2 10.9853L10.4853 2.50001" stroke="#FF9D73" stroke-width="2" stroke-linecap="round"/>
-                        <path d="M10.4853 10.9853L2.00001 2.50001" stroke="#FF9D73" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M2 10.9853L10.4853 2.50001" stroke="#FF9D73" strokeWidth="2" strokeLinecap="round"/>
+                        <path d="M10.4853 10.9853L2.00001 2.50001" stroke="#FF9D73" strokeWidth="2" strokeLinecap="round"/>
                     </svg>
                 </SearchST.Recent>
 
@@ -100,10 +118,26 @@ export default function SearchPage() {
                         viewBox="0 0 12 13"
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg">
-                        <path d="M2 10.9853L10.4853 2.50001" stroke="#FF9D73" stroke-width="2" stroke-linecap="round"/>
-                        <path d="M10.4853 10.9853L2.00001 2.50001" stroke="#FF9D73" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M2 10.9853L10.4853 2.50001" stroke="#FF9D73" strokeWidth="2" strokeLinecap="round"/>
+                        <path d="M10.4853 10.9853L2.00001 2.50001" stroke="#FF9D73" strokeWidth="2" strokeLinecap="round"/>
                     </svg>
                 </SearchST.Recent>
+
+                <SearchST.Recent>
+                    <SearchST.RecentBox>
+                        <SearchST.RecentWord>어디까지 길어지나 보자</SearchST.RecentWord>
+                    </SearchST.RecentBox>
+                    <svg
+                        width="12"
+                        height="13"
+                        viewBox="0 0 12 13"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path d="M2 10.9853L10.4853 2.50001" stroke="#FF9D73" strokeWidth="2" strokeLinecap="round"/>
+                        <path d="M10.4853 10.9853L2.00001 2.50001" stroke="#FF9D73" strokeWidth="2" strokeLinecap="round"/>
+                    </svg>
+                </SearchST.Recent>
+
                 </SearchST.RecentDisplay>
 
             </SearchST.RecentSection>
@@ -129,15 +163,15 @@ export default function SearchPage() {
             </SearchST.DropDownSection>
 
             <SearchST.ResultBox>
-            <ul>
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-            </ul>
+                {posts.data.map ? 
+                    (posts.data.map((post, index) => (
+                        <Card key={post.postId} index={index} post={post} />
+                    ))) : (<h1>아직 개설된 채팅방이 없습니다.</h1>)
+                }
             </SearchST.ResultBox>
 
-            <div style={{ width: '100%', height: '136px' }}></div>
+            <div style={{ width: '100%', height: '152px' }}></div>
+            </SearchST.SearchBg>
         </Layout>
     );
 };

@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk, current } from '@reduxjs/toolkit';
 import getInstance from '../../shared/api/Request';
+import { basePath } from '../../shared/api/Request';
 
 export const __getThunk = createAsyncThunk(
   'GET_POSTS', //action value
@@ -56,6 +57,19 @@ export const __deletePost = createAsyncThunk(
   }
 );
 
+export const __getSearchThunk = createAsyncThunk(
+  'GET_SEARCH',
+  async (arg, thunkAPI) => {
+    try {
+      const { data } = await getInstance().get(`${basePath}/posts/search?keyword=${arg}&type=roomTitle&page=1`);
+      return thunkAPI.fulfillWithValue(data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.code);
+    }
+  }
+);
+
+ 
 const initialState = {
   post: { data: {}, isLoading: false, error: null },
   posts: { data: [], isLoading: false, error: null },
@@ -63,7 +77,6 @@ const initialState = {
 
 export const postsSlice = createSlice({
   name: 'post', //모듈의 이름
-
   initialState,
   reducers: {},
   extraReducers: {
@@ -123,6 +136,19 @@ export const postsSlice = createSlice({
     [__deletePost.rejected]: (state, action) => {
       state.posts.isLoading = false;
       state.posts.error = action.payload;
+    },
+
+    //get Search
+    [__getSearchThunk.pending]: (state) => {
+      state.posts.isLoading = true;
+    },
+    [__getSearchThunk.rejected]: (state, action) => {
+      state.posts.isLoading = false;
+      state.posts.error = action.payload;
+    },
+    [__getSearchThunk.fulfilled]: (state, action) => {
+      state.posts.isLoading = false;
+      state.posts.data = action.payload.content;
     },
   },
 });
