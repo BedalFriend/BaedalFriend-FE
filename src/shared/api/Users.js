@@ -181,3 +181,31 @@ export const sendKaKaoToken = async (code) => {
     return statusError;
   }
 };
+
+//! 중복 확인
+export const checkEmail = async (email) => {
+  const requestPromise = () => {
+    return getInstance().post(`${basePath}/members/email`, { email });
+  };
+
+  const data = await getPromise(requestPromise).catch(() => {
+    return statusError;
+  });
+
+  if (parseInt(Number(data.status) / 100) === 2) {
+    const status = data.data.success;
+    const code = data.status;
+    const text = status
+      ? JSON.stringify(data.headers)
+      : JSON.stringify(data.data.error);
+    const headers = text.length ? JSON.parse(text) : '';
+
+    return {
+      status,
+      code,
+      headers,
+    };
+  } else {
+    return statusError;
+  }
+};

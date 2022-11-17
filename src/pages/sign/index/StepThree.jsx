@@ -1,58 +1,29 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import * as SignST from '../SignPageStyle';
 
-import Select from '../../../components/select/Select';
-import { checkEmail } from '../../../shared/api/Users';
-
-export default function StepOne({
+export default function StepThree({
   signInfo,
-  domain,
-  setDomain,
   handler,
-  isEmailFail,
-  setIsEmailFail,
-  helpEmailText,
-  setHelpEmailText,
   inCheck,
   setInCheck,
+  isNicknameFail,
+  setIsNicknameFail,
+  helpNicknameText,
+  setHelpNicknameText,
 }) {
-  const optionData = [{ value: '@naver.com' }, { value: '@gmail.com' }];
-  const [isDrop, setIsDrop] = useState(false);
-  const toggleDrop = () => {
-    setIsDrop((prev) => !prev);
-  };
-
-  useEffect(() => {
-    setInCheck(true);
-    const handler = setTimeout(async () => {
-      const response = await checkEmail(`${signInfo['email']}${domain}`);
-      console.log(response);
-      if (response.status) {
-        setInCheck(false);
-        setIsEmailFail(false);
-        setHelpEmailText('사용 가능한 이메일이에요!');
-      } else {
-        setInCheck(false);
-        setIsEmailFail(true);
-        if (response.headers.message)
-          setHelpEmailText(response.headers.message);
-        else setHelpEmailText(response.headers.error.message);
-      }
-    }, 500);
-
-    return () => {
-      clearTimeout(handler);
-    };
-    // eslint-disable-next-line
-  }, [signInfo['email'], domain]);
-
   return (
     <SignST.InputSet>
-      <SignST.InputWrapper style={{ width: '155px' }}>
-        <SignST.Input name='email' type='text' onChange={handler} />
-        {signInfo['email'] ? (
+      <SignST.InputWrapper>
+        <SignST.Input
+          placeholder='6자 이하로 설정해주세요.'
+          name='nickname'
+          type='text'
+          onChange={handler}
+        />
+
+        {signInfo['nickname'] ? (
           <SignST.HelpBox>
-            {inCheck ? null : isEmailFail ? (
+            {inCheck ? null : isNicknameFail ? (
               <svg
                 width='14'
                 height='14'
@@ -85,43 +56,13 @@ export default function StepOne({
             )}
 
             {inCheck ? null : (
-              <SignST.HelpText isFail={isEmailFail}>
-                {helpEmailText}
+              <SignST.HelpText isFail={isNicknameFail}>
+                {helpNicknameText}
               </SignST.HelpText>
             )}
           </SignST.HelpBox>
         ) : null}
       </SignST.InputWrapper>
-
-      <SignST.InputWrapper style={{ width: '171px' }} onClick={toggleDrop}>
-        <SignST.DropSVG
-          width='24'
-          height='24'
-          viewBox='0 0 24 24'
-          fill='none'
-          xmlns='http://www.w3.org/2000/svg'
-          isDrop={isDrop}
-        >
-          <g mask='url(#mask0_616_837)'>
-            <path
-              d='M6.23747 14.4147L11.5567 8.20276C11.6201 8.12903 11.6887 8.07693 11.7625 8.04645C11.8364 8.01548 11.9156 8 12 8C12.0844 8 12.1636 8.01548 12.2375 8.04645C12.3113 8.07693 12.3799 8.12903 12.4433 8.20276L17.7784 14.4147C17.9261 14.5868 18 14.8018 18 15.0599C18 15.318 17.9208 15.5392 17.7625 15.7235C17.6042 15.9078 17.4195 16 17.2084 16C16.9974 16 16.8127 15.9078 16.6544 15.7235L12 10.3041L7.34565 15.7235C7.19789 15.8955 7.01594 15.9816 6.79979 15.9816C6.58322 15.9816 6.39578 15.8894 6.23747 15.7051C6.07916 15.5207 6 15.3057 6 15.0599C6 14.8141 6.07916 14.5991 6.23747 14.4147Z'
-              fill='var(--color-orange)'
-            />
-          </g>
-        </SignST.DropSVG>
-
-        <SignST.Input value={domain} disabled />
-      </SignST.InputWrapper>
-
-      <Select
-        width='171px'
-        left='195px'
-        top='60px'
-        optionData={optionData}
-        setCurrentValue={setDomain}
-        showOptions={isDrop}
-        setShowOptions={setIsDrop}
-      />
     </SignST.InputSet>
   );
 }
