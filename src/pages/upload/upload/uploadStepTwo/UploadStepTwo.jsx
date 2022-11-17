@@ -8,7 +8,8 @@ import * as UploadST from '../../UploadPageStyle';
 import Party from '../../../../imgs/upload/Party.png';
 import Time from '../../../../imgs/upload/Party.png';
 import MeetingLoca from '../../../../imgs/upload/MeetingLoca.png';
-import Select from './select/Select';
+import Select from '../../../../components/select/Select';
+import styled from 'styled-components';
 
 const UploadStepTwo = ({
   data,
@@ -21,8 +22,6 @@ const UploadStepTwo = ({
 }) => {
   const [isTime, setIsTime] = useState('PM');
 
-  console.log(isTime);
-
   const today = new Date();
   const year = today.getFullYear();
   const month = ('0' + (today.getMonth() + 1)).slice(-2);
@@ -33,6 +32,18 @@ const UploadStepTwo = ({
     const { value, name } = e.target;
     setNowTime({ ...nowTime, [name]: value });
   };
+  const optionData = [
+    { value: 1 },
+    { value: 2 },
+    { value: 3 },
+    { value: 4 },
+    { value: 5 },
+  ];
+
+  const [currentValue, setCurrentValue] = useState('');
+  const [showOptions, setShowOptions] = useState(false);
+
+  useEffect(() => {}, [currentValue]);
   useEffect(() => {
     if (isTime === 'AM') {
       const dateString =
@@ -47,8 +58,12 @@ const UploadStepTwo = ({
         nowTime.minute +
         '-' +
         '00';
-      console.log('dateString', nowTime);
-      setData({ ...data, limitTime: dateString });
+
+      setData({
+        ...data,
+        limitTime: dateString,
+        participantNumber: currentValue,
+      });
     } else {
       const dateString =
         year +
@@ -62,13 +77,17 @@ const UploadStepTwo = ({
         nowTime.minute +
         '-' +
         '00';
-      console.log('dateString', nowTime);
-      setData({ ...data, limitTime: dateString });
+
+      setData({
+        ...data,
+        limitTime: dateString,
+        participantNumber: currentValue,
+      });
     }
-  }, [nowTime, isTime]);
+  }, [nowTime, isTime, currentValue]);
 
   return (
-    <div>
+    <UploadST.StepTwoBox>
       <UploadST.StepOneHeader>
         <div>
           <UploadST.StepOneTitle>Step 2.</UploadST.StepOneTitle>
@@ -83,10 +102,17 @@ const UploadStepTwo = ({
         <UploadST.MenuTitle>함께 할 인원</UploadST.MenuTitle>
       </UploadST.MenuBox>
       <UploadST.SelectBox>
+        <UploadST.SelectInput onClick={() => setShowOptions((prev) => !prev)}>
+          <UploadST.SelectValue>{currentValue}명</UploadST.SelectValue>
+        </UploadST.SelectInput>
         <Select
-          data={data}
-          setData={setData}
-          stepTwoCheckHandler={stepTwoCheckHandler}
+          width='152px'
+          left='0px'
+          top='45px'
+          optionData={optionData}
+          setCurrentValue={setCurrentValue}
+          showOptions={showOptions}
+          setShowOptions={setShowOptions}
         />
       </UploadST.SelectBox>
 
@@ -142,7 +168,7 @@ const UploadStepTwo = ({
           stepTwoCheckHandler={stepTwoCheckHandler}
         />
       </div>
-    </div>
+    </UploadST.StepTwoBox>
   );
 };
 

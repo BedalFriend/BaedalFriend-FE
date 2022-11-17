@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import GlobalRoute from './GlobalRoute';
 import PublicRoute from './PublicRoute';
@@ -31,10 +31,11 @@ const Router = () => {
         <Route element={<GlobalRoute />}>
           <Route path='/' element={<MainPage />} />
           <Route path='/test' element={<TestPage />} />
-          <Route path='/search' element={<SearchPage />} />
-          <Route path='*' element={<MainPage />} />
           <Route path='/post' element={<UploadPage />} />
           <Route path='/detail/:id' element={<DetailPage />} />
+          <Route path='/search' element={<SearchPage />} />
+          <Route path='*' element={<MainPage />} />
+
         </Route>
       </Routes>
     </BrowserRouter>

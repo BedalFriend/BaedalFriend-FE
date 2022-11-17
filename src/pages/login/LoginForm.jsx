@@ -16,7 +16,8 @@ export default function LoginForm() {
   const [isFailed, setIsFailed] = useState(false);
   const [failText, setFailText] = useState('');
   const [isInvisible, setIsInvisible] = useState(true);
-  const [loginInfo, setLoginInfo, loginInfoHandler] = useMultipleInput({
+  // eslint-disable-next-line
+  const [loginInfo, _, loginInfoHandler] = useMultipleInput({
     email: '',
     password: '',
   });
@@ -29,7 +30,6 @@ export default function LoginForm() {
       setRefreshToken(response.headers.refresh_token);
       dispatch(SET_TOKEN(response.headers.authorization));
       dispatch(SET_USER(response.userInfo));
-
       setIsFailed(false);
     } else {
       // 로그인 실패
