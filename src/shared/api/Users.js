@@ -209,3 +209,30 @@ export const checkEmail = async (email) => {
     return statusError;
   }
 };
+
+export const checkNickname = async (nickname) => {
+  const requestPromise = () => {
+    return getInstance().post(`${basePath}/members/nickname`, { nickname });
+  };
+
+  const data = await getPromise(requestPromise).catch(() => {
+    return statusError;
+  });
+
+  if (parseInt(Number(data.status) / 100) === 2) {
+    const status = data.data.success;
+    const code = data.status;
+    const text = status
+      ? JSON.stringify(data.headers)
+      : JSON.stringify(data.data.error);
+    const headers = text.length ? JSON.parse(text) : '';
+
+    return {
+      status,
+      code,
+      headers,
+    };
+  } else {
+    return statusError;
+  }
+};
