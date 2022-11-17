@@ -51,7 +51,7 @@ export const RecentSection = styled.div`
     position: relative;
     width: calc(100% - 32px);
     height: 56px;
-
+    overflow-x: hidden;
     background-color: var(--color-white);
 `;
 
@@ -63,43 +63,14 @@ export const RecentTitle = styled.div`
 
 export const RecentDisplay = styled.div`
     position: relative;
+    width: 100vw;
     display: flex;
-    flex-direction: row;
-`;
-
-export const Recent = styled.div`
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-
-    position: relative;
-    margin-top: 9px;
-    margin-right: 8px;
-`;
-
-export const RecentBox = styled.div`
-    position: relative;
-    display: flex;
-    flex-direction: row;
     align-items: flex-start;
-    padding: 4px 12px;
-
-    width: auto;
-    height: 25px;
-    margin-right: 4px;
-
-    background: #FFEBE3;
-    border-radius: 99px;
-
-    cursor: pointer;
-`;
-
-export const RecentWord = styled.div`
-    font-weight: var(--weight-regular);
-    font-size: var(--weight-small);
-    line-height: 17px;
-    
-    color: var(--color-orange);
+    background-color: var(--color-white);
+    overflow-x: scroll;
+    ::-webkit-scrollbar {
+        display: none;
+    }
 `;
 
 export const Line = styled.hr`

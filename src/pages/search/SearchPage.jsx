@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as SearchST from './SearchPageStyle';
 
@@ -6,13 +6,14 @@ import Layout from '../../components/layout/Layout';
 import SearchModal from './SearchModal';
 import useInput from '../../hooks/useInput';
 import Card from '../../components/elements/card/Card';
+import RecentWord from './RecentWord';
 
 import {__getSearchThunk} from '../../redux/modules/PostSlice'
 
 
 export default function SearchPage() {
 
-    //정렬 모달창 관련
+    //정렬 모달창 관련-----
 
     const [isOpen, setIsOpen] = useState(false);
 
@@ -24,7 +25,7 @@ export default function SearchPage() {
         setIsOpen(false);
     }
 
-    //정렬 모달 선택 관련
+    //정렬 모달 선택 관련-----
 
     const [select, setSelect] = useState("마감 임박 순");
 
@@ -32,8 +33,53 @@ export default function SearchPage() {
         setIsOpen(false)
     }, [select])
 
+    //드래그 관련-----
 
-    //검색어 관련
+    const scrollRef = useRef(null);
+    const [isDrag, setIsDrag] = useState(false);
+    const [startX, setStartX] = useState();
+
+    const dragStartHandler = (e) => {
+        e.preventDefault();
+        setIsDrag(true);
+        setStartX(e.pageX + scrollRef.current.scrollLeft);
+    };
+
+    const dragEndHandler = () => {
+        setIsDrag(false);
+      };
+
+    const onDragMove = (e) => {
+    if (isDrag) {
+      const { scrollWidth, clientWidth, scrollLeft } = scrollRef.current;
+      scrollRef.current.scrollLeft = startX - e.pageX;
+  
+      if (scrollLeft <= 0) {
+        setStartX(e.pageX);
+      } else if (scrollWidth <= clientWidth + scrollLeft) {
+        setStartX(e.pageX + scrollLeft);
+      }
+    }
+    };
+
+    const throttle = (func, ms) => {
+        let throttled = false;
+        return (...args) => {
+        if (!throttled) {
+            throttled = true;
+            setTimeout(() => {
+            func(...args);
+            throttled = false;
+            }, ms);
+        }
+        };
+    };
+
+    const delay = 10;
+    const onThrottle = throttle(onDragMove, delay);
+
+
+    //검색어 관련-----
 
     const [searchTerm, setSearchTerm, searchHandler] = useInput("");
     //console.log(searchTerm);
@@ -54,8 +100,10 @@ export default function SearchPage() {
     //     dispatch(__getSearchThunk(searchTerm))
     // }, [dispatch])
 
+    //서버에서 response 받아오기
     const posts = useSelector((state) => state.post.posts);
     console.log(posts);
+
 
     //검색된 posts가 없을때
     if (posts.data === [])
@@ -91,53 +139,22 @@ export default function SearchPage() {
             <SearchST.RecentSection>
                 <SearchST.RecentTitle>최근 검색어</SearchST.RecentTitle>
 
-                <SearchST.RecentDisplay>
-                <SearchST.Recent>
-                    <SearchST.RecentBox>
-                        <SearchST.RecentWord>엽기떡볶이</SearchST.RecentWord>
-                    </SearchST.RecentBox>
-                    <svg
-                        width="12"
-                        height="13"
-                        viewBox="0 0 12 13"
-                        fill="none"
-                        cursor="pointer"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path d="M2 10.9853L10.4853 2.50001" stroke="#FF9D73" strokeWidth="2" strokeLinecap="round"/>
-                        <path d="M10.4853 10.9853L2.00001 2.50001" stroke="#FF9D73" strokeWidth="2" strokeLinecap="round"/>
-                    </svg>
-                </SearchST.Recent>
+                <SearchST.RecentDisplay
+                    ref={scrollRef}
+                    onTouchStart={dragStartHandler}
+                    onTouchEnd={dragEndHandler}
+                    onTouchMove={isDrag ? onThrottle : null}
 
-                <SearchST.Recent>
-                    <SearchST.RecentBox>
-                        <SearchST.RecentWord>파스타</SearchST.RecentWord>
-                    </SearchST.RecentBox>
-                    <svg
-                        width="12"
-                        height="13"
-                        viewBox="0 0 12 13"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path d="M2 10.9853L10.4853 2.50001" stroke="#FF9D73" strokeWidth="2" strokeLinecap="round"/>
-                        <path d="M10.4853 10.9853L2.00001 2.50001" stroke="#FF9D73" strokeWidth="2" strokeLinecap="round"/>
-                    </svg>
-                </SearchST.Recent>
-
-                <SearchST.Recent>
-                    <SearchST.RecentBox>
-                        <SearchST.RecentWord>어디까지 길어지나 보자</SearchST.RecentWord>
-                    </SearchST.RecentBox>
-                    <svg
-                        width="12"
-                        height="13"
-                        viewBox="0 0 12 13"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path d="M2 10.9853L10.4853 2.50001" stroke="#FF9D73" strokeWidth="2" strokeLinecap="round"/>
-                        <path d="M10.4853 10.9853L2.00001 2.50001" stroke="#FF9D73" strokeWidth="2" strokeLinecap="round"/>
-                    </svg>
-                </SearchST.Recent>
-
+                    onMouseDown={dragStartHandler}
+                    onMouseUp={dragEndHandler}
+                    onMouseMove={isDrag ? onThrottle : null}
+                    onMouseLeave={dragEndHandler}
+                    >
+                    <RecentWord/>
+                    <RecentWord/>
+                    <RecentWord/>
+                    <RecentWord/>
+                    <RecentWord/>
                 </SearchST.RecentDisplay>
 
             </SearchST.RecentSection>
