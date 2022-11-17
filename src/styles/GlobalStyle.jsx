@@ -25,6 +25,9 @@ const GlobalStyle = createGlobalStyle`
     --color-system-error: #FF6651;
     --color-system-success: #51D486;
 
+    --color-kakao-yellow: #FEE500;
+    --color-kakao-black: #191919;
+
     /* Font size */
     --font-huge: 60px;
     --font-large: 22px;

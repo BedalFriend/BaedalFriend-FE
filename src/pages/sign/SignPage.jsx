@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import useMultipleInput from '../../hooks/useMultipleInput';
+import StepOne from './index/StepOne';
 import * as SignST from './SignPageStyle';
 
 export default function SignPage() {
+  const [domain, setDomain] = useState('@naver.com');
   const [index, setIndex] = useState(0);
   const [signInfo, setSignInfo, signInfoHandler] = useMultipleInput({
     email: '',
@@ -32,15 +34,11 @@ export default function SignPage() {
       </SignST.TitleBox>
 
       <SignST.InputSection>
-        <SignST.InputSet>
-          <SignST.InputWrapper>
-            <SignST.Input></SignST.Input>
-          </SignST.InputWrapper>
-
-          <SignST.InputWrapper>
-            <SignST.Input></SignST.Input>
-          </SignST.InputWrapper>
-        </SignST.InputSet>
+        <StepOne
+          domain={domain}
+          setDomain={setDomain}
+          handler={signInfoHandler}
+        />
       </SignST.InputSection>
     </SignST.Body>
   );
