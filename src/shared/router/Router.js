@@ -12,6 +12,7 @@ import MainPage from '../../pages/main/MainPage';
 import UploadPage from '../../pages/upload/UploadPage';
 import DetailPage from '../../pages/DetailPage';
 import ChatPage from '../../pages/chat/ChatPage';
+import SearchPage from '../../pages/search/SearchPage'
 
 const Router = () => {
   return (
@@ -32,7 +33,9 @@ const Router = () => {
           <Route path='/test' element={<TestPage />} />
           <Route path='/post' element={<UploadPage />} />
           <Route path='/detail/:id' element={<DetailPage />} />
+          <Route path='/search' element={<SearchPage />} />
           <Route path='*' element={<MainPage />} />
+
         </Route>
       </Routes>
     </BrowserRouter>
