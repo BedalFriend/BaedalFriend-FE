@@ -18,10 +18,26 @@ export const StepTwoBox = styled.div`
   width: 100%;
 `;
 
+export const StepOneBody = styled.div`
+  @media screen and (min-width: 764px) {
+  }
+
+  @media screen and (max-width: 764px) {
+    /* margin-left: 50px; */
+  }
+`;
+
 export const StepOneHeader = styled.div`
   height: 71px;
   margin-top: 24px;
-  margin-bottom: 25px;
+
+  @media screen and (min-width: 764px) {
+    margin-bottom: 36px;
+  }
+
+  @media screen and (max-width: 764px) {
+    margin-bottom: 25px;
+  }
 `;
 
 export const StepOneTitle = styled.div`
@@ -49,9 +65,16 @@ export const LongInputBox = styled.div`
 
   background-color: var(--color-dark-white);
   border-radius: 40px;
-  width: 358px;
+  width: 100%;
   height: 40px;
-  margin-bottom: 25px;
+
+  @media screen and (min-width: 764px) {
+    margin-bottom: 36px;
+  }
+
+  @media screen and (max-width: 764px) {
+    margin-bottom: 25px;
+  }
 `;
 
 export const LongInput = styled.input`
@@ -61,7 +84,14 @@ export const LongInput = styled.input`
 
 export const MenuBox = styled.div`
   display: flex;
-  margin-bottom: 12px;
+
+  @media screen and (min-width: 764px) {
+    margin-bottom: 24px;
+  }
+
+  @media screen and (max-width: 764px) {
+    margin-bottom: 12px;
+  }
 `;
 
 export const MenuTitle = styled.div`
@@ -78,9 +108,17 @@ export const ShortInputBox = styled.div`
 
   background-color: var(--color-dark-white);
   border-radius: 40px;
-  width: 152px;
+  width: 100%;
+  max-width: 152px;
+
   height: 40px;
-  margin-bottom: 25px;
+  @media screen and (min-width: 764px) {
+    margin-bottom: 36px;
+  }
+
+  @media screen and (max-width: 764px) {
+    margin-bottom: 28px;
+  }
 `;
 
 export const ShortInput = styled.input`
@@ -130,7 +168,8 @@ export const InputText = styled.div`
 `;
 
 export const CancelBtn = styled.button`
-  width: 171px;
+  max-width: 366px;
+  width: 100%;
   height: 52px;
 
   border-radius: 12px;
@@ -143,7 +182,8 @@ export const CancelBtn = styled.button`
 `;
 
 export const NextBtn = styled.button`
-  width: 171px;
+  max-width: 366px;
+  width: 100%;
   height: 52px;
   margin-left: 16px;
 
@@ -157,7 +197,8 @@ export const NextBtn = styled.button`
 `;
 
 export const StayBtn = styled.button`
-  width: 171px;
+  max-width: 366px;
+  width: 100%;
   height: 52px;
   margin-left: 16px;
 
@@ -180,7 +221,8 @@ export const LimitTimeBox = styled.div`
 `;
 
 export const UploadBtn = styled.button`
-  width: 171px;
+  max-width: 366px;
+  width: 100%;
   height: 52px;
   margin-left: 16px;
 
@@ -213,4 +255,34 @@ export const CtgTitle = styled.div`
   font-size: var(--font-regular);
   margin-top: 28px;
   margin-bottom: 28px;
+`;
+
+export const SelectInput = styled.div`
+  position: relative;
+  width: 152px;
+  height: 40px;
+
+  border-radius: 25px;
+  background-color: var(--color-dark-white);
+  align-self: center;
+
+  cursor: pointer;
+  &::before {
+    content: '⌵';
+    position: absolute;
+    top: 3px;
+    left: 18px;
+    color: var(--color-orange);
+    font-size: 20px;
+  }
+`;
+
+export const SelectValue = styled.div`
+  width: 100%;
+  height: 100%;
+  font-size: 14px;
+  padding-left: 52px;
+  padding-top: 11px;
+  align-items: center;
+  color: var(--color-dark-grey);
 `;
