@@ -15,7 +15,9 @@ export default function StepTwo({
 }) {
   const [isInvisible, setIsInvisible] = useState(true);
   const [isPwFail, setIsPwFail] = useState(true);
-  const [pwText, setPwText] = useState('');
+  const [pwText, setPwText] = useState(
+    '영문, 숫자, 특수문자 포함 4자 이상, 32자 미만'
+  );
 
   const checkProperPassword = async (pw) => {
     const regex =
@@ -26,6 +28,8 @@ export default function StepTwo({
 
   useEffect(() => {
     setInCheck(true);
+    setIsPwFail(true);
+    setPwText('영문, 숫자, 특수문자 포함 4자 이상, 32자 미만');
     const handler = setTimeout(async () => {
       const response = await checkProperPassword(signInfo['password']);
       if (response) {
@@ -48,7 +52,10 @@ export default function StepTwo({
   useEffect(() => {
     setInCheck2(true);
     const handler = setTimeout(async () => {
-      if (signInfo['password'] === signInfo['passwordConfirm']) {
+      if (
+        signInfo['passwordConfirm'] &&
+        signInfo['password'] === signInfo['passwordConfirm']
+      ) {
         setInCheck2(false);
         setIsPwFail2(false);
         setPwText2('비밀번호가 일치합니다.');
@@ -93,9 +100,9 @@ export default function StepTwo({
             </g>
           </svg>
 
-          {signInfo['password'] ? (
+          {
             <SignST.HelpBox>
-              {inCheck ? null : isPwFail ? (
+              {isPwFail ? (
                 <svg
                   width='14'
                   height='14'
@@ -127,11 +134,9 @@ export default function StepTwo({
                 </svg>
               )}
 
-              {inCheck ? null : (
-                <SignST.HelpText isFail={isPwFail}>{pwText}</SignST.HelpText>
-              )}
+              <SignST.HelpText isFail={isPwFail}>{pwText}</SignST.HelpText>
             </SignST.HelpBox>
-          ) : null}
+          }
         </SignST.InputWrapper>
       </SignST.InputSet>
 

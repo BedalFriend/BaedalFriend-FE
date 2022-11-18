@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { checkNickname } from '../../../shared/api/Users';
 import * as SignST from '../SignPageStyle';
 
 export default function StepThree({
@@ -11,6 +12,29 @@ export default function StepThree({
   helpNicknameText,
   setHelpNicknameText,
 }) {
+  useEffect(() => {
+    setInCheck(true);
+    const handler = setTimeout(async () => {
+      const response = await checkNickname(signInfo['nickname']);
+      if (response.status) {
+        setInCheck(false);
+        setIsNicknameFail(false);
+        setHelpNicknameText('사용 가능한 별명이에요!');
+      } else {
+        setInCheck(false);
+        setIsNicknameFail(true);
+        if (response.headers.message)
+          setHelpNicknameText('다른 사용자가 사용 중인 별명이에요.');
+        else setHelpNicknameText(response.headers.error.message);
+      }
+    }, 500);
+
+    return () => {
+      clearTimeout(handler);
+    };
+    // eslint-disable-next-line
+  }, [signInfo['nickname']]);
+
   return (
     <SignST.InputSet>
       <SignST.InputWrapper>
@@ -19,6 +43,7 @@ export default function StepThree({
           name='nickname'
           type='text'
           onChange={handler}
+          maxLength='6'
         />
 
         {signInfo['nickname'] ? (
