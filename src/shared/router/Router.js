@@ -12,7 +12,8 @@ import MainPage from '../../pages/main/MainPage';
 import UploadPage from '../../pages/upload/UploadPage';
 import DetailPage from '../../pages/DetailPage';
 import ChatPage from '../../pages/chat/ChatPage';
-import SearchPage from '../../pages/search/SearchPage'
+import SearchPage from '../../pages/search/SearchPage';
+import NearbyPage from '../../pages/nearby/NearbyPage';
 
 const Router = () => {
   return (
@@ -31,11 +32,11 @@ const Router = () => {
         <Route element={<GlobalRoute />}>
           <Route path='/' element={<MainPage />} />
           <Route path='/test' element={<TestPage />} />
+          <Route path='/nearby' element={<NearbyPage />} />
           <Route path='/post' element={<UploadPage />} />
           <Route path='/detail/:id' element={<DetailPage />} />
           <Route path='/search' element={<SearchPage />} />
           <Route path='*' element={<MainPage />} />
-
         </Route>
       </Routes>
     </BrowserRouter>
