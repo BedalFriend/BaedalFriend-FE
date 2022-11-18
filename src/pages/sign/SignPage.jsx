@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useMultipleInput from '../../hooks/useMultipleInput';
+import { signupUser } from '../../shared/api/Users';
 import StepOne from './index/StepOne';
 import StepThree from './index/StepThree';
 import StepTwo from './index/StepTwo';
@@ -18,6 +19,15 @@ export default function SignPage() {
     nickname: '',
     role: 0,
   });
+
+  const onSignupHandler = async () => {
+    const response = await signupUser({
+      ...signInfo,
+      email: `${signInfo['email']}${domain}`,
+    });
+    console.log(response);
+    navigate('/login');
+  };
 
   const textArr = [
     ['로그인에 사용할 이메일', '을', '입력해주세요.'],
@@ -100,6 +110,7 @@ export default function SignPage() {
         <SignST.NavBtn
           onClick={() => {
             if (index === 2) {
+              onSignupHandler();
             } else {
               setIndex((prev) => prev + 1);
             }

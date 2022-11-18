@@ -10,9 +10,8 @@ import { useEffect } from 'react';
 import Card from '../../components/elements/card/Card';
 
 export default function MainPage(props) {
-
   const navigate = useNavigate();
-  
+
   const { setTab } = useContext(TabContext);
 
   useEffect(() => {
@@ -26,7 +25,11 @@ export default function MainPage(props) {
         <Carousel />
       </MainST.Top>
 
-      <MainST.Search onClick={() => {navigate("/search")}}>
+      <MainST.Search
+        onClick={() => {
+          navigate('/search');
+        }}
+      >
         <svg
           width='24'
           height='24'
@@ -357,10 +360,10 @@ export default function MainPage(props) {
         </div>
 
         <MainST.LimitList>
+          {/* <Card />
           <Card />
           <Card />
-          <Card />
-          <Card />
+          <Card /> */}
         </MainST.LimitList>
       </MainST.LimitBox>
 

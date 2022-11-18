@@ -36,7 +36,17 @@ function Timer({ limit }) {
     return <TimerST.Text>종료</TimerST.Text>;
   };
 
-  return <TimerST.Box>{isDone ? <OutTimeText /> : <InTimeText />}</TimerST.Box>;
+  return (
+    <TimerST.Box>
+      {limit === '0' ? (
+        <OutTimeText />
+      ) : isDone ? (
+        <OutTimeText />
+      ) : (
+        <InTimeText />
+      )}
+    </TimerST.Box>
+  );
 }
 
 export default Timer;
