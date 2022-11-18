@@ -5,6 +5,7 @@ const GlobalStyle = createGlobalStyle`
   :root {
     /* Color */
     --color-white: #ffffff;
+    --color-blur-white: #DCDCDC;
     --color-dark-white: #f6f6f6;
 
     --color-black: #000000;
@@ -14,11 +15,18 @@ const GlobalStyle = createGlobalStyle`
     --color-light-grey: #959595;
     --color-dark-grey: #585858;
 
-    --color-orange: #FF6915;
-    --color-light-orange: #FFDFCD;
+    --color-orange: #FF5B15;
+    --color-light-orange: #FFDCCD;
+    --color-blur-orange: #FFEBE3;
 
     --color-yellow: #FFBA09;
     --color-light-yellow: #FFEAB5;
+
+    --color-system-error: #FF6651;
+    --color-system-success: #51D486;
+
+    --color-kakao-yellow: #FEE500;
+    --color-kakao-black: #191919;
 
     /* Font size */
     --font-huge: 60px;
@@ -33,12 +41,13 @@ const GlobalStyle = createGlobalStyle`
     --weight-bold: 700;
     --weight-semi-bold: 600;
     --weight-regular: 500;
+    --weight-thin: 400;
 
     /* Animation Duration */
     --animation-duration: 300ms;
 
     /* Responsive Width */
-    --responsive-width: 630px;
+    --responsive-width: 764px;
   }
 
   /* Universal tags */
@@ -47,6 +56,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
+    background-color: var(--color-black);
     margin : 0;
     padding : 0;
     font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui,
@@ -57,9 +67,21 @@ const GlobalStyle = createGlobalStyle`
     -moz-user-select:none;
     -ms-user-select:none;
     user-select:none;
+
+    -webkit-tap-highlight-color:  rgba(255, 255, 255, 0);
+  }
+
+  input {
+    margin: 0;
+    padding: 0;
+    border: none;
+    outline: none;
+    background-color: transparent;
   }
 
   ul {
+    margin: 0;
+    padding: 0;
     list-style: none;
     padding-left: 0;
   }
@@ -91,6 +113,13 @@ const GlobalStyle = createGlobalStyle`
 
 h2 {
   font-size: var(--font-large);
+  font-weight: var(--weight-regular);
+  font-display: swap;
+  margin: 0px 0px;
+}
+
+h3 {
+  font-size: var(--font-medium);
   font-weight: var(--weight-bold);
   font-display: swap;
   margin: 0px 0px;

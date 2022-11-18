@@ -68,7 +68,7 @@ export default function TestPage(props) {
   };
 
   useEffect(() => {
-    setTab('Upload');
+    setTab('Mypage');
     // eslint-disable-next-line
   }, []);
 
@@ -94,18 +94,6 @@ export default function TestPage(props) {
       >
         Date Generator!
       </h1>
-      <h1>Scroll Generator...</h1>
-      <h1>Scroll Generator...</h1>
-      <h1>Scroll Generator...</h1>
-      <h1>Scroll Generator...</h1>
-      <h1>Scroll Generator...</h1>
-      <h1>Scroll Generator...</h1>
-      <h1>Scroll Generator...</h1>
-      <h1>Scroll Generator...</h1>
-      <h1>Scroll Generator...</h1>
-      <h1>Scroll Generator...</h1>
-      <h1>Scroll Generator...</h1>
-      <h1>Scroll Generator...</h1>
     </Layout>
   );
 }

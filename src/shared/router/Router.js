@@ -1,24 +1,42 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import GlobalRoute from './GlobalRoute';
-// import PrivateRoute from './PrivateRoute';
+import PublicRoute from './PublicRoute';
+import PrivateRoute from './PrivateRoute';
 
 import TestPage from '../../pages/TestPage';
 import KakaoLoginPage from '../../pages/KakaoLoginPage';
+import LoginPage from '../../pages/login/LoginPage';
+import SignPage from '../../pages/sign/SignPage';
 import MainPage from '../../pages/main/MainPage';
+import UploadPage from '../../pages/upload/UploadPage';
+import DetailPage from '../../pages/DetailPage';
+import ChatPage from '../../pages/chat/ChatPage';
+import SearchPage from '../../pages/search/SearchPage'
 
 const Router = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route element={<GlobalRoute />}>
-          <Route path='/' element={<MainPage />} />
-          <Route path='/test' element={<TestPage />} />
+        <Route element={<PrivateRoute />}></Route>
+
+        <Route element={<PublicRoute />}>
+          <Route path='/login' element={<LoginPage />} />
+          <Route path='/sign' element={<SignPage />} />
         </Route>
 
         <Route path='/kakaoLogin' element={<KakaoLoginPage />} />
+        <Route path='/chat' element={<ChatPage />} />
 
-        <Route path='*' element={<MainPage />} />
+        <Route element={<GlobalRoute />}>
+          <Route path='/' element={<MainPage />} />
+          <Route path='/test' element={<TestPage />} />
+          <Route path='/post' element={<UploadPage />} />
+          <Route path='/detail/:id' element={<DetailPage />} />
+          <Route path='/search' element={<SearchPage />} />
+          <Route path='*' element={<MainPage />} />
+
+        </Route>
       </Routes>
     </BrowserRouter>
   );
