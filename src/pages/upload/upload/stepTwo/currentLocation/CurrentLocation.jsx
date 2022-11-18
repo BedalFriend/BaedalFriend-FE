@@ -18,7 +18,6 @@ const CurrentLocation = ({ data, addressManager, stepTwoCheckHandler }) => {
             mapOption = {
               center: new kakao.maps.LatLng(37.56646, 126.98121), // 지도의 중심좌표
               level: 3, // 지도의 확대 레벨
-              mapTypeId: kakao.maps.MapTypeId.ROADMAP, // 지도종류
             };
           // 지도를 생성한다
           const map = new kakao.maps.Map(mapContainer, mapOption);

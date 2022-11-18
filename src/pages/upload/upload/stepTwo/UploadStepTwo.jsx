@@ -9,7 +9,6 @@ import Party from '../../../../imgs/upload/Party.png';
 import Time from '../../../../imgs/upload/Party.png';
 import MeetingLoca from '../../../../imgs/upload/MeetingLoca.png';
 import Select from '../../../../components/select/Select';
-import styled from 'styled-components';
 
 const UploadStepTwo = ({
   data,
@@ -28,6 +27,8 @@ const UploadStepTwo = ({
   const day = ('0' + today.getDate()).slice(-2);
   const [nowTime, setNowTime] = useState({ hour: 0, minute: 0 });
 
+  const [saveValue, setSaveValue] = useState({ hour: 0, minute: 0 });
+
   const newDateHandler = (e) => {
     const { value, name } = e.target;
     setNowTime({ ...nowTime, [name]: value });
@@ -41,9 +42,9 @@ const UploadStepTwo = ({
   ];
 
   const [currentValue, setCurrentValue] = useState('');
+
   const [showOptions, setShowOptions] = useState(false);
 
-  useEffect(() => {}, [currentValue]);
   useEffect(() => {
     if (isTime === 'AM') {
       const dateString =
@@ -59,10 +60,11 @@ const UploadStepTwo = ({
         '-' +
         '00';
 
+      setSaveValue({ hour: nowTime.hour, minute: nowTime.minute });
       setData({
         ...data,
         limitTime: dateString,
-        participantNumber: currentValue,
+        participantNumber: Number(currentValue),
       });
     } else {
       const dateString =
@@ -77,11 +79,11 @@ const UploadStepTwo = ({
         nowTime.minute +
         '-' +
         '00';
-
+      setSaveValue({ hour: nowTime.hour, minute: nowTime.minute });
       setData({
         ...data,
         limitTime: dateString,
-        participantNumber: currentValue,
+        participantNumber: Number(currentValue),
       });
     }
   }, [nowTime, isTime, currentValue]);
@@ -129,6 +131,7 @@ const UploadStepTwo = ({
               type='number'
               min='1'
               max='12'
+              value={saveValue.hour}
               onChange={newDateHandler}
               onInput={lengthLimit}
             />
@@ -140,6 +143,7 @@ const UploadStepTwo = ({
               type='number'
               min='0'
               max='59'
+              value={saveValue.minute}
               onChange={newDateHandler}
               onInput={lengthLimit}
             />

@@ -93,6 +93,7 @@ const UploadStepOne = ({
           <UploadST.ShortInput
             name='deliveryTime'
             type='number'
+            value={data.deliveryTime}
             onKeyUp={stepOneCheckHandler}
             onChange={dataHandler}
             onInput={lengthLimit}
@@ -110,6 +111,7 @@ const UploadStepOne = ({
             <UploadST.ShortInput
               name='targetAmount'
               type='number'
+              value={data.targetAmount}
               onChange={dataHandler}
               onInput={lengthLimit}
             />
@@ -120,6 +122,7 @@ const UploadStepOne = ({
             <UploadST.ShortInput
               name='deliveryFee'
               type='number'
+              value={data.deliveryFee}
               onChange={dataHandler}
               onKeyUp={stepOneCheckHandler}
               onInput={lengthLimit}

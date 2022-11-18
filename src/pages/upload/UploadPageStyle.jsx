@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 export const PostBox = styled.div`
-  padding-top: 60px;
   width: calc(100% - 32px);
   height: 100vh;
 `;
@@ -12,9 +11,11 @@ export const FormContainer = styled.div`
 `;
 
 export const StepOneBox = styled.div`
+  padding-top: 60px;
   width: 100%;
 `;
 export const StepTwoBox = styled.div`
+  padding-top: 60px;
   width: 100%;
 `;
 

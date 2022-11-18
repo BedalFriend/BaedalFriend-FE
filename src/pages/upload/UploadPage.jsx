@@ -8,11 +8,11 @@ import Layout from '../../components/layout/Layout';
 import * as UploadST from './UploadPageStyle';
 import useMultipleInput from '../../hooks/useMultipleInput';
 
-import SearchStoreMap from './upload/searchStoreMap/SearchStoreMap';
-import SearchPartyMap from './upload/searchPartyMap/SearchPartyMap';
+import SearchStoreMap from './upload/searchMap/SearchStoreMap';
+import SearchPartyMap from './upload/searchMap/SearchPartyMap';
 import UploadCategory from './upload/UploadCategory';
-import UploadStepTwo from './upload/uploadStepTwo/UploadStepTwo';
-import UploadStepOne from './upload/uploadStepOne/UploadStepOne';
+import UploadStepTwo from './upload/stepTwo/UploadStepTwo';
+import UploadStepOne from './upload/stepOne/UploadStepOne';
 
 const Post = () => {
   const { setTab } = useContext(TabContext);
@@ -27,15 +27,17 @@ const Post = () => {
     targetName: '',
     targetAddress: '',
     category: '',
-    deliveryTime: 1,
-    targetAmount: 1,
-    deliveryFee: 1,
-    participantNumber: 1,
+    deliveryTime: 0,
+    targetAmount: 0,
+    deliveryFee: 0,
+    participantNumber: 0,
     gatherName: '',
     gatherAddress: '',
     isDone: 0,
     limitTime: '2022-11-20 20:55:30',
   });
+
+  console.log('총 데이터', data);
 
   const [index, setIndex] = useState(0);
 
