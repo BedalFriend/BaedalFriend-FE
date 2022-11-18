@@ -64,7 +64,7 @@ export default function Header() {
 
         <HeadST.AdrText>
           {refreshToken !== null && refreshToken !== undefined
-            ? user.address !== null && user.address !== undefined
+            ? user.address
               ? user.address
               : '주소를 입력해주세요!'
             : '로그인이 필요해요!'}
