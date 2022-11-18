@@ -36,7 +36,7 @@ export const NameBox = styled.div`
   display: flex;
   flex-flow: row nowrap;
   justify-content: flex-start;
-  align-items: flex-end;
+  align-items: center;
 `;
 
 export const CardHead = styled.div`
