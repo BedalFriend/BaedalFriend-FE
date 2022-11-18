@@ -33,11 +33,14 @@ export default function SearchPage() {
         setIsOpen(false)
     }, [select])
 
-    //드래그 관련-----
+    //최근 검색어 드래그 관련-----
 
     const scrollRef = useRef(null);
     const [isDrag, setIsDrag] = useState(false);
     const [startX, setStartX] = useState();
+    const [isTouch, setIsTouch] = useState(false);
+    const [tochedX, setTochedX] = useState(0);
+    const [tochedY, setTochedY] = useState(0);
 
     const dragStartHandler = (e) => {
         e.preventDefault();
@@ -47,9 +50,9 @@ export default function SearchPage() {
 
     const dragEndHandler = () => {
         setIsDrag(false);
-      };
+    };
 
-    const onDragMove = (e) => {
+    const dragMoveHandler = (e) => {
     if (isDrag) {
       const { scrollWidth, clientWidth, scrollLeft } = scrollRef.current;
       scrollRef.current.scrollLeft = startX - e.pageX;
@@ -60,6 +63,16 @@ export default function SearchPage() {
         setStartX(e.pageX + scrollLeft);
       }
     }
+    };
+
+    const touchStartHandler = (e) => {
+        setIsTouch(true);
+        setTochedX(e.changedTouches[0].pageX);
+        setTochedY(e.changedTouches[0].pageY);
+    };
+
+    const touchEndHandler = (e) => {
+        setIsTouch(false);
     };
 
     const throttle = (func, ms) => {
@@ -76,13 +89,12 @@ export default function SearchPage() {
     };
 
     const delay = 10;
-    const onThrottle = throttle(onDragMove, delay);
+    const throttleHandler = throttle(dragMoveHandler, delay);
 
 
     //검색어 관련-----
 
     const [searchTerm, setSearchTerm, searchHandler] = useInput("");
-    //console.log(searchTerm);
 
     const dispatch = useDispatch();
 
@@ -103,21 +115,13 @@ export default function SearchPage() {
     //서버에서 response 받아오기
     const posts = useSelector((state) => state.post.posts);
     console.log(posts);
-
-
-    //검색된 posts가 없을때
-    if (posts.data === [])
-        //return <div><h2>아직 개설된 채팅방이 없습니다.</h2></div>
-        return console.log("아직 개설된 채팅방이 없습니다.")
-    //에러 발생했을때
-    if (posts.error)
-        return <div><h2>알 수 없는 에러가 발생했습니다.</h2></div>
     
-
+    
     return (
         <Layout>
             <SearchST.SearchBg>
-
+            
+            {/* 검색창 */}
             <SearchST.Search>
                 <svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
                 <g mask='url(#mask0_329_44)'>
@@ -136,18 +140,18 @@ export default function SearchPage() {
                 />                
             </SearchST.Search>
 
+            {/* 최근 검색어 */}
             <SearchST.RecentSection>
                 <SearchST.RecentTitle>최근 검색어</SearchST.RecentTitle>
 
                 <SearchST.RecentDisplay
                     ref={scrollRef}
-                    onTouchStart={dragStartHandler}
-                    onTouchEnd={dragEndHandler}
-                    onTouchMove={isDrag ? onThrottle : null}
-
+                    onTouchStart={touchStartHandler}
+                    onTouchEnd={touchEndHandler}
+                    onTouchMove={isTouch ? throttleHandler : null}
                     onMouseDown={dragStartHandler}
                     onMouseUp={dragEndHandler}
-                    onMouseMove={isDrag ? onThrottle : null}
+                    onMouseMove={isDrag ? throttleHandler : null}
                     onMouseLeave={dragEndHandler}
                     >
                     <RecentWord/>
@@ -155,12 +159,14 @@ export default function SearchPage() {
                     <RecentWord/>
                     <RecentWord/>
                     <RecentWord/>
+                    <div style={{ width: '50%', height: '40px'}}></div>
                 </SearchST.RecentDisplay>
 
             </SearchST.RecentSection>
 
             <SearchST.Line />
 
+            {/* 필터 설정 */}
             <SearchST.DropDownSection onClick={openModal}>
                 {isOpen && (<SearchModal
                                 closeModal={closeModal}
@@ -178,17 +184,27 @@ export default function SearchPage() {
                     </g>
                 </svg>
             </SearchST.DropDownSection>
-
+            
+            {/* 검색 결과 */}
             <SearchST.ResultBox>
                 {posts.data.map ? 
-                    (posts.data.map((post, index) => (
-                        <Card key={post.postId} index={index} post={post} />
+                    (posts.data.map((post) => (
+                        <Card key={post.postId} post={post} />
                     ))) : (<h1>아직 개설된 채팅방이 없습니다.</h1>)
                 }
+
+                {/* //검색된 posts가 없을때
+                    if (posts.data === [])
+                        return <div><h2>아직 개설된 채팅방이 없습니다.</h2></div>
+                        return console.log("아직 개설된 채팅방이 없습니다.")
+                //에러 발생했을때
+                    if (posts.error)
+                        return <div><h2>알 수 없는 에러가 발생했습니다.</h2></div> */}
             </SearchST.ResultBox>
 
             <div style={{ width: '100%', height: '152px' }}></div>
-            </SearchST.SearchBg>
+            
+            </SearchST.SearchBg>     
         </Layout>
     );
 };
