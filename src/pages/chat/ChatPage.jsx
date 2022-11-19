@@ -6,8 +6,13 @@ import Layout from '../../components/layout/Layout';
 import { TabContext } from '../../context/TabContext';
 import ProfilePic from '../../components/elements/profilePic/ProfilePic';
 import Chat from './Chat';
+import { useDispatch, useSelector } from 'react-redux';
+import { __getChannel } from '../../redux/modules/ChatSlice';
 
 export default function ChatPage({ room }) {
+  const channel = useSelector((state) => state.chat.channel);
+  const dispatch = useDispatch();
+
   const { setTab } = useContext(TabContext);
   const [isDroped, setIsDroped] = useState(false);
   const toggleDroped = () => {
@@ -16,6 +21,8 @@ export default function ChatPage({ room }) {
 
   useEffect(() => {
     setTab('Chat');
+    dispatch(__getChannel(1));
+    console.log(channel.data);
     // eslint-disable-next-line
   }, []);
 
