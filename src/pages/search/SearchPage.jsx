@@ -8,32 +8,24 @@ import useInput from '../../hooks/useInput';
 import Card from '../../components/elements/card/Card';
 import RecentWord from './RecentWord';
 
-import {__getSearchThunk} from '../../redux/modules/PostSlice'
+import {__getSearchThunk, CLEAR_POSTS } from '../../redux/modules/PostSlice'
 
 
 export default function SearchPage() {
 
-    //정렬 모달창 관련-----
+    const dispatch = useDispatch();
+
+    //정렬 모달창
 
     const [isOpen, setIsOpen] = useState(false);
-
     const openModal = () => {
         setIsOpen(true);
     }
-
     const closeModal = () => {
         setIsOpen(false);
     }
 
-    //정렬 모달 선택 관련-----
-
-    const [select, setSelect] = useState("마감 임박 순");
-
-    useEffect (() => {
-        setIsOpen(false)
-    }, [select])
-
-    //최근 검색어 드래그 관련-----
+    //최근 검색어 드래그
 
     const scrollRef = useRef(null);
     const [isDrag, setIsDrag] = useState(false);
@@ -47,11 +39,9 @@ export default function SearchPage() {
         setIsDrag(true);
         setStartX(e.pageX + scrollRef.current.scrollLeft);
     };
-
     const dragEndHandler = () => {
         setIsDrag(false);
     };
-
     const dragMoveHandler = (e) => {
     if (isDrag) {
       const { scrollWidth, clientWidth, scrollLeft } = scrollRef.current;
@@ -64,17 +54,14 @@ export default function SearchPage() {
       }
     }
     };
-
     const touchStartHandler = (e) => {
         setIsTouch(true);
         setTochedX(e.changedTouches[0].pageX);
         setTochedY(e.changedTouches[0].pageY);
     };
-
     const touchEndHandler = (e) => {
         setIsTouch(false);
     };
-
     const throttle = (func, ms) => {
         let throttled = false;
         return (...args) => {
@@ -87,36 +74,57 @@ export default function SearchPage() {
         }
         };
     };
-
     const delay = 10;
     const throttleHandler = throttle(dragMoveHandler, delay);
 
-
-    //검색어 관련-----
-
+    //검색어
     const [searchTerm, setSearchTerm, searchHandler] = useInput("");
 
-    const dispatch = useDispatch();
+    //정렬 모달 선택
 
-    //enter키로 검색
-    const onSubmitSearch = (e) => {
-        if (e.key === "Enter") {
-            //엔터 눌렀을 때 동작할 코드
-            dispatch(
-                __getSearchThunk(searchTerm)
-            )
+    const [select, setSelect] = useState("마감 임박 순");
+    let query = "";
+    const posts = useSelector((state) => state.post.posts);
+    //console.log(posts.data);
+
+    const queryHandler = () => {
+        if (select === "마감 임박 순") {
+            query = `${searchTerm}&type=roomTitle&page=1&sortBy=createdAt`
+        } else if (select === "신규 등록 순") {
+            query = ''
+        } else if (select === "참여자 많은 순") {
+            query = ''
+        } else if (select === "참여자 적은 순") {
+            query = ''
+        } else if (select === "매너 사용자 우선 순") {
+            query = ''
         }
     }
 
-    // useEffect(() => {
-    //     dispatch(__getSearchThunk(searchTerm))
-    // }, [dispatch])
+    useEffect(() => {
+        setIsOpen(false);
+        queryHandler();
+        const searchHandler = setTimeout(async () => {
+            if(searchTerm === '') {
+                dispatch(CLEAR_POSTS());
+            } else {
+            const response = dispatch(__getSearchThunk(query));
+            //response로 예외처리
+            }
+        }, 500);
+        return () => {
+            clearTimeout(searchHandler);
+        };
+    }, [searchTerm, select])
 
-    //서버에서 response 받아오기
-    const posts = useSelector((state) => state.post.posts);
-    console.log(posts);
-    
-    
+    //clean up
+    useEffect(() => {
+        return () => {
+            dispatch(CLEAR_POSTS());
+        }
+    }, [])
+
+
     return (
         <Layout>
             <SearchST.SearchBg>
@@ -136,7 +144,6 @@ export default function SearchPage() {
                     type="search"
                     placeholder='검색어를 입력해주세요.'
                     onChange={searchHandler}
-                    onKeyPress={onSubmitSearch}
                 />                
             </SearchST.Search>
 
