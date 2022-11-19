@@ -1,8 +1,9 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { TabContext } from '../../../context/TabContext';
 import { getCookieToken } from '../../../shared/storage/Cookie';
+import PostCode from '../../postCode/PostCode';
 import * as HeadST from './HeaderStyle';
 
 export default function Header() {
@@ -11,6 +12,8 @@ export default function Header() {
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
   const refreshToken = getCookieToken();
+
+  const [isOpenPost, setIsOpenPost] = useState(false);
 
   return (
     <HeadST.Area>
@@ -107,6 +110,8 @@ export default function Header() {
           />
         </g>
       </HeadST.ChatSVG>
+
+      {isOpenPost ? <PostCode /> : null}
     </HeadST.Area>
   );
 }
