@@ -49,7 +49,7 @@ export default function Card({ post }) {
 
   const [limit, setLimit] = useState(new Date(post.limitTime));
   const [gap, setGap] = useState(parseInt((limit - new Date()) / 1000));
-  console.log(parseInt((limit - new Date()) / 1000).toString());
+
   return (
     <CardST.Box>
       <CardST.CardHead>

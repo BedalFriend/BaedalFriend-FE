@@ -42,7 +42,7 @@ export function SocketProvider({ children }) {
       },
     });
 
-    //client.current.activate();
+    client.current.activate();
   };
 
   const subscribe = () => {
@@ -64,7 +64,7 @@ export function SocketProvider({ children }) {
       destination: '/pub/chat/message',
       body: JSON.stringify({
         type: 'TALK',
-        roomId: '1',
+        roomId: 1,
         sender: user.nickname,
         message,
       }),
@@ -73,7 +73,7 @@ export function SocketProvider({ children }) {
   };
 
   useEffect(() => {
-    //connect();
+    // connect();
     window.setTimeout(() => {
       publish('안녕하세요!');
     }, 3000);

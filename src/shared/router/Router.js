@@ -27,7 +27,6 @@ const Router = () => {
         </Route>
 
         <Route path='/kakaoLogin' element={<KakaoLoginPage />} />
-        <Route path='/chat' element={<ChatPage />} />
 
         <Route element={<GlobalRoute />}>
           <Route path='/' element={<MainPage />} />
@@ -37,7 +36,7 @@ const Router = () => {
           <Route path='/search' element={<SearchPage />} />
           <Route path='/category/:id' element={<CategoryPage />} />
           <Route path='*' element={<MainPage />} />
-
+          <Route path='/chat' element={<ChatPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
