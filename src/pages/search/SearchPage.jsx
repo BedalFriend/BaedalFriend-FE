@@ -1,6 +1,7 @@
-import React, { useEffect, useState, useRef} from 'react';
+import React, { useEffect, useState, useRef, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as SearchST from './SearchPageStyle';
+import { TabContext } from '../../context/TabContext';
 
 import Layout from '../../components/layout/Layout';
 import SearchModal from './SearchModal';
@@ -15,8 +16,14 @@ export default function SearchPage() {
 
     const dispatch = useDispatch();
 
-    //정렬 모달창
+    const { setTab } = useContext(TabContext);
 
+    useEffect(() => {
+      setTab('Search');
+      // eslint-disable-next-line
+    }, []);
+
+    //정렬 모달창
     const [isOpen, setIsOpen] = useState(false);
     const openModal = () => {
         setIsOpen(true);
@@ -26,7 +33,6 @@ export default function SearchPage() {
     }
 
     //최근 검색어 드래그
-
     const scrollRef = useRef(null);
     const [isDrag, setIsDrag] = useState(false);
     const [startX, setStartX] = useState();
@@ -81,11 +87,9 @@ export default function SearchPage() {
     const [searchTerm, setSearchTerm, searchHandler] = useInput("");
 
     //정렬 모달 선택
-
     const [select, setSelect] = useState("마감 임박 순");
     let query = "";
     const posts = useSelector((state) => state.post.posts);
-    //console.log(posts.data);
 
     const queryHandler = () => {
         if (select === "마감 임박 순") {
