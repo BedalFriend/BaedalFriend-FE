@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { data } from './data';
-import selectMarker from '../../../imgs/upload/Map_Marker.png';
+import yellowMarker from '../../../imgs/upload/Yellow_Marker.png';
+import orangeMarker from '../../../imgs/upload/Orange_Map_Marker.png';
 import styled from 'styled-components';
+import MyMarker from '../../../imgs/upload/Map_LocationMark.png';
+import Card from '../../../components/elements/card/Card';
 
 const { kakao } = window;
 
@@ -10,9 +13,16 @@ const MapContainer = () => {
 
   const [myLocation, setMyLocation] = useState('');
 
-  const [myAddress, setMyAddress] = useState('');
+  const [myAddress, setMyAddress] = useState([{}]);
+  console.log('myAddress', myAddress);
+  const [slotManager, setSlotManager] = useState(false);
 
-  // console.log(myLocation);
+  //내가 선택한 마커 저장소
+  const [selectMarker, setSelectMarker] = useState(false);
+  const [markerInfo, setMarkerInfo] = useState('');
+
+  const [distMarker, setDistMarker] = useState([]);
+
   // 위치 가져오기 버튼 클릭시
   const getCurrentPosBtn = () => {
     if (navigator.geolocation) {
@@ -38,10 +48,13 @@ const MapContainer = () => {
     }
   };
 
-  useEffect(() => {
-    //현재 위치 위치지정
-    const nowData = { address: '신정로 225-12' };
+  //현재 위치 위치지정
+  const nowData = { address: '신정로 225-12' };
 
+  let totalData = [];
+  console.log(totalData);
+
+  useEffect(() => {
     // 지도를 생성합니다.
     const container = document.getElementById('map');
     const options = {
@@ -50,90 +63,63 @@ const MapContainer = () => {
     };
     const map = new kakao.maps.Map(container, options);
 
+    //현재위치로 지도 이동
+    if (myLocation.latitude || myLocation.longitude) {
+      const currentMarkerImage = new kakao.maps.MarkerImage(
+        MyMarker,
+        new kakao.maps.Size(24, 24),
+        new kakao.maps.Point(13, 34)
+      );
+      // 현재 위치 받아오기
+      const currentPos = new kakao.maps.LatLng(
+        myLocation.latitude,
+        myLocation.longitude
+      );
+
+      console.log('currentPos', currentPos);
+      // 지도 이동(기존 위치와 가깝다면 부드럽게 이동)
+      map.panTo(currentPos);
+
+      // 마커 생성
+      const CurrentMarker = new kakao.maps.Marker({
+        position: currentPos,
+        image: currentMarkerImage,
+      });
+
+      // 기존에 마커가 있다면 제거
+      CurrentMarker.setMap(null);
+      CurrentMarker.setMap(map);
+    }
+
     // 주소-좌표 변환 객체를 생성합니다.
     const geocoder = new kakao.maps.services.Geocoder();
 
-    // 모든 마커의 배열
-    const totalMarkers = [];
-
-    const filterTitle = data.filter((p) => {
-      return p.roomTitle
-        .replace(' ', '')
-        .toLocaleLowerCase()
-        .includes(searchParty.toLocaleLowerCase());
-    });
-
-    // DB의 모임 데이터주소로 좌표를 검색합니다.
-    filterTitle.forEach((el) => {
-      if (el.roomTitle === filterTitle) {
+    const filterData = data.filter((p) => {
+      if (
+        p.targetName
+          .replace('', '')
+          .toLocaleLowerCase()
+          .includes(searchParty.toLocaleLowerCase())
+      ) {
+        return true;
+      } else if (
+        p.category
+          .replace('', '')
+          .toLocaleLowerCase()
+          .includes(searchParty.toLocaleLowerCase())
+      ) {
+        return true;
       }
-      geocoder.addressSearch(el.address, function (result, status) {
-        // 정상적으로 검색이 완료됐으면
-        if (status === kakao.maps.services.Status.OK) {
-          const coord = new kakao.maps.LatLng(result[0].y, result[0].x);
-
-          // 마커 이미지 설정
-          const imageSrc =
-              // 마커이미지의 주소입니다
-              selectMarker,
-            // 마커이미지의 크기입니다
-            imageSize = new kakao.maps.Size(30, 30),
-            // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
-            imageOption = { offset: new kakao.maps.Point(27, 69) };
-
-          // 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
-          const markerImage = new kakao.maps.MarkerImage(
-            imageSrc,
-            imageSize,
-            imageOption
-          );
-
-          // 결과값으로 받은 위치를 마커로 표시합니다
-          const marker = new kakao.maps.Marker({
-            map: map,
-            position: coord,
-            image: markerImage,
-          });
-          // console.log('filterTitle', filterTitle);
-          // console.log('el.searchParty', el);
-          // 모든 마커 저장소로 마커를 각각 추가해줍니다.
-          totalMarkers.push(marker);
-
-          // 인포윈도우로 장소에 대한 설명을 표시합니다
-          const infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
-          kakao.maps.event.addListener(marker, 'click', function () {
-            const content =
-              `<div>` +
-              `<div style="width:200px;text-align:center;">` +
-              `<span>배프명: </span>` +
-              el.roomTitle +
-              `</div>` +
-              `<div>` +
-              `<span>위치: </span>` +
-              el.address +
-              `</div>` +
-              `<div>` +
-              `<span>남은시간: </span>` +
-              el.epiredTime +
-              `</div>` +
-              `</div>`;
-            if (infowindow.getMap()) {
-              infowindow.close();
-            } else {
-              infowindow.open(map, marker);
-              infowindow.setContent(content);
-            }
-          });
-        }
-      });
     });
+
+    let selectedMarker = null;
 
     // 현재위치에 대한 검색어를 좌표로 변환
-    geocoder.addressSearch(nowData.address, function (result, status) {
+    geocoder.addressSearch(nowData.address, function (results, status) {
       // 정상적으로 검색이 완료됐으면
       if (status === kakao.maps.services.Status.OK) {
-        const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-        // console.log('현재위치', coords);
+        const coords = new kakao.maps.LatLng(results[0].y, results[0].x);
+
         // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
         map.setCenter(coords);
 
@@ -150,39 +136,81 @@ const MapContainer = () => {
           fillOpacity: 0.2,
         });
 
-        const center = circle.getPosition();
-        const radius = circle.getRadius();
-        const line = new kakao.maps.Polyline();
+        // DB의 모임 데이터주소로 좌표를 검색합니다.
+        filterData.forEach(async (el) => {
+          geocoder.addressSearch(el.targetAddress, function (result, status) {
+            // 정상적으로 검색이 완료됐으면
+            if (status === kakao.maps.services.Status.OK) {
+              const coord = new kakao.maps.LatLng(result[0].y, result[0].x);
 
-        // 마커의 위치와 원의 중심을 경로로 하는 폴리라인 설정
-        totalMarkers.forEach(function (marker) {
-          var path = [marker.n, center];
-          line.setPath(path);
+              // 마커 이미지 설정
+              const markerImage = new kakao.maps.MarkerImage(
+                yellowMarker,
+                new kakao.maps.Size(36, 36),
+                new kakao.maps.Point(13, 34)
+              );
+              const checkMarkerImage = new kakao.maps.MarkerImage(
+                orangeMarker,
+                new kakao.maps.Size(36, 36),
+                new kakao.maps.Point(13, 34)
+              );
 
-          // // 현재위치와 마커 사이의 거리 색깔지정
-          // const drawLine = new kakao.maps.Polyline({
-          //   map: map, // 선을 표시할 지도입니다
-          //   path: path,
-          //   strokeWeight: 3, // 선의 두께입니다
-          //   strokeColor: '#db4040', // 선의 색깔입니다
-          //   strokeOpacity: 1, // 선의 불투명도입니다 0에서 1 사이값이며 0에 가까울수록 투명합니다
-          //   strokeStyle: 'solid', // 선의 스타일입니다
-          // });
+              // 결과값으로 받은 위치를 마커로 표시합니다
+              const marker = new kakao.maps.Marker({
+                map: map,
+                position: coord,
+                image: markerImage,
+              });
 
-          // 현재위치와 마커 사이의 거리 측정
-          const dist = line.getLength();
-          // console.log('totalMarkers.roomTitle', totalMarkers);
+              // // 모든 마커 저장소로 마커를 각각 추가해줍니다.
+              // totalMarkers.push({ coord, marker });
 
-          if (dist < radius) {
-            // 해당 marker는 원 안에 있는 것
-            marker.setMap(map);
-          } else {
-            marker.setMap(null);
-          }
+              const center = circle.getPosition();
+              const radius = circle.getRadius();
+              const line = new kakao.maps.Polyline();
+
+              // // 마커의 위치와 원의 중심을 경로로 하는 폴리라인 설정
+              // totalMarkers.forEach(function (marker) {
+              var path = [coord, center];
+              line.setPath(path);
+
+              // 현재위치와 마커 사이의 거리 측정
+              const dist = line.getLength();
+
+              if (dist < radius) {
+                // 해당 marker는 원 안에 있는 것
+                marker.setMap(map);
+                console.log('el', el);
+                totalData.push(el);
+              } else {
+                marker.setMap(null);
+              }
+
+              // setDistMarker({ coord, marker });
+              kakao.maps.event.addListener(marker, 'click', function () {
+                // 클릭된 마커가 없고, click 마커가 클릭된 마커가 아니면
+                // 마커의 이미지를 클릭 이미지로 변경합니다
+                if (!selectedMarker || selectedMarker !== marker) {
+                  // 클릭된 마커 객체가 null이 아니면
+                  // 클릭된 마커의 이미지를 기본 이미지로 변경하고
+                  !!selectedMarker && selectedMarker.setImage(markerImage);
+
+                  // 현재 클릭된 마커의 이미지는 클릭 이미지로 변경합니다
+                  marker.setImage(checkMarkerImage);
+                }
+
+                // 클릭된 마커를 현재 클릭된 마커 객체로 설정합니다
+                selectedMarker = marker;
+
+                setSlotManager(true);
+                setMarkerInfo(el);
+              });
+            }
+          });
         });
       }
     });
-  }, [searchParty]);
+  }, [searchParty, myLocation]);
 
   return (
     <NearbyBox>
@@ -234,11 +262,13 @@ const MapContainer = () => {
       </NearbyInfo>
 
       <SearchBtn
+        onClick={getCurrentPosBtn}
         width='48'
         height='48'
         viewBox='0 0 48 48'
         fill='none'
         xmlns='http://www.w3.org/2000/svg'
+        slotManager={slotManager}
       >
         <g mask='url(#mask0_772_845)'>
           <circle cx='24' cy='24' r='20' fill='white' />
@@ -248,6 +278,10 @@ const MapContainer = () => {
           />
         </g>
       </SearchBtn>
+
+      <div>
+        <CardBox>{slotManager ? <Card post={markerInfo} /> : null}</CardBox>
+      </div>
     </NearbyBox>
   );
 };
@@ -320,7 +354,20 @@ const InfoContent = styled.div`
 
 const SearchBtn = styled.svg`
   position: absolute;
-  bottom: 156px;
   margin-left: 16px;
+  z-index: 2;
+  bottom: ${(props) => (props.slotManager ? '390px' : '156px')};
+  cursor: pointer;
+`;
+
+const CardBox = styled.div`
+  min-width: 358px;
+  width: calc(100% - 36px);
+  margin-left: 13px;
+  height: 265px;
+
+  position: absolute;
   z-index: 1;
+
+  bottom: 136px;
 `;
