@@ -61,15 +61,14 @@ export const __getSearchThunk = createAsyncThunk(
   'GET_SEARCH',
   async (arg, thunkAPI) => {
     try {
-      const { data } = await getInstance().get(`${basePath}/posts/search?keyword=${arg}&type=roomTitle&page=1`);
+      const { data } = await getInstance().get(`${basePath}/posts/search?keyword=${arg}`);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error.code);
-    }
+    }   
   }
 );
 
- 
 const initialState = {
   post: { data: {}, isLoading: false, error: null },
   posts: { data: [], isLoading: false, error: null },
@@ -78,7 +77,11 @@ const initialState = {
 export const postsSlice = createSlice({
   name: 'post', //모듈의 이름
   initialState,
-  reducers: {},
+  reducers: {
+    CLEAR_POSTS : (state) => { state.posts = {
+      data: [], isLoading: false, error: null
+    }}
+  },
   extraReducers: {
     //get
     [__getThunk.pending]: (state) => {
@@ -153,5 +156,5 @@ export const postsSlice = createSlice({
   },
 });
 
-export const {} = postsSlice.actions;
+export const {CLEAR_POSTS} = postsSlice.actions;
 export default postsSlice.reducer;
