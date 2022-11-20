@@ -7,22 +7,21 @@ import { useParams } from 'react-router-dom';
 import Layout from '../../components/layout/Layout';
 import SearchModal from './SearchModal';
 import Card from '../../components/elements/card/Card';
+import SVG from '../../shared/SVG';
 
-import { __getSearchThunk, CLEAR_POSTS } from '../../redux/modules/PostSlice'
+import { __getCateSearchThunk, CLEAR_POSTS } from '../../redux/modules/PostSlice'
 
 
 export default function CategoryPage() {
 
     const { setTab } = useContext(TabContext);
+    const dispatch = useDispatch();
+    const { id } = useParams();
 
     useEffect(() => {
       setTab('Category');
       // eslint-disable-next-line
     }, []);
-
-    const dispatch = useDispatch();
-    const { id } = useParams();
-    //console.log(id);
 
     //정렬 모달창
     const [isOpen, setIsOpen] = useState(false);
@@ -38,29 +37,30 @@ export default function CategoryPage() {
 
     //정렬 모달 선택
     const [select, setSelect] = useState("마감 임박 순");
-    let query = "";
-    
-    const posts = useSelector((state) => state.post.posts);
+    const [query, setQuery] = useState("");
 
     const queryHandler = () => {
         if (select === "마감 임박 순") {
-            query = `${searchCate}&type=roomTitle&page=1&sortBy=createdAt`
+            dispatch(__getCateSearchThunk(searchCate));
         } else if (select === "신규 등록 순") {
-            query = ''
+            setQuery()
         } else if (select === "참여자 많은 순") {
-            query = ''
+            setQuery()
         } else if (select === "참여자 적은 순") {
-            query = ''
+            setQuery()
         } else if (select === "매너 사용자 우선 순") {
-            query = ''
+            setQuery()
         }
     }
 
-    useEffect(() => {
-        setIsOpen(false);
-        queryHandler();
-        dispatch(__getSearchThunk(query));
-    }, [select])
+    // useEffect(() => {
+    //     setIsOpen(false);
+    //     queryHandler();
+    //     dispatch(__getCateSearchThunk(query));
+    // }, [select])
+
+    const posts = useSelector((state) => state.post.posts);
+    console.log("여기", posts);
 
     //clean up
     useEffect(() => {

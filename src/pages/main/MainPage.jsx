@@ -49,7 +49,7 @@ export default function MainPage(props) {
       </MainST.Search>
 
       <MainST.CtgSection>
-        <MainST.CtgBox onClick={() => navigate(`/category/전체}`)}>
+        <MainST.CtgBox onClick={() => navigate(`/category/전체`)}>
           <svg
             width='36'
             height='36'
@@ -68,7 +68,7 @@ export default function MainPage(props) {
           <MainST.CtgText>전체</MainST.CtgText>
         </MainST.CtgBox>
 
-        <MainST.CtgBox onClick={() => navigate(`/category/패스트푸드}`)}>
+        <MainST.CtgBox onClick={() => navigate(`/category/패스트푸드`)}>
           <svg
             width='36'
             height='36'
@@ -86,7 +86,7 @@ export default function MainPage(props) {
           <MainST.CtgText>패스트푸드</MainST.CtgText>
         </MainST.CtgBox>
 
-        <MainST.CtgBox  onClick={() => navigate(`/category/치킨}`)}>
+        <MainST.CtgBox  onClick={() => navigate(`/category/치킨`)}>
           <svg
             width='36'
             height='36'

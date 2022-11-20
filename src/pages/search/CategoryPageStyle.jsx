@@ -14,6 +14,7 @@ export const SearchBg = styled.div`
 export const DropDownSection = styled.div`
     position: relative;
     width: calc(100% - 32px);
+    margin-top: 85px;
 
     display: flex;
     flex-direction: row;

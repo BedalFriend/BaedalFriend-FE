@@ -85,23 +85,21 @@ export default function SearchPage() {
 
     //검색어
     const [searchTerm, setSearchTerm, searchHandler] = useInput("");
-
     //정렬 모달 선택
     const [select, setSelect] = useState("마감 임박 순");
     let query = "";
-    const posts = useSelector((state) => state.post.posts);
 
     const queryHandler = () => {
         if (select === "마감 임박 순") {
-            query = `${searchTerm}&type=roomTitle&page=1&sortBy=createdAt`
+            query = `sortBy=limit_time&isAsc=true&keyword=${searchTerm}`;
         } else if (select === "신규 등록 순") {
-            query = ''
+            query = `sortBy=created_at&isAsc=true&keyword=${searchTerm}`;
         } else if (select === "참여자 많은 순") {
-            query = ''
+            query = `sortBy=participant_number&isAsc=false&keyword=${searchTerm}`;
         } else if (select === "참여자 적은 순") {
-            query = ''
+            query = `sortBy=participant_number&isAsc=true&keyword=${searchTerm}`;
         } else if (select === "매너 사용자 우선 순") {
-            query = ''
+            query = `keyword=${searchTerm}`;
         }
     }
 
@@ -112,10 +110,10 @@ export default function SearchPage() {
             if(searchTerm === '') {
                 dispatch(CLEAR_POSTS());
             } else {
-            const response = dispatch(__getSearchThunk(query));
-            //response로 예외처리
+                dispatch(__getSearchThunk(query));
+                //response로 선언해서 예외처리
             }
-        }, 500);
+        }, 600);
         return () => {
             clearTimeout(searchHandler);
         };
@@ -127,6 +125,9 @@ export default function SearchPage() {
             dispatch(CLEAR_POSTS());
         }
     }, [])
+
+    const posts = useSelector((state) => state.post.posts);
+    console.log("페이지", posts);
 
 
     return (
@@ -198,11 +199,15 @@ export default function SearchPage() {
             
             {/* 검색 결과 */}
             <SearchST.ResultBox>
-                {posts.data.map ? 
+                {/* {posts.data.map ? 
                     (posts.data.map((post) => (
                         <Card key={post.postId} post={post} />
                     ))) : (<h1>아직 개설된 채팅방이 없습니다.</h1>)
-                }
+                } */}
+
+                    {posts.data.map((post) => (
+                        <Card key={post.postId} post={post} />
+                    ))}
 
                 {/* //검색된 posts가 없을때
                     if (posts.data === [])
