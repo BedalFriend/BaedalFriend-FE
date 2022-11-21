@@ -127,6 +127,7 @@ export const ShortInput = styled.input`
   color: var(--color-light-black);
   width: 30px;
   margin-left: 20px;
+  text-align: right;
 
   ::-webkit-inner-spin-button {
     -webkit-appearance: none;
@@ -164,6 +165,7 @@ export const ButtonBox = styled.div`
 `;
 
 export const InputText = styled.div`
+  margin-left: 4px;
   font-size: var(--font-small);
   color: var(--color-dark-grey);
 `;

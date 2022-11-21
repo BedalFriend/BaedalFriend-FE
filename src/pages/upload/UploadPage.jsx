@@ -38,8 +38,6 @@ const Post = () => {
     limitTime: '2022-11-20 20:55:30',
   });
 
-  console.log('총 데이터', data);
-
   const [index, setIndex] = useState(0);
 
   const [addressManager, setAddressManager] = useState(false);
@@ -52,7 +50,8 @@ const Post = () => {
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    dispatch(__addPostThunk(data));
+    console.log('총데이터', data);
+    // dispatch(__addPostThunk(data));
   };
 
   const stepOneCheckHandler = (event) => {
@@ -123,7 +122,13 @@ const Post = () => {
             </>
           ) : null}
           {index === 1 ? (
-            <SearchMap setIndex={setIndex} data={data} setData={setData} />
+            <SearchMap
+              setIndex={setIndex}
+              data={data}
+              setData={setData}
+              name='targetName'
+              name2='targetAddress'
+            />
           ) : null}
           {index === 2 ? (
             <UploadCategory data={data} setData={setData} setIndex={setIndex} />

@@ -14,7 +14,6 @@ const UploadStepTwo = ({
   data,
   setData,
   setIndex,
-  dataHandler,
   addressManager,
   stepTwoCheckHandler,
   lengthLimit,
@@ -26,8 +25,6 @@ const UploadStepTwo = ({
   const month = ('0' + (today.getMonth() + 1)).slice(-2);
   const day = ('0' + today.getDate()).slice(-2);
   const [nowTime, setNowTime] = useState({ hour: 0, minute: 0 });
-
-  const [saveValue, setSaveValue] = useState({ hour: 0, minute: 0 });
 
   const newDateHandler = (e) => {
     const { value, name } = e.target;
@@ -41,7 +38,7 @@ const UploadStepTwo = ({
     { value: 5 },
   ];
 
-  const [currentValue, setCurrentValue] = useState('');
+  const [currentValue, setCurrentValue] = useState(data.participantNumber);
 
   const [showOptions, setShowOptions] = useState(false);
 
@@ -60,7 +57,6 @@ const UploadStepTwo = ({
         '-' +
         '00';
 
-      setSaveValue({ hour: nowTime.hour, minute: nowTime.minute });
       setData({
         ...data,
         limitTime: dateString,
@@ -79,7 +75,7 @@ const UploadStepTwo = ({
         nowTime.minute +
         '-' +
         '00';
-      setSaveValue({ hour: nowTime.hour, minute: nowTime.minute });
+
       setData({
         ...data,
         limitTime: dateString,
@@ -105,7 +101,9 @@ const UploadStepTwo = ({
       </UploadST.MenuBox>
       <UploadST.SelectBox>
         <UploadST.SelectInput onClick={() => setShowOptions((prev) => !prev)}>
-          <UploadST.SelectValue>{currentValue}명</UploadST.SelectValue>
+          <UploadST.SelectValue>
+            {data.participantNumber}명
+          </UploadST.SelectValue>
         </UploadST.SelectInput>
         <Select
           width='152px'
@@ -123,6 +121,7 @@ const UploadStepTwo = ({
           <img src={Time} style={{ width: '20px', height: '20px' }} alt='' />
           <UploadST.MenuTitle>모집 마감시간</UploadST.MenuTitle>
         </UploadST.MenuBox>
+
         <UploadST.LimitTimeBox>
           <Toggle setIsTime={setIsTime} />
           <UploadST.PriceInputBox>
@@ -131,19 +130,20 @@ const UploadStepTwo = ({
               type='number'
               min='1'
               max='12'
-              value={saveValue.hour}
+              value={nowTime.hour}
               onChange={newDateHandler}
               onInput={lengthLimit}
             />
             <UploadST.InputText>시</UploadST.InputText>
           </UploadST.PriceInputBox>
+
           <UploadST.PriceInputBox>
             <UploadST.TimeInput
               name='minute'
               type='number'
               min='0'
               max='59'
-              value={saveValue.minute}
+              value={nowTime.minute}
               onChange={newDateHandler}
               onInput={lengthLimit}
             />

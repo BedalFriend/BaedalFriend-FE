@@ -47,7 +47,8 @@ const SearchMap = ({ setIndex, data, setData, setAddressManager }) => {
   };
 
   const onChange = (e) => {
-    setInputText(e.target.value);
+    // setInputText(e.target.value);
+    setPlace(e.target.value);
   };
 
   const onClickHandler = (e) => {
@@ -59,6 +60,11 @@ const SearchMap = ({ setIndex, data, setData, setAddressManager }) => {
   const saveAddressHandler = () => {
     const gatherName = document.getElementById('gatherName');
     const gatherAddress = document.getElementById('gatherAddress');
+    console.log('beforeData', {
+      ...data,
+      gatherName: gatherName.innerHTML,
+      gatherAddress: gatherAddress.innerHTML,
+    });
     setData({
       ...data,
       gatherName: gatherName.innerHTML,
@@ -216,7 +222,7 @@ const SearchMap = ({ setIndex, data, setData, setAddressManager }) => {
           <SearchST.SearchInput
             placeholder='만날 장소를 검색해주세요'
             onChange={onChange}
-            value={inputText}
+            value={place}
           />
         </SearchST.SearchInputBox>
         <SearchST.MarkerInfoBox>

@@ -10,7 +10,7 @@ import CurrentMark from '../../imgs/upload/Map_MyLocation.png';
 //스크립트로 kakao maps api를 심어서 가져오면 window전역 객체에 들어가게 된다. 그리고 그걸 사용하려면 window에서 kakao객체를 뽑아서 사용하면 된다.
 const { kakao } = window;
 
-const SearchMap = ({ setIndex, setData, data }) => {
+const SearchMap = ({ setIndex, setData, data, name, name2 }) => {
   console.log(data);
   const [inputText, setInputText] = useState('');
   const [place, setPlace] = useState('');
@@ -65,11 +65,12 @@ const SearchMap = ({ setIndex, setData, data }) => {
   const saveAddressHandler = () => {
     const storeName = document.getElementById('storeName');
     const storeAddress = document.getElementById('storeAddress');
-    setData({
-      ...data,
-      targetName: storeName.innerHTML,
-      targetAddress: storeAddress.innerHTML,
-    });
+
+    const tempArr = { ...data };
+    tempArr[`${name}`] = storeName.innerHTML;
+    tempArr[`${name2}`] = storeAddress.innerHTML;
+    console.log('tempArr', tempArr);
+    setData(tempArr);
     setIndex(0);
   };
 
