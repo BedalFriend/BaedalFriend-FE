@@ -2,19 +2,19 @@ import React, { useEffect, useState } from 'react';
 
 import * as SearchST from './SearchMapStyle';
 
-import yellowMarker from '../../../../imgs/upload/Yellow_Marker.png';
-import orangeMarker from '../../../../imgs/upload/Orange_Map_Marker.png';
-import MyMarker from '../../../../imgs/upload/Map_LocationMark.png';
-import CurrentMark from '../../../../imgs/upload/Map_MyLocation.png';
+import yellowMarker from '../../imgs/upload/Yellow_Marker.png';
+import orangeMarker from '../../imgs/upload/Orange_Map_Marker.png';
+import MyMarker from '../../imgs/upload/Map_LocationMark.png';
+import CurrentMark from '../../imgs/upload/Map_MyLocation.png';
 
 //스크립트로 kakao maps api를 심어서 가져오면 window전역 객체에 들어가게 된다. 그리고 그걸 사용하려면 window에서 kakao객체를 뽑아서 사용하면 된다.
 const { kakao } = window;
 
-const SearchStoreMap = ({ setIndex, setData, data }) => {
+const SearchMap = ({ setIndex, setData, data }) => {
+  console.log(data);
   const [inputText, setInputText] = useState('');
   const [place, setPlace] = useState('');
   const [markerInfo, setMarkerInfo] = useState('');
-  console.log('markerInfo', markerInfo);
 
   //내가 선택한 마커 저장소
   const [selectMarker, setSelectMarker] = useState(false);
@@ -336,4 +336,4 @@ const SearchStoreMap = ({ setIndex, setData, data }) => {
   );
 };
 
-export default SearchStoreMap;
+export default SearchMap;

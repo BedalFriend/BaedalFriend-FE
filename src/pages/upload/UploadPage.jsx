@@ -13,6 +13,7 @@ import SearchPartyMap from './upload/searchMap/SearchPartyMap';
 import UploadCategory from './upload/UploadCategory';
 import UploadStepTwo from './upload/stepTwo/UploadStepTwo';
 import UploadStepOne from './upload/stepOne/UploadStepOne';
+import SearchMap from '../../components/searchMap/SearchMap';
 
 const Post = () => {
   const { setTab } = useContext(TabContext);
@@ -122,7 +123,7 @@ const Post = () => {
             </>
           ) : null}
           {index === 1 ? (
-            <SearchStoreMap setIndex={setIndex} data={data} setData={setData} />
+            <SearchMap setIndex={setIndex} data={data} setData={setData} />
           ) : null}
           {index === 2 ? (
             <UploadCategory data={data} setData={setData} setIndex={setIndex} />
