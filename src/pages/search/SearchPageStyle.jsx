@@ -25,7 +25,6 @@ export const Search = styled.div`
   justify-content: center;
 
   padding: 0 24px;
-  margin-top: 85px;
   margin-bottom: 24px;
 `;
 

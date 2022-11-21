@@ -10,6 +10,8 @@ import { useEffect } from 'react';
 import Card from '../../components/elements/card/Card';
 
 export default function MainPage(props) {
+
+  window.scrollTo(0, 0);
   const navigate = useNavigate();
 
   const { setTab } = useContext(TabContext);
@@ -200,7 +202,7 @@ export default function MainPage(props) {
           <MainST.CtgText>양식</MainST.CtgText>
         </MainST.CtgBox>
 
-        <MainST.CtgBox onClick={() => navigate(`/category/일식/회`)}>
+        <MainST.CtgBox onClick={() => navigate(`/category/일식`)}>
           <svg
             width='36'
             height='36'

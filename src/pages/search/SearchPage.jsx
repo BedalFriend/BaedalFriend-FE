@@ -14,10 +14,11 @@ import {__getSearchThunk, CLEAR_POSTS } from '../../redux/modules/PostSlice'
 
 export default function SearchPage() {
 
+    window.scrollTo(0, 0);
     const dispatch = useDispatch();
-
     const { setTab } = useContext(TabContext);
 
+    //tab
     useEffect(() => {
       setTab('Search');
       // eslint-disable-next-line
@@ -25,7 +26,9 @@ export default function SearchPage() {
 
     //정렬 모달창
     const [isOpen, setIsOpen] = useState(false);
+    const [aniState, setAniState] = useState(false);
     const openModal = () => {
+        setAniState(true);
         setIsOpen(true);
     }
     const closeModal = () => {
@@ -127,13 +130,13 @@ export default function SearchPage() {
     }, [])
 
     const posts = useSelector((state) => state.post.posts);
-    console.log("페이지", posts);
 
 
     return (
         <Layout>
-            <SearchST.SearchBg>
             
+            <SearchST.SearchBg>
+            <div style={{ width: '100%', height: '84px'}}></div>
             {/* 검색창 */}
             <SearchST.Search>
                 <svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
@@ -171,7 +174,7 @@ export default function SearchPage() {
                     <RecentWord/>
                     <RecentWord/>
                     <RecentWord/>
-                    <div style={{ width: '50%', height: '40px'}}></div>
+                    <div style={{ width: '50%', height: '30px'}}></div>
                 </SearchST.RecentDisplay>
 
             </SearchST.RecentSection>
@@ -179,13 +182,7 @@ export default function SearchPage() {
             <SearchST.Line />
 
             {/* 필터 설정 */}
-            <SearchST.DropDownSection onClick={openModal}>
-                {isOpen && (<SearchModal
-                                closeModal={closeModal}
-                                setSelect={setSelect}
-                                select={select}
-                                setIsOpen={setIsOpen}/>)}
-                
+            <SearchST.DropDownSection onClick={openModal}>                
                 <SearchST.DropDownText>{select}</SearchST.DropDownText>
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <mask id="mask0_536_236" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="-2" width="16" height="18">
@@ -196,18 +193,19 @@ export default function SearchPage() {
                     </g>
                 </svg>
             </SearchST.DropDownSection>
+            {isOpen && (<SearchModal
+                                aniState={aniState}
+                                setAniState={setAniState}
+                                closeModal={closeModal}
+                                setSelect={setSelect}
+                                select={select}/>)}
             
             {/* 검색 결과 */}
             <SearchST.ResultBox>
-                {/* {posts.data.map ? 
-                    (posts.data.map((post) => (
-                        <Card key={post.postId} post={post} />
-                    ))) : (<h1>아직 개설된 채팅방이 없습니다.</h1>)
-                } */}
 
-                    {posts.data.map((post) => (
-                        <Card key={post.postId} post={post} />
-                    ))}
+                {posts.data.map((post) => (
+                    <Card key={post.postId} post={post} />))
+                }
 
                 {/* //검색된 posts가 없을때
                     if (posts.data === [])
@@ -219,8 +217,8 @@ export default function SearchPage() {
             </SearchST.ResultBox>
 
             <div style={{ width: '100%', height: '152px' }}></div>
-            
-            </SearchST.SearchBg>     
+            </SearchST.SearchBg>
+           
         </Layout>
     );
 };
