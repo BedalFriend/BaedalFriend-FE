@@ -10,9 +10,7 @@ import CurrentMark from '../../imgs/upload/Map_MyLocation.png';
 //스크립트로 kakao maps api를 심어서 가져오면 window전역 객체에 들어가게 된다. 그리고 그걸 사용하려면 window에서 kakao객체를 뽑아서 사용하면 된다.
 const { kakao } = window;
 
-const SearchMap = ({ setIndex, setData, data, name, name2 }) => {
-  console.log(data);
-  const [inputText, setInputText] = useState('');
+const SearchMap = ({ setIndex, setData, data, name, address }) => {
   const [place, setPlace] = useState('');
   const [markerInfo, setMarkerInfo] = useState('');
 
@@ -53,13 +51,7 @@ const SearchMap = ({ setIndex, setData, data, name, name2 }) => {
   };
 
   const onChange = (e) => {
-    setInputText(e.target.value);
-  };
-
-  const onClickHandler = (e) => {
-    e.preventDefault();
-    setPlace(inputText);
-    setInputText('');
+    setPlace(e.target.value);
   };
 
   const saveAddressHandler = () => {
@@ -67,20 +59,11 @@ const SearchMap = ({ setIndex, setData, data, name, name2 }) => {
     const storeAddress = document.getElementById('storeAddress');
 
     const tempArr = { ...data };
-    tempArr[`${name}`] = storeName.innerHTML;
-    tempArr[`${name2}`] = storeAddress.innerHTML;
+    tempArr[`${name}`] = storeName.textContent;
+    tempArr[`${address}`] = storeAddress.textContent;
     console.log('tempArr', tempArr);
     setData(tempArr);
     setIndex(0);
-  };
-
-  // Enter 입력이 되면 클릭 이벤트 실행
-  const handleOnKeyPress = (e) => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      setPlace(inputText);
-      setInputText('');
-    }
   };
 
   useEffect(() => {
@@ -124,22 +107,25 @@ const SearchMap = ({ setIndex, setData, data, name, name2 }) => {
     }
 
     // //검색어따라 지도에서 찾기
-    const ps = new kakao.maps.services.Places();
+    let timer = setTimeout(() => {
+      const ps = new kakao.maps.services.Places();
 
-    const placesSearchCB = (data, status, pagination) => {
-      if (status === kakao.maps.services.Status.OK) {
-        let bounds = new kakao.maps.LatLngBounds();
+      const placesSearchCB = (data, status, pagination) => {
+        console.log('status', status);
+        if (status === kakao.maps.services.Status.OK) {
+          let bounds = new kakao.maps.LatLngBounds();
 
-        for (let i = 0; i < data.length; i++) {
-          displayMarker(data[i]);
-          bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
+          for (let i = 0; i < data.length; i++) {
+            displayMarker(data[i]);
+            bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
+          }
+
+          map.setBounds(bounds);
         }
+      };
 
-        map.setBounds(bounds);
-      }
-    };
-
-    ps.keywordSearch(place, placesSearchCB);
+      ps.keywordSearch(place, placesSearchCB);
+    }, 500);
 
     let selectedMarker = null;
 
@@ -173,7 +159,6 @@ const SearchMap = ({ setIndex, setData, data, name, name2 }) => {
 
           // 현재 클릭된 마커의 이미지는 클릭 이미지로 변경합니다
           marker.setImage(checkMarkerImage);
-          console.log('marker', marker);
         }
 
         // 클릭된 마커를 현재 클릭된 마커 객체로 설정합니다
@@ -206,7 +191,9 @@ const SearchMap = ({ setIndex, setData, data, name, name2 }) => {
     // 현재위치와 마커 사이의 거리 측정
     const dist = line.getLength();
 
-    console.log('dist', dist);
+    return () => {
+      clearTimeout(timer);
+    };
   }, [place, myLocation]);
 
   return (
@@ -220,10 +207,7 @@ const SearchMap = ({ setIndex, setData, data, name, name2 }) => {
           overflow: 'hidden',
         }}
       >
-        <SearchST.SearchInputBox
-          onClick={onClickHandler}
-          onKeyPress={handleOnKeyPress}
-        >
+        <SearchST.SearchInputBox>
           <SearchST.SearchImage
             width='24'
             height='24'
@@ -242,30 +226,8 @@ const SearchMap = ({ setIndex, setData, data, name, name2 }) => {
           <SearchST.SearchInput
             placeholder='만날 장소를 검색해주세요'
             onChange={onChange}
-            value={inputText}
+            value={place}
           />
-          {/* <button onClick={onClickHandler}>검색</button> */}
-          {/* <div>
-            {Places.map((item, i) => (
-              <div key={i} style={{ marginTop: '20px' }}>
-                <span>{i + 1}</span>
-                <button onClick={saveAddressHandler}>선택</button>
-                <div>
-                  <h5 id='storeName'>{item.place_name}</h5>
-                  {item.road_address_name ? (
-                    <div>
-                      <span id='storeAddress'>{item.road_address_name}</span>
-                      <span>{item.address_name}</span>
-                    </div>
-                  ) : (
-                    <span id='storeAddress'>{item.address_name}</span>
-                  )}
-                  <span>{item.phone}</span>
-                </div>
-              </div>
-            ))}
-            <div id='pagination'></div>
-          </div> */}
         </SearchST.SearchInputBox>
         <SearchST.MarkerInfoBox>
           <SearchST.InfoTitleBox>

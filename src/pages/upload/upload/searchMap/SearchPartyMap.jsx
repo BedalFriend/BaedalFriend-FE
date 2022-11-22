@@ -60,11 +60,7 @@ const SearchMap = ({ setIndex, data, setData, setAddressManager }) => {
   const saveAddressHandler = () => {
     const gatherName = document.getElementById('gatherName');
     const gatherAddress = document.getElementById('gatherAddress');
-    console.log('beforeData', {
-      ...data,
-      gatherName: gatherName.innerHTML,
-      gatherAddress: gatherAddress.innerHTML,
-    });
+
     setData({
       ...data,
       gatherName: gatherName.innerHTML,
@@ -105,7 +101,6 @@ const SearchMap = ({ setIndex, data, setData, setAddressManager }) => {
         myLocation.longitude
       );
 
-      console.log('currentPos', currentPos);
       // 지도 이동(기존 위치와 가깝다면 부드럽게 이동)
       map.panTo(currentPos);
 
@@ -125,22 +120,24 @@ const SearchMap = ({ setIndex, data, setData, setAddressManager }) => {
     }
 
     // //검색어따라 지도에서 찾기
-    const ps = new kakao.maps.services.Places();
+    let timer = setTimeout(() => {
+      const ps = new kakao.maps.services.Places();
 
-    const placesSearchCB = (data, status, pagination) => {
-      if (status === kakao.maps.services.Status.OK) {
-        let bounds = new kakao.maps.LatLngBounds();
+      const placesSearchCB = (data, status, pagination) => {
+        if (status === kakao.maps.services.Status.OK) {
+          let bounds = new kakao.maps.LatLngBounds();
 
-        for (let i = 0; i < data.length; i++) {
-          displayMarker(data[i]);
-          bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
+          for (let i = 0; i < data.length; i++) {
+            displayMarker(data[i]);
+            bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
+          }
+
+          map.setBounds(bounds);
         }
+      };
 
-        map.setBounds(bounds);
-      }
-    };
-
-    ps.keywordSearch(place, placesSearchCB);
+      ps.keywordSearch(place, placesSearchCB);
+    }, 500);
 
     let selectedMarker = null;
 
@@ -174,7 +171,6 @@ const SearchMap = ({ setIndex, data, setData, setAddressManager }) => {
 
           // 현재 클릭된 마커의 이미지는 클릭 이미지로 변경합니다
           marker.setImage(checkMarkerImage);
-          console.log('marker', marker);
         }
 
         // 클릭된 마커를 현재 클릭된 마커 객체로 설정합니다
@@ -186,6 +182,9 @@ const SearchMap = ({ setIndex, data, setData, setAddressManager }) => {
 
         setMarkerInfo(place);
       });
+    };
+    return () => {
+      clearTimeout(timer);
     };
   }, [place, myLocation]);
 

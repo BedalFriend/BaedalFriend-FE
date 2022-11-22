@@ -70,11 +70,11 @@ export const LongInputBox = styled.div`
   height: 40px;
 
   @media screen and (min-width: 764px) {
-    margin-bottom: 36px;
+    margin-bottom: 27px;
   }
 
   @media screen and (max-width: 764px) {
-    margin-bottom: 25px;
+    margin-bottom: 16px;
   }
 `;
 
@@ -114,11 +114,11 @@ export const ShortInputBox = styled.div`
 
   height: 40px;
   @media screen and (min-width: 764px) {
-    margin-bottom: 36px;
+    margin-bottom: 24px;
   }
 
   @media screen and (max-width: 764px) {
-    margin-bottom: 28px;
+    margin-bottom: 12px;
   }
 `;
 
@@ -143,6 +143,14 @@ export const PriceBox = styled.div`
   display: flex;
   align-items: center;
   width: 356px;
+
+  @media screen and (min-width: 764px) {
+    margin-bottom: 24px;
+  }
+
+  @media screen and (max-width: 764px) {
+    margin-bottom: 12px;
+  }
 `;
 
 export const PriceInputBox = styled.div`
@@ -155,6 +163,17 @@ export const PriceInputBox = styled.div`
   height: 40px;
 `;
 
+export const TimeInputBox = styled.div`
+  display: flex;
+  align-items: center;
+
+  background-color: var(--color-dark-white);
+  border-radius: 40px;
+  width: 152px;
+  height: 40px;
+  margin-left: 8px;
+`;
+
 export const ButtonBox = styled.div`
   position: absolute;
   width: calc(100% - 32px);
@@ -165,7 +184,7 @@ export const ButtonBox = styled.div`
 `;
 
 export const InputText = styled.div`
-  margin-left: 4px;
+  margin-left: 5px;
   font-size: var(--font-small);
   color: var(--color-dark-grey);
 `;
@@ -216,6 +235,7 @@ export const StayBtn = styled.button`
 
 export const SelectBox = styled.div`
   position: relative;
+  margin-bottom: 28px;
 `;
 
 export const LimitTimeBox = styled.div`
@@ -242,6 +262,7 @@ export const TimeInput = styled.input`
   color: var(--color-light-black);
   width: 30px;
   margin-left: 20px;
+  text-align: right;
 
   ::-webkit-inner-spin-button {
     -webkit-appearance: none;
@@ -288,4 +309,18 @@ export const SelectValue = styled.div`
   padding-top: 11px;
   align-items: center;
   color: var(--color-dark-grey);
+`;
+
+export const ErrorMsgBox = styled.div`
+  display: flex;
+`;
+
+export const ErrorMsg = styled.div`
+  margin-left: 4px;
+  margin-bottom: 29px;
+
+  font-family: 'Pretandard';
+  font-size: var(--font-micro);
+  font-weight: var(--weight-bold);
+  color: var(--color-system-error);
 `;
