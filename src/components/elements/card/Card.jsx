@@ -148,7 +148,7 @@ export default function Card({ post }) {
           &nbsp;/ {post.maxCapacity}명
         </CardST.PtNum>
 
-        <CardST.PtPic>
+        {/* <CardST.PtPic>
           {post.chatRoomMembers.map((user) => (
             <ProfilePic
               key={user.member.id}
@@ -159,7 +159,7 @@ export default function Card({ post }) {
           ))}
 
           <VacUser />
-        </CardST.PtPic>
+        </CardST.PtPic> */}
       </CardST.Party>
     </CardST.Box>
   );
