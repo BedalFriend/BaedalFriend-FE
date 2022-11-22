@@ -7,6 +7,7 @@ export const BottomBox = styled.div`
   height: 120px;
   padding: 16px;
 
+  display: flex;
   background-color: var(--color-white);
 
   @media screen and (min-width: 764px) {
@@ -18,7 +19,9 @@ export const BottomBox = styled.div`
   }
 `;
 
-export const InputBox = styled.div`
+export const Form = styled.form`
+  width: 100%;
+  height: 52px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -31,7 +34,7 @@ export const InputWrapper = styled.div`
   border-radius: 999px;
   display: flex;
   align-items: center;
-  padding: 0 32px;
+  padding: 0 24px;
 `;
 
 export const Input = styled.input`
@@ -103,6 +106,12 @@ export const TopBtn = styled.button`
   color: var(--color-orange);
 `;
 
+export const TopSVG = styled.svg`
+  margin-left: 6px;
+  cursor: pointer;
+  transform: ${(props) => (props.isDroped ? 'rotate(180deg)' : '')};
+`;
+
 export const TopThird = styled.div`
   position: fixed;
   top: ${(props) => (props.isDroped ? '95px' : '0px')};
@@ -146,6 +155,8 @@ export const BigUser = styled.div`
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
+  width: 48px;
+  height: 66px;
 `;
 
 export const Nickname = styled.span`
@@ -155,11 +166,111 @@ export const Nickname = styled.span`
   font-weight: var(--weight-regular);
   font-size: var(--font-micro);
   color: var(--color-grey);
+  width: 48px;
+  max-width: 48px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 export const Body = styled.div`
   width: 100%;
+  height: 100vh;
+  overflow: scroll;
   padding: 0 16px;
   min-height: 100vh;
   background-color: var(--color-dark-white);
+`;
+
+/* ================ */
+
+export const Area = styled.div`
+  position: absolute;
+  height: 100%;
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const ModalLayout = styled.div`
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-color: var(--color-light-black);
+  opacity: 0.3;
+
+  z-index: 910;
+`;
+
+export const Box = styled.div`
+  display: flex;
+  flex-flow: column nowrap;
+
+  width: 326px;
+  height: 174px;
+`;
+
+export const ModalInfo = styled.div`
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+
+  width: 100%;
+  height: 110px;
+
+  z-index: 920;
+
+  margin-bottom: 12px;
+
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+
+  padding-top: 16px;
+`;
+
+export const InfoText = styled.div`
+  width: 160px;
+  height: 42px;
+  font-display: swap;
+  font-weight: var(--weight-regular);
+  font-size: var(--font-small);
+  line-height: 150%;
+  text-align: center;
+  color: var(--color-dark-grey);
+  margin-top: 8px;
+`;
+
+export const Option = styled.div`
+  font-display: swap;
+  font-weight: var(--weight-regular);
+  font-size: var(--font-small);
+  color: var(--color-dark-grey);
+
+  display: flex;
+  align-items: center;
+  gap: 4px;
+`;
+
+export const ModalBtnSet = styled.div`
+  width: 100%;
+  height: 52px;
+
+  display: flex;
+  justify-content: space-between;
+`;
+
+export const ModalBtn = styled.button`
+  background: var(--color-white);
+  border-radius: 12px;
+
+  width: 155px;
+  height: 52px;
+  z-index: 920;
+
+  font-family: 'Pretendard';
+  font-display: swap;
+  font-weight: var(--weight-bold);
+  font-size: var(--font-small);
 `;

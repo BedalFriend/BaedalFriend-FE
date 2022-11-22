@@ -61,15 +61,26 @@ export const __getSearchThunk = createAsyncThunk(
   'GET_SEARCH',
   async (arg, thunkAPI) => {
     try {
-      const { data } = await getInstance().get(`${basePath}/posts/search?keyword=${arg}&type=roomTitle&page=1`);
+      const { data } = await getInstance().get(`${basePath}/posts/search?page=1&size=100&${arg}`);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error.code);
-    }
+    }   
   }
 );
 
- 
+export const __getCateSearchThunk = createAsyncThunk(
+  'GET_CATESEARCH',
+  async (arg, thunkAPI) => {
+    try {
+      const { data } = await getInstance().get(`${basePath}/posts/category/search?page=1&size=100&${arg}`);
+      return thunkAPI.fulfillWithValue(data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.code);
+    }   
+  }
+);
+
 const initialState = {
   post: { data: {}, isLoading: false, error: null },
   posts: { data: [], isLoading: false, error: null },
@@ -78,7 +89,11 @@ const initialState = {
 export const postsSlice = createSlice({
   name: 'post', //모듈의 이름
   initialState,
-  reducers: {},
+  reducers: {
+    CLEAR_POSTS : (state) => { state.posts = {
+      data: [], isLoading: false, error: null
+    }}
+  },
   extraReducers: {
     //get
     [__getThunk.pending]: (state) => {
@@ -148,10 +163,23 @@ export const postsSlice = createSlice({
     },
     [__getSearchThunk.fulfilled]: (state, action) => {
       state.posts.isLoading = false;
-      state.posts.data = action.payload.content;
+      state.posts.data = action.payload.data;
+    },
+
+    //get Category Search
+    [__getCateSearchThunk.pending]: (state) => {
+      state.posts.isLoading = true;
+    },
+    [__getCateSearchThunk.rejected]: (state, action) => {
+      state.posts.isLoading = false;
+      state.posts.error = action.payload;
+    },
+    [__getCateSearchThunk.fulfilled]: (state, action) => {
+      state.posts.isLoading = false;
+      state.posts.data = action.payload.data;
     },
   },
 });
 
-export const {} = postsSlice.actions;
+export const {CLEAR_POSTS} = postsSlice.actions;
 export default postsSlice.reducer;

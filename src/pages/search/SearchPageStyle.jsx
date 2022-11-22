@@ -3,19 +3,18 @@ import styled from 'styled-components';
 export const SearchBg = styled.div`
     background-color: var(--color-white);
     width: 100%;
-    height: 100vh;
+    min-height: 1000px;
     
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
-    position: relative;
+    position: absolute;
 `
 
 export const Search = styled.div`
   position: relative;
   width: calc(100% - 32px);
   height: 56px;
-  z-index: 500;
 
   background: var(--color-white);
   box-shadow: 0px 0px 8px rgba(187, 187, 187, 0.32);
@@ -26,7 +25,6 @@ export const Search = styled.div`
   justify-content: center;
 
   padding: 0 24px;
-  margin-top: 85px;
   margin-bottom: 24px;
 `;
 
@@ -63,7 +61,7 @@ export const RecentTitle = styled.div`
 
 export const RecentDisplay = styled.div`
     position: relative;
-    width: 100vw;
+    width: 100%;
     display: flex;
     align-items: flex-start;
     background-color: var(--color-white);
@@ -82,6 +80,8 @@ export const Line = styled.hr`
     width: calc(100% - 32px);
 
     border-radius: 99px;
+
+    z-index: 500;
 `;
 
 export const DropDownSection = styled.div`

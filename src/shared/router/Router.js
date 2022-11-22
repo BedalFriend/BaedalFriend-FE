@@ -14,12 +14,15 @@ import DetailPage from '../../pages/DetailPage';
 import ChatPage from '../../pages/chat/ChatPage';
 import SearchPage from '../../pages/search/SearchPage';
 import NearbyPage from '../../pages/nearby/NearbyPage';
+import CategoryPage from '../../pages/search/CategoryPage';
 
 const Router = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route element={<PrivateRoute />}></Route>
+        <Route element={<PrivateRoute />}>
+          <Route path='/chat/:id' element={<ChatPage />} />
+        </Route>
 
         <Route element={<PublicRoute />}>
           <Route path='/login' element={<LoginPage />} />
@@ -27,7 +30,6 @@ const Router = () => {
         </Route>
 
         <Route path='/kakaoLogin' element={<KakaoLoginPage />} />
-        <Route path='/chat' element={<ChatPage />} />
 
         <Route element={<GlobalRoute />}>
           <Route path='/' element={<MainPage />} />
@@ -36,6 +38,7 @@ const Router = () => {
           <Route path='/post' element={<UploadPage />} />
           <Route path='/detail/:id' element={<DetailPage />} />
           <Route path='/search' element={<SearchPage />} />
+          <Route path='/category/:id' element={<CategoryPage />} />
           <Route path='*' element={<MainPage />} />
         </Route>
       </Routes>

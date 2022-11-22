@@ -26,7 +26,6 @@ export default function StepOne({
     setInCheck(true);
     const handler = setTimeout(async () => {
       const response = await checkEmail(`${signInfo['email']}${domain}`);
-      console.log(response);
       if (response.status) {
         setInCheck(false);
         setIsEmailFail(false);

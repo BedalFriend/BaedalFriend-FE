@@ -1,12 +1,21 @@
 import styled, {keyframes} from 'styled-components';
 
 
-const fadeIn = keyframes`
+const FadeIn = keyframes`
   from {
-    background: rgba(0, 0, 0, 0);
+    opacity: 0;
   }
   to {
-    background: rgba(0, 0, 0, 0.5);
+    opacity: 1;
+  }
+`;
+
+const FadeOut = keyframes`
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
   }
 `;
 
@@ -17,12 +26,12 @@ export const Overlay = styled.div`
     bottom: 0;
     left: 0;
     right: 0;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.3);
     z-index: 910;
 
     animation-duration: 0.5s;
     animation-timing-function: ease-out;
-    animation-name: ${fadeIn};
+    animation-name: ${(props) => (props.aniState ? FadeIn : FadeOut)};
 
     @media screen and (min-width: 764px) {
         width: var(--responsive-width);
@@ -31,29 +40,50 @@ export const Overlay = styled.div`
     @media screen and (max-width: 764px) {
         width: 100%;
     }
+
+    cursor: pointer;
 `;
 
 export const ModalWrap = styled.div`
-    width: calc(100% - 32px);
+    width: 326px;
     height: fit-content;
-    border-radius: 12px;
-    background-color: var(--color-white);
     position: absolute;
-    padding: 15px 0px;
+
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -10%);
+    transform: translate(-50%, -50%);
     z-index: 920;
 
     align-items: center;
+
+    cursor: pointer;
 `;
 
 export const SelectBox = styled.div`
     position: relative;
-    height: 50px;
-    border-radius: 12px;
-    background-color: var(--color-white);
+    height: 40px;
+    background-color: rgba(255, 255, 255, 0.80);
     text-align: center;
+`;
+
+export const TopBox = styled.div`
+    position: relative;
+    height: 50px;
+    background-color: rgba(255, 255, 255, 0.80);
+    text-align: center;  
+    border-top-left-radius: 12px;
+    border-top-right-radius : 12px;
+    padding-top: 10px;
+`;
+
+export const BottomBox = styled.div`
+    position: relative;
+    height: 50px;
+    background-color: rgba(255, 255, 255, 0.80);
+    text-align: center;    
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    padding-bottom: 10px;
 `;
 
 export const SelectText = styled.div`

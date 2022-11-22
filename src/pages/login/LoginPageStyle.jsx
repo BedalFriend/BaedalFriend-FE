@@ -7,6 +7,7 @@ export const Box = styled.div`
 
   display: flex;
   flex-flow: column nowrap;
+  justify-content: center;
   align-items: center;
 
   @media screen and (min-width: 764px) {
@@ -19,7 +20,6 @@ export const Box = styled.div`
 `;
 
 export const LogoSVG = styled.svg`
-  margin-top: 204px;
   margin-bottom: 64px;
   width: 80px;
   height: 80px;
@@ -65,7 +65,7 @@ export const InputWrapper = styled.div`
 
   background: var(--color-white);
   border: 1px solid var(--color-orange);
-  border-radius: 999px;
+  border-radius: 12px;
 
   display: flex;
   align-items: center;
