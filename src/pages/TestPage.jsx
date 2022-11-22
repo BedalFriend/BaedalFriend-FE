@@ -89,7 +89,7 @@ export default function TestPage(props) {
       <Timer limit='10' />
       <h1
         onClick={() => {
-          console.log(new Date('2022-11-10 17:30:25') - new Date());
+          console.log(new Date('2022-11-19T10:05:48.282494'));
         }}
       >
         Date Generator!
@@ -104,6 +104,7 @@ const Box = styled.div`
   width: 300px;
   font-weight: 300;
   font-display: swap;
+  min-height: 100vh;
 `;
 
 const Button = styled.button`

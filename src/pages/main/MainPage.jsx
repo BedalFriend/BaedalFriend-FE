@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import * as MainST from './MainPageStyle';
 
 import Layout from '../../components/layout/Layout';
@@ -9,6 +10,10 @@ import { useEffect } from 'react';
 import Card from '../../components/elements/card/Card';
 
 export default function MainPage(props) {
+
+  window.scrollTo(0, 0);
+  const navigate = useNavigate();
+
   const { setTab } = useContext(TabContext);
 
   useEffect(() => {
@@ -22,7 +27,11 @@ export default function MainPage(props) {
         <Carousel />
       </MainST.Top>
 
-      <MainST.Search>
+      <MainST.Search
+        onClick={() => {
+          navigate('/search');
+        }}
+      >
         <svg
           width='24'
           height='24'
@@ -42,7 +51,7 @@ export default function MainPage(props) {
       </MainST.Search>
 
       <MainST.CtgSection>
-        <MainST.CtgBox>
+        <MainST.CtgBox onClick={() => navigate(`/category/전체`)}>
           <svg
             width='36'
             height='36'
@@ -61,7 +70,7 @@ export default function MainPage(props) {
           <MainST.CtgText>전체</MainST.CtgText>
         </MainST.CtgBox>
 
-        <MainST.CtgBox>
+        <MainST.CtgBox onClick={() => navigate(`/category/패스트푸드`)}>
           <svg
             width='36'
             height='36'
@@ -79,7 +88,7 @@ export default function MainPage(props) {
           <MainST.CtgText>패스트푸드</MainST.CtgText>
         </MainST.CtgBox>
 
-        <MainST.CtgBox>
+        <MainST.CtgBox  onClick={() => navigate(`/category/치킨`)}>
           <svg
             width='36'
             height='36'
@@ -100,7 +109,7 @@ export default function MainPage(props) {
           <MainST.CtgText>치킨</MainST.CtgText>
         </MainST.CtgBox>
 
-        <MainST.CtgBox>
+        <MainST.CtgBox onClick={() => navigate(`/category/분식`)}>
           <svg
             width='36'
             height='36'
@@ -118,7 +127,7 @@ export default function MainPage(props) {
           <MainST.CtgText>분식</MainST.CtgText>
         </MainST.CtgBox>
 
-        <MainST.CtgBox>
+        <MainST.CtgBox onClick={() => navigate(`/category/야식`)}>
           <svg
             width='36'
             height='36'
@@ -137,7 +146,7 @@ export default function MainPage(props) {
           <MainST.CtgText>야식</MainST.CtgText>
         </MainST.CtgBox>
 
-        <MainST.CtgBox>
+        <MainST.CtgBox onClick={() => navigate(`/category/한식`)}>
           <svg
             width='36'
             height='36'
@@ -156,7 +165,7 @@ export default function MainPage(props) {
           <MainST.CtgText>한식</MainST.CtgText>
         </MainST.CtgBox>
 
-        <MainST.CtgBox>
+        <MainST.CtgBox onClick={() => navigate(`/category/중식`)}>
           <svg
             width='36'
             height='36'
@@ -175,7 +184,7 @@ export default function MainPage(props) {
           <MainST.CtgText>중식</MainST.CtgText>
         </MainST.CtgBox>
 
-        <MainST.CtgBox>
+        <MainST.CtgBox onClick={() => navigate(`/category/양식`)}>
           <svg
             width='36'
             height='36'
@@ -193,7 +202,7 @@ export default function MainPage(props) {
           <MainST.CtgText>양식</MainST.CtgText>
         </MainST.CtgBox>
 
-        <MainST.CtgBox>
+        <MainST.CtgBox onClick={() => navigate(`/category/일식`)}>
           <svg
             width='36'
             height='36'
@@ -212,7 +221,7 @@ export default function MainPage(props) {
           <MainST.CtgText>일식/회</MainST.CtgText>
         </MainST.CtgBox>
 
-        <MainST.CtgBox>
+        <MainST.CtgBox onClick={() => navigate(`/category/디저트`)}>
           <svg
             width='36'
             height='36'
@@ -231,7 +240,7 @@ export default function MainPage(props) {
           <MainST.CtgText>디저트</MainST.CtgText>
         </MainST.CtgBox>
 
-        <MainST.CtgBox>
+        <MainST.CtgBox onClick={() => navigate(`/category/채식`)}>
           <svg
             width='36'
             height='36'
@@ -250,7 +259,7 @@ export default function MainPage(props) {
           <MainST.CtgText>채식</MainST.CtgText>
         </MainST.CtgBox>
 
-        <MainST.CtgBox>
+        <MainST.CtgBox onClick={() => navigate(`/category/아시안`)}>
           <svg
             width='36'
             height='36'
@@ -269,7 +278,7 @@ export default function MainPage(props) {
           <MainST.CtgText>아시안</MainST.CtgText>
         </MainST.CtgBox>
 
-        <MainST.CtgBox>
+        <MainST.CtgBox onClick={() => navigate(`/category/건강식`)}>
           <svg
             width='36'
             height='36'
@@ -286,7 +295,7 @@ export default function MainPage(props) {
           <MainST.CtgText>건강식</MainST.CtgText>
         </MainST.CtgBox>
 
-        <MainST.CtgBox>
+        <MainST.CtgBox onClick={() => navigate(`/category/샌드위치`)}>
           <svg
             width='36'
             height='36'
@@ -305,7 +314,7 @@ export default function MainPage(props) {
           <MainST.CtgText>샌드위치</MainST.CtgText>
         </MainST.CtgBox>
 
-        <MainST.CtgBox>
+        <MainST.CtgBox onClick={() => navigate(`/category/편의점`)}>
           <svg
             width='36'
             height='36'
@@ -353,10 +362,10 @@ export default function MainPage(props) {
         </div>
 
         <MainST.LimitList>
+          {/* <Card />
           <Card />
           <Card />
-          <Card />
-          <Card />
+          <Card /> */}
         </MainST.LimitList>
       </MainST.LimitBox>
 

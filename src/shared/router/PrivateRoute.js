@@ -6,7 +6,7 @@ export default function PrivateRoute() {
   const { isAuth } = CheckToken(location.key);
 
   if (isAuth === 'Failed') {
-    return <Navigate to='/sign' state={{ from: location }} />;
+    return <Navigate to='/login' state={{ from: location }} />;
   }
 
   return <Outlet />;

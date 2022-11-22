@@ -14,7 +14,7 @@ export const IndicatorWrapper = styled.div`
   align-items: center;
   justify-content: center;
   position: absolute;
-  top: 92%;
+  top: 345px;
   left: 50%;
   transform: translate(-50%, -50%);
 `
@@ -37,9 +37,7 @@ export const Wrapper = styled.div`
 `;
 
 export const Container = styled.div`
-  //border-radius: 7px;
   display: flex;
-  //margin: 0 12px;
   cursor: pointer;
   position: relative;
 `;
@@ -55,16 +53,18 @@ export const Row = styled.div`
 
 export const ImgWrapper = styled.div`
   position: relative;
+  background-color: var(--color-white);
 `;
 
 export const Img = styled.img`
-  //border-radius: 7px;
-  //margin: 0 20px;
   position: relative;
   cursor: pointer;
-  transition: all 0.5s linear;
-  width: 631px;
-  height: 370px;
+  transition: all 0.5s ease-out;
+  width: 630px;
+  height: 400px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 `;
 
 export const ImgDes = styled.div`
@@ -72,40 +72,86 @@ export const ImgDes = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  text-align: center;
 
-  width: 358px;
+  width: calc(100vw - 32px);
+  max-width: calc(100% - 32px);
   height: 92px;
-  border: 1px solid var(--color-orange);
   border-radius: 12px;
-  background-color: #ffffff;
+  background-color: #77777778;
   color: var(--color-orange);
 
-  top: 70%;
+  top: 66%;
   left: 50%;
   transform: translate(-50%, -50%);
+
   padding: 0 auto;
   cursor: pointer;
 `;
 
+
 export const MiniBox = styled.div`
   position: relative;
-  width: 116px;
+  width: fit-content;
   height: 33px;
-  left: 7%;
+  left: 24px;
 
   display: flex;
   flex-direction: row;
+  flex-flow: row wrap;
   align-items: flex-start;
   padding: 8px 12px;
-  gap: 10px;
 
-  background: var(--color-light-orange);
+  background: var(--color-blur-orange);
   border-radius: 99px;
+
+  cursor: pointer;
+`
+
+export const LoginMiniBox = styled.div`
+  position: absolute;
+  width: fit-content;
+
+  height: 33px;
+  top: 138px;
+  left: 140px;
+  //transform: translate(-50%, -50%);
+
+  display: flex;
+  flex-flow: row wrap;
+  align-items: flex-start;
+  padding: 8px 12px;
+
+  background: var(--color-blur-orange);
+  border-radius: 99px;
+
+  cursor: pointer;
 `
 
 export const DesContent = styled.span`
-  font-weight: 700;
-  font-size: 14px;
+  font-weight: var(--weight-bold);
+  font-size: var(--font-small);
+  color: var(--color-orange);
+  word-break: keep-all;
+`;
+
+
+export const TextBox = styled.span`
+  font-weight: var(--weight-regular);
+  font-size: 24px;
+  text-align: left;
+
+  position: absolute;
+  width: fit-content;
+  top: 60px;
+  left: 152px;
+
+`;
+
+export const BoldText = styled.span`
+  font-weight: var(--weight-bold);
+`;
+
+export const BfText = styled.span`
+  font-weight: var(--weight-bold);
   color: var(--color-orange);
 `;

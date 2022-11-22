@@ -3,10 +3,11 @@ import styled from 'styled-components';
 export const Box = styled.div`
   background-color: var(--color-orange);
   position: relative;
-  height: 100vh;
+  min-height: 100vh;
 
   display: flex;
   flex-flow: column nowrap;
+  justify-content: center;
   align-items: center;
 
   @media screen and (min-width: 764px) {
@@ -19,8 +20,9 @@ export const Box = styled.div`
 `;
 
 export const LogoSVG = styled.svg`
-  margin-top: 204px;
   margin-bottom: 64px;
+  width: 80px;
+  height: 80px;
 `;
 
 export const SetBox = styled.div`
@@ -63,7 +65,7 @@ export const InputWrapper = styled.div`
 
   background: var(--color-white);
   border: 1px solid var(--color-orange);
-  border-radius: 999px;
+  border-radius: 12px;
 
   display: flex;
   align-items: center;
@@ -104,7 +106,7 @@ export const LoginBtn = styled.button`
 `;
 export const KakaoBtn = styled.button`
   position: relative;
-  background-color: #fee500;
+  background-color: var(--color-kakao-yellow);
   border-radius: 12px;
   height: 52px;
 
@@ -112,7 +114,7 @@ export const KakaoBtn = styled.button`
   font-size: var(--font-regular);
   font-weight: var(--weight-regular);
   font-display: swap;
-  color: #191919;
+  color: var(--color-kakao-black);
 
   display: flex;
   justify-content: center;

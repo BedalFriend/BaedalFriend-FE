@@ -7,18 +7,20 @@ import store from './redux/config/ConfigStore';
 import { Provider } from 'react-redux';
 import { TabProvider } from './context/TabContext';
 import { SocketProvider } from './context/SocketContext';
+import { AlarmProvider } from './context/AlarmContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   // <React.StrictMode>
 
   // </React.StrictMode>
-  // <SocketProvider></SocketProvider>
   <Provider store={store}>
     <TabProvider>
-      <SocketProvider>
-        <App />
-      </SocketProvider>
+      <AlarmProvider>
+        <SocketProvider>
+          <App />
+        </SocketProvider>
+      </AlarmProvider>
     </TabProvider>
   </Provider>
 );
