@@ -61,7 +61,19 @@ export const __getSearchThunk = createAsyncThunk(
   'GET_SEARCH',
   async (arg, thunkAPI) => {
     try {
-      const { data } = await getInstance().get(`${basePath}/posts/search?keyword=${arg}`);
+      const { data } = await getInstance().get(`${basePath}/posts/search?page=1&size=100&${arg}`);
+      return thunkAPI.fulfillWithValue(data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.code);
+    }   
+  }
+);
+
+export const __getCateSearchThunk = createAsyncThunk(
+  'GET_CATESEARCH',
+  async (arg, thunkAPI) => {
+    try {
+      const { data } = await getInstance().get(`${basePath}/posts/category/search?page=1&size=100&${arg}`);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error.code);
@@ -151,7 +163,20 @@ export const postsSlice = createSlice({
     },
     [__getSearchThunk.fulfilled]: (state, action) => {
       state.posts.isLoading = false;
-      state.posts.data = action.payload.content;
+      state.posts.data = action.payload.data;
+    },
+
+    //get Category Search
+    [__getCateSearchThunk.pending]: (state) => {
+      state.posts.isLoading = true;
+    },
+    [__getCateSearchThunk.rejected]: (state, action) => {
+      state.posts.isLoading = false;
+      state.posts.error = action.payload;
+    },
+    [__getCateSearchThunk.fulfilled]: (state, action) => {
+      state.posts.isLoading = false;
+      state.posts.data = action.payload.data;
     },
   },
 });

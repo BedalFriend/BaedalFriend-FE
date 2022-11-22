@@ -2,12 +2,15 @@ import React, {useEffect, useRef} from 'react';
 import * as ModalST from './SearchModalStyle';
 import useOutSideClick from '../../hooks/useOutSideClick';
 
-export default function SearchModal({closeModal, setSelect, select}) {
+export default function SearchModal({aniState, setAniState, closeModal, setSelect, select}) {
 
     //배경 클릭 시 모달창 닫기
     const modalRef = useRef(null)
     const handleClose = () => {
-        closeModal();
+        setAniState(false);
+        setTimeout(() => {
+            closeModal();
+        }, 500);
     };
 
     useOutSideClick(modalRef, handleClose);
@@ -21,12 +24,11 @@ export default function SearchModal({closeModal, setSelect, select}) {
     
     return (
         <>
-        <ModalST.Overlay/>
-
+        <ModalST.Overlay aniState={aniState}>
         <ModalST.ModalWrap ref={modalRef}>
-            <ModalST.SelectBox onClick={() => setSelect("마감 임박 순")}>
+            <ModalST.TopBox onClick={() => setSelect("마감 임박 순")}>
                 <ModalST.SelectText focused={select === "마감 임박 순" ? true:false}>마감 임박 순</ModalST.SelectText>
-            </ModalST.SelectBox>
+            </ModalST.TopBox>
             <ModalST.SelectBox onClick={() => setSelect("신규 등록 순")}>
                 <ModalST.SelectText focused={select === "신규 등록 순" ? true:false}>신규 등록 순</ModalST.SelectText>
             </ModalST.SelectBox>
@@ -36,10 +38,11 @@ export default function SearchModal({closeModal, setSelect, select}) {
             <ModalST.SelectBox onClick={() => setSelect("참여자 적은 순")}>
                 <ModalST.SelectText focused={select === "참여자 적은 순" ? true:false}>참여자 적은 순</ModalST.SelectText>
             </ModalST.SelectBox>
-            <ModalST.SelectBox onClick={() => setSelect("매너 사용자 우선 순")}>
+            <ModalST.BottomBox onClick={() => setSelect("매너 사용자 우선 순")}>
                 <ModalST.SelectText focused={select === "매너 사용자 우선 순" ? true:false}>매너 사용자 우선 순</ModalST.SelectText>
-            </ModalST.SelectBox>
+            </ModalST.BottomBox>
         </ModalST.ModalWrap>
+        </ModalST.Overlay>
         </>
     );
 };

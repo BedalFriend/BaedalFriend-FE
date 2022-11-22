@@ -14,10 +14,11 @@ import {__getSearchThunk, CLEAR_POSTS } from '../../redux/modules/PostSlice'
 
 export default function SearchPage() {
 
+    window.scrollTo(0, 0);
     const dispatch = useDispatch();
-
     const { setTab } = useContext(TabContext);
 
+    //tab
     useEffect(() => {
       setTab('Search');
       // eslint-disable-next-line
@@ -25,7 +26,9 @@ export default function SearchPage() {
 
     //정렬 모달창
     const [isOpen, setIsOpen] = useState(false);
+    const [aniState, setAniState] = useState(false);
     const openModal = () => {
+        setAniState(true);
         setIsOpen(true);
     }
     const closeModal = () => {
@@ -85,23 +88,21 @@ export default function SearchPage() {
 
     //검색어
     const [searchTerm, setSearchTerm, searchHandler] = useInput("");
-
     //정렬 모달 선택
     const [select, setSelect] = useState("마감 임박 순");
     let query = "";
-    const posts = useSelector((state) => state.post.posts);
 
     const queryHandler = () => {
         if (select === "마감 임박 순") {
-            query = `${searchTerm}&type=roomTitle&page=1&sortBy=createdAt`
+            query = `sortBy=limit_time&isAsc=true&keyword=${searchTerm}`;
         } else if (select === "신규 등록 순") {
-            query = ''
+            query = `sortBy=created_at&isAsc=true&keyword=${searchTerm}`;
         } else if (select === "참여자 많은 순") {
-            query = ''
+            query = `sortBy=participant_number&isAsc=false&keyword=${searchTerm}`;
         } else if (select === "참여자 적은 순") {
-            query = ''
+            query = `sortBy=participant_number&isAsc=true&keyword=${searchTerm}`;
         } else if (select === "매너 사용자 우선 순") {
-            query = ''
+            query = `keyword=${searchTerm}`;
         }
     }
 
@@ -112,10 +113,10 @@ export default function SearchPage() {
             if(searchTerm === '') {
                 dispatch(CLEAR_POSTS());
             } else {
-            const response = dispatch(__getSearchThunk(query));
-            //response로 예외처리
+                dispatch(__getSearchThunk(query));
+                //response로 선언해서 예외처리
             }
-        }, 500);
+        }, 600);
         return () => {
             clearTimeout(searchHandler);
         };
@@ -128,11 +129,14 @@ export default function SearchPage() {
         }
     }, [])
 
+    const posts = useSelector((state) => state.post.posts);
+
 
     return (
         <Layout>
-            <SearchST.SearchBg>
             
+            <SearchST.SearchBg>
+            <div style={{ width: '100%', height: '84px'}}></div>
             {/* 검색창 */}
             <SearchST.Search>
                 <svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
@@ -170,7 +174,7 @@ export default function SearchPage() {
                     <RecentWord/>
                     <RecentWord/>
                     <RecentWord/>
-                    <div style={{ width: '50%', height: '40px'}}></div>
+                    <div style={{ width: '50%', height: '30px'}}></div>
                 </SearchST.RecentDisplay>
 
             </SearchST.RecentSection>
@@ -178,13 +182,7 @@ export default function SearchPage() {
             <SearchST.Line />
 
             {/* 필터 설정 */}
-            <SearchST.DropDownSection onClick={openModal}>
-                {isOpen && (<SearchModal
-                                closeModal={closeModal}
-                                setSelect={setSelect}
-                                select={select}
-                                setIsOpen={setIsOpen}/>)}
-                
+            <SearchST.DropDownSection onClick={openModal}>                
                 <SearchST.DropDownText>{select}</SearchST.DropDownText>
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <mask id="mask0_536_236" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="-2" width="16" height="18">
@@ -195,13 +193,18 @@ export default function SearchPage() {
                     </g>
                 </svg>
             </SearchST.DropDownSection>
+            {isOpen && (<SearchModal
+                                aniState={aniState}
+                                setAniState={setAniState}
+                                closeModal={closeModal}
+                                setSelect={setSelect}
+                                select={select}/>)}
             
             {/* 검색 결과 */}
             <SearchST.ResultBox>
-                {posts.data.map ? 
-                    (posts.data.map((post) => (
-                        <Card key={post.postId} post={post} />
-                    ))) : (<h1>아직 개설된 채팅방이 없습니다.</h1>)
+
+                {posts.data.map((post) => (
+                    <Card key={post.postId} post={post} />))
                 }
 
                 {/* //검색된 posts가 없을때
@@ -214,8 +217,8 @@ export default function SearchPage() {
             </SearchST.ResultBox>
 
             <div style={{ width: '100%', height: '152px' }}></div>
-            
-            </SearchST.SearchBg>     
+            </SearchST.SearchBg>
+           
         </Layout>
     );
 };
