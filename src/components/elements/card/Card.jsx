@@ -6,28 +6,9 @@ import ProfilePic from '../profilePic/ProfilePic';
 import SVG from '../../../shared/SVG';
 
 export default function Card({ post }) {
-  const boyUser = {
-    id: 1,
-    profileURL:
-      'https://i.pinimg.com/236x/56/cc/80/56cc80ea80aff65bc09c7967b993821c.jpg',
-  };
-
-  const girlUser = {
-    id: 2,
-    profileURL:
-      'https://i.pinimg.com/236x/cb/24/f1/cb24f1478772b27702ff45e5490b6b6f.jpg',
-  };
-
-  const noPicUser = {
-    id: 3,
-    profileURL: null,
-  };
-
-  const userArr = [boyUser, girlUser, noPicUser];
-
   const VacUser = () => {
     const result = [];
-    for (let i = 0; i < 5 - userArr.length; i++) {
+    for (let i = 0; i < post.maxCapacity - post.chatRoomMembers.length; i++) {
       result.push(
         <svg
           key={i}
@@ -168,12 +149,12 @@ export default function Card({ post }) {
         </CardST.PtNum>
 
         <CardST.PtPic>
-          {userArr.map((user) => (
+          {post.chatRoomMembers.map((user) => (
             <ProfilePic
-              key={user.id}
+              key={user.member.id}
               size='36px'
               border='1px solid var(--color-orange)'
-              user={user}
+              user={user.member}
             />
           ))}
 

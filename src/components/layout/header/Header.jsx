@@ -16,6 +16,8 @@ export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const { setIsDP } = useContext(AlarmContext);
 
+  // console.log(user);
+
   return (
     <HeadST.Area>
       <svg
