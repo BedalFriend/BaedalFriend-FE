@@ -155,3 +155,85 @@ export const NavBtn = styled.button`
     background-color: var(--color-grey);
   }
 `;
+
+/* =============== */
+
+export const Area = styled.div`
+  position: absolute;
+  height: 100%;
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const ModalLayout = styled.div`
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-color: var(--color-light-black);
+  opacity: 0.3;
+
+  z-index: 910;
+`;
+
+export const Box = styled.div`
+  display: flex;
+  flex-flow: column nowrap;
+
+  width: 326px;
+  height: 174px;
+`;
+
+export const ModalInfo = styled.div`
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+
+  width: 100%;
+  height: 110px;
+
+  z-index: 920;
+
+  margin-bottom: 12px;
+
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+
+  padding-top: 16px;
+`;
+
+export const InfoText = styled.div`
+  width: 160px;
+  height: 42px;
+  font-display: swap;
+  font-weight: var(--weight-regular);
+  font-size: var(--font-small);
+  line-height: 150%;
+  text-align: center;
+  color: var(--color-dark-grey);
+  margin-top: 8px;
+`;
+
+export const ModalBtnSet = styled.div`
+  width: 100%;
+  height: 52px;
+
+  display: flex;
+  justify-content: space-between;
+`;
+
+export const ModalBtn = styled.button`
+  background: var(--color-white);
+  border-radius: 12px;
+
+  width: 155px;
+  height: 52px;
+  z-index: 920;
+
+  font-family: 'Pretendard';
+  font-display: swap;
+  font-weight: var(--weight-bold);
+  font-size: var(--font-small);
+`;
