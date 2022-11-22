@@ -1,13 +1,21 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { AlarmContext } from '../../context/AlarmContext';
 import SVG from '../../shared/SVG';
 import * as AlaramST from './AlarmStyle';
 
 export default function Alarm(props) {
   const navigate = useNavigate();
+  const { setIsDP, setIsDone, isDone } = useContext(AlarmContext);
+
   return (
-    <AlaramST.Area>
-      <AlaramST.Box>
+    <AlaramST.Area
+      isDone={isDone}
+      onClick={() => {
+        setIsDone(true);
+      }}
+    >
+      <AlaramST.Box className='vibrate-box'>
         <AlaramST.Help>
           <SVG category='Error' size='14px' color='var(--color-white)' />
           로그인이 필요한 서비스입니다!
@@ -15,6 +23,8 @@ export default function Alarm(props) {
 
         <AlaramST.Btn
           onClick={() => {
+            setIsDone(true);
+            setIsDP(false);
             navigate('/login');
           }}
         >

@@ -1,9 +1,9 @@
 import React, { useContext, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { AlarmContext } from '../../../context/AlarmContext';
 import { TabContext } from '../../../context/TabContext';
 import { getCookieToken } from '../../../shared/storage/Cookie';
-import PostCode from '../../postCode/PostCode';
 import * as HeadST from './HeaderStyle';
 
 export default function Header() {
@@ -13,10 +13,10 @@ export default function Header() {
   const user = useSelector((state) => state.user);
   const refreshToken = getCookieToken();
 
-  const [isOpenPost, setIsOpenPost] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const { setIsDP } = useContext(AlarmContext);
 
-  // console.log('user:', user.nickname);
-  // console.log('token:', refreshToken);
+  // console.log(user);
 
   return (
     <HeadST.Area>
@@ -99,7 +99,13 @@ export default function Header() {
         fill='none'
         xmlns='http://www.w3.org/2000/svg'
         onClick={() => {
-          if (!location.pathname.includes('/chat')) navigate(`/chat/2`);
+          if (!location.pathname.includes('/chat')) {
+            if (refreshToken !== null && refreshToken !== undefined) {
+              navigate(`/chat/2`);
+            } else {
+              setIsDP(true);
+            }
+          }
         }}
       >
         <g mask='url(#mask0_159_110)'>
@@ -113,8 +119,6 @@ export default function Header() {
           />
         </g>
       </HeadST.ChatSVG>
-
-      {isOpenPost ? <PostCode /> : null}
     </HeadST.Area>
   );
 }
