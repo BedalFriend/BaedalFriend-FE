@@ -35,7 +35,7 @@ export const __addPostThunk = createAsyncThunk(
     //콜백
 
     try {
-      const { data } = await getInstance().post(`${basePath}/posts`, arg);
+      const { data } = await getInstance().post(`${basePath}/auth/posts`, arg);
 
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {

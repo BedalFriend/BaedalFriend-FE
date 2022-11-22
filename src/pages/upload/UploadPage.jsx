@@ -29,12 +29,15 @@ const Post = () => {
     category: '',
     deliveryTime: 0,
     targetAmount: 0,
-    deliveryFee: 0,
     participantNumber: 0,
+    hits: 0,
+    deliveryFee: 0,
+    maxCapacity: 0,
     gatherName: '',
     gatherAddress: '',
     isDone: 0,
     limitTime: '2022-11-20 00:00:30',
+    region: '서울',
   });
 
   const [index, setIndex] = useState(0);
