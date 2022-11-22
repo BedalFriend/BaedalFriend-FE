@@ -38,8 +38,8 @@ export default function SearchModal({aniState, setAniState, closeModal, setSelec
             <ModalST.SelectBox onClick={() => setSelect("참여자 적은 순")}>
                 <ModalST.SelectText focused={select === "참여자 적은 순" ? true:false}>참여자 적은 순</ModalST.SelectText>
             </ModalST.SelectBox>
-            <ModalST.BottomBox onClick={() => setSelect("매너 사용자 우선 순")}>
-                <ModalST.SelectText focused={select === "매너 사용자 우선 순" ? true:false}>매너 사용자 우선 순</ModalST.SelectText>
+            <ModalST.BottomBox>
+                <ModalST.SelectText style={{color: `var(--color-blur-white)`}}>매너 사용자 우선 순</ModalST.SelectText>
             </ModalST.BottomBox>
         </ModalST.ModalWrap>
         </ModalST.Overlay>
