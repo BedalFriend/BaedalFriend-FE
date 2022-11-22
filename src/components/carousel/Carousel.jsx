@@ -7,31 +7,30 @@ import { getCookieToken } from "../../shared/storage/Cookie";
 
 
 const PageOne = () => {
-
   return (
-  <div>
-  { getCookieToken === null||undefined ?
-  (<div>
-    <CaroST.Img src={img2} alt='첫번째배너'/>
-    <CaroST.ImgDes>
-      <CaroST.MiniBox>
-        <CaroST.DesContent>땅콩님을 기다리는 n명의 배프</CaroST.DesContent>
-      </CaroST.MiniBox>
-    </CaroST.ImgDes>
-  </div>)
-  :
-  (<div>
-  <CaroST.BannerImg src={LoginImg1} alt='로그인배너'/>
-  <CaroST.TextBox>
-    <CaroST.BoldText>로그인</CaroST.BoldText> 하고<br/>
-    <CaroST.BfText>배프</CaroST.BfText>가 되어주세요!
-  </CaroST.TextBox>
-  <CaroST.LoginMiniBox>
-      <CaroST.DesContent>로그인하고 내 근처 배프 만나러 가기</CaroST.DesContent>
-  </CaroST.LoginMiniBox>
-  </div>)
-  }
-  </div>
+    <div>
+      { getCookieToken === null||undefined ?
+        (<div>
+          <CaroST.Img src={img2} alt='첫번째배너'/>
+          <CaroST.ImgDes>
+            <CaroST.MiniBox>
+              <CaroST.DesContent>땅콩님을 기다리는 n명의 배프</CaroST.DesContent>
+            </CaroST.MiniBox>
+          </CaroST.ImgDes>
+        </div>)
+        :
+        (<div>
+        <CaroST.BannerImg src={LoginImg1} alt='로그인배너'/>
+        <CaroST.TextBox>
+          <CaroST.BoldText>로그인</CaroST.BoldText> 하고<br/>
+          <CaroST.BfText>배프</CaroST.BfText>가 되어주세요!
+        </CaroST.TextBox>
+        <CaroST.LoginMiniBox>
+            <CaroST.DesContent>로그인하고 내 근처 배프 만나러 가기</CaroST.DesContent>
+        </CaroST.LoginMiniBox>
+        </div>)
+      }
+    </div>
   )
 }
 
@@ -56,7 +55,6 @@ const PageThree = () => {
 const BannerImg = [ PageOne, PageTwo, PageThree ];
 
 export default function Carousel() {
-
   //화면크기 인식
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const resizeWidth = () => {
@@ -234,13 +232,13 @@ export default function Carousel() {
       else if(windowWidth < 750) setX(-86);
       else if(windowWidth < 764) setX(-84);
       else setX(-82);
-
-        setIsSlide(true);
-        setTimeout(() => {
-          setIndex((prev) => (prev === (BannerImg.length-1) ? 0 : prev + 1));
-          setX(0);
-          setIsSlide(false);
-        }, 500);
+      
+      setIsSlide(true);
+      setTimeout(() => {
+        setIndex((prev) => (prev === (BannerImg.length-1) ? 0 : prev + 1));
+        setX(0);
+        setIsSlide(false);
+      }, 500);
       }, 4000);
     
       return () => {

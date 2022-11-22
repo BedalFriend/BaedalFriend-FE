@@ -17,7 +17,6 @@ export const SelectBox = styled.div`
   justify-content: center;
 
   background: var(--color-white);
-
   font-weight: ${(props) => (props.focused ? 'var(--weight-bold)' : 'var(--weight-regular)')};
   font-size: 'var(--font-regular)';
   color: ${(props) => (props.focused ? 'var(--color-orange)' : 'var(--color-blur-white)')};
