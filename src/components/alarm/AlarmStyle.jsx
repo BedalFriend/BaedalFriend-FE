@@ -8,6 +8,8 @@ export const Area = styled.div`
   height: 100vh;
 
   z-index: 910;
+  opacity: ${(props) => (props.isDone ? '0' : '1')};
+  transition: all var(--animation-duration) ease-out;
 `;
 
 export const Box = styled.div`

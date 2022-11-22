@@ -18,7 +18,6 @@ export default function SignPage() {
     password: '',
     passwordConfirm: '',
     nickname: '',
-    role: 0,
   });
 
   const onSignupHandler = async () => {
