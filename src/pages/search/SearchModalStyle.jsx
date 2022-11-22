@@ -45,7 +45,7 @@ export const Overlay = styled.div`
 `;
 
 export const ModalWrap = styled.div`
-    width: calc(100% - 64px);
+    width: 326px;
     height: fit-content;
     position: absolute;
 
@@ -61,29 +61,29 @@ export const ModalWrap = styled.div`
 
 export const SelectBox = styled.div`
     position: relative;
-    height: 50px;
-    background-color: rgba(255, 255, 255, 0.85);
-    text-align: center;    
+    height: 40px;
+    background-color: rgba(255, 255, 255, 0.80);
+    text-align: center;
 `;
 
 export const TopBox = styled.div`
     position: relative;
-    height: 65px;
-    background-color: rgba(255, 255, 255, 0.85);
+    height: 50px;
+    background-color: rgba(255, 255, 255, 0.80);
     text-align: center;  
     border-top-left-radius: 12px;
     border-top-right-radius : 12px;
-    padding-top:15px;
+    padding-top: 10px;
 `;
 
 export const BottomBox = styled.div`
     position: relative;
-    height: 65px;
-    background-color: rgba(255, 255, 255, 0.85);
+    height: 50px;
+    background-color: rgba(255, 255, 255, 0.80);
     text-align: center;    
     border-bottom-left-radius: 12px;
     border-bottom-right-radius: 12px;
-    padding-bottom: 15px;
+    padding-bottom: 10px;
 `;
 
 export const SelectText = styled.div`
