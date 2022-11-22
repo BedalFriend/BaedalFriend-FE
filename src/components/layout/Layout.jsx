@@ -20,6 +20,7 @@ export default function Layout(props) {
       ) : (
         <GnbFloat />
       )}
+
       {isDP ? <Alarm /> : null}
     </LayoutST.Box>
   );

@@ -143,7 +143,8 @@ export const requestToken = async () => {
 
 //? Kakao
 const client_id = process.env.REACT_APP_KAKAO_KEY;
-const redirect_uri = 'http://localhost:3000/kakaoLogin';
+const redirect_uri =
+  'https://feat-chat.d25ifr3qhnz84w.amplifyapp.com/kakaoLogin';
 //* 카카오 인가코드 받기
 export const getKakaoCode = async () => {
   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${client_id}&redirect_uri=${redirect_uri}&response_type=code`;
