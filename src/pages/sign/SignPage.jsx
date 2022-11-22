@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useMultipleInput from '../../hooks/useMultipleInput';
 import { signupUser } from '../../shared/api/Users';
+import SVG from '../../shared/SVG';
 import StepOne from './index/StepOne';
 import StepThree from './index/StepThree';
 import StepTwo from './index/StepTwo';
@@ -46,6 +47,8 @@ export default function SignPage() {
 
   const [isNicknameFail, setIsNicknameFail] = useState(true);
   const [helpNicknameText, setHelpNicknameText] = useState('');
+
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <SignST.Body>
@@ -101,7 +104,7 @@ export default function SignPage() {
       <SignST.BtnSet>
         <SignST.CancelBtn
           onClick={() => {
-            navigate(-1);
+            setIsOpen(true);
           }}
         >
           취소하기
@@ -136,6 +139,48 @@ export default function SignPage() {
           {index === 2 ? '시작하기' : '다음 단계'}
         </SignST.NavBtn>
       </SignST.BtnSet>
+
+      {isOpen ? (
+        <SignST.Area>
+          <SignST.Box>
+            <SignST.ModalInfo>
+              <SVG
+                category='Error'
+                size='24px'
+                color='var(--color-system-error)'
+              />
+              <SignST.InfoText>
+                지금 회원가입 단계를 나가면입력한 내용이 모두 사라져요.
+              </SignST.InfoText>
+            </SignST.ModalInfo>
+
+            <SignST.ModalBtnSet>
+              <SignST.ModalBtn
+                style={{ color: 'var(--color-system-error' }}
+                onClick={() => {
+                  navigate(-1);
+                }}
+              >
+                나가기
+              </SignST.ModalBtn>
+              <SignST.ModalBtn
+                style={{ color: 'var(--color-system-success' }}
+                onClick={() => {
+                  setIsOpen(false);
+                }}
+              >
+                돌아가기
+              </SignST.ModalBtn>
+            </SignST.ModalBtnSet>
+          </SignST.Box>
+
+          <SignST.ModalLayout
+            onClick={() => {
+              setIsOpen(false);
+            }}
+          />
+        </SignST.Area>
+      ) : null}
     </SignST.Body>
   );
 }

@@ -15,6 +15,9 @@ export default function Header() {
 
   const [isOpenPost, setIsOpenPost] = useState(false);
 
+  // console.log('user:', user.nickname);
+  // console.log('token:', refreshToken);
+
   return (
     <HeadST.Area>
       <svg
@@ -96,7 +99,7 @@ export default function Header() {
         fill='none'
         xmlns='http://www.w3.org/2000/svg'
         onClick={() => {
-          if (location.pathname !== '/chat') navigate('/chat');
+          if (!location.pathname.includes('/chat')) navigate(`/chat/2`);
         }}
       >
         <g mask='url(#mask0_159_110)'>
