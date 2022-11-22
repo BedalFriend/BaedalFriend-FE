@@ -88,6 +88,7 @@ export default function CategoryPage() {
 
     //선택한 카테고리
     const [searchCate, setSearchCate] = useState(id);
+    const [index, setIndex] = useState(0);
 
     //정렬 모달 선택
     const [select, setSelect] = useState("마감 임박 순");
@@ -121,8 +122,7 @@ export default function CategoryPage() {
         }
     }, [])
 
-    const posts = useSelector((state) => state.post.posts);
-    
+    const posts = useSelector((state) => state.post.posts);   
     
     return (
         <Layout>

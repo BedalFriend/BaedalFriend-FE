@@ -113,13 +113,39 @@ export default function CategorySelect({searchCate, setSearchCate}) {
                     양식, 일식, 디저트, 채식, 아시안, 건강식, 샌드위치, 편의점]
 
     const [index, setIndex] = useState(0);
+   
+    //함수를 할당할 객체 생성
+    let context = {};
+
+    context["전체"] = 전체;
+    context["패스트푸드"] = 패스트푸드;
+    context["치킨"] = 치킨;
+    context["분식"] = 분식;
+    context["야식"] = 야식;
+    context["한식"] = 한식;
+    context["중식"] = 중식;
+    context["양식"] = 양식;
+    context["일식"] = 일식;
+    context["디저트"] = 디저트;
+    context["채식"] = 채식;
+    context["아시안"] = 아시안;
+    context["건강식"] = 건강식;
+    context["샌드위치"] = 샌드위치;
+    context["편의점"] = 편의점;
+
+    //console.log(context["샌드위치"]())
+    // {CateArr[index]()}
+    // {context[searchCate]()}
+
+    const New = CateArr.map((i) => {
+        return i
+    })
+    console.log(New);
 
     return (
-            <SelectST.Row
-                key={index}>
-
-                    {CateArr[index]()}
-
+            <SelectST.Row>
+                {context[searchCate]()}
+                
             </SelectST.Row>
     )
 };
