@@ -67,6 +67,18 @@ export const Img = styled.img`
   text-align: center;
 `;
 
+export const BannerImg = styled.img`
+  position: relative;
+  cursor: pointer;
+  transition: all 0.5s ease-out;
+  width: 630px;
+  height: 400px;
+  left: 16%;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+`;
+
 export const ImgDes = styled.div`
   position: absolute;
   display: flex;

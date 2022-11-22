@@ -137,15 +137,14 @@ export default function CategorySelect({searchCate, setSearchCate}) {
     // {CateArr[index]()}
     // {context[searchCate]()}
 
-    const New = CateArr.map((i) => {
-        return i
-    })
-    console.log(New);
+    console.log(context[searchCate]());
 
     return (
             <SelectST.Row>
                 {context[searchCate]()}
-                
+                {CateArr[0]()}
+                {CateArr[1]()}
+                {CateArr[2]()}
             </SelectST.Row>
     )
 };
