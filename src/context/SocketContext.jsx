@@ -3,11 +3,14 @@ import SockJS from 'sockjs-client';
 import * as StompJS from '@stomp/stompjs';
 
 import { getCookieToken } from '../shared/storage/Cookie';
+import { ADD_CHAT } from '../redux/modules/ChatSlice';
 import store from '../redux/config/ConfigStore';
+import { useDispatch } from 'react-redux';
 
 export const SocketContext = createContext();
 
 export function SocketProvider({ children }) {
+  const dispatch = useDispatch();
   const client = useRef({});
 
   const getInfo = () => {
@@ -47,16 +50,17 @@ export function SocketProvider({ children }) {
 
   const subscribe = () => {
     if (!client.current.connected) return;
-    client.current.subscribe(`/sub/chat/room/1`, onMessageReceived, {
-      id: `sub-1`,
+    client.current.subscribe(`/sub/chat/room/2`, onMessageReceived, {
+      id: `sub-2`,
     });
   };
 
   const onMessageReceived = (payload) => {
-    console.log(JSON.parse(payload.body));
+    const received = JSON.parse(payload.body);
+    dispatch(ADD_CHAT(received));
   };
 
-  const publish = (message) => {
+  const publish = (message, roomId) => {
     const { user, authorization, refreshToken } = getInfo();
 
     if (!client.current.connected) return;
@@ -64,7 +68,7 @@ export function SocketProvider({ children }) {
       destination: '/pub/chat/message',
       body: JSON.stringify({
         type: 'TALK',
-        roomId: 1,
+        roomId: roomId,
         sender: user.nickname,
         message,
       }),
@@ -73,10 +77,7 @@ export function SocketProvider({ children }) {
   };
 
   useEffect(() => {
-    // connect();
-    window.setTimeout(() => {
-      publish('안녕하세요!');
-    }, 3000);
+    connect();
     //return () => disconnect();
     // eslint-disable-next-line
   }, []);
