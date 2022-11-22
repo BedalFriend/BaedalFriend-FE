@@ -8,11 +8,11 @@ import Layout from '../../components/layout/Layout';
 import * as UploadST from './UploadPageStyle';
 import useMultipleInput from '../../hooks/useMultipleInput';
 
-import SearchStoreMap from './upload/searchStoreMap/SearchStoreMap';
-import SearchPartyMap from './upload/searchPartyMap/SearchPartyMap';
+import SearchPartyMap from './upload/searchMap/SearchPartyMap';
 import UploadCategory from './upload/UploadCategory';
-import UploadStepTwo from './upload/uploadStepTwo/UploadStepTwo';
-import UploadStepOne from './upload/uploadStepOne/UploadStepOne';
+import UploadStepTwo from './upload/stepTwo/UploadStepTwo';
+import UploadStepOne from './upload/stepOne/UploadStepOne';
+import SearchMap from '../../components/searchMap/SearchMap';
 
 const Post = () => {
   const { setTab } = useContext(TabContext);
@@ -27,55 +27,43 @@ const Post = () => {
     targetName: '',
     targetAddress: '',
     category: '',
-    deliveryTime: 1,
-    targetAmount: 1,
-    deliveryFee: 1,
-    participantNumber: 1,
+    deliveryTime: 0,
+    targetAmount: 0,
+    deliveryFee: 0,
+    participantNumber: 0,
     gatherName: '',
     gatherAddress: '',
     isDone: 0,
-    limitTime: '2022-11-20 20:55:30',
+    limitTime: '2022-11-20 00:00:30',
   });
 
   const [index, setIndex] = useState(0);
 
   const [addressManager, setAddressManager] = useState(false);
 
-  const [nextStepOne, setNextStepOne] = useState(true);
-  const [nextStepTwo, setNextStepTwo] = useState(true);
+  //버튼 on/off
+  const [nextStepOne, setNextStepOne] = useState(false);
+
+  const [nextStepTwo, setNextStepTwo] = useState(false);
+
+  const [isChecked, setIsChecked] = useState(false);
+  const [isSecondChecked, setIsSecondChecked] = useState(false);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
+    console.log('총데이터', data);
     dispatch(__addPostThunk(data));
   };
 
   const stepOneCheckHandler = (event) => {
-    if (
-      !data.targetName &&
-      !data.category &&
-      data.deliveryTime.trim() === '' &&
-      data.targetAmount.trim() === '' &&
-      data.deliveryFee.trim() === ''
-    ) {
-      setNextStepOne(false);
-    } else {
-      setNextStepOne(true);
-    }
+    setIsChecked(true);
   };
 
   const stepTwoCheckHandler = (event) => {
-    if (
-      data.participantNumber.length === 0 ||
-      data.limitTime.length === 0 ||
-      data.gatherName.length === 0
-    ) {
-      setNextStepTwo(false);
-    } else {
-      setNextStepTwo(true);
-    }
+    setIsSecondChecked(true);
   };
 
   const lengthLimit = (e) => {
@@ -94,8 +82,9 @@ const Post = () => {
                 setIndex={setIndex}
                 data={data}
                 dataHandler={dataHandler}
-                stepOneCheckHandler={stepOneCheckHandler}
                 lengthLimit={lengthLimit}
+                setNextStepOne={setNextStepOne}
+                isChecked={isChecked}
               />
               <UploadST.ButtonBox>
                 <UploadST.CancelBtn
@@ -114,13 +103,21 @@ const Post = () => {
                     다음 단계
                   </UploadST.NextBtn>
                 ) : (
-                  <UploadST.StayBtn>다음 단계</UploadST.StayBtn>
+                  <UploadST.StayBtn onClick={stepOneCheckHandler}>
+                    다음 단계
+                  </UploadST.StayBtn>
                 )}
               </UploadST.ButtonBox>
             </>
           ) : null}
           {index === 1 ? (
-            <SearchStoreMap setIndex={setIndex} data={data} setData={setData} />
+            <SearchMap
+              setIndex={setIndex}
+              data={data}
+              setData={setData}
+              name='targetName'
+              address='targetAddress'
+            />
           ) : null}
           {index === 2 ? (
             <UploadCategory data={data} setData={setData} setIndex={setIndex} />
@@ -133,8 +130,9 @@ const Post = () => {
                 setData={setData}
                 dataHandler={dataHandler}
                 addressManager={addressManager}
-                stepTwoCheckHandler={stepTwoCheckHandler}
                 lengthLimit={lengthLimit}
+                isSecondChecked={isSecondChecked}
+                setNextStepTwo={setNextStepTwo}
               />
               <UploadST.ButtonBox>
                 <UploadST.CancelBtn
@@ -149,7 +147,9 @@ const Post = () => {
                     업로드 하기
                   </UploadST.UploadBtn>
                 ) : (
-                  <UploadST.StayBtn>업로드 하기</UploadST.StayBtn>
+                  <UploadST.StayBtn onClick={stepTwoCheckHandler}>
+                    업로드 하기
+                  </UploadST.StayBtn>
                 )}
               </UploadST.ButtonBox>
             </>

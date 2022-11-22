@@ -344,6 +344,8 @@ const UploadCategory = ({ data, setData, setIndex }) => {
         <MainST.CtgVac />
         <MainST.CtgVac />
         <MainST.CtgVac />
+        <MainST.CtgVac />
+        <MainST.CtgVac />
       </MainST.CtgSection>
     </div>
   );
