@@ -1,12 +1,5 @@
 import styled from 'styled-components';
 
-export const Row = styled.div`
-  background-color: var(--color-white);
-  display: flex;
-  gap: 16px;
-  position: relative;
-`;
-
 export const SelectBox = styled.div`
   position: relative;
   display: flex;
@@ -25,5 +18,5 @@ export const SelectBox = styled.div`
 `;
 
 export const SelectWord = styled.div`
-    word-break: keep-all;
+  white-space: nowrap;
 `;

@@ -8,6 +8,7 @@ import Layout from '../../components/layout/Layout';
 import SearchModal from './SearchModal';
 import Card from '../../components/elements/card/Card';
 import CategorySelect from './CategorySelect';
+import SVG from '../../shared/SVG';
 
 import { __getCateSearchThunk, CLEAR_POSTS } from '../../redux/modules/PostSlice'
 
@@ -85,7 +86,24 @@ export default function CategoryPage() {
   
   //선택한 카테고리
   const [searchCate, setSearchCate] = useState(id);
-  const [index, setIndex] = useState(0);
+
+  const cates = [
+    { category: '전체'},
+    { category: '패스트푸드'},
+    { category: '치킨' },
+    { category: '분식' },
+    { category: '야식' },
+    { category: '한식' },
+    { category: '중식' },
+    { category: '양식' },
+    { category: '일식/회' },
+    { category: '디저트' },
+    { category: '채식' },
+    { category: '아시안' },
+    { category: '건강식' },
+    { category: '샌드위치' },
+    { category: '편의점' },
+  ]
 
   //정렬 모달 선택
   const [select, setSelect] = useState("마감 임박 순");
@@ -119,7 +137,7 @@ export default function CategoryPage() {
     }
   }, [])
 
-  const posts = useSelector((state) => state.post.posts);   
+  const posts = useSelector((state) => state.post.posts);
     
   return (
     <Layout>
@@ -128,6 +146,12 @@ export default function CategoryPage() {
 
         {/* 카테고리 슬라이드 */}
         <CateST.SelectSection>
+
+          <CateST.Selected>
+            <SVG category={searchCate} size='16' color='var(--color-white)'/>
+            <CateST.SelectWord>&nbsp;{searchCate}</CateST.SelectWord>
+          </CateST.Selected>
+
           <CateST.SelectDisplay
             ref={scrollRef}
             onTouchStart={touchStartHandler}
@@ -137,9 +161,16 @@ export default function CategoryPage() {
             onMouseUp={dragEndHandler}
             onMouseMove={isDrag ? throttleHandler : null}
             onMouseLeave={dragEndHandler}>
-          <CategorySelect 
-            searchCate={searchCate}
-            setSearchCate={setSearchCate}/>
+            <CateST.Row>
+              <div style={{ width:'0.1px', height:'30px' }}></div>
+              {cates.map((cate, index)  => (
+                <CategorySelect 
+                  searchCate={searchCate}
+                  setSearchCate={setSearchCate}
+                  key={index}
+                  category={cate.category}/>
+              ))}
+            </CateST.Row>
           </CateST.SelectDisplay>
         </CateST.SelectSection>
 

@@ -52,20 +52,50 @@ export const ResultBox = styled.div`
 export const SelectSection = styled.div`
   position: relative;
   width: calc(100% - 32px);
-  height: fit-content;
+  //height: fit-content;
   overflow-x: hidden;
-  background-color: var(--color-orange);
-  gap: 16px;
+  background-color: var(--color-white);
+  display: flex;
+  align-items: center;
 `
+
+export const Row = styled.div`
+  background-color: var(--color-white);
+  display: flex;
+  gap: 16px;
+  position: relative;
+`;
+
+export const Selected = styled.div`
+  position: relative;
+  background-color: var(--color-orange);
+  width: fit-content;
+  height: 30px;
+  padding: 4px 12px;
+
+  color: var(--color-white);
+  font-weight: var(--weight-bold);
+  border-radius: 12px;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+`;
 
 export const SelectDisplay = styled.div`
   position: relative;
   width: 100%;
+  height: 30px;
+  
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   background-color: var(--color-white);
   overflow-x: scroll;
   ::-webkit-scrollbar {
       display: none;
   }
+`;
+
+export const SelectWord = styled.div`
+  white-space: nowrap;
 `;

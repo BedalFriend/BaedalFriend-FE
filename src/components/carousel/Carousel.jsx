@@ -1,8 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import * as CaroST from './CarouselStyle';
-import LoginImg1 from '../carousel/img/BannerIllustOriginal.png';
-import img2 from '../carousel/img/2.png';
-import img3 from '../carousel/img/3.png';
+import LoginImg1 from '../carousel/img/BannerReal3.png';
 import { getCookieToken } from "../../shared/storage/Cookie";
 
 
@@ -11,7 +9,7 @@ const PageOne = () => {
     <div>
       { getCookieToken === null||undefined ?
         (<div>
-          <CaroST.Img src={img2} alt='첫번째배너'/>
+          <CaroST.BannerImg src={LoginImg1} alt='로그인배너'/>
           <CaroST.ImgDes>
             <CaroST.MiniBox>
               <CaroST.DesContent>땅콩님을 기다리는 n명의 배프</CaroST.DesContent>
@@ -20,39 +18,22 @@ const PageOne = () => {
         </div>)
         :
         (<div>
-        <CaroST.BannerImg src={LoginImg1} alt='로그인배너'/>
-        <CaroST.TextBox>
-          <CaroST.BoldText>로그인</CaroST.BoldText> 하고<br/>
-          <CaroST.BfText>배프</CaroST.BfText>가 되어주세요!
-        </CaroST.TextBox>
-        <CaroST.LoginMiniBox>
-            <CaroST.DesContent>로그인하고 내 근처 배프 만나러 가기</CaroST.DesContent>
-        </CaroST.LoginMiniBox>
+          <CaroST.BannerImg src={LoginImg1} alt='로그인배너'/>
+          <CaroST.TextBox>
+            <CaroST.BoldText>로그인</CaroST.BoldText> 하고<br/>
+            <CaroST.BfText>배프</CaroST.BfText>가 되어주세요!
+          </CaroST.TextBox>
+          <CaroST.LoginMiniBox>
+          <CaroST.DesContent>로그인하고 내 근처 배프 만나러 가기</CaroST.DesContent>
+          </CaroST.LoginMiniBox>
         </div>)
       }
     </div>
   )
 }
 
-const PageTwo = () => {
-  return (
-    <div>
-    <CaroST.BannerImg src={LoginImg1} alt='로그인배너'/>
-    <CaroST.ImgDes>
-      <CaroST.MiniBox>
-        <CaroST.DesContent>땅콩님을 기다리는 n명의 배프</CaroST.DesContent>
-      </CaroST.MiniBox>
-    </CaroST.ImgDes>
-    </div>
-  )
-}
-
-const PageThree = () => {
-  return <CaroST.Img src={img3} alt='세번째페이지'/>
-}
-
 //배너 페이지
-const BannerImg = [ PageOne, PageTwo, PageThree ];
+const BannerImg = [ PageOne ];
 
 export default function Carousel() {
   //화면크기 인식
@@ -211,41 +192,41 @@ export default function Carousel() {
   };
 
   //자동 슬라이드
-  useEffect(() => {
-    if ((isClick&&isTouch)===false) {
-      const autoPage = setTimeout(() => {
-      //반응형 애니메이션
-      if(windowWidth < 400) setX(-165);
-      else if(windowWidth < 425) setX(-155);
-      else if(windowWidth < 450) setX(-147);
-      else if(windowWidth < 475) setX(-137);
-      else if(windowWidth < 500) setX(-130);
-      else if(windowWidth < 525) setX(-123);
-      else if(windowWidth < 550) setX(-116);
-      else if(windowWidth < 575) setX(-111);
-      else if(windowWidth < 600) setX(-107);
-      else if(windowWidth < 625) setX(-100);
-      else if(windowWidth < 650) setX(-99);
-      else if(windowWidth < 675) setX(-94);
-      else if(windowWidth < 700) setX(-92);
-      else if(windowWidth < 725) setX(-89);
-      else if(windowWidth < 750) setX(-86);
-      else if(windowWidth < 764) setX(-84);
-      else setX(-82);
+  // useEffect(() => {
+  //   if ((isClick&&isTouch)===false) {
+  //     const autoPage = setTimeout(() => {
+  //     //반응형 애니메이션
+  //     if(windowWidth < 400) setX(-165);
+  //     else if(windowWidth < 425) setX(-155);
+  //     else if(windowWidth < 450) setX(-147);
+  //     else if(windowWidth < 475) setX(-137);
+  //     else if(windowWidth < 500) setX(-130);
+  //     else if(windowWidth < 525) setX(-123);
+  //     else if(windowWidth < 550) setX(-116);
+  //     else if(windowWidth < 575) setX(-111);
+  //     else if(windowWidth < 600) setX(-107);
+  //     else if(windowWidth < 625) setX(-100);
+  //     else if(windowWidth < 650) setX(-99);
+  //     else if(windowWidth < 675) setX(-94);
+  //     else if(windowWidth < 700) setX(-92);
+  //     else if(windowWidth < 725) setX(-89);
+  //     else if(windowWidth < 750) setX(-86);
+  //     else if(windowWidth < 764) setX(-84);
+  //     else setX(-82);
       
-      setIsSlide(true);
-      setTimeout(() => {
-        setIndex((prev) => (prev === (BannerImg.length-1) ? 0 : prev + 1));
-        setX(0);
-        setIsSlide(false);
-      }, 500);
-      }, 4000);
+  //     setIsSlide(true);
+  //     setTimeout(() => {
+  //       setIndex((prev) => (prev === (BannerImg.length-1) ? 0 : prev + 1));
+  //       setX(0);
+  //       setIsSlide(false);
+  //     }, 500);
+  //     }, 4000);
     
-      return () => {
-        clearTimeout(autoPage);
-      };
-    }
-  }, [index, isClick, isTouch]);
+  //     return () => {
+  //       clearTimeout(autoPage);
+  //     };
+  //   }
+  // }, [index, isClick, isTouch]);
 
 
   return (
@@ -262,25 +243,25 @@ export default function Carousel() {
           onTouchStart={onTouchStart}
           style={{transform: `translateX(${x}%)`}}>
 
-          <CaroST.Container>
+          {/* <CaroST.Container>
               {BannerImg[morePrevImg]()} 
           </CaroST.Container>
 
           <CaroST.Container> 
               {BannerImg[PrevImg]()}
-          </CaroST.Container>
+          </CaroST.Container> */}
 
           <CaroST.ImgWrapper>
               {BannerImg[index]()}        
           </CaroST.ImgWrapper>
 
-          <CaroST.Container>
+          {/* <CaroST.Container>
               {BannerImg[NextImg]()}
           </CaroST.Container>
 
           <CaroST.Container>
               {BannerImg[moreNextImg]()}
-          </CaroST.Container>
+          </CaroST.Container> */}
           
         </CaroST.Row>
       </CaroST.Wrapper>
