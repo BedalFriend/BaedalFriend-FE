@@ -155,11 +155,15 @@ export default function SearchPage() {
       if(searchTerm === '') {
         dispatch(CLEAR_POSTS());
       } else {
-        dispatch(__getSearchThunk(query));
-        setSearched(true);
-        //response로 선언해서 예외처리
+        dispatch(__getSearchThunk(query)); //response로 선언해서 예외처리
+        //결과 불러오기 전에 NoResult 방지
+        if(posts.data.length === 0) {
+          setSearched(false);
+        } else {
+          setSearched(true);
+        }
       }
-    }, 600);
+    },600);
     return () => {
       clearTimeout(searchHandler);
       setSearched(false);
@@ -170,11 +174,11 @@ export default function SearchPage() {
   useEffect(() => {
     return () => {
       dispatch(CLEAR_POSTS());
-      setSearchTerm('');
     }
   }, [])
 
   const posts = useSelector((state) => state.post.posts);
+  //const address = useSelector((state) => s)
 
   //스크롤방지
   useEffect(() => {
