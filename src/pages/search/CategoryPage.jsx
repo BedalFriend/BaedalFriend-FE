@@ -87,6 +87,7 @@ export default function CategoryPage() {
   
   //선택한 카테고리
   const [searchCate, setSearchCate] = useState(id);
+  const [searched, setSearched] = useState();
 
   const cates = [
     { category: '전체'},
@@ -163,9 +164,16 @@ export default function CategoryPage() {
   }
 
   useEffect(() => {
+    setSearched(false);
     setIsOpen(false);
     queryHandler();
     dispatch(__getCateSearchThunk(query));
+    //결과 불러오기 전에 NoResult 방지
+    if(posts.data.length === 0) {
+      setSearched(false);
+    } else {
+      setSearched(true);
+    }
     //response로 선언해서 예외처리
   }, [searchCate, select])
 
@@ -247,7 +255,7 @@ export default function CategoryPage() {
         {/* 검색 결과 */}
         <CateST.ResultBox>
         {
-          (posts.data.length === 0)?
+          (posts.data.length === 0) && searched===true?
           (
             <CateST.NoResult>
               <img src={NRImage} alt='결과없음'/>
