@@ -89,6 +89,7 @@ export default function SearchPage() {
 
   //검색어
   const [searchTerm, setSearchTerm, searchHandler] = useInput("");
+  const [searched, setSearched] = useState();
 
   //정렬 모달 선택
   const [select, setSelect] = useState("마감 임박 순");
@@ -147,6 +148,7 @@ export default function SearchPage() {
   }
   
   useEffect(() => {
+    setSearched(false);
     setIsOpen(false);
     queryHandler();
     const searchHandler = setTimeout(async () => {
@@ -154,11 +156,13 @@ export default function SearchPage() {
         dispatch(CLEAR_POSTS());
       } else {
         dispatch(__getSearchThunk(query));
+        setSearched(true);
         //response로 선언해서 예외처리
       }
     }, 600);
     return () => {
       clearTimeout(searchHandler);
+      setSearched(false);
     };
     }, [searchTerm, select])
 
@@ -179,7 +183,7 @@ export default function SearchPage() {
     }
     // modal 닫히면 다시 스크롤 가능하도록 함
     return () => enableScroll();
-  }, [posts]);  
+  }, [posts]); 
 
   return (
     <Layout>
@@ -244,7 +248,7 @@ export default function SearchPage() {
     {/* 검색 결과 */}
     <SearchST.ResultBox>
     {
-      (posts.data.length === 0)?
+      (posts.data.length === 0) && searched===true?
       (
         <SearchST.NoResult>
           <img src={NRImage} alt='결과없음'/>
