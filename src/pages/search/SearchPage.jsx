@@ -8,7 +8,7 @@ import SearchModal from './SearchModal';
 import useInput from '../../hooks/useInput';
 import Card from '../../components/elements/card/Card';
 //import RecentWord from './RecentWord';
-import NoResult from '../../pages/search/NoResult'
+import NRImage from './banner 1.png'
 
 import {__getSearchThunk, CLEAR_POSTS } from '../../redux/modules/PostSlice'
 
@@ -243,15 +243,21 @@ export default function SearchPage() {
     
     {/* 검색 결과 */}
     <SearchST.ResultBox>
-      {
+    {
       (posts.data.length === 0)?
-      (<NoResult searchTerm={searchTerm}/>)
+      (
+        <SearchST.NoResult>
+          <img src={NRImage} alt='결과없음'/>
+          <SearchST.NoResultText>'{searchTerm}'</SearchST.NoResultText> <br/>
+          관련 배프가 없어요 :(
+        </SearchST.NoResult>
+      )
       :
       (<>
       {posts.data.map((post) => (
         <Card key={post.postId} post={post} />))}
       </>)
-      }
+    }
     </SearchST.ResultBox>
 
     <div style={{ width: '100%', height: '152px' }}></div>

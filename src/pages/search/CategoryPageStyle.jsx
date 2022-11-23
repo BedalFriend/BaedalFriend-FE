@@ -100,3 +100,19 @@ export const SelectDisplay = styled.div`
 export const SelectWord = styled.div`
   white-space: nowrap;
 `;
+
+export const NoResult = styled.div`
+  width: calc(100% - 32px);
+  position: relative;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+
+  color: var(--color-grey);
+  font-weight: var(--weight-regular);
+  font-size: var(--font-small);
+`
+
+export const NoResultText = styled.span`
+  font-weight: var(--weight-bold);
+`;

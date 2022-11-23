@@ -107,3 +107,19 @@ export const ResultBox = styled.div`
   flex-flow: row wrap;
   gap: 16px;
 `;
+
+export const NoResult = styled.div`
+  width: calc(100% - 32px);
+  position: relative;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+
+  color: var(--color-grey);
+  font-weight: var(--weight-regular);
+  font-size: var(--font-small);
+`
+
+export const NoResultText = styled.span`
+  font-weight: var(--weight-bold);
+`;

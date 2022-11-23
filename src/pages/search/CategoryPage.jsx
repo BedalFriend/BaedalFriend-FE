@@ -9,6 +9,7 @@ import SearchModal from './SearchModal';
 import Card from '../../components/elements/card/Card';
 import CategorySelect from './CategorySelect';
 import SVG from '../../shared/SVG';
+import NRImage from './banner 1.png'
 
 import { __getCateSearchThunk, CLEAR_POSTS } from '../../redux/modules/PostSlice'
 
@@ -123,6 +124,44 @@ export default function CategoryPage() {
     }
   }
 
+  //스크롤 방지
+  var keys = {37: 1, 38: 1, 39: 1, 40: 1};
+ 
+  function preventDefault(e) {
+    e.preventDefault();
+  }
+  
+  function preventDefaultForScrollKeys(e) {
+    if (keys[e.keyCode]) {
+      preventDefault(e);
+      return false;
+    }
+  }
+
+  var supportsPassive = false;
+  try {
+    window.addEventListener("test", null, Object.defineProperty({}, 'passive', {
+      get: function () { supportsPassive = true; }
+    }));
+  } catch(e) {}
+
+  var wheelOpt = supportsPassive ? { passive: false } : false;
+  var wheelEvent = 'onwheel' in document.createElement('div') ? 'wheel' : 'mousewheel';
+
+  function disableScroll() {
+    window.addEventListener('DOMMouseScroll', preventDefault, false);
+    window.addEventListener(wheelEvent, preventDefault, wheelOpt);
+    window.addEventListener('touchmove', preventDefault, wheelOpt);
+    window.addEventListener('keydown', preventDefaultForScrollKeys, false);
+  }
+
+  function enableScroll() {
+    window.removeEventListener('DOMMouseScroll', preventDefault, false);
+    window.removeEventListener(wheelEvent, preventDefault, wheelOpt);
+    window.removeEventListener('touchmove', preventDefault, wheelOpt);
+    window.removeEventListener('keydown', preventDefaultForScrollKeys, false);
+  }
+
   useEffect(() => {
     setIsOpen(false);
     queryHandler();
@@ -138,6 +177,15 @@ export default function CategoryPage() {
   }, [])
 
   const posts = useSelector((state) => state.post.posts);
+
+  //스크롤방지
+  useEffect(() => {
+    if(posts.data.length === 0) {
+      disableScroll();
+    }
+    // modal 닫히면 다시 스크롤 가능하도록 함
+    return () => enableScroll();
+  }, [posts]);  
     
   return (
     <Layout>
@@ -198,8 +246,21 @@ export default function CategoryPage() {
             
         {/* 검색 결과 */}
         <CateST.ResultBox>
+        {
+          (posts.data.length === 0)?
+          (
+            <CateST.NoResult>
+              <img src={NRImage} alt='결과없음'/>
+              <CateST.NoResultText>'{searchCate}'</CateST.NoResultText> <br/>
+              관련 배프가 없어요 :(
+            </CateST.NoResult>
+          )
+          :
+          (<>
           {posts.data.map((post) => (
           <Card key={post.postId} post={post} />))}
+          </>)
+        }
         </CateST.ResultBox>
 
         <div style={{ width: '100%', height: '152px' }}></div>
