@@ -6,7 +6,7 @@ export const __getThunk = createAsyncThunk(
   'GET_POSTS', //action value
   async (_, thunkAPI) => {
     try {
-      const { data } = await getInstance().get('v1/posts');
+      const { data } = await getInstance().get(`${basePath}/posts`);
       console.log(data.data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
@@ -19,7 +19,7 @@ export const __getDetailThunk = createAsyncThunk(
   'GET_POST', //action value
   async (arg, thunkAPI) => {
     try {
-      const { data } = await getInstance().get(`v1/posts/${arg}`);
+      const { data } = await getInstance().get(`${basePath}/posts/${arg}`);
 
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
@@ -35,7 +35,7 @@ export const __addPostThunk = createAsyncThunk(
     //콜백
 
     try {
-      const { data } = await getInstance().post('v1/auth/posts', arg);
+      const { data } = await getInstance().post(`${basePath}/auth/posts`, arg);
 
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
@@ -49,7 +49,7 @@ export const __deletePost = createAsyncThunk(
   async (arg, thunkAPI) => {
     try {
       console.log('delete', arg);
-      await getInstance().delete(`/v1/auth/posts/${arg}`);
+      await getInstance().delete(`${basePath}/posts/${arg}`);
       return thunkAPI.fulfillWithValue(arg);
     } catch (e) {
       return thunkAPI.rejectWithValue(e.code);
@@ -61,11 +61,13 @@ export const __getSearchThunk = createAsyncThunk(
   'GET_SEARCH',
   async (arg, thunkAPI) => {
     try {
-      const { data } = await getInstance().get(`${basePath}/posts/search?page=1&size=100&${arg}`);
+      const { data } = await getInstance().get(
+        `${basePath}/posts/search?page=1&size=100&${arg}`
+      );
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error.code);
-    }   
+    }
   }
 );
 
@@ -73,11 +75,13 @@ export const __getCateSearchThunk = createAsyncThunk(
   'GET_CATESEARCH',
   async (arg, thunkAPI) => {
     try {
-      const { data } = await getInstance().get(`${basePath}/posts/category/search?page=1&size=100&${arg}`);
+      const { data } = await getInstance().get(
+        `${basePath}/posts/category/search?page=1&size=100&${arg}`
+      );
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error.code);
-    }   
+    }
   }
 );
 
@@ -90,9 +94,13 @@ export const postsSlice = createSlice({
   name: 'post', //모듈의 이름
   initialState,
   reducers: {
-    CLEAR_POSTS : (state) => { state.posts = {
-      data: [], isLoading: false, error: null
-    }}
+    CLEAR_POSTS: (state) => {
+      state.posts = {
+        data: [],
+        isLoading: false,
+        error: null,
+      };
+    },
   },
   extraReducers: {
     //get
@@ -181,5 +189,5 @@ export const postsSlice = createSlice({
   },
 });
 
-export const {CLEAR_POSTS} = postsSlice.actions;
+export const { CLEAR_POSTS } = postsSlice.actions;
 export default postsSlice.reducer;

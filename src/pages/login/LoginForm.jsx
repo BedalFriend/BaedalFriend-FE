@@ -34,7 +34,11 @@ export default function LoginForm() {
     } else {
       // 로그인 실패
       setIsFailed(true);
-      setFailText(response.headers.error.message);
+      if (response?.headers?.error) {
+        setFailText(response.headers.error.message);
+      } else {
+        setFailText(response.headers.message);
+      }
       target.classList.remove('vibrate-box');
       void target.offsetWidth;
       target.classList.add('vibrate-box');
