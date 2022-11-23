@@ -1,10 +1,14 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect} from "react";
+import { useNavigate } from "react-router-dom";
 import * as CaroST from './CarouselStyle';
 import LoginImg1 from '../carousel/img/BannerReal3.png';
 import { getCookieToken } from "../../shared/storage/Cookie";
 
 
 const PageOne = () => {
+
+  const navigate = useNavigate();
+
   return (
     <div>
       { getCookieToken === null||undefined ?
@@ -23,8 +27,10 @@ const PageOne = () => {
             <CaroST.BoldText>로그인</CaroST.BoldText> 하고<br/>
             <CaroST.BfText>배프</CaroST.BfText>가 되어주세요!
           </CaroST.TextBox>
-          <CaroST.LoginMiniBox>
-          <CaroST.DesContent>로그인하고 내 근처 배프 만나러 가기</CaroST.DesContent>
+          <CaroST.LoginMiniBox onClick={() => {navigate('/login')}}>
+          <CaroST.DesContent>
+            로그인하고 내 근처 배프 만나러 가기
+          </CaroST.DesContent>
           </CaroST.LoginMiniBox>
         </div>)
       }

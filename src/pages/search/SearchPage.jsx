@@ -7,7 +7,8 @@ import Layout from '../../components/layout/Layout';
 import SearchModal from './SearchModal';
 import useInput from '../../hooks/useInput';
 import Card from '../../components/elements/card/Card';
-import RecentWord from './RecentWord';
+//import RecentWord from './RecentWord';
+import NoResult from '../../pages/search/NoResult'
 
 import {__getSearchThunk, CLEAR_POSTS } from '../../redux/modules/PostSlice'
 
@@ -88,6 +89,7 @@ export default function SearchPage() {
 
   //검색어
   const [searchTerm, setSearchTerm, searchHandler] = useInput("");
+
   //정렬 모달 선택
   const [select, setSelect] = useState("마감 임박 순");
   let query = "";
@@ -106,6 +108,44 @@ export default function SearchPage() {
     }
   }
 
+  //스크롤 방지
+  var keys = {37: 1, 38: 1, 39: 1, 40: 1};
+ 
+  function preventDefault(e) {
+    e.preventDefault();
+  }
+  
+  function preventDefaultForScrollKeys(e) {
+    if (keys[e.keyCode]) {
+      preventDefault(e);
+      return false;
+    }
+  }
+
+  var supportsPassive = false;
+  try {
+    window.addEventListener("test", null, Object.defineProperty({}, 'passive', {
+      get: function () { supportsPassive = true; }
+    }));
+  } catch(e) {}
+
+  var wheelOpt = supportsPassive ? { passive: false } : false;
+  var wheelEvent = 'onwheel' in document.createElement('div') ? 'wheel' : 'mousewheel';
+
+  function disableScroll() {
+    window.addEventListener('DOMMouseScroll', preventDefault, false);
+    window.addEventListener(wheelEvent, preventDefault, wheelOpt);
+    window.addEventListener('touchmove', preventDefault, wheelOpt);
+    window.addEventListener('keydown', preventDefaultForScrollKeys, false);
+  }
+
+  function enableScroll() {
+    window.removeEventListener('DOMMouseScroll', preventDefault, false);
+    window.removeEventListener(wheelEvent, preventDefault, wheelOpt);
+    window.removeEventListener('touchmove', preventDefault, wheelOpt);
+    window.removeEventListener('keydown', preventDefaultForScrollKeys, false);
+  }
+  
   useEffect(() => {
     setIsOpen(false);
     queryHandler();
@@ -126,10 +166,20 @@ export default function SearchPage() {
   useEffect(() => {
     return () => {
       dispatch(CLEAR_POSTS());
+      setSearchTerm('');
     }
   }, [])
 
   const posts = useSelector((state) => state.post.posts);
+
+  //스크롤방지
+  useEffect(() => {
+    if(posts.data.length === 0) {
+      disableScroll();
+    }
+    // modal 닫히면 다시 스크롤 가능하도록 함
+    return () => enableScroll();
+  }, [posts]);  
 
   return (
     <Layout>
@@ -151,7 +201,7 @@ export default function SearchPage() {
     </SearchST.Search>
 
     {/* 최근 검색어 */}
-    <SearchST.RecentSection>
+    {/* <SearchST.RecentSection>
       <SearchST.RecentTitle>최근 검색어</SearchST.RecentTitle>
       <SearchST.RecentDisplay
         ref={scrollRef}
@@ -165,11 +215,9 @@ export default function SearchPage() {
         <RecentWord/>
         <RecentWord/>
         <RecentWord/>
-        <RecentWord/>
-        <RecentWord/>
         <div style={{ width: '50%', height: '30px'}}></div>
       </SearchST.RecentDisplay>
-    </SearchST.RecentSection>
+    </SearchST.RecentSection> */}
 
     <SearchST.Line />
 
@@ -195,16 +243,15 @@ export default function SearchPage() {
     
     {/* 검색 결과 */}
     <SearchST.ResultBox>
+      {
+      (posts.data.length === 0)?
+      (<NoResult searchTerm={searchTerm}/>)
+      :
+      (<>
       {posts.data.map((post) => (
         <Card key={post.postId} post={post} />))}
-
-    {/* //검색된 posts가 없을때
-        if (posts.data === [])
-            return <div><h2>아직 개설된 채팅방이 없습니다.</h2></div>
-            return console.log("아직 개설된 채팅방이 없습니다.")
-    //에러 발생했을때
-        if (posts.error)
-            return <div><h2>알 수 없는 에러가 발생했습니다.</h2></div> */}
+      </>)
+      }
     </SearchST.ResultBox>
 
     <div style={{ width: '100%', height: '152px' }}></div>

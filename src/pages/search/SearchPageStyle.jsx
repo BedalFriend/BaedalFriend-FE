@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const SearchBg = styled.div`
   background-color: var(--color-white);
   width: 100%;
-  min-height: 1000px;
+  min-height: 2000px;
 
   display: flex;
   flex-flow: column nowrap;
