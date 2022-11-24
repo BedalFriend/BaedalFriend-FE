@@ -84,6 +84,7 @@ export const Line = styled.hr`
 export const DropDownSection = styled.div`
   position: relative;
   width: calc(100% - 32px);
+  margin-bottom: 20px;
 
   display: flex;
   flex-direction: row;
