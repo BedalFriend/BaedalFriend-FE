@@ -64,7 +64,21 @@ export const __getSearchThunk = createAsyncThunk(
   async (arg, thunkAPI) => {
     try {
       const { data } = await getInstance().get(
-        `${basePath}/posts/search?page=1&size=100&${arg}`
+        `${basePath}/posts/search?page=1&size=1000&${arg}`
+      );
+      return thunkAPI.fulfillWithValue(data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.code);
+    }
+  }
+);
+
+export const __getReSearchThunk = createAsyncThunk(
+  'GET_RESEARCH',
+  async (arg, thunkAPI) => {
+    try {
+      const { data } = await getInstance().get(
+        `${basePath}/posts/region/search?page=1&size=1000&${arg}`
       );
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
@@ -78,7 +92,49 @@ export const __getCateSearchThunk = createAsyncThunk(
   async (arg, thunkAPI) => {
     try {
       const { data } = await getInstance().get(
-        `${basePath}/posts/category/search?page=1&size=100&${arg}`
+        `${basePath}/posts/category/search?page=1&size=1000&${arg}`
+      );
+      return thunkAPI.fulfillWithValue(data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.code);
+    }
+  }
+);
+
+export const __getReCateSearchThunk = createAsyncThunk(
+  'GET_RECATESEARCH',
+  async (arg, thunkAPI) => {
+    try {
+      const { data } = await getInstance().get(
+        `${basePath}/posts/regionCategory/search?page=1&size=1000&${arg}`
+      );
+      return thunkAPI.fulfillWithValue(data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.code);
+    }
+  }
+);
+
+export const __getReEntireCateThunk = createAsyncThunk(
+  'GET_REENTIRECATE',
+  async (arg, thunkAPI) => {
+    try {
+      const { data } = await getInstance().get(
+        `${basePath}/posts/regionEntireCategory/search?page=1&size=1000&${arg}`
+      );
+      return thunkAPI.fulfillWithValue(data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.code);
+    }
+  }
+);
+
+export const __getEntireCateThunk = createAsyncThunk(
+  'GET_ENTIRECATE',
+  async (arg, thunkAPI) => {
+    try {
+      const { data } = await getInstance().get(
+        `${basePath}/posts/entireCategory/search?page=1&size=1000&${arg}`
       );
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
@@ -176,6 +232,19 @@ export const postsSlice = createSlice({
       state.posts.data = action.payload.data;
     },
 
+    //get Region Search
+    [__getReSearchThunk.pending]: (state) => {
+      state.posts.isLoading = true;
+    },
+    [__getReSearchThunk.rejected]: (state, action) => {
+      state.posts.isLoading = false;
+      state.posts.error = action.payload;
+    },
+    [__getReSearchThunk.fulfilled]: (state, action) => {
+      state.posts.isLoading = false;
+      state.posts.data = action.payload.data;
+    },
+
     //get Category Search
     [__getCateSearchThunk.pending]: (state) => {
       state.posts.isLoading = true;
@@ -185,6 +254,45 @@ export const postsSlice = createSlice({
       state.posts.error = action.payload;
     },
     [__getCateSearchThunk.fulfilled]: (state, action) => {
+      state.posts.isLoading = false;
+      state.posts.data = action.payload.data;
+    },
+
+    //get Region Category Search
+    [__getReCateSearchThunk.pending]: (state) => {
+      state.posts.isLoading = true;
+    },
+    [__getReCateSearchThunk.rejected]: (state, action) => {
+      state.posts.isLoading = false;
+      state.posts.error = action.payload;
+    },
+    [__getReCateSearchThunk.fulfilled]: (state, action) => {
+      state.posts.isLoading = false;
+      state.posts.data = action.payload.data;
+    },
+
+    //get Region Entire Category Search
+    [__getReEntireCateThunk.pending]: (state) => {
+      state.posts.isLoading = true;
+    },
+    [__getReEntireCateThunk.rejected]: (state, action) => {
+      state.posts.isLoading = false;
+      state.posts.error = action.payload;
+    },
+    [__getReEntireCateThunk.fulfilled]: (state, action) => {
+      state.posts.isLoading = false;
+      state.posts.data = action.payload.data;
+    },
+    
+    //get Entire Category Search
+    [__getEntireCateThunk.pending]: (state) => {
+      state.posts.isLoading = true;
+    },
+    [__getEntireCateThunk.rejected]: (state, action) => {
+      state.posts.isLoading = false;
+      state.posts.error = action.payload;
+    },
+    [__getEntireCateThunk.fulfilled]: (state, action) => {
       state.posts.isLoading = false;
       state.posts.data = action.payload.data;
     },

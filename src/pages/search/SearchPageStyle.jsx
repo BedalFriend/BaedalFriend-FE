@@ -1,14 +1,14 @@
 import styled from 'styled-components';
 
 export const SearchBg = styled.div`
-    background-color: var(--color-white);
-    width: 100%;
-    min-height: 1000px;
-    
-    display: flex;
-    flex-flow: column nowrap;
-    align-items: center;
-    position: absolute;
+  background-color: var(--color-white);
+  width: 100%;
+  min-height: 2000px;
+
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  position: absolute;
 `
 
 export const Search = styled.div`
@@ -29,84 +29,98 @@ export const Search = styled.div`
 `;
 
 export const SearchText = styled.input`
-    all: unset;
+  all: unset;
+  font-weight: var(--weight-regular);
+  font-size: var(--font-regular);
+  margin-left: 4px;
+  cursor: auto;
+  width: 100%;
+
+  ::placeholder {
+    color: var(--color-grey);
     font-weight: var(--weight-regular);
     font-size: var(--font-regular);
-    margin-left: 4px;
-    cursor: auto;
-    width: 100%;
-
-    ::placeholder {
-        color: var(--color-grey);
-        font-weight: var(--weight-regular);
-        font-size: var(--font-regular);
-        font-display: swap;
-    }
-
+    font-display: swap;
+  }
 `;
 
 export const RecentSection = styled.div`
-    position: relative;
-    width: calc(100% - 32px);
-    height: 56px;
-    overflow-x: hidden;
-    background-color: var(--color-white);
+  position: relative;
+  width: calc(100% - 32px);
+  height: 56px;
+  overflow-x: hidden;
+  background-color: var(--color-white);
 `;
 
 export const RecentTitle = styled.div`
-    font-size: var(--weight-small);
-    font-weight: var(--weight-regular);
-    color: var(--color-dark-grey);
+  font-size: var(--weight-small);
+  font-weight: var(--weight-regular);
+  color: var(--color-dark-grey);
 `;
 
 export const RecentDisplay = styled.div`
-    position: relative;
-    width: 100%;
-    display: flex;
-    align-items: flex-start;
-    background-color: var(--color-white);
-    overflow-x: scroll;
-    ::-webkit-scrollbar {
-        display: none;
-    }
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  background-color: var(--color-white);
+  overflow-x: scroll;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const Line = styled.hr`
-    position: relative;
+  position: relative;
 
-    margin-top: 20px;
-    margin-bottom: 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 
-    width: calc(100% - 32px);
-
-    border-radius: 99px;
-
-    z-index: 500;
+  width: calc(100% - 32px);
+  border-radius: 99px;
+  z-index: 500;
 `;
 
 export const DropDownSection = styled.div`
-    position: relative;
-    width: calc(100% - 32px);
+  position: relative;
+  width: calc(100% - 32px);
+  margin-bottom: 20px;
 
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 
-    background-color: var(--color-white);
-    cursor: pointer;
+  background-color: var(--color-white);
+  cursor: pointer;
 `;
 
 export const DropDownText = styled.div`
-    font-size: var(--weight-small);
-    font-weight: var(--weight-regular);
-    color: var(--color-grey);
+  font-size: var(--weight-small);
+  font-weight: var(--weight-regular);
+  color: var(--color-grey);
 
-    margin-right: 4px;
+  margin-right: 4px;
 `
 
 export const ResultBox = styled.div`
-    position: relative;
-    width: calc(100% - 32px);
-    display: flex;
-    flex-flow: row wrap;
-    gap: 16px;
+  position: relative;
+  width: calc(100% - 32px);
+  display: flex;
+  flex-flow: row wrap;
+  gap: 16px;
+`;
+
+export const NoResult = styled.div`
+  width: calc(100% - 32px);
+  position: relative;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+
+  color: var(--color-grey);
+  font-weight: var(--weight-regular);
+  font-size: var(--font-small);
+`
+
+export const NoResultText = styled.span`
+  font-weight: var(--weight-bold);
 `;

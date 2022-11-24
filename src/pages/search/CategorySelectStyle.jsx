@@ -1,12 +1,5 @@
 import styled from 'styled-components';
 
-export const Row = styled.div`
-  background-color: var(--color-white);
-  display: flex;
-  gap: 16px;
-  position: relative;
-`;
-
 export const SelectBox = styled.div`
   position: relative;
   display: flex;
@@ -17,7 +10,6 @@ export const SelectBox = styled.div`
   justify-content: center;
 
   background: var(--color-white);
-
   font-weight: ${(props) => (props.focused ? 'var(--weight-bold)' : 'var(--weight-regular)')};
   font-size: 'var(--font-regular)';
   color: ${(props) => (props.focused ? 'var(--color-orange)' : 'var(--color-blur-white)')};
@@ -26,5 +18,5 @@ export const SelectBox = styled.div`
 `;
 
 export const SelectWord = styled.div`
-    word-break: keep-all;
+  white-space: nowrap;
 `;
