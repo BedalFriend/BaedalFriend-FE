@@ -61,7 +61,7 @@ export const Img = styled.img`
   cursor: pointer;
   transition: all 0.5s ease-out;
   width: 630px;
-  height: 400px;
+  height: 380px;
   justify-content: center;
   align-items: center;
   text-align: center;
@@ -72,8 +72,9 @@ export const BannerImg = styled.img`
   cursor: pointer;
   transition: all 0.5s ease-out;
   width: 630px;
-  height: 400px;
-  left: 15%;
+  height: 380px;
+  //left: 15%;
+  top: 5px;
   bottom: 15px;
   justify-content: center;
   align-items: center;

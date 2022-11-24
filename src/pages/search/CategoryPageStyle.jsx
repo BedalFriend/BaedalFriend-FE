@@ -68,13 +68,13 @@ export const Row = styled.div`
 
 export const Selected = styled.div`
   position: relative;
-  background-color: var(--color-orange);
+  background-color: var(--color-light-orange);
   width: fit-content;
   height: 30px;
   padding: 4px 12px;
   margin-right: 10px;
 
-  color: var(--color-white);
+  color: var(--color-orange);
   font-weight: var(--weight-bold);
   border-radius: 12px;
   text-align: center;

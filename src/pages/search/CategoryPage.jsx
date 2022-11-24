@@ -11,7 +11,11 @@ import CategorySelect from './CategorySelect';
 import SVG from '../../shared/SVG';
 import NRImage from './banner 1.png'
 
-import { __getCateSearchThunk, CLEAR_POSTS } from '../../redux/modules/PostSlice'
+import {__getCateSearchThunk,
+        __getReCateSearchThunk,
+        __getReEntireCateThunk,
+        __getEntireCateThunk,
+        CLEAR_POSTS } from '../../redux/modules/PostSlice'
 
 export default function CategoryPage() {
 
@@ -107,74 +111,99 @@ export default function CategoryPage() {
     { category: '편의점' },
   ]
 
+  //주소 받아오기
+  const fullAddress = useSelector(state => state.user.address);
+  const address = (fullAddress||'').split(' ', 1)
+
   //정렬 모달 선택
   const [select, setSelect] = useState("마감 임박 순");
   let query = "";
 
   const queryHandler = () => {
     if (select === "마감 임박 순") {
-      query = `sortBy=limit_time&isAsc=true&keyword=${searchCate}`;
+      if (searchCate === "전체") {
+        if (fullAddress === null || fullAddress === undefined) {
+          query = `keyword=&sortBy=limit_time&isAsc=true`;
+        } else {
+          query = `keyword=${address[0]}&region=${address[0]}&sortBy=limit_time&isAsc=true`;
+        }
+      } else {
+          if (fullAddress === null || fullAddress === undefined) {
+            query = `sortBy=limit_time&isAsc=true&keyword=${searchCate}`;
+          } else {
+            query = `sortBy=limit_time&isAsc=true&region=${address[0]}&keyword=${searchCate}`;
+          }
+        }
     } else if (select === "신규 등록 순") {
-      query = `sortBy=created_at&isAsc=true&keyword=${searchCate}`;
+        if (searchCate === "전체") {
+          if (fullAddress === null || fullAddress === undefined) {
+            query = `keyword=&sortBy=created_at&isAsc=true`;
+          } else {
+            query = `keyword=${address[0]}&region=${address[0]}&sortBy=created_at&isAsc=true`;
+          }
+        } else {
+            if (fullAddress === null || fullAddress === undefined) {
+              query = `sortBy=created_at&isAsc=true&keyword=${searchCate}`;
+            } else {
+              query = `sortBy=created_at&isAsc=true&region=${address[0]}&keyword=${searchCate}`;
+            }          
+        }
     } else if (select === "참여자 많은 순") {
-      query = `sortBy=participant_number&isAsc=false&keyword=${searchCate}`;
+      if (searchCate === "전체") {
+        if (fullAddress === null || fullAddress === undefined) {
+          query = `keyword=&sortBy=participant_number&isAsc=false`;
+        } else {
+          query = `keyword=${address[0]}&region=${address[0]}&sortBy=participant_number&isAsc=false`;
+        }
+      } else {
+        if (fullAddress === null || fullAddress === undefined) {
+          query = `sortBy=participant_number&isAsc=false&keyword=${searchCate}`;
+        } else {
+          query = `sortBy=participant_number&isAsc=false&region=${address[0]}&keyword=${searchCate}`;
+        }
+      }
     } else if (select === "참여자 적은 순") {
-      query = `sortBy=participant_number&isAsc=true&keyword=${searchCate}`;
+      if (searchCate === "전체") {
+        if (fullAddress === null || fullAddress === undefined) {
+          query = `keyword=&sortBy=participant_number&isAsc=true`;
+        } else {
+          query = `keyword=${address[0]}&region=${address[0]}&sortBy=participant_number&isAsc=true`;
+        }
+      } else {
+          if (fullAddress === null || fullAddress === undefined) {
+            query = `sortBy=participant_number&isAsc=true&keyword=${searchCate}`;
+          } else {
+            query = `sortBy=participant_number&isAsc=true&region=${address[0]}&keyword=${searchCate}`;
+          }
+      }
     } else if (select === "매너 사용자 우선 순") {
       query = `keyword=${searchCate}`;
     }
   }
 
-  //스크롤 방지
-  var keys = {37: 1, 38: 1, 39: 1, 40: 1};
- 
-  function preventDefault(e) {
-    e.preventDefault();
-  }
-  
-  function preventDefaultForScrollKeys(e) {
-    if (keys[e.keyCode]) {
-      preventDefault(e);
-      return false;
+  const thunkHandler = () => {
+    //response로 선언해서 예외처리
+    if (searchCate === "전체") {
+      if(fullAddress === null || fullAddress === undefined) {  
+        dispatch(__getEntireCateThunk(query));
+      } else {
+        dispatch(__getReEntireCateThunk(query));
+      }
+    } else {
+        if(fullAddress === null || fullAddress === undefined) {  
+          dispatch(__getCateSearchThunk(query));
+        } else {
+          dispatch(__getReCateSearchThunk(query));
+        }
     }
-  }
-
-  var supportsPassive = false;
-  try {
-    window.addEventListener("test", null, Object.defineProperty({}, 'passive', {
-      get: function () { supportsPassive = true; }
-    }));
-  } catch(e) {}
-
-  var wheelOpt = supportsPassive ? { passive: false } : false;
-  var wheelEvent = 'onwheel' in document.createElement('div') ? 'wheel' : 'mousewheel';
-
-  function disableScroll() {
-    window.addEventListener('DOMMouseScroll', preventDefault, false);
-    window.addEventListener(wheelEvent, preventDefault, wheelOpt);
-    window.addEventListener('touchmove', preventDefault, wheelOpt);
-    window.addEventListener('keydown', preventDefaultForScrollKeys, false);
-  }
-
-  function enableScroll() {
-    window.removeEventListener('DOMMouseScroll', preventDefault, false);
-    window.removeEventListener(wheelEvent, preventDefault, wheelOpt);
-    window.removeEventListener('touchmove', preventDefault, wheelOpt);
-    window.removeEventListener('keydown', preventDefaultForScrollKeys, false);
   }
 
   useEffect(() => {
     setSearched(false);
     setIsOpen(false);
     queryHandler();
-    dispatch(__getCateSearchThunk(query));
-    //결과 불러오기 전에 NoResult 방지
-    if(posts.data.length === 0) {
-      setSearched(false);
-    } else {
-      setSearched(true);
-    }
-    //response로 선언해서 예외처리
+    thunkHandler();
+    setSearched(true);
   }, [searchCate, select])
 
   //clean up
@@ -184,9 +213,41 @@ export default function CategoryPage() {
     }
   }, [])
 
+  //게시물 받아오기
   const posts = useSelector((state) => state.post.posts);
+  console.log(posts)
 
   //스크롤방지
+  var keys = {37: 1, 38: 1, 39: 1, 40: 1};
+  function preventDefault(e) {
+    e.preventDefault();
+  }
+  function preventDefaultForScrollKeys(e) {
+    if (keys[e.keyCode]) {
+      preventDefault(e);
+      return false;
+    }
+  }
+  var supportsPassive = false;
+  try {
+    window.addEventListener("test", null, Object.defineProperty({}, 'passive', {
+      get: function () { supportsPassive = true; }
+    }));
+  } catch(e) {}
+  var wheelOpt = supportsPassive ? { passive: false } : false;
+  var wheelEvent = 'onwheel' in document.createElement('div') ? 'wheel' : 'mousewheel';
+  function disableScroll() {
+    window.addEventListener('DOMMouseScroll', preventDefault, false);
+    window.addEventListener(wheelEvent, preventDefault, wheelOpt);
+    window.addEventListener('touchmove', preventDefault, wheelOpt);
+    window.addEventListener('keydown', preventDefaultForScrollKeys, false);
+  }
+  function enableScroll() {
+    window.removeEventListener('DOMMouseScroll', preventDefault, false);
+    window.removeEventListener(wheelEvent, preventDefault, wheelOpt);
+    window.removeEventListener('touchmove', preventDefault, wheelOpt);
+    window.removeEventListener('keydown', preventDefaultForScrollKeys, false);
+  }
   useEffect(() => {
     if(posts.data.length === 0) {
       disableScroll();
@@ -204,7 +265,7 @@ export default function CategoryPage() {
         <CateST.SelectSection>
 
           <CateST.Selected>
-            <SVG category={searchCate} size='16' color='var(--color-white)'/>
+            <SVG category={searchCate} size='16' color='var(--color-orange)'/>
             <CateST.SelectWord>&nbsp;{searchCate}</CateST.SelectWord>
           </CateST.Selected>
 
