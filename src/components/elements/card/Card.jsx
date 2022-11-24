@@ -88,7 +88,7 @@ export default function Card({ post }) {
                 />
               </g>
             </CardST.InfoSVG>
-            {post.gatherName}
+            <CardST.InfoText>{post.gatherName}</CardST.InfoText>
           </CardST.InfoLine>
 
           <CardST.InfoLine>
@@ -107,7 +107,7 @@ export default function Card({ post }) {
                 />
               </g>
             </CardST.InfoSVG>
-            {post.deliveryTime}분 예상
+            <CardST.InfoText>{post.deliveryTime}분 예상</CardST.InfoText>
           </CardST.InfoLine>
         </CardST.InfoColumn>
 
@@ -128,8 +128,10 @@ export default function Card({ post }) {
                 />
               </g>
             </CardST.InfoSVG>
-            - {limit.getHours() >= 12 ? 'PM' : 'AM'} {limit.getHours()}:
-            {limit.getMinutes()}
+            <CardST.InfoText>
+              - {limit.getHours() >= 12 ? 'PM' : 'AM'} {limit.getHours()}:
+              {limit.getMinutes()}
+            </CardST.InfoText>
           </CardST.InfoLine>
 
           <CardST.InfoLine>
@@ -148,7 +150,9 @@ export default function Card({ post }) {
                 />
               </g>
             </CardST.InfoSVG>
-            {post.targetAmount}만원 이상 {post.deliveryFee}원
+            <CardST.InfoText>
+              {post.targetAmount}만원 이상 {post.deliveryFee}원
+            </CardST.InfoText>
           </CardST.InfoLine>
         </CardST.InfoColumn>
       </CardST.InfoBox>
