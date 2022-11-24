@@ -37,7 +37,7 @@ const Post = () => {
     gatherAddress: '',
     isDone: 0,
     limitTime: '2022-11-20 00:00:30',
-    region: '서울',
+    region: '',
   });
 
   const [index, setIndex] = useState(0);

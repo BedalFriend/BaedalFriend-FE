@@ -19,7 +19,9 @@ export const __getDetailThunk = createAsyncThunk(
   'GET_POST', //action value
   async (arg, thunkAPI) => {
     try {
-      const { data } = await getInstance().get(`${basePath}/posts/${arg}`);
+      const { data } = await getInstance().get(
+        `${basePath}/posts/detail/${arg}`
+      );
 
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
@@ -49,7 +51,7 @@ export const __deletePost = createAsyncThunk(
   async (arg, thunkAPI) => {
     try {
       console.log('delete', arg);
-      await getInstance().delete(`${basePath}/posts/${arg}`);
+      await getInstance().delete(`${basePath}/auth/posts/${arg}`);
       return thunkAPI.fulfillWithValue(arg);
     } catch (e) {
       return thunkAPI.rejectWithValue(e.code);

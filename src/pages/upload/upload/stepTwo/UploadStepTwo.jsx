@@ -15,7 +15,6 @@ const UploadStepTwo = ({
   setData,
   setIndex,
   addressManager,
-  lengthLimit,
   isSecondChecked,
   setNextStepTwo,
 }) => {
@@ -52,6 +51,12 @@ const UploadStepTwo = ({
   const [currentValue, setCurrentValue] = useState(data.maxCapacity);
 
   const [showOptions, setShowOptions] = useState(false);
+
+  const lengthLimit = (e) => {
+    if (e.target.value.length > 2) {
+      e.target.value = e.target.value.slice(0, 2);
+    }
+  };
 
   useEffect(() => {
     if (isTime === 'AM') {
