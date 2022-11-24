@@ -5,7 +5,7 @@ export const Box = styled.div`
   flex-flow: column nowrap;
   align-items: center;
 
-  margin-top: 20px;
+  margin-top: 4px;
   padding: 20px 24px;
 
   background-color: var(--color-white);
@@ -105,7 +105,7 @@ export const InfoBox = styled.div`
   display: flex;
   flex-flow: row nowrap;
   width: 100%;
-  gap: 40px;
+  gap: 16px;
 `;
 
 export const InfoColumn = styled.div`
@@ -127,4 +127,16 @@ export const InfoLine = styled.div`
 
 export const InfoSVG = styled.svg`
   margin-right: 4px;
+`;
+
+export const InfoText = styled.div`
+  width: 126px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  color: var(--color-dark-grey);
+  font-weight: var(--weight-regular);
+  font-size: var(--font-small);
+  font-display: swap;
 `;

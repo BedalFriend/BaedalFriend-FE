@@ -72,8 +72,8 @@ export const Input = styled.input`
 export const InputSet = styled.div`
   position: relative;
   padding: 0 24px;
-  width: 100vw;
-  min-width: 100vw;
+  width: 100%;
+  min-width: 100%;
   display: flex;
   gap: 16px;
 `;

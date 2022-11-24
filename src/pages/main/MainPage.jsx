@@ -10,7 +10,6 @@ import { useEffect } from 'react';
 import Card from '../../components/elements/card/Card';
 
 export default function MainPage(props) {
-
   window.scrollTo(0, 0);
   const navigate = useNavigate();
 
@@ -88,7 +87,7 @@ export default function MainPage(props) {
           <MainST.CtgText>패스트푸드</MainST.CtgText>
         </MainST.CtgBox>
 
-        <MainST.CtgBox  onClick={() => navigate(`/category/치킨`)}>
+        <MainST.CtgBox onClick={() => navigate(`/category/치킨`)}>
           <svg
             width='36'
             height='36'

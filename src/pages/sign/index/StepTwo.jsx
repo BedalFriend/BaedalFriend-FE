@@ -215,7 +215,7 @@ export default function StepTwo({
       {isPwFail ? (
         <div
           style={{
-            position: 'fixed',
+            position: 'absolute',
             bottom: '0px',
             width: '100%',
             height: '110px',
