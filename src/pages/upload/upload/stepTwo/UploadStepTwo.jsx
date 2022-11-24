@@ -31,7 +31,7 @@ const UploadStepTwo = ({
   });
 
   // isFail === false 일때 error 메세지 숨김
-  const [isParticipantNumberFail, setIsParticipantNumberFail] = useState(false);
+  const [isMaxCapacityFail, setIsMaxCapacityFail] = useState(false);
   const [isFistTimeFail, setIsFistTimeFail] = useState(false);
   const [isSecondTimeFail, setIsSecondTimeFail] = useState(false);
   const [isGatherNameFail, setIsGatherNameFail] = useState(false);
@@ -49,7 +49,7 @@ const UploadStepTwo = ({
     { value: 5 },
   ];
 
-  const [currentValue, setCurrentValue] = useState(data.participantNumber);
+  const [currentValue, setCurrentValue] = useState(data.maxCapacity);
 
   const [showOptions, setShowOptions] = useState(false);
 
@@ -71,7 +71,7 @@ const UploadStepTwo = ({
       setData({
         ...data,
         limitTime: dateString,
-        participantNumber: Number(currentValue),
+        maxCapacity: Number(currentValue),
       });
     } else {
       const dateString =
@@ -90,19 +90,19 @@ const UploadStepTwo = ({
       setData({
         ...data,
         limitTime: dateString,
-        participantNumber: Number(currentValue),
+        maxCapacity: Number(currentValue),
       });
     }
   }, [nowTime, isTime, currentValue]);
 
-  // ParticipantNumber
+  // MaxCapacity
   useEffect(() => {
-    if (data.participantNumber === 0 && isSecondChecked) {
-      setIsParticipantNumberFail(true);
+    if (data.maxCapacity === 0 && isSecondChecked) {
+      setIsMaxCapacityFail(true);
     } else {
-      setIsParticipantNumberFail(false);
+      setIsMaxCapacityFail(false);
     }
-  }, [data.participantNumber, isSecondChecked]);
+  }, [data.maxCapacity, isSecondChecked]);
 
   // FistTime
   useEffect(() => {
@@ -133,9 +133,9 @@ const UploadStepTwo = ({
   // NextStepTwo
   useEffect(() => {
     if (
-      isParticipantNumberFail === false &&
+      isMaxCapacityFail === false &&
       isGatherNameFail === false &&
-      data.participantNumber !== 0 &&
+      data.maxCapacity !== 0 &&
       data.gatherName !== ''
     ) {
       setNextStepTwo(true);
@@ -143,7 +143,7 @@ const UploadStepTwo = ({
       setNextStepTwo(false);
     }
     // eslint-disable-next-line
-  }, [isParticipantNumberFail, data.participantNumber]);
+  }, [isMaxCapacityFail, data.maxCapacity]);
 
   return (
     <UploadST.StepTwoBox>
@@ -162,9 +162,7 @@ const UploadStepTwo = ({
       </UploadST.MenuBox>
       <UploadST.SelectBox>
         <UploadST.SelectInput onClick={() => setShowOptions((prev) => !prev)}>
-          <UploadST.SelectValue>
-            {data.participantNumber} 명
-          </UploadST.SelectValue>
+          <UploadST.SelectValue>{data.maxCapacity} 명</UploadST.SelectValue>
         </UploadST.SelectInput>
         <Select
           width='152px'
@@ -177,7 +175,7 @@ const UploadStepTwo = ({
         />
       </UploadST.SelectBox>
 
-      {isParticipantNumberFail ? (
+      {isMaxCapacityFail ? (
         <UploadST.ErrorMsgBox>
           <svg
             width='14'

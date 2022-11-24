@@ -25,6 +25,7 @@ const MapContainer = () => {
 
   //내가 선택한 마커 저장소
   const [markerInfo, setMarkerInfo] = useState('');
+  console.log('markerInfo', markerInfo);
   console.log('검색어', searchParty);
 
   //검색한 값 && 반경 1km 값
