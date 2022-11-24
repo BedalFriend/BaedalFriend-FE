@@ -16,7 +16,15 @@ export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const { setIsDP } = useContext(AlarmContext);
 
-  // console.log(user);
+  const getAddress = (address) => {
+    const arr = address
+      .split(' ')
+      .filter(
+        (word) => !word.includes('(') && !word.includes(')') && word !== ''
+      );
+    const result = `${arr[arr.length - 2]} ${arr[arr.length - 1]}`;
+    return result;
+  };
 
   return (
     <HeadST.Area>
@@ -71,7 +79,7 @@ export default function Header() {
         <HeadST.AdrText>
           {refreshToken !== null && refreshToken !== undefined
             ? user.address
-              ? user.address
+              ? getAddress(user.address)
               : '주소를 입력해주세요!'
             : '로그인이 필요해요!'}
         </HeadST.AdrText>
@@ -101,7 +109,7 @@ export default function Header() {
         onClick={() => {
           if (!location.pathname.includes('/chat')) {
             if (refreshToken !== null && refreshToken !== undefined) {
-              navigate(`/chat/2`);
+              navigate(`/chat/${user.onGoing}`);
             } else {
               setIsDP(true);
             }
@@ -112,8 +120,10 @@ export default function Header() {
           <path
             d='M36 34.615V13.6873C36 12.9483 35.7648 12.3155 35.2944 11.7887C34.8248 11.2629 34.26 11 33.6 11H14.4C13.74 11 13.1748 11.2629 12.7044 11.7887C12.2348 12.3155 12 12.9483 12 13.6873V29.8114C12 30.5504 12.2348 31.1833 12.7044 31.71C13.1748 32.2358 13.74 32.4988 14.4 32.4988H31.2L33.96 35.5892C34.34 36.0147 34.7752 36.1097 35.2656 35.8741C35.7552 35.6394 36 35.2197 36 34.615Z'
             fill={
-              tab === 'Chat'
-                ? 'var(--color-orange)'
+              refreshToken !== null && refreshToken !== undefined
+                ? user.onGoing === 0
+                  ? 'var(--color-light-orange)'
+                  : 'var(--color-orange)'
                 : 'var(--color-light-orange)'
             }
           />
