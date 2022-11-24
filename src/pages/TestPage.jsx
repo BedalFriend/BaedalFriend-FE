@@ -29,7 +29,7 @@ export default function TestPage(props) {
     email: 'test@gmail.com',
     password: 'qwer1234*',
     passwordConfirm: 'qwer1234*',
-    nickname: 'test1234',
+    nickname: 'test12',
     role: 0,
   };
 

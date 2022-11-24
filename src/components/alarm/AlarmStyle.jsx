@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 
 export const Area = styled.div`
-  position: fixed;
+  position: absolute;
   display: flex;
   justify-content: center;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
 
   z-index: 910;
   opacity: ${(props) => (props.isDone ? '0' : '1')};
@@ -13,7 +13,7 @@ export const Area = styled.div`
 `;
 
 export const Box = styled.div`
-  position: absolute;
+  position: fixed;
   bottom: 144px;
 
   display: flex;
@@ -24,13 +24,22 @@ export const Box = styled.div`
   border-radius: 12px;
 
   height: 57px;
-  width: calc(100% - 32px);
+  /* width: calc(100% - 32px); */
+  @media screen and (min-width: 764px) {
+    width: calc(var(--responsive-width) - 32px);
+  }
+
+  @media screen and (max-width: 764px) {
+    width: calc(100vw - 32px);
+  }
 
   font-family: 'Pretendard';
   font-display: swap;
   font-weight: var(--weight-bold);
   font-size: var(--font-small);
   color: var(--color-white);
+
+  z-index: 920;
 `;
 
 export const Help = styled.div`

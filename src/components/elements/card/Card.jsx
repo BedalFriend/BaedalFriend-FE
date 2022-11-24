@@ -4,6 +4,7 @@ import * as CardST from './CardStyle';
 import Timer from '../timer/Timer';
 import ProfilePic from '../profilePic/ProfilePic';
 import SVG from '../../../shared/SVG';
+import { useNavigate } from 'react-router-dom';
 
 export default function Card({ post }) {
   const VacUser = () => {
@@ -31,11 +32,26 @@ export default function Card({ post }) {
   const [limit, setLimit] = useState(new Date(post.limitTime));
   const [gap, setGap] = useState(parseInt((limit - new Date()) / 1000));
 
-  console.log(post);
+  const navigate = useNavigate();
+
+  const getAddress = (address) => {
+    const arr = address
+      .split(' ')
+      .filter(
+        (word) => !word.includes('(') && !word.includes(')') && word !== ''
+      );
+    const result = `${arr[arr.length - 2]} ${arr[arr.length - 1]}`;
+    return result;
+  };
+
   return (
-    <CardST.Box>
+    <CardST.Box
+      onClick={() => {
+        navigate(`/detail/${post.postId}`);
+      }}
+    >
       <CardST.CardHead>
-        <CardST.CardAdr>{post.targetAddress}</CardST.CardAdr>
+        <CardST.CardAdr>{getAddress(post.targetAddress)}</CardST.CardAdr>
         <CardST.CardTimer>
           {gap < 0 ? (
             <Timer limit='0' />

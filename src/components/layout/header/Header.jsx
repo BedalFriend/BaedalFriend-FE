@@ -16,6 +16,16 @@ export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const { setIsDP } = useContext(AlarmContext);
 
+  const getAddress = (address) => {
+    const arr = address
+      .split(' ')
+      .filter(
+        (word) => !word.includes('(') && !word.includes(')') && word !== ''
+      );
+    const result = `${arr[arr.length - 2]} ${arr[arr.length - 1]}`;
+    return result;
+  };
+
   return (
     <HeadST.Area>
       <svg
@@ -69,7 +79,7 @@ export default function Header() {
         <HeadST.AdrText>
           {refreshToken !== null && refreshToken !== undefined
             ? user.address
-              ? user.address
+              ? getAddress(user.address)
               : '주소를 입력해주세요!'
             : '로그인이 필요해요!'}
         </HeadST.AdrText>
