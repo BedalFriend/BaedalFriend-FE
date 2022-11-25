@@ -207,9 +207,9 @@ export const postsSlice = createSlice({
     [__deletePost.fulfilled]: (state, action) => {
       state.posts.isLoading = false;
       console.log('Delete.action.payload', action.payload);
-      console.log('state.posts.data', current(state.posts.data));
+      console.log('state.posts.data', current(state));
       const target = state.posts.data.findIndex(
-        (post) => post.id === parseInt(action.payload)
+        (post) => post.postId === parseInt(action.payload)
       );
       console.log('target', target);
       state.posts.data.splice(target, 1);
@@ -283,7 +283,7 @@ export const postsSlice = createSlice({
       state.posts.isLoading = false;
       state.posts.data = action.payload.data;
     },
-    
+
     //get Entire Category Search
     [__getEntireCateThunk.pending]: (state) => {
       state.posts.isLoading = true;

@@ -1,6 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect } from 'react';
 import * as ModalST from './DeleteModalStyle';
-import useOutSideClick from '../../hooks/useOutSideClick';
 
 export default function DeleteModal({
   setIsOpen,
@@ -11,17 +10,6 @@ export default function DeleteModal({
   isDeleteHandler,
   setIsDeleteHandler,
 }) {
-  //배경 클릭 시 모달창 닫기
-  const modalRef = useRef(null);
-  const handleClose = () => {
-    setAniState(false);
-    setTimeout(() => {
-      closeModal();
-    }, 500);
-  };
-
-  useOutSideClick(modalRef, handleClose);
-
   //외부 스크롤 막기
   useEffect(() => {
     const $body = document.querySelector('body');
@@ -33,7 +21,7 @@ export default function DeleteModal({
     <>
       <ModalST.Overlay aniState={aniState}>
         {isDeleteHandler ? (
-          <ModalST.ModalWrap ref={modalRef}>
+          <ModalST.ModalWrap>
             <ModalST.ReTopBox>
               <div>
                 <ModalST.ErrorSvg
@@ -61,7 +49,9 @@ export default function DeleteModal({
 
             <ModalST.BottomBtnBox>
               <ModalST.DeleteBtnBox>
-                <ModalST.DeleteBtn>삭제</ModalST.DeleteBtn>
+                <ModalST.DeleteBtn onClick={onDeleteHandler}>
+                  삭제
+                </ModalST.DeleteBtn>
               </ModalST.DeleteBtnBox>
               <ModalST.DeleteBtnBox>
                 <ModalST.CancelBtn
@@ -75,7 +65,7 @@ export default function DeleteModal({
             </ModalST.BottomBtnBox>
           </ModalST.ModalWrap>
         ) : (
-          <ModalST.ModalWrap ref={modalRef}>
+          <ModalST.ModalWrap>
             <ModalST.TopBox>
               <ModalST.SelectText>게시글 수정하기</ModalST.SelectText>
             </ModalST.TopBox>
@@ -102,8 +92,6 @@ export default function DeleteModal({
             </ModalST.CloseSelectBox>
           </ModalST.ModalWrap>
         )}
-
-        <ModalST.ModalWrap></ModalST.ModalWrap>
       </ModalST.Overlay>
     </>
   );

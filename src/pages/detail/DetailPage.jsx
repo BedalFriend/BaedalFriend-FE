@@ -1,57 +1,85 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import styled from 'styled-components';
-import Layout from '../../components/layout/Layout';
-import CurrentLocation from './CurrentLocation';
-import * as CardST from '../../components/elements/card/CardStyle';
-import Timer from '../../components/elements/timer/Timer';
-import SVG from '../../shared/SVG';
 
 import {
   __deletePost,
   __getDetailThunk,
   __getThunk,
 } from '../../redux/modules/PostSlice';
+import { __enterChannel, __exitChannel } from '../../redux/modules/ChatSlice';
+
+import Layout from '../../components/layout/Layout';
+import CurrentLocation from './CurrentLocation';
+import ExitModal from './ExitModal';
 import DeleteModal from './DeleteModal';
 import CurrentMap from './CurrentMap';
 
+import * as DetailST from './DetailPageStyle';
+import Timer from '../../components/elements/timer/Timer';
+import SVG from '../../shared/SVG';
+import ProfilePic from '../../components/elements/profilePic/ProfilePic';
+
 const DetailPage = () => {
   const { id } = useParams();
-  useEffect(() => {
-    dispatch(__getDetailThunk(id));
-    dispatch(__getThunk());
-  }, []);
-  const user = useSelector((state) => state);
-  const post = useSelector((state) => state.post.post.data);
-  const posts = useSelector((state) => state.post.posts);
-  const token = useSelector((state) => state.token.accessToken);
-  console.log('user', user);
-  console.log('post', post);
-  console.log('token', token);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [deleteControl, setDeleteControl] = useState(false);
+  const user = useSelector((state) => state.user);
+  const post = useSelector((state) => state.post.post.data);
+  const posts = useSelector((state) => state.post.posts);
+  const token = useSelector((state) => state.token.accessToken);
+  console.log('posts', posts);
+  console.log('post', post);
+  console.log('token', token);
+  console.log('user', user);
+
+  //지도 화면 변환
   const [index, setIndex] = useState(false);
 
-  //정렬 모달창
+  //하단 버튼 변환
+  const [custom, setCustom] = useState(0);
+
+  //삭제 모달창
   const [isOpen, setIsOpen] = useState(false);
+
+  //퇴장 모달창
+  const [isExitOpen, setIsExitOpen] = useState(false);
+
   const [aniState, setAniState] = useState(false);
   const [isDeleteHandler, setIsDeleteHandler] = useState(false);
   const openModal = () => {
     setAniState(true);
     setIsOpen(true);
   };
-  const closeModal = () => {
-    setIsOpen(false);
+
+  const openExitModal = () => {
+    setAniState(true);
+    setIsExitOpen(true);
   };
 
+  // 삭제 핸들러
   const onDeleteHandler = () => {
     dispatch(__deletePost(id));
     navigate('/');
   };
 
+  // 참여 핸들러
+  const onEnterHandler = () => {
+    dispatch(__enterChannel(id));
+    setCustom(2);
+    window.location.reload();
+  };
+
+  // 퇴장 핸들러
+  const onExitHandler = () => {
+    dispatch(__exitChannel(id));
+    setCustom(0);
+    setIsExitOpen(false);
+    window.location.reload();
+  };
+
+  // 참여중인 인원
   const VacUser = () => {
     const result = [];
     for (
@@ -78,6 +106,7 @@ const DetailPage = () => {
     return result;
   };
 
+  // Limit 계산
   const [limit, setLimit] = useState();
   const [gap, setGap] = useState(parseInt((limit - new Date()) / 1000));
 
@@ -91,16 +120,33 @@ const DetailPage = () => {
     setGap(parseInt((limit - new Date()) / 1000));
   }, [limit]);
 
+  useEffect(() => {
+    dispatch(__getDetailThunk(id));
+    dispatch(__getThunk());
+  }, []);
+
+  useEffect(() => {
+    if (user.id === post.memberId) {
+      setCustom(3);
+    } else if (user.onGoing === 0 || user.onGoing === null) {
+      setCustom(0);
+    } else if (user.onGoing !== 0 && user.onGoing !== post.postId) {
+      setCustom(1);
+    } else if (user.onGoing === post.postId) {
+      setCustom(2);
+    }
+  }, [user.id, post.memberId, user.onGoing, custom]);
+
   return (
     <Layout>
       {index ? (
         <CurrentMap data={post} setIndex={setIndex} />
       ) : (
-        <DetailBox>
-          <CardBox>
-            <AddressBox>
-              <AddressHeader>
-                <YellowMarkSvg
+        <DetailST.DetailBox>
+          <DetailST.CardBox>
+            <DetailST.AddressBox>
+              <DetailST.AddressHeader>
+                <DetailST.YellowMarkSvg
                   width='16'
                   height='16'
                   viewBox='0 0 16 16'
@@ -119,11 +165,13 @@ const DetailPage = () => {
                       fill='white'
                     />
                   </g>
-                </YellowMarkSvg>
+                </DetailST.YellowMarkSvg>
 
-                <CardAddress>{post?.targetAddress}</CardAddress>
-              </AddressHeader>
-              {user.id !== post.memberId ? (
+                <DetailST.CardAddress>
+                  {post?.targetAddress}
+                </DetailST.CardAddress>
+              </DetailST.AddressHeader>
+              {user.id === post.memberId ? (
                 <svg
                   onClick={openModal}
                   width='28'
@@ -160,34 +208,33 @@ const DetailPage = () => {
                   setIsOpen={setIsOpen}
                   aniState={aniState}
                   setAniState={setAniState}
-                  closeModal={closeModal}
                   onDeleteHandler={onDeleteHandler}
                   isDeleteHandler={isDeleteHandler}
                   setIsDeleteHandler={setIsDeleteHandler}
                 />
               )}
-            </AddressBox>
+            </DetailST.AddressBox>
 
-            <TitleBox>
-              <NameBox>
+            <DetailST.TitleBox>
+              <DetailST.NameBox>
                 <SVG
                   category={post?.category}
                   size='24px'
                   color='var(--color-light-black)'
                 />
-                <TagetName>{post?.targetName}</TagetName>
-              </NameBox>
-              <CardTimer>
+                <DetailST.TagetName>{post?.targetName}</DetailST.TagetName>
+              </DetailST.NameBox>
+              <DetailST.CardTimer>
                 {gap < 0 ? (
                   <Timer limit='0' />
                 ) : gap > 900 ? null : (
                   <Timer limit={gap.toString()} />
                 )}
-              </CardTimer>
-            </TitleBox>
+              </DetailST.CardTimer>
+            </DetailST.TitleBox>
 
-            <BodyBox>
-              <DeliveryInfo>
+            <DetailST.BodyBox>
+              <DetailST.DeliveryInfo>
                 <svg
                   width='20'
                   height='20'
@@ -204,9 +251,11 @@ const DetailPage = () => {
                   </g>
                 </svg>
 
-                <InfoText>{post?.deliveryTime}분 소요 예상</InfoText>
-              </DeliveryInfo>
-              <DeliveryInfo>
+                <DetailST.InfoText>
+                  {post?.deliveryTime}분 소요 예상
+                </DetailST.InfoText>
+              </DetailST.DeliveryInfo>
+              <DetailST.DeliveryInfo>
                 <svg
                   width='20'
                   height='20'
@@ -224,11 +273,11 @@ const DetailPage = () => {
                   </g>
                 </svg>
 
-                <InfoText>
+                <DetailST.InfoText>
                   {post?.targetAmount}만원 이상 {post?.deliveryFee}원
-                </InfoText>
-              </DeliveryInfo>
-              <DeliveryInfo>
+                </DetailST.InfoText>
+              </DetailST.DeliveryInfo>
+              <DetailST.DeliveryInfo>
                 <svg
                   width='20'
                   height='20'
@@ -246,7 +295,7 @@ const DetailPage = () => {
                   </g>
                 </svg>
 
-                <InfoText>
+                <DetailST.InfoText>
                   {post?.limitTime?.split(' ')[1].split(':')[0] > 12 ? (
                     <div>
                       오후 {post?.limitTime?.split(' ')[1].split(':')[0] - 12}시
@@ -258,45 +307,33 @@ const DetailPage = () => {
                       {post?.limitTime?.split(' ')[1].split(':')[1]}분 신청 마감
                     </div>
                   )}
-                </InfoText>
-              </DeliveryInfo>
-            </BodyBox>
+                </DetailST.InfoText>
+              </DetailST.DeliveryInfo>
+            </DetailST.BodyBox>
 
-            <ContentBox>
-              <UserInfo>
-                <ProfilePic>
-                  {post.profileURL ? (
-                    <div>{post.profileURL}</div>
-                  ) : (
-                    <svg
-                      width='36'
-                      height='36'
-                      viewBox='0 0 36 36'
-                      fill='none'
-                      xmlns='http://www.w3.org/2000/svg'
-                    >
-                      <circle
-                        cx='18'
-                        cy='18'
-                        r='17.5'
-                        fill='white'
-                        stroke='#FFDFCD'
-                      />
-                      <circle cx='10' cy='18' r='2' fill='#FFDFCD' />
-                      <circle cx='18' cy='18' r='2' fill='#FFDFCD' />
-                      <circle cx='26' cy='18' r='2' fill='#FFDFCD' />
-                    </svg>
-                  )}
-                </ProfilePic>
-                <ProfileNickName>{post.nickname}</ProfileNickName>
-              </UserInfo>
+            <DetailST.ContentBox>
+              <DetailST.UserInfo>
+                <ProfilePic
+                  key={user.id}
+                  size='36px'
+                  border='1px solid var(--color-orange)'
+                  user={user}
+                />
+                <DetailST.ProfileNickName>
+                  {post.nickname}
+                </DetailST.ProfileNickName>
+              </DetailST.UserInfo>
 
-              <Content>안녕하세요! 매너있는 공구 진행해요</Content>
-            </ContentBox>
-          </CardBox>
+              <DetailST.Content>
+                <DetailST.ContentText>
+                  안녕하세요! 매너있는 공구 진행해요.
+                </DetailST.ContentText>
+              </DetailST.Content>
+            </DetailST.ContentBox>
+          </DetailST.CardBox>
           <div>
-            <PartyHeaderBox>
-              <PartyHeader>
+            <DetailST.PartyHeaderBox>
+              <DetailST.PartyHeader>
                 <svg
                   width='24'
                   height='24'
@@ -312,32 +349,34 @@ const DetailPage = () => {
                     />
                   </g>
                 </svg>
-                <PartyTitle>참여중인 배프</PartyTitle>
-              </PartyHeader>
-              <PartyTotalMember>
+                <DetailST.PartyTitle>참여중인 배프</DetailST.PartyTitle>
+              </DetailST.PartyHeader>
+              <DetailST.PartyTotalMember>
                 {post.participantNumber}/{post.maxCapacity}
-              </PartyTotalMember>
-            </PartyHeaderBox>
+              </DetailST.PartyTotalMember>
+            </DetailST.PartyHeaderBox>
 
-            <PtPicBox>
+            <DetailST.PtPicBox>
               {post.chatRoomMembers?.map((user) => (
-                <UserInfo key={user.member.id}>
+                <DetailST.UserInfo key={user.member.id}>
                   <ProfilePic
                     key={user.member.id}
                     size='36px'
                     border='1px solid var(--color-orange)'
                     user={user.member}
                   />
-                  <ProfileNickName>{user.member.nickname}</ProfileNickName>
-                </UserInfo>
+                  <DetailST.ProfileNickName>
+                    {user.member.nickname}
+                  </DetailST.ProfileNickName>
+                </DetailST.UserInfo>
               ))}
 
               <VacUser />
-            </PtPicBox>
+            </DetailST.PtPicBox>
           </div>
 
-          <PtMapBox>
-            <PtMapTitle>
+          <DetailST.PtMapBox>
+            <DetailST.PtMapTitle>
               <svg
                 width='24'
                 height='24'
@@ -353,8 +392,8 @@ const DetailPage = () => {
                   />
                 </g>
               </svg>
-              <PartyTitle>만나는 장소</PartyTitle>
-            </PtMapTitle>
+              <DetailST.PartyTitle>만나는 장소</DetailST.PartyTitle>
+            </DetailST.PtMapTitle>
             <div
               onClick={() => {
                 setIndex(true);
@@ -362,289 +401,45 @@ const DetailPage = () => {
             >
               <CurrentLocation data={post} />
             </div>
-          </PtMapBox>
+          </DetailST.PtMapBox>
 
-          {user.onGoing === 0 ? <JoinBtn>참여하기</JoinBtn> : null}
-          {post.postId &&
-          user.onGoing !== post.postId &&
-          user.id !== post.memberId ? (
-            <OverLapBtn>이미 다른 공구에 참여중이에요.</OverLapBtn>
+          {isExitOpen && (
+            <ExitModal
+              setIsExitOpen={setIsExitOpen}
+              onExitHandler={onExitHandler}
+              aniState={aniState}
+              setAniState={setAniState}
+            />
+          )}
+
+          {custom === 0 ? (
+            <DetailST.JoinBtn onClick={onEnterHandler}>
+              참여하기
+            </DetailST.JoinBtn>
           ) : null}
-          {user.onGoing === post.postId && user.id !== post.memberId ? (
-            <BottomBtnBox>
-              <PartyOutBtn>파티에서 나가기</PartyOutBtn>
-              <CurrentStatusBtn>참여 중</CurrentStatusBtn>
-            </BottomBtnBox>
+          {custom === 1 ? (
+            <DetailST.OverLapBtn>
+              이미 다른 공구에 참여중이에요.
+            </DetailST.OverLapBtn>
           ) : null}
-          {user.id === post.memberId ? (
-            <BottomBtnBox>
-              <PartyOutBtn>공구 완료하기</PartyOutBtn>
-              <CurrentStatusBtn>진행 중</CurrentStatusBtn>
-            </BottomBtnBox>
+          {custom === 2 ? (
+            <DetailST.BottomBtnBox>
+              <DetailST.PartyOutBtn onClick={openExitModal}>
+                파티에서 나가기
+              </DetailST.PartyOutBtn>
+              <DetailST.CurrentStatusBtn>참여 중</DetailST.CurrentStatusBtn>
+            </DetailST.BottomBtnBox>
           ) : null}
-        </DetailBox>
+          {custom === 3 ? (
+            <DetailST.BottomBtnBox>
+              <DetailST.PartyOutBtn>공구 완료하기</DetailST.PartyOutBtn>
+              <DetailST.CurrentStatusBtn>진행 중</DetailST.CurrentStatusBtn>
+            </DetailST.BottomBtnBox>
+          ) : null}
+        </DetailST.DetailBox>
       )}
     </Layout>
   );
 };
 
 export default DetailPage;
-
-const DetailBox = styled.div`
-  position: absolute;
-  z-index: 2;
-  padding-top: 60px;
-
-  width: 100%;
-  height: 100vh;
-  background-color: white;
-`;
-
-const CardBox = styled.div`
-  width: 100%;
-  height: 284px;
-  background-color: var(--color-white);
-  border-bottom-left-radius: 24px;
-  border-bottom-right-radius: 24px;
-  box-shadow: 0px 3px 10px 0px #bbbb;
-`;
-
-const CardAddress = styled.div`
-  padding: 4px 8px;
-  height: 20px;
-  background-color: var(--color-dark-white);
-  border-radius: 99px;
-
-  color: var(--color-grey);
-  font-weight: var(--weight-regular);
-  font-size: var(--font-minor);
-  font-display: swap;
-`;
-
-const AddressBox = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: calc(100% - 16px);
-  height: 40px;
-  padding: 20px 0px 0px 16px;
-`;
-const AddressHeader = styled.div`
-  display: flex;
-`;
-
-const YellowMarkSvg = styled.svg`
-  margin-right: 4px;
-`;
-
-const TitleBox = styled.div`
-  margin: 16px 0px 0px 16px;
-  width: calc(100% - 44px);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`;
-
-const NameBox = styled.div`
-  width: 100%;
-  height: 21px;
-
-  display: flex;
-  align-items: center;
-`;
-const TagetName = styled.div`
-  font-size: var(--font-large);
-  margin-left: 8px;
-`;
-
-const CardTimer = styled.div``;
-
-const BodyBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin: 18px 0px 0px 16px;
-`;
-
-const DeliveryInfo = styled.div`
-  display: flex;
-  align-items: center;
-  margin-bottom: 6px;
-`;
-
-const InfoText = styled.div`
-  margin-left: 8px;
-  font-size: var(--font-small);
-  font-weight: var(--weight-regular);
-  color: var(--color-dark-grey);
-`;
-
-const ProfilePic = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 44px;
-  height: 44px;
-`;
-
-const ProfileNickName = styled.div`
-  margin-top: 4px;
-  font-size: var(--font-micro);
-  color: var(--color-grey);
-`;
-
-const ContentBox = styled.div`
-  display: flex;
-  margin: 20px 0px 0px 16px;
-  width: calc(100% - 32px);
-`;
-
-const UserInfo = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const Content = styled.div`
-  background-color: var(--color-dark-white);
-  display: flex;
-  align-items: center;
-  margin-left: 8px;
-  padding-left: 20px;
-  width: calc(100% - 32px);
-
-  height: 64px;
-  border-radius: 12px;
-
-  font-size: var(--font-micro);
-  font-weight: var(--weight-regular);
-`;
-
-const PartyHeaderBox = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: calc(100% - 102px);
-  height: 24px;
-
-  margin: 32px 0px 0px 16px;
-`;
-
-const PartyHeader = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const PartyTitle = styled.div`
-  margin-left: 8px;
-
-  color: var(--color-light-black);
-  font-size: var(--font-regular);
-  font-weight: var(--weight-regular);
-`;
-
-const PartyTotalMember = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 43px;
-  height: 22px;
-  border-radius: 99px;
-
-  background-color: var(--color-light-orange);
-  color: var(--color-orange);
-
-  font-size: var(--font-micro);
-  font-weight: var(--weight-regular);
-`;
-
-const PtPicBox = styled.div`
-  display: flex;
-  height: 66px;
-  margin: 14px 0px 0px 16px;
-  gap: 8px;
-`;
-
-const PtMapBox = styled.div`
-  width: calc(100% - 32px);
-  margin-left: 16px;
-`;
-
-const PtMapTitle = styled.div`
-  display: flex;
-  align-items: center;
-  margin-bottom: 12px;
-`;
-
-const JoinBtn = styled.div`
-  position: absolute;
-  bottom: 52px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  width: calc(100% - 32px);
-  height: 52px;
-  border-radius: 12px;
-  margin-left: 16px;
-
-  background-color: var(--color-orange);
-  color: var(--color-white);
-
-  font-size: var(--font-regular);
-  font-weight: var(--weight-semi-bold);
-`;
-
-const OverLapBtn = styled.div`
-  position: absolute;
-  bottom: 52px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  width: calc(100% - 32px);
-  min-width: 358px;
-  height: 52px;
-  border-radius: 12px;
-  margin-left: 16px;
-
-  background-color: var(--color-light-orange);
-  color: var(--color-orange);
-
-  font-size: var(--font-regular);
-  font-weight: var(--weight-semi-bold);
-`;
-
-const BottomBtnBox = styled.div`
-  display: flex;
-  position: absolute;
-  bottom: 52px;
-  width: calc(100% - 32px);
-  margin-left: 16px;
-  gap: 16px;
-`;
-
-const PartyOutBtn = styled.button`
-  width: 50%;
-  min-width: 171px;
-  height: 52px;
-  border-radius: 12px;
-
-  background-color: var(--color-blur-white);
-  color: var(--color-white);
-
-  font-size: var(--font-regular);
-  font-weight: var(--weight-semi-bold);
-`;
-
-const CurrentStatusBtn = styled.button`
-  width: 50%;
-  min-width: 171px;
-  height: 52px;
-  border-radius: 12px;
-
-  background-color: var(--color-light-yellow);
-  color: var(--color-yellow);
-
-  font-size: var(--font-regular);
-  font-weight: var(--weight-semi-bold);
-`;

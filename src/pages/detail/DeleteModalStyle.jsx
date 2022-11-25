@@ -96,10 +96,8 @@ export const BottomBox = styled.div`
 
 export const SelectText = styled.div`
   font-size: var(--weight-small);
-  font-weight: ${(props) =>
-    props.focused ? 'var(--weight-bold)' : 'var(--weight-regular)'};
-  color: ${(props) =>
-    props.focused ? 'var(--color-orange)' : 'var(--color-dark-grey)'};
+  font-weight: var(--weight-regular);
+  color: var(--color-dark-grey);
 
   position: relative;
   top: 50%;
@@ -126,13 +124,22 @@ export const ReTopBox = styled.div`
 
 export const InfoText = styled.div`
   font-size: var(--weight-small);
-  font-weight: ${(props) =>
-    props.focused ? 'var(--weight-bold)' : 'var(--weight-regular)'};
-  color: ${(props) =>
-    props.focused ? 'var(--color-orange)' : 'var(--color-dark-grey)'};
+  font-weight: var(--weight-regular);
+  color: var(--color-dark-grey);
 
   position: relative;
   top: calc(50% - 25px);
+  left: 50%;
+  transform: translate(-50%, -50%);
+`;
+
+export const ExitInfoText = styled.div`
+  font-size: var(--weight-small);
+  font-weight: var(--weight-regular);
+  color: var(--color-dark-grey);
+
+  position: relative;
+  top: calc(50% - 10px);
   left: 50%;
   transform: translate(-50%, -50%);
 `;
@@ -145,36 +152,26 @@ export const DeleteBtn = styled.div`
   width: 152px;
 
   font-size: var(--weight-small);
-  font-weight: ${(props) =>
-    props.focused ? 'var(--weight-bold)' : 'var(--weight-regular)'};
+  font-weight: var(--weight-regular);
   color: var(--color-system-error);
 
   position: relative;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-
-  :hover {
-    color: var(--color-orange);
-  }
 `;
 
 export const CancelBtn = styled.div`
   width: 152px;
 
   font-size: var(--weight-small);
-  font-weight: ${(props) =>
-    props.focused ? 'var(--weight-bold)' : 'var(--weight-regular)'};
+  font-weight: var(--weight-regular);
   color: var(--color-system-success);
 
   position: relative;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-
-  :hover {
-    color: var(--color-orange);
-  }
 `;
 
 export const DeleteBtnBox = styled.div`
