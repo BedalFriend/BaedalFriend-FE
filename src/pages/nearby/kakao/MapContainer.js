@@ -10,7 +10,7 @@ import { __getThunk } from '../../../redux/modules/PostSlice';
 
 const { kakao } = window;
 
-const MapContainer = () => {
+const MapContainer = ({ setTab }) => {
   const user = useSelector((state) => state.user);
   const partyData = useSelector((state) => state.post.posts.data);
   console.log('user', user);
@@ -90,7 +90,9 @@ const MapContainer = () => {
 
   useEffect(() => {
     dispatch(__getThunk());
+  }, []);
 
+  useEffect(() => {
     // 지도를 생성합니다.
     const container = document.getElementById('map');
     const options = {
@@ -131,7 +133,10 @@ const MapContainer = () => {
     const geocoder = new kakao.maps.services.Geocoder();
 
     let timer = setTimeout(() => {
+      console.log('timertimertimer');
+      console.log(partyData);
       const filterData = partyData.filter((p) => {
+        console.log('againagainagina');
         if (
           p.targetName
             .replace('', '')
@@ -147,6 +152,7 @@ const MapContainer = () => {
         ) {
           return true;
         }
+        return false;
       });
 
       let selectedMarker = null;
@@ -249,10 +255,11 @@ const MapContainer = () => {
         }
       });
     }, 500);
+
     return () => {
       clearTimeout(timer);
     };
-  }, [searchParty, myLocation]);
+  }, [searchParty, myLocation, user.address, partyData?.length]);
 
   return (
     <NearbyBox>
@@ -284,23 +291,23 @@ const MapContainer = () => {
                 />
               </g>
             </ResultSearchImg>
-            <ResultBoldTitle>패스트푸드 </ResultBoldTitle>
-            <ResultNomalTitle>검색 결과</ResultNomalTitle>
+            <ResultBoldTitle>{searchParty}</ResultBoldTitle>
+            <ResultNomalTitle> 검색 결과</ResultNomalTitle>
           </ResultTitle>
           <TitleBorder />
 
           <Select>마감 임박 순</Select>
 
-          <div>
+          <SelectList>
             {filterSearchData.map((data) => {
               console.log('data', data);
               return (
-                <div key={data.Id}>
+                <div key={data.postId}>
                   <Card post={data} />
                 </div>
               );
             })}
-          </div>
+          </SelectList>
         </SearchResult>
       ) : (
         <>
@@ -374,6 +381,7 @@ const MapContainer = () => {
                 <VeiwAll
                   onClick={() => {
                     setIndex(true);
+                    setTab('nearbyList');
                   }}
                 >
                   모두보기
@@ -382,7 +390,7 @@ const MapContainer = () => {
             </BottomBtnBox>
 
             <div>
-              <CardBox>
+              <CardBox slotManager={slotManager}>
                 {slotManager ? <Card post={markerInfo} /> : null}
               </CardBox>
             </div>
@@ -399,7 +407,7 @@ const NearbyBox = styled.div`
   position: relative;
   padding-top: 60px;
   width: calc(100% - 32px);
-  min-height: 100vh;
+  height: 100vh;
   z-index: 0;
 `;
 
@@ -460,6 +468,7 @@ const InfoContent = styled.div`
 `;
 
 const CardBox = styled.div`
+  display: ${(props) => (props.slotManager ? 'block' : 'none')};
   min-width: 358px;
   width: calc(100% - 32px);
   margin-left: 13px;
@@ -507,10 +516,10 @@ const VeiwAll = styled.div`
 //
 
 const SearchResult = styled.div`
+  background-color: rebeccapurple;
   position: absolute;
   width: 100%;
-  height: calc(100vh - 196px);
-  z-index: 6;
+  height: 100vh;
 `;
 
 const ResultTitle = styled.div`
@@ -561,4 +570,18 @@ const Select = styled.div`
   font-family: 'Pretendard';
   font-weight: var(--weight-regular);
   font-size: var(--font-small);
+`;
+
+const SelectList = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+
+  width: 100%;
+  height: calc(100% - 60px);
+
+  overflow-x: auto;
+  overflow-y: scroll;
+
+  gap: 4px;
+  /* background-color: skyblue; */
 `;

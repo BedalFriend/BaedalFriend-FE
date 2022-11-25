@@ -352,7 +352,7 @@ const DetailPage = () => {
                 <DetailST.PartyTitle>참여중인 배프</DetailST.PartyTitle>
               </DetailST.PartyHeader>
               <DetailST.PartyTotalMember>
-                {post.participantNumber}/{post.maxCapacity}
+                {post?.chatRoomMembers?.length}/{post.maxCapacity}
               </DetailST.PartyTotalMember>
             </DetailST.PartyHeaderBox>
 
