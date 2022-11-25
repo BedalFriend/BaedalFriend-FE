@@ -50,8 +50,8 @@ export function SocketProvider({ children }) {
 
   const subscribe = () => {
     if (!client.current.connected) return;
-    client.current.subscribe(`/sub/chat/room/2`, onMessageReceived, {
-      id: `sub-2`,
+    client.current.subscribe(`/sub/chat/room/3`, onMessageReceived, {
+      id: `sub-3`,
     });
   };
 
