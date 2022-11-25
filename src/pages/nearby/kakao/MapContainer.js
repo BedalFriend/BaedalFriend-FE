@@ -11,13 +11,17 @@ import { __getThunk } from '../../../redux/modules/PostSlice';
 const { kakao } = window;
 
 const MapContainer = () => {
-  const allData = useSelector((state) => state);
+  const user = useSelector((state) => state.user);
+  const partyData = useSelector((state) => state.post.posts.data);
+  console.log('user', user);
+  console.log('data', data);
+  console.log('partyData', partyData);
   const dispatch = useDispatch();
 
   const [searchParty, setSearchParty] = useState('');
 
   const [myLocation, setMyLocation] = useState('');
-
+  console.log('myLocation', myLocation);
   const [myAddress, setMyAddress] = useState([{}]);
   console.log('myAddress', myAddress);
 
@@ -59,9 +63,6 @@ const MapContainer = () => {
       alert('GPS를 지원하지 않습니다');
     }
   };
-
-  //현재 위치 위치지정
-  const nowData = { address: '신정로 225-12' };
 
   let totalData = [];
 
@@ -129,123 +130,129 @@ const MapContainer = () => {
     // 주소-좌표 변환 객체를 생성합니다.
     const geocoder = new kakao.maps.services.Geocoder();
 
-    const filterData = data.filter((p) => {
-      if (
-        p.targetName
-          .replace('', '')
-          .toLocaleLowerCase()
-          .includes(searchParty.toLocaleLowerCase())
-      ) {
-        return true;
-      } else if (
-        p.category
-          .replace('', '')
-          .toLocaleLowerCase()
-          .includes(searchParty.toLocaleLowerCase())
-      ) {
-        return true;
-      }
-    });
+    let timer = setTimeout(() => {
+      const filterData = partyData.filter((p) => {
+        if (
+          p.targetName
+            .replace('', '')
+            .toLocaleLowerCase()
+            .includes(searchParty.toLocaleLowerCase())
+        ) {
+          return true;
+        } else if (
+          p.category
+            .replace('', '')
+            .toLocaleLowerCase()
+            .includes(searchParty.toLocaleLowerCase())
+        ) {
+          return true;
+        }
+      });
 
-    let selectedMarker = null;
+      let selectedMarker = null;
 
-    // 현재위치에 대한 검색어를 좌표로 변환
-    geocoder.addressSearch(nowData.address, function (results, status) {
-      // 정상적으로 검색이 완료됐으면
-      if (status === kakao.maps.services.Status.OK) {
-        const coords = new kakao.maps.LatLng(results[0].y, results[0].x);
+      // 현재위치에 대한 검색어를 좌표로 변환
+      geocoder.addressSearch(user.address, function (results, status) {
+        // 정상적으로 검색이 완료됐으면
+        if (status === kakao.maps.services.Status.OK) {
+          const coords = new kakao.maps.LatLng(results[0].y, results[0].x);
 
-        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-        map.setCenter(coords);
+          // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+          map.setCenter(coords);
 
-        // 원의 영역을 설정
-        const circle = new kakao.maps.Circle({
-          map: map,
-          center: coords,
-          radius: 1000, // m단위
-          strokeWeight: 0,
-          strokeColor: '',
-          strokeOpacity: 0.8,
-          strokeStyle: 'dashed',
-          fillColor: '#00EEEE',
-          fillOpacity: 0.2,
-        });
+          // 원의 영역을 설정
+          const circle = new kakao.maps.Circle({
+            map: map,
+            center: coords,
+            radius: 1000, // m단위
+            strokeWeight: 0,
+            strokeColor: '',
+            strokeOpacity: 0.8,
+            strokeStyle: 'dashed',
+            fillColor: '#00EEEE',
+            fillOpacity: 0.2,
+          });
 
-        // DB의 모임 데이터주소로 좌표를 검색합니다.
-        filterData.forEach((el) => {
-          geocoder.addressSearch(el.targetAddress, function (result, status) {
-            // 정상적으로 검색이 완료됐으면
-            if (status === kakao.maps.services.Status.OK) {
-              const coord = new kakao.maps.LatLng(result[0].y, result[0].x);
+          // DB의 모임 데이터주소로 좌표를 검색합니다.
+          filterData.forEach((el) => {
+            geocoder.addressSearch(el.targetAddress, function (result, status) {
+              // 정상적으로 검색이 완료됐으면
+              if (status === kakao.maps.services.Status.OK) {
+                const coord = new kakao.maps.LatLng(result[0].y, result[0].x);
 
-              // 마커 이미지 설정
-              const markerImage = new kakao.maps.MarkerImage(
-                yellowMarker,
-                new kakao.maps.Size(36, 36),
-                new kakao.maps.Point(13, 34)
-              );
-              const checkMarkerImage = new kakao.maps.MarkerImage(
-                orangeMarker,
-                new kakao.maps.Size(36, 36),
-                new kakao.maps.Point(13, 34)
-              );
+                // 마커 이미지 설정
+                const markerImage = new kakao.maps.MarkerImage(
+                  yellowMarker,
+                  new kakao.maps.Size(36, 36),
+                  new kakao.maps.Point(13, 34)
+                );
+                const checkMarkerImage = new kakao.maps.MarkerImage(
+                  orangeMarker,
+                  new kakao.maps.Size(36, 36),
+                  new kakao.maps.Point(13, 34)
+                );
 
-              // 결과값으로 받은 위치를 마커로 표시합니다
-              const marker = new kakao.maps.Marker({
-                map: map,
-                position: coord,
-                image: markerImage,
-              });
+                // 결과값으로 받은 위치를 마커로 표시합니다
+                const marker = new kakao.maps.Marker({
+                  map: map,
+                  position: coord,
+                  image: markerImage,
+                });
 
-              // // 모든 마커 저장소로 마커를 각각 추가해줍니다.
-              // totalMarkers.push({ coord, marker });
+                // // 모든 마커 저장소로 마커를 각각 추가해줍니다.
+                // totalMarkers.push({ coord, marker });
 
-              const center = circle.getPosition();
-              const radius = circle.getRadius();
-              const line = new kakao.maps.Polyline();
+                const center = circle.getPosition();
+                const radius = circle.getRadius();
+                const line = new kakao.maps.Polyline();
 
-              // // 마커의 위치와 원의 중심을 경로로 하는 폴리라인 설정
-              // totalMarkers.forEach(function (marker) {
-              var path = [coord, center];
-              line.setPath(path);
+                // // 마커의 위치와 원의 중심을 경로로 하는 폴리라인 설정
+                // totalMarkers.forEach(function (marker) {
+                var path = [coord, center];
+                line.setPath(path);
 
-              // 현재위치와 마커 사이의 거리 측정
-              const dist = line.getLength();
+                // 현재위치와 마커 사이의 거리 측정
+                const dist = line.getLength();
 
-              if (dist < radius) {
-                // 해당 marker는 원 안에 있는 것
-                marker.setMap(map);
-                totalData.push(el);
-                setSearchData(totalData);
-              } else {
-                marker.setMap(null);
-              }
-
-              // setDistMarker({ coord, marker });
-              kakao.maps.event.addListener(marker, 'click', function () {
-                // 클릭된 마커가 없고, click 마커가 클릭된 마커가 아니면
-                // 마커의 이미지를 클릭 이미지로 변경합니다
-                if (!selectedMarker || selectedMarker !== marker) {
-                  // 클릭된 마커 객체가 null이 아니면
-                  // 클릭된 마커의 이미지를 기본 이미지로 변경하고
-                  !!selectedMarker && selectedMarker.setImage(markerImage);
-
-                  // 현재 클릭된 마커의 이미지는 클릭 이미지로 변경합니다
-                  marker.setImage(checkMarkerImage);
+                if (dist < radius) {
+                  // 해당 marker는 원 안에 있는 것
+                  marker.setMap(map);
+                  totalData.push(el);
+                  setSearchData(totalData);
+                } else {
+                  marker.setMap(null);
                 }
 
-                // 클릭된 마커를 현재 클릭된 마커 객체로 설정합니다
-                selectedMarker = marker;
+                // setDistMarker({ coord, marker });
+                kakao.maps.event.addListener(marker, 'click', function () {
+                  // 클릭된 마커가 없고, click 마커가 클릭된 마커가 아니면
+                  // 마커의 이미지를 클릭 이미지로 변경합니다
+                  if (!selectedMarker || selectedMarker !== marker) {
+                    // 클릭된 마커 객체가 null이 아니면
+                    // 클릭된 마커의 이미지를 기본 이미지로 변경하고
+                    !!selectedMarker && selectedMarker.setImage(markerImage);
 
-                setSlotManager(true);
-                setMarkerInfo(el);
-              });
-            }
+                    // 현재 클릭된 마커의 이미지는 클릭 이미지로 변경합니다
+                    marker.setImage(checkMarkerImage);
+                  }
+
+                  // 클릭된 마커를 현재 클릭된 마커 객체로 설정합니다
+                  selectedMarker = marker;
+
+                  setSlotManager(true);
+                  console.log(el);
+                  setMarkerInfo(el);
+                });
+              }
+            });
           });
-        });
-      }
-    });
-  }, [searchParty, myLocation, data]);
+        }
+      });
+    }, 500);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [searchParty, myLocation]);
 
   return (
     <NearbyBox>
@@ -364,7 +371,13 @@ const MapContainer = () => {
                 </g>
               </SearchBtn>
               {slotManager && searchData.length > 1 && searchParty !== '' ? (
-                <VeiwAll>모두보기</VeiwAll>
+                <VeiwAll
+                  onClick={() => {
+                    setIndex(true);
+                  }}
+                >
+                  모두보기
+                </VeiwAll>
               ) : null}
             </BottomBtnBox>
 
@@ -464,11 +477,13 @@ const BottomBtnBox = styled.div`
   align-items: center;
   width: calc(100% - 32px);
   margin-left: 16px;
-  z-index: 2;
+  z-index: 3;
   bottom: ${(props) => (props.slotManager ? '265px' : '20px')};
 `;
 
 const SearchBtn = styled.svg`
+  z-index: 3;
+  position: relative;
   cursor: pointer;
 `;
 
