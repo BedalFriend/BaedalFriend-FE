@@ -60,7 +60,6 @@ const CurrentLocation = ({
           width: '358px',
           height: '72px',
           borderRadius: '12px',
-          border: '1px solid var(--color-orange)',
         }}
       >
         {addressManager ? (
@@ -136,6 +135,7 @@ const SelectAddressBox = styled.div`
   border-radius: 25px;
 
   background-color: var(--color-white);
+  opacity: 80%;
 
   margin: 16px 20px 16px 20px;
 `;

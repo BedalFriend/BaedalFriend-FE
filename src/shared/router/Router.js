@@ -10,7 +10,7 @@ import LoginPage from '../../pages/login/LoginPage';
 import SignPage from '../../pages/sign/SignPage';
 import MainPage from '../../pages/main/MainPage';
 import UploadPage from '../../pages/upload/UploadPage';
-import DetailPage from '../../pages/DetailPage';
+import DetailPage from '../../pages/detail/DetailPage';
 import ChatPage from '../../pages/chat/ChatPage';
 import SearchPage from '../../pages/search/SearchPage';
 import NearbyPage from '../../pages/nearby/NearbyPage';

@@ -60,9 +60,11 @@ const SearchMap = ({ setIndex, data, setData, setAddressManager }) => {
   const saveAddressHandler = () => {
     const gatherName = document.getElementById('gatherName');
     const gatherAddress = document.getElementById('gatherAddress');
+    const region = gatherAddress.innerHTML.split(' ')[0];
 
     setData({
       ...data,
+      region: region,
       gatherName: gatherName.innerHTML,
       gatherAddress: gatherAddress.innerHTML,
     });

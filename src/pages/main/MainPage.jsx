@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as MainST from './MainPageStyle';
 
@@ -7,18 +7,62 @@ import Carousel from '../../components/carousel/Carousel';
 
 import { TabContext } from '../../context/TabContext';
 import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Card from '../../components/elements/card/Card';
+import {
+  __getEntireCateThunk,
+  __getReCateSearchThunk,
+  __getReEntireCateThunk,
+} from '../../redux/modules/PostSlice';
+import { getCookieToken } from '../../shared/storage/Cookie';
 
 export default function MainPage(props) {
-  window.scrollTo(0, 0);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const { setTab } = useContext(TabContext);
+  const user = useSelector((state) => state.user);
+  const post = useSelector((state) => state.post.posts);
+  const refreshToken = getCookieToken();
 
   useEffect(() => {
     setTab('Home');
+    window.scrollTo(0, 0);
     // eslint-disable-next-line
   }, []);
+
+  useEffect(() => {
+    const handler = setTimeout(async () => {
+      if (user.address) {
+        const address = user.address.split(' ')[0];
+        dispatch(
+          __getReEntireCateThunk(
+            `keyword=${address}&region=${address}&sortBy=limit_time&isAsc=true`
+          )
+        );
+      } else {
+        dispatch(__getEntireCateThunk(`keyword=&sortBy=limit_time&isAsc=true`));
+      }
+    }, 300);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [user.address]);
+
+  const [target1, setTarget1] = useState(0);
+  const [target2, setTarget2] = useState(0);
+  useEffect(() => {
+    const target1 = post.data.findIndex(
+      (post) => (new Date(post.limitTime) - new Date()) / 1000 > 900
+    );
+    const target2 = post.data.findIndex(
+      (post) => (new Date(post.limitTime) - new Date()) / 1000 > 0
+    );
+    console.log(target1, target2);
+    setTarget1(target1);
+    setTarget2(target2);
+  }, [post?.data?.length]);
 
   return (
     <Layout>
@@ -344,10 +388,31 @@ export default function MainPage(props) {
       <MainST.LimitBox>
         <div style={{ marginBottom: '4px' }}>
           <MainST.LimitAdr>
-            서울시 마포구 양화로 12길{' '}
-            <span style={{ fontWeight: 'var(--weight-regular)' }}>근처</span>
+            {user.address ? user.address : null}
+            {refreshToken ? (
+              user.address ? (
+                <span style={{ fontWeight: 'var(--weight-regular)' }}>
+                  &nbsp;근처
+                </span>
+              ) : (
+                <span style={{ fontWeight: 'var(--weight-regular)' }}>
+                  주소를 설정해 주세요
+                </span>
+              )
+            ) : (
+              <span style={{ fontWeight: 'var(--weight-regular)' }}>
+                로그인이 필요합니다
+              </span>
+            )}
           </MainST.LimitAdr>
-          <h2 style={{ color: 'var(--color-light-black)', marginTop: '8px' }}>
+          <h2
+            style={{
+              color: 'var(--color-light-black)',
+              marginTop: '8px',
+              marginBottom: '20px',
+              lineHeight: '130%',
+            }}
+          >
             <span
               style={{
                 fontWeight: 'var(--weight-bold)',
@@ -361,10 +426,15 @@ export default function MainPage(props) {
         </div>
 
         <MainST.LimitList>
-          {/* <Card />
-          <Card />
-          <Card />
-          <Card /> */}
+          {target2 === -1
+            ? null
+            : target1 === -1
+            ? post.data
+                .slice(target2)
+                .map((post) => <Card key={post.postId} post={post} />)
+            : post.data
+                .slice(target2, target1)
+                .map((post) => <Card key={post.postId} post={post} />)}
         </MainST.LimitList>
       </MainST.LimitBox>
 
