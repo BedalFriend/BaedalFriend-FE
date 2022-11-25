@@ -8,6 +8,8 @@ export const Box = styled.div`
   flex-flow: column nowrap;
   align-items: center;
 
+  min-height: 100vh;
+
   @media screen and (min-width: 764px) {
     width: var(--responsive-width);
   }
