@@ -15,9 +15,12 @@ const UploadStepTwo = ({
   setData,
   setIndex,
   addressManager,
-  lengthLimit,
   isSecondChecked,
   setNextStepTwo,
+  setPeople,
+  people,
+  setTime,
+  time,
 }) => {
   const [isTime, setIsTime] = useState('PM');
 
@@ -26,8 +29,8 @@ const UploadStepTwo = ({
   const month = ('0' + (today.getMonth() + 1)).slice(-2);
   const day = ('0' + today.getDate()).slice(-2);
   const [nowTime, setNowTime] = useState({
-    hour: '00',
-    minute: '00',
+    hour: time.hour,
+    minute: time.minute,
   });
 
   // isFail === false 일때 error 메세지 숨김
@@ -41,17 +44,17 @@ const UploadStepTwo = ({
     setNowTime({ ...nowTime, [name]: value });
   };
 
-  const optionData = [
-    { value: 1 },
-    { value: 2 },
-    { value: 3 },
-    { value: 4 },
-    { value: 5 },
-  ];
+  const optionData = [{ value: 1 }, { value: 2 }, { value: 3 }, { value: 4 }];
 
-  const [currentValue, setCurrentValue] = useState(data.maxCapacity);
+  const [currentValue, setCurrentValue] = useState(people.maxCapacity);
 
   const [showOptions, setShowOptions] = useState(false);
+
+  const lengthLimit = (e) => {
+    if (e.target.value.length > 2) {
+      e.target.value = e.target.value.slice(0, 2);
+    }
+  };
 
   useEffect(() => {
     if (isTime === 'AM') {
@@ -71,8 +74,10 @@ const UploadStepTwo = ({
       setData({
         ...data,
         limitTime: dateString,
-        maxCapacity: Number(currentValue),
+        maxCapacity: Number(currentValue) + 1,
       });
+      setTime({ hour: Number(nowTime.hour) + 12, minute: nowTime.minute });
+      setPeople({ maxCapacity: Number(currentValue) });
     } else {
       const dateString =
         year +
@@ -90,8 +95,10 @@ const UploadStepTwo = ({
       setData({
         ...data,
         limitTime: dateString,
-        maxCapacity: Number(currentValue),
+        maxCapacity: Number(currentValue) + 1,
       });
+      setTime({ hour: nowTime.hour, minute: nowTime.minute });
+      setPeople({ maxCapacity: Number(currentValue) });
     }
   }, [nowTime, isTime, currentValue]);
 
@@ -162,7 +169,7 @@ const UploadStepTwo = ({
       </UploadST.MenuBox>
       <UploadST.SelectBox>
         <UploadST.SelectInput onClick={() => setShowOptions((prev) => !prev)}>
-          <UploadST.SelectValue>{data.maxCapacity} 명</UploadST.SelectValue>
+          <UploadST.SelectValue>{people.maxCapacity} 명</UploadST.SelectValue>
         </UploadST.SelectInput>
         <Select
           width='152px'
@@ -209,7 +216,7 @@ const UploadStepTwo = ({
               type='number'
               min='1'
               max='12'
-              value={nowTime.hour}
+              value={time.hour}
               onChange={newDateHandler}
               onInput={lengthLimit}
             />
@@ -222,7 +229,7 @@ const UploadStepTwo = ({
               type='number'
               min='0'
               max='59'
-              value={nowTime.minute}
+              value={time.minute}
               onChange={newDateHandler}
               onInput={lengthLimit}
             />

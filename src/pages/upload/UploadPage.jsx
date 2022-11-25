@@ -37,12 +37,16 @@ const Post = () => {
     gatherAddress: '',
     isDone: 0,
     limitTime: '2022-11-20 00:00:30',
-    region: '서울',
+    region: '',
   });
 
+  // 페이지 전환
   const [index, setIndex] = useState(0);
-
   const [addressManager, setAddressManager] = useState(false);
+
+  // 지도 입력시 삭제방지
+  const [time, setTime] = useState({ hour: 0, minute: 0 });
+  const [people, setPeople] = useState({ maxCapacity: 0 });
 
   //버튼 on/off
   const [nextStepOne, setNextStepOne] = useState(false);
@@ -59,6 +63,7 @@ const Post = () => {
     e.preventDefault();
     console.log('총데이터', data);
     dispatch(__addPostThunk(data));
+    navigate('/');
   };
 
   const stepOneCheckHandler = (event) => {
@@ -136,6 +141,10 @@ const Post = () => {
                 lengthLimit={lengthLimit}
                 isSecondChecked={isSecondChecked}
                 setNextStepTwo={setNextStepTwo}
+                setPeople={setPeople}
+                people={people}
+                setTime={setTime}
+                time={time}
               />
               <UploadST.ButtonBox>
                 <UploadST.CancelBtn

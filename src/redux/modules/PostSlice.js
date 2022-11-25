@@ -19,7 +19,9 @@ export const __getDetailThunk = createAsyncThunk(
   'GET_POST', //action value
   async (arg, thunkAPI) => {
     try {
-      const { data } = await getInstance().get(`${basePath}/posts/${arg}`);
+      const { data } = await getInstance().get(
+        `${basePath}/posts/detail/${arg}`
+      );
 
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
@@ -49,7 +51,7 @@ export const __deletePost = createAsyncThunk(
   async (arg, thunkAPI) => {
     try {
       console.log('delete', arg);
-      await getInstance().delete(`${basePath}/posts/${arg}`);
+      await getInstance().delete(`${basePath}/auth/posts/${arg}`);
       return thunkAPI.fulfillWithValue(arg);
     } catch (e) {
       return thunkAPI.rejectWithValue(e.code);
@@ -205,9 +207,9 @@ export const postsSlice = createSlice({
     [__deletePost.fulfilled]: (state, action) => {
       state.posts.isLoading = false;
       console.log('Delete.action.payload', action.payload);
-      console.log('state.posts.data', current(state.posts.data));
+      console.log('state.posts.data', current(state));
       const target = state.posts.data.findIndex(
-        (post) => post.id === parseInt(action.payload)
+        (post) => post.postId === parseInt(action.payload)
       );
       console.log('target', target);
       state.posts.data.splice(target, 1);
@@ -281,7 +283,7 @@ export const postsSlice = createSlice({
       state.posts.isLoading = false;
       state.posts.data = action.payload.data;
     },
-    
+
     //get Entire Category Search
     [__getEntireCateThunk.pending]: (state) => {
       state.posts.isLoading = true;

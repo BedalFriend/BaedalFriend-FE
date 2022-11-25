@@ -13,7 +13,7 @@ const Nearby = () => {
   return (
     <div>
       <Layout>
-        <MapContainer />
+        <MapContainer setTab={setTab} />
       </Layout>
     </div>
   );
