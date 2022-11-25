@@ -17,6 +17,7 @@ export const data = [
     modifiedAt: '2022-11-18 22:01:01',
     limitTime: '2022-11-18 22:50:50',
     done: false,
+    chatRoomMembers: 0,
   },
   {
     Id: 1,
@@ -36,6 +37,7 @@ export const data = [
     modifiedAt: '2022-11-18 22:01:01',
     limitTime: '2022-11-18 22:50:50',
     done: false,
+    chatRoomMembers: 0,
   },
   {
     Id: 2,
@@ -55,6 +57,7 @@ export const data = [
     modifiedAt: '2022-11-18 22:01:01',
     limitTime: '2022-11-18 22:50:50',
     done: false,
+    chatRoomMembers: 0,
   },
   {
     Id: 3,

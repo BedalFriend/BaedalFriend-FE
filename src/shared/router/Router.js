@@ -10,11 +10,12 @@ import LoginPage from '../../pages/login/LoginPage';
 import SignPage from '../../pages/sign/SignPage';
 import MainPage from '../../pages/main/MainPage';
 import UploadPage from '../../pages/upload/UploadPage';
-import DetailPage from '../../pages/DetailPage';
+import DetailPage from '../../pages/detail/DetailPage';
 import ChatPage from '../../pages/chat/ChatPage';
 import SearchPage from '../../pages/search/SearchPage';
 import NearbyPage from '../../pages/nearby/NearbyPage';
 import CategoryPage from '../../pages/search/CategoryPage';
+import MyPage from '../../pages/mypage/MyPage'
 
 const Router = () => {
   return (
@@ -39,6 +40,7 @@ const Router = () => {
           <Route path='/detail/:id' element={<DetailPage />} />
           <Route path='/search' element={<SearchPage />} />
           <Route path='/category/:id' element={<CategoryPage />} />
+          <Route path='/mypage' element={<MyPage />} />
           <Route path='*' element={<MainPage />} />
         </Route>
       </Routes>
