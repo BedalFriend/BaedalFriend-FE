@@ -160,7 +160,6 @@ export default function SearchPage() {
 
   //게시물 받아오기
   const posts = useSelector((state) => state.post.posts);
-  console.log(posts)
 
   //스크롤방지
   var keys = {37: 1, 38: 1, 39: 1, 40: 1};
