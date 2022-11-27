@@ -13,7 +13,7 @@ export default function MyPage() {
 
   //tab
   useEffect(() => {
-    setTab('MyPage');
+    setTab('Mypage');
     // eslint-disable-next-line
   }, []);
 
