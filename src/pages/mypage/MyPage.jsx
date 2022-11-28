@@ -39,7 +39,7 @@ export default function MyPage() {
         <myST.MainBox>
 
           <myST.Profile>
-            <ProfilePic size='56px' border='1px solid var(--color-orange)' user={user}/>
+            <ProfilePic size='56px' border='' user={user}/>
             <myST.VerticalBox>
               <myST.NickText>{nickname}</myST.NickText>
               <myST.EmailText>{email}</myST.EmailText>

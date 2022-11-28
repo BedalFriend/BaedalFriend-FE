@@ -16,6 +16,7 @@ import SearchPage from '../../pages/search/SearchPage';
 import NearbyPage from '../../pages/nearby/NearbyPage';
 import CategoryPage from '../../pages/search/CategoryPage';
 import MyPage from '../../pages/mypage/MyPage'
+import MyEditPage from '../../pages/mypage/MyEditPage'
 
 const Router = () => {
   return (
@@ -41,6 +42,7 @@ const Router = () => {
           <Route path='/search' element={<SearchPage />} />
           <Route path='/category/:id' element={<CategoryPage />} />
           <Route path='/mypage' element={<MyPage />} />
+          <Route path='/myEdit' element={<MyEditPage />} />
           <Route path='*' element={<MainPage />} />
         </Route>
       </Routes>

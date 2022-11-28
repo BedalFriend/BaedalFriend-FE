@@ -1,7 +1,6 @@
 import React, {useEffect, useRef} from 'react';
-import * as ModalST from './MyPageModalStyle';
+import * as ModalST from './MyEditModalStyle';
 import useOutSideClick from '../../hooks/useOutSideClick';
-import { useNavigate } from 'react-router-dom';
 
 export default function SearchModal({aniState, setAniState, closeModal}) {
 
@@ -24,23 +23,17 @@ export default function SearchModal({aniState, setAniState, closeModal}) {
     return () => ($body.style.overflow = "auto");
   }, []);
 
-  const navigate = useNavigate();
-
   return (
     <ModalST.Overlay aniState={aniState}>
       <ModalST.ModalWrap ref={modalRef}>
 
-        <ModalST.TopBox onClick={() => {navigate('/myEdit')}}>
-            <ModalST.SelectText>프로필 수정하기</ModalST.SelectText>
+        <ModalST.TopBox>
+            <ModalST.SelectText>기기에서 가져오기</ModalST.SelectText>
         </ModalST.TopBox>
 
         <ModalST.BottomBox>
-            <ModalST.SelectText>로그아웃</ModalST.SelectText>
-        </ModalST.BottomBox>
-
-        <ModalST.SelectBox onClick={() => handleClose()}>
-            <ModalST.BackText>돌아가기</ModalST.BackText>
-        </ModalST.SelectBox>        
+            <ModalST.SelectText>기본 이미지로 변경</ModalST.SelectText>
+        </ModalST.BottomBox>    
 
       </ModalST.ModalWrap>
     </ModalST.Overlay>
