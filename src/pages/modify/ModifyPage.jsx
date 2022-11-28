@@ -27,11 +27,11 @@ const Post = () => {
     targetName: '',
     targetAddress: '',
     category: '',
-    deliveryTime: '',
-    targetAmount: '',
+    deliveryTime: 0,
+    targetAmount: 0,
     participantNumber: 0,
     hits: 0,
-    deliveryFee: '',
+    deliveryFee: 0,
     maxCapacity: 0,
     gatherName: '',
     gatherAddress: '',
@@ -46,7 +46,7 @@ const Post = () => {
   const [addressManager, setAddressManager] = useState(false);
 
   // 지도 입력시 삭제방지
-  const [time, setTime] = useState({ hour: '', minute: '' });
+  const [time, setTime] = useState({ hour: 0, minute: 0 });
   const [people, setPeople] = useState({ maxCapacity: 0 });
 
   //버튼 on/off
@@ -80,7 +80,6 @@ const Post = () => {
       e.target.value = e.target.value.slice(0, 4);
     }
   };
-  useEffect(() => {}, [data]);
 
   return (
     <Layout>
@@ -91,7 +90,6 @@ const Post = () => {
               <UploadStepOne
                 setIndex={setIndex}
                 data={data}
-                setData={setData}
                 dataHandler={dataHandler}
                 lengthLimit={lengthLimit}
                 setNextStepOne={setNextStepOne}

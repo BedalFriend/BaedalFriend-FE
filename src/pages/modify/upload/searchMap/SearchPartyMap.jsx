@@ -65,7 +65,6 @@ const SearchMap = ({ setIndex, data, setData, setAddressManager }) => {
     setData({
       ...data,
       region: region,
-      roomTitle: gatherName.innerHTML,
       gatherName: gatherName.innerHTML,
       gatherAddress: gatherAddress.innerHTML,
     });

@@ -64,6 +64,11 @@ export const LongInputBox = styled.div`
   display: flex;
   align-items: center;
 
+  border: ${(props) =>
+    props.isTargetFail || props.isCategoryFail
+      ? '1px solid var(--color-system-error)'
+      : null};
+
   background-color: var(--color-dark-white);
   border-radius: 12px;
   width: 100%;
@@ -106,6 +111,9 @@ export const MenuTitle = styled.div`
 export const ShortInputBox = styled.div`
   display: flex;
   align-items: center;
+
+  border: ${(props) =>
+    props.isDeliveryTimeFail ? '1px solid var(--color-system-error)' : null};
 
   background-color: var(--color-dark-white);
   border-radius: 12px;
@@ -156,6 +164,11 @@ export const PriceBox = styled.div`
 export const PriceInputBox = styled.div`
   display: flex;
   align-items: center;
+
+  border: ${(props) =>
+    props.isTargetAmountFail || props.isDeliveryFeeFail
+      ? '1px solid var(--color-system-error)'
+      : null};
 
   background-color: var(--color-dark-white);
   border-radius: 12px;
@@ -323,4 +336,12 @@ export const ErrorMsg = styled.div`
   font-size: var(--font-micro);
   font-weight: var(--weight-bold);
   color: var(--color-system-error);
+`;
+
+export const SearchSvg = styled.svg`
+  margin: 0px 8px 0px 20px;
+`;
+
+export const DropDownSvg = styled.svg`
+  margin: 0px 8px 0px 20px;
 `;

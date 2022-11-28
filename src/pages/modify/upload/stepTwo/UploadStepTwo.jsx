@@ -22,23 +22,8 @@ const UploadStepTwo = ({
   setTime,
   time,
 }) => {
-  // AM PM 토글 관리
   const [isTime, setIsTime] = useState('PM');
 
-  // Select
-  const optionData = [{ value: 1 }, { value: 2 }, { value: 3 }, { value: 4 }];
-
-  const [currentValue, setCurrentValue] = useState(people.maxCapacity);
-
-  const [showOptions, setShowOptions] = useState(false);
-
-  // isFail === false 일때 error 메세지 숨김
-  const [isMaxCapacityFail, setIsMaxCapacityFail] = useState(false);
-  const [isFistTimeFail, setIsFistTimeFail] = useState(false);
-  const [isSecondTimeFail, setIsSecondTimeFail] = useState(false);
-  const [isGatherNameFail, setIsGatherNameFail] = useState(false);
-
-  // LimitTime
   const today = new Date();
   const year = today.getFullYear();
   const month = ('0' + (today.getMonth() + 1)).slice(-2);
@@ -48,134 +33,78 @@ const UploadStepTwo = ({
     minute: time.minute,
   });
 
-  const newHourHandler = (e) => {
-    const { value, name } = e.target;
+  // isFail === false 일때 error 메세지 숨김
+  const [isMaxCapacityFail, setIsMaxCapacityFail] = useState(false);
+  const [isFistTimeFail, setIsFistTimeFail] = useState(false);
+  const [isSecondTimeFail, setIsSecondTimeFail] = useState(false);
+  const [isGatherNameFail, setIsGatherNameFail] = useState(false);
 
-    if (
-      value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '') &&
-      value.length < 3 &&
-      value >= 0 &&
-      value < 13
-    ) {
-      setNowTime({ ...nowTime, [name]: value });
-    }
+  const newDateHandler = (e) => {
+    const { value, name } = e.target;
+    setNowTime({ ...nowTime, [name]: value });
   };
 
-  const newMinnuteHandler = (e) => {
-    const { value, name } = e.target;
+  const optionData = [{ value: 1 }, { value: 2 }, { value: 3 }, { value: 4 }];
 
-    if (
-      value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '') &&
-      value.length < 3 &&
-      value >= 0 &&
-      value < 60
-    ) {
-      setNowTime({ ...nowTime, [name]: value });
+  const [currentValue, setCurrentValue] = useState(people.maxCapacity);
+
+  const [showOptions, setShowOptions] = useState(false);
+
+  const lengthLimit = (e) => {
+    if (e.target.value.length > 2) {
+      e.target.value = e.target.value.slice(0, 2);
     }
   };
 
   useEffect(() => {
-    console.log('nowmintue', nowTime.minute.length);
+    if (isTime === 'AM') {
+      const dateString =
+        year +
+        '-' +
+        month +
+        '-' +
+        day +
+        ' ' +
+        (Number(nowTime.hour) + 12) +
+        ':' +
+        nowTime.minute +
+        ':' +
+        '00';
 
-    if (data?.limitTime.split(' ')[1].split(':')[0] < 13) {
-      if (isTime === 'AM') {
-        const dateString =
-          year +
-          '-' +
-          month +
-          '-' +
-          day +
-          ' ' +
-          (Number(nowTime.hour) + 12) +
-          ':' +
-          nowTime.minute +
-          ':' +
-          '00';
+      setData({
+        ...data,
+        limitTime: dateString,
+        maxCapacity: Number(currentValue) + 1,
+      });
+      setTime({ hour: Number(nowTime.hour) + 12, minute: nowTime.minute });
+      setPeople({ maxCapacity: Number(currentValue) });
+    } else {
+      const dateString =
+        year +
+        '-' +
+        month +
+        '-' +
+        day +
+        ' ' +
+        nowTime.hour +
+        ':' +
+        nowTime.minute +
+        ':' +
+        '00';
 
-        console.log('시간 바뀐다');
-        setData({
-          ...data,
-          limitTime: dateString,
-          maxCapacity: Number(currentValue) + 1,
-        });
-        setTime({ hour: nowTime.hour, minute: nowTime.minute });
-        setPeople({ maxCapacity: Number(currentValue) });
-      } else if (nowTime.hour.length === 1) {
-        const dateString =
-          year +
-          '-' +
-          month +
-          '-' +
-          day +
-          ' ' +
-          '0' +
-          nowTime.hour +
-          ':' +
-          nowTime.minute +
-          ':' +
-          '00';
-
-        setData({
-          ...data,
-          limitTime: dateString,
-          maxCapacity: Number(currentValue) + 1,
-        });
-        setTime({ hour: nowTime.hour, minute: nowTime.minute });
-        setPeople({ maxCapacity: Number(currentValue) });
-      } else if (nowTime.minute.length === 1) {
-        console.log('여기들어왔다');
-        const dateString =
-          year +
-          '-' +
-          month +
-          '-' +
-          day +
-          ' ' +
-          nowTime.hour +
-          ':' +
-          '0' +
-          nowTime.minute +
-          ':' +
-          '00';
-
-        setData({
-          ...data,
-          limitTime: dateString,
-          maxCapacity: Number(currentValue) + 1,
-        });
-        setTime({ hour: nowTime.hour, minute: nowTime.minute });
-        setPeople({ maxCapacity: Number(currentValue) });
-      } else {
-        console.log('여기왜들어오냐');
-        const dateString =
-          year +
-          '-' +
-          month +
-          '-' +
-          day +
-          ' ' +
-          nowTime.hour +
-          ':' +
-          nowTime.minute +
-          ':' +
-          '00';
-
-        setData({
-          ...data,
-          limitTime: dateString,
-          maxCapacity: Number(currentValue) + 1,
-        });
-        setTime({ hour: nowTime.hour, minute: nowTime.minute });
-        setPeople({ maxCapacity: Number(currentValue) });
-      }
+      setData({
+        ...data,
+        limitTime: dateString,
+        maxCapacity: Number(currentValue) + 1,
+      });
+      setTime({ hour: nowTime.hour, minute: nowTime.minute });
+      setPeople({ maxCapacity: Number(currentValue) });
     }
-  }, [nowTime.hour, isTime, currentValue, nowTime.minute]);
-
-  // 에러메세지 유효성검사
+  }, [nowTime, isTime, currentValue]);
 
   // MaxCapacity
   useEffect(() => {
-    if (data.maxCapacity === 1 && isSecondChecked) {
+    if (data.maxCapacity === 0 && isSecondChecked) {
       setIsMaxCapacityFail(true);
     } else {
       setIsMaxCapacityFail(false);
@@ -184,7 +113,7 @@ const UploadStepTwo = ({
 
   // FistTime
   useEffect(() => {
-    if (nowTime.hour === '' && isSecondChecked) {
+    if (nowTime.hour === '00' && isSecondChecked) {
       setIsFistTimeFail(true);
     } else {
       setIsFistTimeFail(false);
@@ -193,7 +122,7 @@ const UploadStepTwo = ({
 
   // SecondTime
   useEffect(() => {
-    if (nowTime.minute === '' && isSecondChecked) {
+    if (nowTime.minute === '00' && isSecondChecked) {
       setIsSecondTimeFail(true);
     } else {
       setIsSecondTimeFail(false);
@@ -213,8 +142,6 @@ const UploadStepTwo = ({
     if (
       isMaxCapacityFail === false &&
       isGatherNameFail === false &&
-      nowTime.hour !== '' &&
-      nowTime.minute !== '' &&
       data.maxCapacity !== 0 &&
       data.gatherName !== ''
     ) {
@@ -223,7 +150,7 @@ const UploadStepTwo = ({
       setNextStepTwo(false);
     }
     // eslint-disable-next-line
-  }, [isMaxCapacityFail, data.maxCapacity, nowTime.hour, nowTime.minute]);
+  }, [isMaxCapacityFail, data.maxCapacity]);
 
   return (
     <UploadST.StepTwoBox>
@@ -282,14 +209,16 @@ const UploadStepTwo = ({
         </UploadST.MenuBox>
 
         <UploadST.LimitTimeBox>
-          <Toggle data={data} setIsTime={setIsTime} />
+          <Toggle setIsTime={setIsTime} />
           <UploadST.TimeInputBox>
             <UploadST.TimeInput
               name='hour'
-              type='text'
-              placeholder='0'
+              type='number'
+              min='1'
+              max='12'
               value={time.hour}
-              onChange={newHourHandler}
+              onChange={newDateHandler}
+              onInput={lengthLimit}
             />
             <UploadST.InputText>시</UploadST.InputText>
           </UploadST.TimeInputBox>
@@ -297,10 +226,12 @@ const UploadStepTwo = ({
           <UploadST.TimeInputBox>
             <UploadST.TimeInput
               name='minute'
-              type='text'
-              placeholder='0'
+              type='number'
+              min='0'
+              max='59'
               value={time.minute}
-              onChange={newMinnuteHandler}
+              onChange={newDateHandler}
+              onInput={lengthLimit}
             />
             <UploadST.InputText>분</UploadST.InputText>
           </UploadST.TimeInputBox>

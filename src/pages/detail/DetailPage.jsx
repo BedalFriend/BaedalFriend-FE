@@ -108,8 +108,9 @@ const DetailPage = () => {
 
   // Limit 계산
   const [limit, setLimit] = useState();
+  console.log('Limit', limit);
   const [gap, setGap] = useState(parseInt((limit - new Date()) / 1000));
-
+  console.log('gap', gap);
   useEffect(() => {
     if (post?.limitTime) {
       setLimit(new Date(post.limitTime));
