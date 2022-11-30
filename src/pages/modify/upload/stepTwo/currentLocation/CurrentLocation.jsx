@@ -72,6 +72,7 @@ const CurrentLocation = ({
             <SelectAddress
               defaultValue={data.gatherName}
               onKeyUp={stepTwoCheckHandler}
+              disabled
             />
           </SelectAddressBox>
         ) : (

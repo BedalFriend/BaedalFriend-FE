@@ -1,7 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { __addPostThunk } from '../../redux/modules/PostSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom';
+import {
+  __getDetailThunk,
+  __modifyPostThunk,
+} from '../../redux/modules/PostSlice';
 import { TabContext } from '../../context/TabContext';
 import Layout from '../../components/layout/Layout';
 
@@ -16,38 +19,51 @@ import SearchMap from '../../components/searchMap/SearchMap';
 
 const Post = () => {
   const { setTab } = useContext(TabContext);
+  const { id } = useParams();
+  const user = useSelector((state) => state.user);
+
+  const detailData = useSelector((state) => state?.post?.post?.data);
+
+  console.log('user', user);
+  console.log('detailData', detailData);
 
   useEffect(() => {
     setTab('Upload');
     // eslint-disable-next-line
   }, []);
-
+  console.log(detailData?.deliveryTime);
   const [data, setData, dataHandler] = useMultipleInput({
-    roomTitle: '',
-    targetName: '',
-    targetAddress: '',
-    category: '',
-    deliveryTime: 0,
-    targetAmount: 0,
-    participantNumber: 0,
+    postId: id,
+    roomTitle: detailData?.roomTitle,
+    targetName: detailData?.targetName,
+    targetAddress: detailData?.targetAddress,
+    category: detailData?.category,
+    deliveryTime: detailData?.deliveryTime,
+    targetAmount: detailData?.targetAmount,
+    participantNumber: 1,
     hits: 0,
-    deliveryFee: 0,
-    maxCapacity: 0,
-    gatherName: '',
-    gatherAddress: '',
+    deliveryFee: detailData?.deliveryFee,
+    maxCapacity: detailData?.maxCapacity,
+    gatherName: detailData?.gatherName,
+    gatherAddress: detailData?.gatherAddress,
     isDone: 0,
-    limitTime: '2022-11-20 00:00:30',
-    region: '',
+    limitTime: detailData?.limitTime,
+    region: detailData?.gatherAddress.split(' ')[0],
   });
   console.log(data);
 
   // 페이지 전환
   const [index, setIndex] = useState(0);
-  const [addressManager, setAddressManager] = useState(false);
+  const [addressManager, setAddressManager] = useState(true);
 
   // 지도 입력시 삭제방지
-  const [time, setTime] = useState({ hour: 0, minute: 0 });
-  const [people, setPeople] = useState({ maxCapacity: 0 });
+  const [detailHour, setDetailHour] = useState();
+  console.log(detailHour);
+  const [time, setTime] = useState({
+    hour: detailData?.limitTime?.split(' ')[1].split(':')[0],
+    minute: detailData?.limitTime?.split(' ')[1].split(':')[1],
+  });
+  const [toggle, setToggle] = useState(false);
 
   //버튼 on/off
   const [nextStepOne, setNextStepOne] = useState(false);
@@ -63,7 +79,7 @@ const Post = () => {
   const onSubmitHandler = (e) => {
     e.preventDefault();
     console.log('총데이터', data);
-    dispatch(__addPostThunk(data));
+    dispatch(__modifyPostThunk(data));
     navigate('/');
   };
 
@@ -80,7 +96,25 @@ const Post = () => {
       e.target.value = e.target.value.slice(0, 4);
     }
   };
+  useEffect(() => {}, [data, toggle]);
+  useEffect(() => {
+    dispatch(__getDetailThunk(id));
+  }, []);
+  // useEffect(() => {
+  //   if (detailData?.limitTime?.split(' ')[1].split(':')[0] > 12) {
+  //     setDetailHour(
+  //       Number(detailData?.limitTime?.split(' ')[1].split(':')[0]) - 12
+  //     );
+  //   }
+  // }, [detailData.limitTime, time]);
 
+  useEffect(() => {
+    if (data?.limitTime?.split(' ')[1].split(':')[0] < 13) {
+      setToggle(false);
+    } else {
+      setToggle(true);
+    }
+  }, [data.limitTime]);
   return (
     <Layout>
       <UploadST.PostBox>
@@ -88,8 +122,10 @@ const Post = () => {
           {index === 0 ? (
             <>
               <UploadStepOne
+                detailData={detailData}
                 setIndex={setIndex}
                 data={data}
+                setData={setData}
                 dataHandler={dataHandler}
                 lengthLimit={lengthLimit}
                 setNextStepOne={setNextStepOne}
@@ -134,6 +170,7 @@ const Post = () => {
           {index === 3 ? (
             <>
               <UploadStepTwo
+                detailData={detailData}
                 setIndex={setIndex}
                 data={data}
                 setData={setData}
@@ -142,10 +179,10 @@ const Post = () => {
                 lengthLimit={lengthLimit}
                 isSecondChecked={isSecondChecked}
                 setNextStepTwo={setNextStepTwo}
-                setPeople={setPeople}
-                people={people}
                 setTime={setTime}
                 time={time}
+                setToggle={setToggle}
+                toggle={toggle}
               />
               <UploadST.ButtonBox>
                 <UploadST.CancelBtn

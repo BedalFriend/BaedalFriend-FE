@@ -26,7 +26,7 @@ export const Overlay = styled.div`
   left: 0;
   right: 0;
   background: rgba(0, 0, 0, 0.3);
-  z-index: 920;
+  z-index: 980;
 
   animation-duration: 0.5s;
   animation-timing-function: ease-out;
@@ -61,7 +61,7 @@ export const ModalWrap = styled.div`
 export const SelectBox = styled.div`
   position: relative;
   height: 50px;
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: white;
   text-align: center;
 `;
 
@@ -70,14 +70,14 @@ export const CloseSelectBox = styled.div`
   margin-top: 20px;
   height: 52px;
   border-radius: 12px;
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: white;
   text-align: center;
 `;
 
 export const TopBox = styled.div`
   position: relative;
   height: 50px;
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: white;
   text-align: center;
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
@@ -87,7 +87,7 @@ export const TopBox = styled.div`
 export const BottomBox = styled.div`
   position: relative;
   height: 0px;
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: white;
   text-align: center;
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;

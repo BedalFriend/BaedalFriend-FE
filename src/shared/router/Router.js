@@ -15,7 +15,10 @@ import ChatPage from '../../pages/chat/ChatPage';
 import SearchPage from '../../pages/search/SearchPage';
 import NearbyPage from '../../pages/nearby/NearbyPage';
 import CategoryPage from '../../pages/search/CategoryPage';
+
 import ModifyPage from '../../pages/modify/ModifyPage';
+
+import MyPage from '../../pages/mypage/MyPage';
 
 const Router = () => {
   return (
@@ -41,6 +44,7 @@ const Router = () => {
           <Route path='/modify/:id' element={<ModifyPage />} />
           <Route path='/search' element={<SearchPage />} />
           <Route path='/category/:id' element={<CategoryPage />} />
+          <Route path='/mypage' element={<MyPage />} />
           <Route path='*' element={<MainPage />} />
         </Route>
       </Routes>

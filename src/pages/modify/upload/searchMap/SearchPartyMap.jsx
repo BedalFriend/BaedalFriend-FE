@@ -65,6 +65,7 @@ const SearchMap = ({ setIndex, data, setData, setAddressManager }) => {
     setData({
       ...data,
       region: region,
+      roomTitle: gatherName.innerHTML,
       gatherName: gatherName.innerHTML,
       gatherAddress: gatherAddress.innerHTML,
     });
@@ -82,6 +83,7 @@ const SearchMap = ({ setIndex, data, setData, setAddressManager }) => {
   };
 
   useEffect(() => {
+    console.log('data', data);
     //지도 생성
     const container = document.getElementById('myMap');
     const options = {
@@ -188,7 +190,7 @@ const SearchMap = ({ setIndex, data, setData, setAddressManager }) => {
     return () => {
       clearTimeout(timer);
     };
-  }, [place, myLocation]);
+  }, [data, place, myLocation]);
 
   return (
     <SearchST.SearchMapBox>

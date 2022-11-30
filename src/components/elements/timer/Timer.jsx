@@ -24,6 +24,7 @@ function Timer({ limit }) {
   }, [minutes, seconds]);
 
   const InTimeText = () => {
+    console.log(minutes, seconds);
     return (
       <TimerST.Text>
         {minutes < 10 ? `0${minutes}` : minutes}:

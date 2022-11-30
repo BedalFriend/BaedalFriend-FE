@@ -3,9 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import {
+  __decreaseParticipantThunk,
   __deletePost,
   __getDetailThunk,
   __getThunk,
+  __increaseParticipantThunk,
 } from '../../redux/modules/PostSlice';
 import { __enterChannel, __exitChannel } from '../../redux/modules/ChatSlice';
 
@@ -67,12 +69,14 @@ const DetailPage = () => {
   // 참여 핸들러
   const onEnterHandler = () => {
     dispatch(__enterChannel(id));
+    dispatch(__increaseParticipantThunk(id));
     setCustom(2);
     window.location.reload();
   };
 
   // 퇴장 핸들러
   const onExitHandler = () => {
+    dispatch(__decreaseParticipantThunk(id));
     dispatch(__exitChannel(id));
     setCustom(0);
     setIsExitOpen(false);
@@ -107,19 +111,16 @@ const DetailPage = () => {
   };
 
   // Limit 계산
-  const [limit, setLimit] = useState();
-  console.log('Limit', limit);
-  const [gap, setGap] = useState(parseInt((limit - new Date()) / 1000));
+
+  const [gap, setGap] = useState(
+    parseInt((new Date(post.limitTime) - new Date()) / 1000)
+  );
   console.log('gap', gap);
   useEffect(() => {
     if (post?.limitTime) {
-      setLimit(new Date(post.limitTime));
+      setGap(parseInt((new Date(post.limitTime) - new Date()) / 1000));
     }
   }, [post?.limitTime]);
-
-  useEffect(() => {
-    setGap(parseInt((limit - new Date()) / 1000));
-  }, [limit]);
 
   useEffect(() => {
     dispatch(__getDetailThunk(id));

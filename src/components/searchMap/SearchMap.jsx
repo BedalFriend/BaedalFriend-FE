@@ -23,8 +23,6 @@ const SearchMap = ({ setIndex, setData, data, name, address }) => {
   //선택한 마커의 좌표
   const [distance, setDistance] = useState('');
 
-  //나의 현재위치와 선택한 마커 사이의 거리 저장소
-
   // 위치 가져오기 버튼 클릭시
   const getCurrentPosBtn = () => {
     if (navigator.geolocation) {
@@ -67,6 +65,7 @@ const SearchMap = ({ setIndex, setData, data, name, address }) => {
   };
 
   useEffect(() => {
+    console.log('data', data);
     //지도 생성
     const container = document.getElementById('myMap');
     const options = {
@@ -87,7 +86,6 @@ const SearchMap = ({ setIndex, setData, data, name, address }) => {
         myLocation.longitude
       );
 
-      console.log('currentPos', currentPos);
       // 지도 이동(기존 위치와 가깝다면 부드럽게 이동)
       map.panTo(currentPos);
 
@@ -111,7 +109,6 @@ const SearchMap = ({ setIndex, setData, data, name, address }) => {
       const ps = new kakao.maps.services.Places();
 
       const placesSearchCB = (data, status, pagination) => {
-        console.log('status', status);
         if (status === kakao.maps.services.Status.OK) {
           let bounds = new kakao.maps.LatLngBounds();
 
@@ -167,34 +164,34 @@ const SearchMap = ({ setIndex, setData, data, name, address }) => {
         if (!selectMarker) {
           setSelectMarker(true);
         }
-        setDistance({ La: Number(place.x), Ma: Number(place.y) });
+        // setDistance({ La: Number(place.x), Ma: Number(place.y) });
         setMarkerInfo(place);
       });
     };
 
-    // 현재위치에 대한 검색어를 좌표로 변환
-    const coords = new kakao.maps.LatLng(
-      myLocation.latitude,
-      myLocation.longitude
-    );
+    // // 현재위치에 대한 검색어를 좌표로 변환
+    // const coords = new kakao.maps.LatLng(
+    //   myLocation.latitude,
+    //   myLocation.longitude
+    // );
 
-    // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-    map.setCenter(coords);
+    // // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+    // map.setCenter(coords);
 
-    let line = new kakao.maps.Polyline();
-    const mystore = new kakao.maps.LatLng(distance.Ma, distance.La);
+    // let line = new kakao.maps.Polyline();
+    // const mystore = new kakao.maps.LatLng(distance.Ma, distance.La);
 
-    // 마커의 위치와 원의 중심을 경로로 하는 폴리라인 설정
-    const path = [mystore, coords];
-    line.setPath(path);
+    // // 마커의 위치와 원의 중심을 경로로 하는 폴리라인 설정
+    // const path = [mystore, coords];
+    // line.setPath(path);
 
-    // 현재위치와 마커 사이의 거리 측정
-    const dist = line.getLength();
+    // // 현재위치와 마커 사이의 거리 측정
+    // const dist = line.getLength();
 
     return () => {
       clearTimeout(timer);
     };
-  }, [place, myLocation]);
+  }, [data, place, myLocation]);
 
   return (
     <SearchST.SearchMapBox>
@@ -262,9 +259,15 @@ const SearchMap = ({ setIndex, setData, data, name, address }) => {
             </SearchST.InfoTitle>
           </SearchST.InfoTitleBox>
 
-          <SearchST.InfoAddress id='storeAddress'>
-            {markerInfo.road_address_name}
-          </SearchST.InfoAddress>
+          {markerInfo.road_address_name ? (
+            <SearchST.InfoAddress id='storeAddress'>
+              {markerInfo.road_address_name}
+            </SearchST.InfoAddress>
+          ) : (
+            <SearchST.InfoAddress id='storeAddress'>
+              {markerInfo.address_name}
+            </SearchST.InfoAddress>
+          )}
         </SearchST.MarkerInfoBox>
 
         <SearchST.CurrentBox onClick={getCurrentPosBtn}>

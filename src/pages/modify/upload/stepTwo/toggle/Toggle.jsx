@@ -1,13 +1,12 @@
-import { useState } from 'react';
 import styled, { css } from 'styled-components';
 
-export const Toggle = ({ setIsTime }) => {
-  const [toggle, setToggle] = useState(false);
+export const Toggle = ({ toggle, setToggle, data, setIsTime }) => {
   const clickedToggle = () => {
     const time = document.getElementById('time');
     setToggle((prev) => !prev);
     setIsTime(time.innerText);
   };
+
   return (
     <div>
       <ToggleBtn onClick={clickedToggle} toggle={toggle}>

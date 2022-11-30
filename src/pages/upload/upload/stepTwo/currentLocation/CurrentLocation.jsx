@@ -61,6 +61,7 @@ const CurrentLocation = ({
           height: '72px',
           borderRadius: '12px',
         }}
+        isGatherNameFail={isGatherNameFail}
       >
         {addressManager ? (
           <SelectAddressBox>
@@ -69,10 +70,7 @@ const CurrentLocation = ({
               style={{ width: '14px', height: '14px' }}
               alt=''
             />
-            <SelectAddress
-              defaultValue={data.gatherName}
-              onKeyUp={stepTwoCheckHandler}
-            />
+            <SelectAddress defaultValue={data.gatherName} />
           </SelectAddressBox>
         ) : (
           <Frame
@@ -113,6 +111,9 @@ const MapBox = styled.div`
   z-index: 1;
 
   margin-bottom: 14px;
+
+  border: ${(props) =>
+    props.isGatherNameFail ? '1px solid var(--color-system-error)' : null};
 `;
 
 const Frame = styled.img`

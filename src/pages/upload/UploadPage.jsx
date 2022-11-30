@@ -29,7 +29,7 @@ const Post = () => {
     category: '',
     deliveryTime: '',
     targetAmount: '',
-    participantNumber: 0,
+    participantNumber: 1,
     hits: 0,
     deliveryFee: '',
     maxCapacity: 0,
@@ -48,6 +48,7 @@ const Post = () => {
   // 지도 입력시 삭제방지
   const [time, setTime] = useState({ hour: '', minute: '' });
   const [people, setPeople] = useState({ maxCapacity: 0 });
+  const [toggle, setToggle] = useState(false);
 
   //버튼 on/off
   const [nextStepOne, setNextStepOne] = useState(false);
@@ -80,8 +81,8 @@ const Post = () => {
       e.target.value = e.target.value.slice(0, 4);
     }
   };
-  useEffect(() => {}, [data]);
 
+  useEffect(() => {}, [data.gatherName]);
   return (
     <Layout>
       <UploadST.PostBox>
@@ -148,6 +149,8 @@ const Post = () => {
                 people={people}
                 setTime={setTime}
                 time={time}
+                setToggle={setToggle}
+                toggle={toggle}
               />
               <UploadST.ButtonBox>
                 <UploadST.CancelBtn

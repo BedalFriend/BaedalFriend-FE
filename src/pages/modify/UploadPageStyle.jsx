@@ -64,15 +64,15 @@ export const LongInputBox = styled.div`
   display: flex;
   align-items: center;
 
-  border: ${(props) =>
-    props.isTargetFail || props.isCategoryFail
-      ? '1px solid var(--color-system-error)'
-      : null};
-
   background-color: var(--color-dark-white);
   border-radius: 12px;
   width: 100%;
   height: 40px;
+
+  border: ${(props) =>
+    props.isTargetFail || props.isCategoryFail
+      ? '1px solid var(--color-system-error)'
+      : null};
 
   @media screen and (min-width: 764px) {
     margin-bottom: 27px;
@@ -112,15 +112,15 @@ export const ShortInputBox = styled.div`
   display: flex;
   align-items: center;
 
-  border: ${(props) =>
-    props.isDeliveryTimeFail ? '1px solid var(--color-system-error)' : null};
-
   background-color: var(--color-dark-white);
   border-radius: 12px;
   width: 100%;
   max-width: 152px;
 
   height: 40px;
+
+  border: ${(props) =>
+    props.isDeliveryTimeFail ? '1px solid var(--color-system-error)' : null};
   @media screen and (min-width: 764px) {
     margin-bottom: 24px;
   }
@@ -165,15 +165,15 @@ export const PriceInputBox = styled.div`
   display: flex;
   align-items: center;
 
-  border: ${(props) =>
-    props.isTargetAmountFail || props.isDeliveryFeeFail
-      ? '1px solid var(--color-system-error)'
-      : null};
-
   background-color: var(--color-dark-white);
   border-radius: 12px;
   width: 152px;
   height: 40px;
+
+  border: ${(props) =>
+    props.isTargetAmountFail || props.isDeliveryFeeFail
+      ? '1px solid var(--color-system-error)'
+      : null};
 `;
 
 export const TimeInputBox = styled.div`
@@ -185,6 +185,11 @@ export const TimeInputBox = styled.div`
   width: 152px;
   height: 40px;
   margin-left: 8px;
+
+  border: ${(props) =>
+    props.isFistTimeFail || props.isSecondTimeFail
+      ? '1px solid var(--color-system-error)'
+      : null};
 `;
 
 export const ButtonBox = styled.div`
@@ -302,6 +307,9 @@ export const SelectInput = styled.div`
   border-radius: 12px;
   background-color: var(--color-dark-white);
   align-self: center;
+
+  border: ${(props) =>
+    props.isMaxCapacityFail ? '1px solid var(--color-system-error)' : null};
 
   cursor: pointer;
   &::before {

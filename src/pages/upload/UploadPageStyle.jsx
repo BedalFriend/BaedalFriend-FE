@@ -196,7 +196,7 @@ export const CancelBtn = styled.button`
 
   border-radius: 12px;
   background-color: var(--color-blur-white);
-  color: white;
+  color: var(--color-grey);
 
   font-family: 'Pretendard';
   font-weight: var(--weight-bold);
@@ -323,4 +323,12 @@ export const ErrorMsg = styled.div`
   font-size: var(--font-micro);
   font-weight: var(--weight-bold);
   color: var(--color-system-error);
+`;
+
+export const SearchSvg = styled.svg`
+  margin: 0px 8px 0px 20px;
+`;
+
+export const DropDownSvg = styled.svg`
+  margin: 0px 8px 0px 20px;
 `;

@@ -21,6 +21,8 @@ const UploadStepTwo = ({
   people,
   setTime,
   time,
+  toggle,
+  setToggle,
 }) => {
   // AM PM 토글 관리
   const [isTime, setIsTime] = useState('PM');
@@ -49,36 +51,50 @@ const UploadStepTwo = ({
   });
 
   const newHourHandler = (e) => {
+    console.log(e.target.value);
     const { value, name } = e.target;
-
-    if (
-      value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '') &&
-      value.length < 3 &&
-      value >= 0 &&
-      value < 13
-    ) {
-      setNowTime({ ...nowTime, [name]: value });
+    if (value.length < 3 && value < 13) {
+      setNowTime({ ...nowTime, [name]: value.replace(/[^0-9]/g, '') });
     }
   };
 
   const newMinnuteHandler = (e) => {
     const { value, name } = e.target;
 
-    if (
-      value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '') &&
-      value.length < 3 &&
-      value >= 0 &&
-      value < 60
-    ) {
-      setNowTime({ ...nowTime, [name]: value });
+    if (value < 60 && value.length < 3) {
+      setNowTime({ ...nowTime, [name]: value.replace(/[^0-9]/g, '') });
     }
   };
 
   useEffect(() => {
-    console.log('nowmintue', nowTime.minute.length);
+    console.log('isTime', isTime);
 
-    if (data?.limitTime.split(' ')[1].split(':')[0] < 13) {
-      if (isTime === 'AM') {
+    if (isTime === 'AM') {
+      if (nowTime.minute.length === 1) {
+        const dateString =
+          year +
+          '-' +
+          month +
+          '-' +
+          day +
+          ' ' +
+          (Number(nowTime.hour) + 12) +
+          ':' +
+          '0' +
+          nowTime.minute +
+          ':' +
+          '00';
+
+        console.log('시간 바뀐다');
+        setData({
+          ...data,
+          limitTime: dateString,
+          maxCapacity: Number(currentValue) + 1,
+        });
+        setTime({ hour: nowTime.hour, minute: nowTime.minute });
+        setPeople({ maxCapacity: Number(currentValue) });
+      } else {
+        console.log('여기왜들어오냐');
         const dateString =
           year +
           '-' +
@@ -92,52 +108,35 @@ const UploadStepTwo = ({
           ':' +
           '00';
 
+        setData({
+          ...data,
+          limitTime: dateString,
+          maxCapacity: Number(currentValue) + 1,
+        });
+        setTime({ hour: nowTime.hour, minute: nowTime.minute });
+        setPeople({ maxCapacity: Number(currentValue) });
+      }
+    } else if (
+      (isTime === 'PM' && nowTime.hour.length === 1) ||
+      nowTime.hour === ''
+    ) {
+      if (nowTime.minute.length === 1) {
+        const dateString =
+          year +
+          '-' +
+          month +
+          '-' +
+          day +
+          ' ' +
+          '0' +
+          nowTime.hour +
+          ':' +
+          '0' +
+          nowTime.minute +
+          ':' +
+          '00';
+
         console.log('시간 바뀐다');
-        setData({
-          ...data,
-          limitTime: dateString,
-          maxCapacity: Number(currentValue) + 1,
-        });
-        setTime({ hour: nowTime.hour, minute: nowTime.minute });
-        setPeople({ maxCapacity: Number(currentValue) });
-      } else if (nowTime.hour.length === 1) {
-        const dateString =
-          year +
-          '-' +
-          month +
-          '-' +
-          day +
-          ' ' +
-          '0' +
-          nowTime.hour +
-          ':' +
-          nowTime.minute +
-          ':' +
-          '00';
-
-        setData({
-          ...data,
-          limitTime: dateString,
-          maxCapacity: Number(currentValue) + 1,
-        });
-        setTime({ hour: nowTime.hour, minute: nowTime.minute });
-        setPeople({ maxCapacity: Number(currentValue) });
-      } else if (nowTime.minute.length === 1) {
-        console.log('여기들어왔다');
-        const dateString =
-          year +
-          '-' +
-          month +
-          '-' +
-          day +
-          ' ' +
-          nowTime.hour +
-          ':' +
-          '0' +
-          nowTime.minute +
-          ':' +
-          '00';
-
         setData({
           ...data,
           limitTime: dateString,
@@ -147,6 +146,53 @@ const UploadStepTwo = ({
         setPeople({ maxCapacity: Number(currentValue) });
       } else {
         console.log('여기왜들어오냐');
+        const dateString =
+          year +
+          '-' +
+          month +
+          '-' +
+          day +
+          ' ' +
+          '0' +
+          nowTime.hour +
+          ':' +
+          nowTime.minute +
+          ':' +
+          '00';
+
+        setData({
+          ...data,
+          limitTime: dateString,
+          maxCapacity: Number(currentValue) + 1,
+        });
+        setTime({ hour: nowTime.hour, minute: nowTime.minute });
+        setPeople({ maxCapacity: Number(currentValue) });
+      }
+    } else if (isTime === 'PM' && nowTime.hour.length === 2) {
+      if (nowTime.minute.length === 1) {
+        const dateString =
+          year +
+          '-' +
+          month +
+          '-' +
+          day +
+          ' ' +
+          nowTime.hour +
+          ':' +
+          '0' +
+          nowTime.minute +
+          ':' +
+          '00';
+
+        console.log('시간 바뀐다');
+        setData({
+          ...data,
+          limitTime: dateString,
+          maxCapacity: Number(currentValue) + 1,
+        });
+        setTime({ hour: nowTime.hour, minute: nowTime.minute });
+        setPeople({ maxCapacity: Number(currentValue) });
+      } else {
         const dateString =
           year +
           '-' +
@@ -168,8 +214,9 @@ const UploadStepTwo = ({
         setTime({ hour: nowTime.hour, minute: nowTime.minute });
         setPeople({ maxCapacity: Number(currentValue) });
       }
-    }
-  }, [nowTime.hour, isTime, currentValue, nowTime.minute]);
+    } else return;
+    console.log('여기어떄');
+  }, [nowTime.hour, isTime, nowTime.minute, currentValue, data.gatherName]);
 
   // 에러메세지 유효성검사
 
@@ -225,6 +272,7 @@ const UploadStepTwo = ({
     // eslint-disable-next-line
   }, [isMaxCapacityFail, data.maxCapacity, nowTime.hour, nowTime.minute]);
 
+  useEffect(() => {}, []);
   return (
     <UploadST.StepTwoBox>
       <UploadST.StepOneHeader>
@@ -241,7 +289,10 @@ const UploadStepTwo = ({
         <UploadST.MenuTitle>함께 할 인원</UploadST.MenuTitle>
       </UploadST.MenuBox>
       <UploadST.SelectBox>
-        <UploadST.SelectInput onClick={() => setShowOptions((prev) => !prev)}>
+        <UploadST.SelectInput
+          isMaxCapacityFail={isMaxCapacityFail}
+          onClick={() => setShowOptions((prev) => !prev)}
+        >
           <UploadST.SelectValue>{people.maxCapacity} 명</UploadST.SelectValue>
         </UploadST.SelectInput>
         <Select
@@ -282,8 +333,13 @@ const UploadStepTwo = ({
         </UploadST.MenuBox>
 
         <UploadST.LimitTimeBox>
-          <Toggle data={data} setIsTime={setIsTime} />
-          <UploadST.TimeInputBox>
+          <Toggle
+            toggle={toggle}
+            setToggle={setToggle}
+            data={data}
+            setIsTime={setIsTime}
+          />
+          <UploadST.TimeInputBox isFistTimeFail={isFistTimeFail}>
             <UploadST.TimeInput
               name='hour'
               type='text'
@@ -294,7 +350,7 @@ const UploadStepTwo = ({
             <UploadST.InputText>시</UploadST.InputText>
           </UploadST.TimeInputBox>
 
-          <UploadST.TimeInputBox>
+          <UploadST.TimeInputBox isSecondTimeFail={isSecondTimeFail}>
             <UploadST.TimeInput
               name='minute'
               type='text'
