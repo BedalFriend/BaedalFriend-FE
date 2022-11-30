@@ -86,6 +86,7 @@ export const LongInputBox = styled.div`
 export const LongInput = styled.input`
   font-size: var(--font-small);
   color: var(--color-dark-grey);
+  opacity: 0.7;
 `;
 
 export const MenuBox = styled.div`
@@ -106,6 +107,14 @@ export const MenuTitle = styled.div`
   font-family: 'Pretendard';
   font-size: var(--font-regular);
   color: var(--color-light-black);
+`;
+
+export const BlurMenuTitle = styled.div`
+  margin-left: 4px;
+
+  font-family: 'Pretendard';
+  font-size: var(--font-regular);
+  color: var(--color-grey);
 `;
 
 export const ShortInputBox = styled.div`
@@ -214,7 +223,7 @@ export const CancelBtn = styled.button`
 
   border-radius: 12px;
   background-color: var(--color-blur-white);
-  color: white;
+  color: var(--color-grey);
 
   font-family: 'Pretendard';
   font-weight: var(--weight-bold);
@@ -317,7 +326,7 @@ export const SelectInput = styled.div`
     position: absolute;
     top: 3px;
     left: 18px;
-    color: var(--color-orange);
+    color: var(--color-grey);
     font-size: 20px;
   }
 `;
@@ -330,6 +339,8 @@ export const SelectValue = styled.div`
   padding-top: 11px;
   align-items: center;
   color: var(--color-dark-grey);
+
+  opacity: 0.7;
 `;
 
 export const ErrorMsgBox = styled.div`

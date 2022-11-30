@@ -11,10 +11,9 @@ import CurrentMark from '../../../../imgs/upload/Map_MyLocation.png';
 const { kakao } = window;
 
 const SearchMap = ({ setIndex, data, setData, setAddressManager }) => {
-  const [inputText, setInputText] = useState('');
   const [place, setPlace] = useState('');
   const [markerInfo, setMarkerInfo] = useState('');
-
+  console.log(markerInfo);
   //내가 선택한 마커 저장소
   const [selectMarker, setSelectMarker] = useState(false);
 
@@ -51,12 +50,6 @@ const SearchMap = ({ setIndex, data, setData, setAddressManager }) => {
     setPlace(e.target.value);
   };
 
-  const onClickHandler = (e) => {
-    e.preventDefault();
-    setPlace(inputText);
-    setInputText('');
-  };
-
   const saveAddressHandler = () => {
     const gatherName = document.getElementById('gatherName');
     const gatherAddress = document.getElementById('gatherAddress');
@@ -69,17 +62,7 @@ const SearchMap = ({ setIndex, data, setData, setAddressManager }) => {
       gatherName: gatherName.innerHTML,
       gatherAddress: gatherAddress.innerHTML,
     });
-    setIndex(3);
-    setAddressManager(true);
-  };
-
-  // Enter 입력이 되면 클릭 이벤트 실행
-  const handleOnKeyPress = (e) => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      setPlace(inputText);
-      setInputText('');
-    }
+    setIndex(1);
   };
 
   useEffect(() => {
@@ -203,10 +186,7 @@ const SearchMap = ({ setIndex, data, setData, setAddressManager }) => {
           overflow: 'hidden',
         }}
       >
-        <SearchST.SearchInputBox
-          onClick={onClickHandler}
-          onKeyPress={handleOnKeyPress}
-        >
+        <SearchST.SearchInputBox>
           <SearchST.SearchImage
             width='24'
             height='24'
@@ -261,9 +241,15 @@ const SearchMap = ({ setIndex, data, setData, setAddressManager }) => {
             </SearchST.InfoTitle>
           </SearchST.InfoTitleBox>
 
-          <SearchST.InfoAddress id='gatherAddress'>
-            {markerInfo.road_address_name}
-          </SearchST.InfoAddress>
+          {markerInfo.road_address_name ? (
+            <SearchST.InfoAddress id='gatherAddress'>
+              {markerInfo.road_address_name}
+            </SearchST.InfoAddress>
+          ) : (
+            <SearchST.InfoAddress id='gatherAddress'>
+              {markerInfo.address_name}
+            </SearchST.InfoAddress>
+          )}
         </SearchST.MarkerInfoBox>
 
         <SearchST.CurrentBox onClick={getCurrentPosBtn}>

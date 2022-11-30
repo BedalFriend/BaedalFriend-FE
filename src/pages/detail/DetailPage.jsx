@@ -31,10 +31,10 @@ const DetailPage = () => {
   const post = useSelector((state) => state.post.post.data);
   const posts = useSelector((state) => state.post.posts);
   const token = useSelector((state) => state.token.accessToken);
-  console.log('posts', posts);
-  console.log('post', post);
-  console.log('token', token);
-  console.log('user', user);
+  // console.log('posts', posts);
+  // console.log('post', post);
+  // console.log('token', token);
+  // console.log('user', user);
 
   //지도 화면 변환
   const [index, setIndex] = useState(false);
@@ -115,7 +115,7 @@ const DetailPage = () => {
   const [gap, setGap] = useState(
     parseInt((new Date(post.limitTime) - new Date()) / 1000)
   );
-  console.log('gap', gap);
+
   useEffect(() => {
     if (post?.limitTime) {
       setGap(parseInt((new Date(post.limitTime) - new Date()) / 1000));
@@ -130,12 +130,14 @@ const DetailPage = () => {
   useEffect(() => {
     if (user.id === post.memberId) {
       setCustom(3);
-    } else if (user.onGoing === 0 || user.onGoing === null) {
-      setCustom(0);
     } else if (user.onGoing !== 0 && user.onGoing !== post.postId) {
       setCustom(1);
     } else if (user.onGoing === post.postId) {
       setCustom(2);
+    } else if (post.maxCapacity === post.participantNumber) {
+      setCustom(4);
+    } else if (user.onGoing === 0 || user.onGoing === null) {
+      setCustom(0);
     }
   }, [user.id, post.memberId, user.onGoing, custom]);
 
@@ -437,6 +439,11 @@ const DetailPage = () => {
               <DetailST.PartyOutBtn>공구 완료하기</DetailST.PartyOutBtn>
               <DetailST.CurrentStatusBtn>진행 중</DetailST.CurrentStatusBtn>
             </DetailST.BottomBtnBox>
+          ) : null}
+          {custom === 4 ? (
+            <DetailST.OverLapBtn>
+              참가할 수 있는 최대 인원이 초과하였습니다.
+            </DetailST.OverLapBtn>
           ) : null}
         </DetailST.DetailBox>
       )}

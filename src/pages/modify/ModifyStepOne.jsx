@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react';
 
-import * as UploadST from '../../UploadPageStyle';
+import * as ModifyST from './ModifyPageStyle';
 
-const UploadStepOne = ({
+const ModifySTepOne = ({
   detailData,
   data,
   setData,
-  dataHandler,
-  setIndex,
   setNextStepOne,
   isChecked,
 }) => {
@@ -22,11 +20,8 @@ const UploadStepOne = ({
   const deliveryCheckHandler = (e) => {
     const { value, name } = e.target;
 
-    if (
-      value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '') &&
-      value.length < 5
-    ) {
-      setData({ ...data, [name]: parseInt(value) });
+    if (value.length < 5) {
+      setData({ ...data, [name]: value.replace(/[^0-9.]/g, '') });
     }
   };
 
@@ -83,45 +78,45 @@ const UploadStepOne = ({
   ]);
 
   return (
-    <UploadST.StepOneBox>
-      <UploadST.StepOneHeader>
+    <ModifyST.StepOneBox>
+      <ModifyST.StepOneHeader>
         <div>
-          <UploadST.StepOneTitle>Step 1.</UploadST.StepOneTitle>
+          <ModifyST.StepOneTitle>Step 1.</ModifyST.StepOneTitle>
         </div>
-        <UploadST.StepOneContent>
+        <ModifyST.StepOneContent>
           배달 공동 구매를 진행할 가게 정보를 입력해주세요.
-        </UploadST.StepOneContent>
-      </UploadST.StepOneHeader>
+        </ModifyST.StepOneContent>
+      </ModifyST.StepOneHeader>
 
-      <UploadST.StepOneBody>
+      <ModifyST.StepOneBody>
         <div>
-          <UploadST.MenuBox>
+          <ModifyST.MenuBox>
             <svg
-              width='16'
-              height='16'
-              viewBox='0 0 16 16'
+              width='20'
+              height='20'
+              viewBox='0 0 20 20'
               fill='none'
               xmlns='http://www.w3.org/2000/svg'
             >
-              <g mask='url(#mask0_848_1614)'>
+              <g mask='url(#mask0_1649_2234)'>
                 <path
-                  d='M8.00002 14.4166C7.91113 14.4166 7.82224 14.3999 7.73335 14.3666C7.64446 14.3333 7.56669 14.2888 7.50002 14.2333C5.8778 12.7999 4.66669 11.4695 3.86669 10.2419C3.06669 9.01392 2.66669 7.86659 2.66669 6.79992C2.66669 5.13325 3.20291 3.80547 4.27535 2.81659C5.34735 1.8277 6.58891 1.33325 8.00002 1.33325C9.41113 1.33325 10.6527 1.8277 11.7247 2.81659C12.7971 3.80547 13.3334 5.13325 13.3334 6.79992C13.3334 7.86659 12.9334 9.01392 12.1334 10.2419C11.3334 11.4695 10.1222 12.7999 8.50002 14.2333C8.43335 14.2888 8.35558 14.3333 8.26669 14.3666C8.1778 14.3999 8.08891 14.4166 8.00002 14.4166Z'
-                  fill='#FFBA09'
+                  d='M9.99998 18.0209C9.88887 18.0209 9.77776 18.0001 9.66665 17.9584C9.55554 17.9167 9.45831 17.8612 9.37498 17.7917C7.3472 16.0001 5.83331 14.337 4.83331 12.8026C3.83331 11.2676 3.33331 9.83342 3.33331 8.50008C3.33331 6.41675 4.00359 4.75703 5.34415 3.52091C6.68415 2.2848 8.23609 1.66675 9.99998 1.66675C11.7639 1.66675 13.3158 2.2848 14.6558 3.52091C15.9964 4.75703 16.6666 6.41675 16.6666 8.50008C16.6666 9.83342 16.1666 11.2676 15.1666 12.8026C14.1666 14.337 12.6528 16.0001 10.625 17.7917C10.5416 17.8612 10.4444 17.9167 10.3333 17.9584C10.2222 18.0001 10.1111 18.0209 9.99998 18.0209Z'
+                  fill='#FFEAB5'
                 />
               </g>
 
-              <g mask='url(#mask1_848_1614)'>
+              <g mask='url(#mask1_1649_2234)'>
                 <path
-                  d='M9.33334 9.55553C9.27038 9.55553 9.21764 9.53419 9.17512 9.49153C9.13245 9.44901 9.11112 9.39627 9.11112 9.33331V7.77775H8.8889C8.76667 7.77775 8.66208 7.73419 8.57512 7.64708C8.48801 7.56012 8.44445 7.45553 8.44445 7.33331V6.2222C8.44445 5.91479 8.55282 5.65279 8.76956 5.4362C8.98615 5.21945 9.24815 5.11108 9.55556 5.11108V9.33331C9.55556 9.39627 9.53423 9.44901 9.49156 9.49153C9.44904 9.53419 9.3963 9.55553 9.33334 9.55553ZM7.11112 9.55553C7.04815 9.55553 6.99534 9.53419 6.95267 9.49153C6.91015 9.44901 6.8889 9.39627 6.8889 9.33331V7.5222C6.70001 7.47034 6.54171 7.36664 6.41401 7.21108C6.28615 7.05553 6.22223 6.87405 6.22223 6.66664V5.33331C6.22223 5.27034 6.24349 5.21753 6.28601 5.17486C6.32867 5.13234 6.38149 5.11108 6.44445 5.11108C6.50741 5.11108 6.56023 5.13234 6.6029 5.17486C6.64541 5.21753 6.66667 5.27034 6.66667 5.33331V6.66664H6.8889V5.33331C6.8889 5.27034 6.91015 5.21753 6.95267 5.17486C6.99534 5.13234 7.04815 5.11108 7.11112 5.11108C7.17408 5.11108 7.2269 5.13234 7.26956 5.17486C7.31208 5.21753 7.33334 5.27034 7.33334 5.33331V6.66664H7.55556V5.33331C7.55556 5.27034 7.5769 5.21753 7.61956 5.17486C7.66208 5.13234 7.71482 5.11108 7.77778 5.11108C7.84075 5.11108 7.89356 5.13234 7.93623 5.17486C7.97875 5.21753 8.00001 5.27034 8.00001 5.33331V6.66664C8.00001 6.87405 7.93608 7.05553 7.80823 7.21108C7.68053 7.36664 7.52223 7.47034 7.33334 7.5222V9.33331C7.33334 9.39627 7.31208 9.44901 7.26956 9.49153C7.2269 9.53419 7.17408 9.55553 7.11112 9.55553Z'
+                  d='M11.6667 11.9445C11.588 11.9445 11.522 11.9178 11.4689 11.8645C11.4155 11.8113 11.3889 11.7454 11.3889 11.6667V9.72225H11.1111C10.9583 9.72225 10.8276 9.6678 10.7189 9.55892C10.61 9.45021 10.5555 9.31947 10.5555 9.16669V7.7778C10.5555 7.39355 10.691 7.06605 10.9619 6.7953C11.2327 6.52438 11.5602 6.38892 11.9444 6.38892V11.6667C11.9444 11.7454 11.9178 11.8113 11.8644 11.8645C11.8113 11.9178 11.7454 11.9445 11.6667 11.9445ZM8.88888 11.9445C8.81018 11.9445 8.74416 11.9178 8.69083 11.8645C8.63768 11.8113 8.6111 11.7454 8.6111 11.6667V9.40281C8.37499 9.33799 8.17712 9.20836 8.01749 9.01392C7.85768 8.81947 7.77777 8.59262 7.77777 8.33336V6.66669C7.77777 6.58799 7.80435 6.52197 7.85749 6.46864C7.91083 6.41549 7.97685 6.38892 8.05555 6.38892C8.13425 6.38892 8.20027 6.41549 8.2536 6.46864C8.30675 6.52197 8.33333 6.58799 8.33333 6.66669V8.33336H8.6111V6.66669C8.6111 6.58799 8.63768 6.52197 8.69083 6.46864C8.74416 6.41549 8.81018 6.38892 8.88888 6.38892C8.96759 6.38892 9.0336 6.41549 9.08694 6.46864C9.14009 6.52197 9.16666 6.58799 9.16666 6.66669V8.33336H9.44444V6.66669C9.44444 6.58799 9.4711 6.52197 9.52444 6.46864C9.57759 6.41549 9.64351 6.38892 9.72222 6.38892C9.80092 6.38892 9.86694 6.41549 9.92027 6.46864C9.97342 6.52197 9.99999 6.58799 9.99999 6.66669V8.33336C9.99999 8.59262 9.92009 8.81947 9.76027 9.01392C9.60064 9.20836 9.40277 9.33799 9.16666 9.40281V11.6667C9.16666 11.7454 9.14009 11.8113 9.08694 11.8645C9.0336 11.9178 8.96759 11.9445 8.88888 11.9445Z'
                   fill='white'
                 />
               </g>
             </svg>
 
-            <UploadST.MenuTitle>음식점 선택</UploadST.MenuTitle>
-          </UploadST.MenuBox>
-          <UploadST.LongInputBox isTargetFail={isTargetFail}>
-            <UploadST.SearchSvg
+            <ModifyST.BlurMenuTitle>음식점 선택</ModifyST.BlurMenuTitle>
+          </ModifyST.MenuBox>
+          <ModifyST.LongInputBox isTargetFail={isTargetFail}>
+            <ModifyST.SearchSvg
               width='20'
               height='20'
               viewBox='0 0 20 20'
@@ -131,21 +126,21 @@ const UploadStepOne = ({
               <g mask='url(#mask0_566_596)'>
                 <path
                   d='M15.3788 16.458L11.1363 12.2096C10.7576 12.513 10.3219 12.7533 9.82952 12.9303C9.3371 13.1073 8.81311 13.1958 8.25756 13.1958C6.88129 13.1958 5.71665 12.7186 4.76362 11.7642C3.81008 10.8093 3.33331 9.64278 3.33331 8.26456C3.33331 6.88634 3.81008 5.71978 4.76362 4.76489C5.71665 3.81051 6.88129 3.33331 8.25756 3.33331C9.63382 3.33331 10.7987 3.81051 11.7523 4.76489C12.7053 5.71978 13.1818 6.88634 13.1818 8.26456C13.1818 8.82091 13.0934 9.34564 12.9166 9.83877C12.7399 10.3319 12.5 10.7681 12.1969 11.1474L16.4583 15.4149C16.5972 15.554 16.6666 15.7247 16.6666 15.927C16.6666 16.1293 16.5909 16.3063 16.4394 16.458C16.3005 16.5971 16.1237 16.6666 15.9091 16.6666C15.6944 16.6666 15.5177 16.5971 15.3788 16.458ZM8.25756 11.6785C9.20452 11.6785 10.0096 11.3467 10.6727 10.6831C11.3353 10.0191 11.6666 9.21288 11.6666 8.26456C11.6666 7.31624 11.3353 6.51005 10.6727 5.84597C10.0096 5.1824 9.20452 4.85062 8.25756 4.85062C7.31059 4.85062 6.50554 5.1824 5.8424 5.84597C5.17978 6.51005 4.84846 7.31624 4.84846 8.26456C4.84846 9.21288 5.17978 10.0191 5.8424 10.6831C6.50554 11.3467 7.31059 11.6785 8.25756 11.6785Z'
-                  fill='#FF5B15'
+                  fill='#939393'
                 />
               </g>
-            </UploadST.SearchSvg>
+            </ModifyST.SearchSvg>
 
-            <UploadST.LongInput
+            <ModifyST.LongInput
               name='store'
-              value={detailData.targetName || ''}
+              value={detailData.targetName}
               disabled
             />
-          </UploadST.LongInputBox>
+          </ModifyST.LongInputBox>
         </div>
 
         <div>
-          <UploadST.MenuBox>
+          <ModifyST.MenuBox>
             <svg
               width='20'
               height='20'
@@ -156,15 +151,15 @@ const UploadStepOne = ({
               <g mask='url(#mask0_566_610)'>
                 <path
                   d='M3.10417 9.16665C2.78472 9.16665 2.54528 9.03109 2.38583 8.75998C2.22583 8.48942 2.22222 8.21526 2.375 7.93748L5.125 2.97915C5.20833 2.82637 5.3125 2.71526 5.4375 2.64581C5.5625 2.57637 5.70139 2.54165 5.85417 2.54165C6.00694 2.54165 6.14583 2.57637 6.27083 2.64581C6.39583 2.71526 6.5 2.82637 6.58333 2.97915L9.33333 7.93748C9.48611 8.21526 9.48278 8.48942 9.32333 8.75998C9.16333 9.03109 8.92361 9.16665 8.60417 9.16665H3.10417ZM5.85417 17.5C4.9375 17.5 4.15278 17.1736 3.5 16.5208C2.84722 15.868 2.52083 15.0833 2.52083 14.1666C2.52083 13.2361 2.84722 12.4478 3.5 11.8016C4.15278 11.1561 4.9375 10.8333 5.85417 10.8333C6.77083 10.8333 7.55555 11.1597 8.20833 11.8125C8.86111 12.4653 9.1875 13.25 9.1875 14.1666C9.1875 15.0833 8.86111 15.868 8.20833 16.5208C7.55555 17.1736 6.77083 17.5 5.85417 17.5ZM11.6875 17.5C11.4514 17.5 11.2533 17.42 11.0933 17.26C10.9339 17.1005 10.8542 16.9028 10.8542 16.6666V11.6666C10.8542 11.4305 10.9339 11.2325 11.0933 11.0725C11.2533 10.913 11.4514 10.8333 11.6875 10.8333H16.6875C16.9236 10.8333 17.1217 10.913 17.2817 11.0725C17.4411 11.2325 17.5208 11.4305 17.5208 11.6666V16.6666C17.5208 16.9028 17.4411 17.1005 17.2817 17.26C17.1217 17.42 16.9236 17.5 16.6875 17.5H11.6875ZM14.1875 8.85415C14.0764 8.85415 13.9653 8.83665 13.8542 8.80165C13.7431 8.7672 13.6458 8.71526 13.5625 8.64581C12.7986 8.00692 12.1839 7.47915 11.7183 7.06248C11.2533 6.64581 10.8958 6.2847 10.6458 5.97915C10.3958 5.67359 10.2292 5.39581 10.1458 5.14581C10.0625 4.89581 10.0208 4.61804 10.0208 4.31248C10.0208 3.68748 10.2394 3.1597 10.6767 2.72915C11.1144 2.29859 11.6597 2.08331 12.3125 2.08331C12.6875 2.08331 13.0383 2.16998 13.365 2.34331C13.6911 2.5172 13.9653 2.75692 14.1875 3.06248C14.4097 2.75692 14.6842 2.5172 15.0108 2.34331C15.3369 2.16998 15.6875 2.08331 16.0625 2.08331C16.7153 2.08331 17.2606 2.29859 17.6983 2.72915C18.1356 3.1597 18.3542 3.68748 18.3542 4.31248C18.3542 4.60415 18.3161 4.87498 18.24 5.12498C18.1633 5.37498 18 5.65276 17.75 5.95831C17.5 6.26387 17.1425 6.62831 16.6775 7.05165C16.2119 7.47554 15.5972 8.00692 14.8333 8.64581C14.75 8.71526 14.6494 8.7672 14.5317 8.80165C14.4133 8.83665 14.2986 8.85415 14.1875 8.85415Z'
-                  fill='#FFBA09'
+                  fill='#FFEAB5'
                 />
               </g>
             </svg>
 
-            <UploadST.MenuTitle>카테고리 선택</UploadST.MenuTitle>
-          </UploadST.MenuBox>
-          <UploadST.LongInputBox isCategoryFail={isCategoryFail}>
-            <UploadST.DropDownSvg
+            <ModifyST.BlurMenuTitle>카테고리 선택</ModifyST.BlurMenuTitle>
+          </ModifyST.MenuBox>
+          <ModifyST.LongInputBox isCategoryFail={isCategoryFail}>
+            <ModifyST.DropDownSvg
               width='24'
               height='24'
               viewBox='0 0 24 24'
@@ -174,21 +169,21 @@ const UploadStepOne = ({
               <g mask='url(#mask0_566_601)'>
                 <path
                   d='M9.58525 6.23747L15.7972 11.5567C15.871 11.6201 15.9231 11.6887 15.9535 11.7625C15.9845 11.8364 16 11.9156 16 12C16 12.0844 15.9845 12.1636 15.9535 12.2375C15.9231 12.3113 15.871 12.3799 15.7972 12.4433L9.58525 17.7784C9.41321 17.9261 9.19816 18 8.94009 18C8.68203 18 8.46083 17.9208 8.2765 17.7625C8.09217 17.6042 8 17.4195 8 17.2084C8 16.9974 8.09217 16.8127 8.2765 16.6544L13.6959 12L8.2765 7.34565C8.10445 7.19789 8.01843 7.01594 8.01843 6.79979C8.01843 6.58322 8.1106 6.39578 8.29493 6.23747C8.47926 6.07916 8.69432 6 8.94009 6C9.18587 6 9.40092 6.07916 9.58525 6.23747Z'
-                  fill='#FF5B15'
+                  fill='#939393'
                 />
               </g>
-            </UploadST.DropDownSvg>
+            </ModifyST.DropDownSvg>
 
-            <UploadST.LongInput
+            <ModifyST.LongInput
               name='category'
               value={detailData.category || ''}
               disabled
             />
-          </UploadST.LongInputBox>
+          </ModifyST.LongInputBox>
         </div>
 
         <div>
-          <UploadST.MenuBox>
+          <ModifyST.MenuBox>
             <svg
               width='20'
               height='20'
@@ -206,20 +201,20 @@ const UploadStepOne = ({
               </g>
             </svg>
 
-            <UploadST.MenuTitle>예상 배달 소요시간</UploadST.MenuTitle>
-          </UploadST.MenuBox>
-          <UploadST.ShortInputBox isDeliveryTimeFail={isDeliveryTimeFail}>
-            <UploadST.ShortInput
+            <ModifyST.MenuTitle>예상 배달 소요시간</ModifyST.MenuTitle>
+          </ModifyST.MenuBox>
+          <ModifyST.ShortInputBox isDeliveryTimeFail={isDeliveryTimeFail}>
+            <ModifyST.ShortInput
               name='deliveryTime'
               type='text'
-              placeholder={detailData.deliveryTime}
-              value={data.deliveryTime || ''}
+              // placeholder={detailData.deliveryTime}
+              value={data.deliveryTime}
               onChange={deliveryCheckHandler}
             />
-            <UploadST.InputText>분</UploadST.InputText>
-          </UploadST.ShortInputBox>
+            <ModifyST.InputText>분</ModifyST.InputText>
+          </ModifyST.ShortInputBox>
           {isDeliveryTimeFail ? (
-            <UploadST.ErrorMsgBox>
+            <ModifyST.ErrorMsgBox>
               <svg
                 width='14'
                 height='14'
@@ -234,13 +229,13 @@ const UploadStepOne = ({
                   />
                 </g>
               </svg>
-              <UploadST.ErrorMsg>필드를 채워주세요!</UploadST.ErrorMsg>
-            </UploadST.ErrorMsgBox>
+              <ModifyST.ErrorMsg>필드를 채워주세요!</ModifyST.ErrorMsg>
+            </ModifyST.ErrorMsgBox>
           ) : null}
         </div>
 
         <div>
-          <UploadST.MenuBox>
+          <ModifyST.MenuBox>
             <svg
               width='20'
               height='20'
@@ -258,37 +253,37 @@ const UploadStepOne = ({
               </g>
             </svg>
 
-            <UploadST.MenuTitle>
+            <ModifyST.MenuTitle>
               목표 금액에 따른 배달료 기준
-            </UploadST.MenuTitle>
-          </UploadST.MenuBox>
+            </ModifyST.MenuTitle>
+          </ModifyST.MenuBox>
 
-          <UploadST.PriceBox>
-            <UploadST.PriceInputBox isTargetAmountFail={isTargetAmountFail}>
-              <UploadST.ShortInput
+          <ModifyST.PriceBox>
+            <ModifyST.PriceInputBox isTargetAmountFail={isTargetAmountFail}>
+              <ModifyST.ShortInput
                 name='targetAmount'
                 type='text'
                 placeholder='0'
                 value={data.targetAmount}
                 onChange={deliveryCheckHandler}
               />
-              <UploadST.InputText>만원</UploadST.InputText>
-            </UploadST.PriceInputBox>
+              <ModifyST.InputText>만원</ModifyST.InputText>
+            </ModifyST.PriceInputBox>
             <div style={{ marginLeft: '8px', marginRight: '16px' }}>이상</div>
-            <UploadST.PriceInputBox isDeliveryFeeFail={isDeliveryFeeFail}>
-              <UploadST.ShortInput
+            <ModifyST.PriceInputBox isDeliveryFeeFail={isDeliveryFeeFail}>
+              <ModifyST.ShortInput
                 name='deliveryFee'
                 type='text'
                 placeholder='0'
                 value={data.deliveryFee}
                 onChange={deliveryCheckHandler}
               />
-              <UploadST.InputText>원</UploadST.InputText>
-            </UploadST.PriceInputBox>
-          </UploadST.PriceBox>
+              <ModifyST.InputText>원</ModifyST.InputText>
+            </ModifyST.PriceInputBox>
+          </ModifyST.PriceBox>
 
           {isTargetAmountFail || isDeliveryFeeFail ? (
-            <UploadST.ErrorMsgBox>
+            <ModifyST.ErrorMsgBox>
               <svg
                 width='14'
                 height='14'
@@ -303,13 +298,13 @@ const UploadStepOne = ({
                   />
                 </g>
               </svg>
-              <UploadST.ErrorMsg>필드를 채워주세요!</UploadST.ErrorMsg>
-            </UploadST.ErrorMsgBox>
+              <ModifyST.ErrorMsg>필드를 채워주세요!</ModifyST.ErrorMsg>
+            </ModifyST.ErrorMsgBox>
           ) : null}
         </div>
-      </UploadST.StepOneBody>
-    </UploadST.StepOneBox>
+      </ModifyST.StepOneBody>
+    </ModifyST.StepOneBox>
   );
 };
 
-export default UploadStepOne;
+export default ModifySTepOne;

@@ -112,7 +112,7 @@ export const SelectText = styled.div`
 export const ReTopBox = styled.div`
   position: relative;
   height: 110px;
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: white;
   text-align: center;
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
@@ -180,7 +180,7 @@ export const DeleteBtnBox = styled.div`
   width: 156px;
   height: 52px;
   border-radius: 12px;
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: var(--color-white);
   text-align: center;
 `;
 
