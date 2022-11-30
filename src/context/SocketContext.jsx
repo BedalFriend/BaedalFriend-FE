@@ -13,7 +13,7 @@ export function SocketProvider({ children }) {
   const dispatch = useDispatch();
   const client = useRef({});
 
-  const getInfo = () => {
+  const getInfo = async () => {
     const user = store.getState()?.user;
     const authorization = store.getState()?.token?.accessToken;
     const refreshToken = getCookieToken();
@@ -33,42 +33,57 @@ export function SocketProvider({ children }) {
       heartbeatOutgoing: 4000,
       onConnect: () => {
         subscribe();
-      },
-      onDisconnect: (e) => {
-        console.log('Disconnect...!', e);
-      },
-      onChangeState: (e) => {
-        console.log('change', e);
-      },
-      onStompError: (frame) => {
-        console.error(frame);
+        // unsubscribe();
       },
     });
 
     client.current.activate();
   };
 
-  const subscribe = () => {
+  const subscribe = async () => {
+    const { user } = await getInfo();
     if (!client.current.connected) return;
-    client.current.subscribe(`/sub/chat/room/3`, onMessageReceived, {
-      id: `sub-3`,
-    });
+    if (
+      user.onGoing !== null &&
+      user.onGoing !== undefined &&
+      user.onGoing !== 0
+    ) {
+      client.current.subscribe(
+        `/sub/chat/room/${user.onGoing}`,
+        onMessageReceived,
+        {
+          id: `sub-${user.onGoing}`,
+        }
+      );
+    }
   };
 
-  const onMessageReceived = (payload) => {
+  const unsubscribe = async () => {
+    const { user } = await getInfo();
+    if (!client.current.connected) return;
+    if (
+      user.onGoing !== null &&
+      user.onGoing !== undefined &&
+      user.onGoing !== 0
+    ) {
+      client.current.unsubscribe(`sub-${user.onGoing}`);
+    }
+  };
+
+  const onMessageReceived = async (payload) => {
+    const { user } = await getInfo();
     const received = JSON.parse(payload.body);
-    dispatch(ADD_CHAT(received));
+    if (received.roomId === user.onGoing) dispatch(ADD_CHAT(received));
   };
 
-  const publish = (message, roomId) => {
-    const { user, authorization, refreshToken } = getInfo();
-
+  const publish = async (message, roomId, type) => {
+    const { user, authorization, refreshToken } = await getInfo();
     if (!client.current.connected) return;
     client.current.publish({
       destination: '/pub/chat/message',
       body: JSON.stringify({
-        type: 'TALK',
-        roomId: roomId,
+        type,
+        roomId,
         sender: user.nickname,
         message,
       }),
@@ -76,14 +91,18 @@ export function SocketProvider({ children }) {
     });
   };
 
+  const disconnect = () => {
+    client.current.deactivate();
+  };
+
   useEffect(() => {
     connect();
-    //return () => disconnect();
+    return () => disconnect();
     // eslint-disable-next-line
   }, []);
 
   return (
-    <SocketContext.Provider value={{ client, subscribe, publish }}>
+    <SocketContext.Provider value={{ client, subscribe, unsubscribe, publish }}>
       {children}
     </SocketContext.Provider>
   );
