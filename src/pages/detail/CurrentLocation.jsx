@@ -22,7 +22,7 @@ const CurrentLocation = ({ data, stepTwoCheckHandler }) => {
       // 정상적으로 검색이 완료됐으면
       if (status === kakao.maps.services.Status.OK) {
         const coord = new kakao.maps.LatLng(result[0].y, result[0].x);
-        console.log('coord', coord);
+
         // 지도 이동(기존 위치와 가깝다면 부드럽게 이동)
         map.panTo(coord);
       }

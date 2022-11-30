@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import Layout from '../../components/layout/Layout';
-import MapContainer from './kakao/MapContainer';
+import MapContainer from './MapContainer';
 import { TabContext } from '../../context/TabContext';
 
 const Nearby = () => {

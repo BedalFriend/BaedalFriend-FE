@@ -6,10 +6,10 @@ const useMultipleInput = (initObj) => {
   const handler = (e) => {
     const { value, name } = e.target;
     if (
-      (name === 'price',
-      name === 'deliveryTime',
-      name === 'targetAmount',
-      name === 'deliveryFee')
+      name === 'price' ||
+      name === 'deliveryTime' ||
+      name === 'targetAmount' ||
+      name === 'deliveryFee'
     ) {
       setObj({ ...obj, [name]: parseInt(value) });
     } else {
