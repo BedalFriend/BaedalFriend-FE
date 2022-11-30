@@ -98,7 +98,7 @@ export const MapCancelBtn = styled.button`
 
   border-radius: 12px;
   background-color: var(--color-blur-white);
-  color: white;
+  color: var(--color-grey);
 
   font-family: 'Pretendard';
   font-weight: var(--weight-bold);

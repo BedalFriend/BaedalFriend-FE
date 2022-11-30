@@ -69,6 +69,11 @@ export const LongInputBox = styled.div`
   width: 100%;
   height: 40px;
 
+  border: ${(props) =>
+    props.isTargetFail || props.isCategoryFail
+      ? '1px solid var(--color-system-error)'
+      : null};
+
   @media screen and (min-width: 764px) {
     margin-bottom: 27px;
   }
@@ -81,6 +86,7 @@ export const LongInputBox = styled.div`
 export const LongInput = styled.input`
   font-size: var(--font-small);
   color: var(--color-dark-grey);
+  opacity: 0.7;
 `;
 
 export const MenuBox = styled.div`
@@ -103,6 +109,14 @@ export const MenuTitle = styled.div`
   color: var(--color-light-black);
 `;
 
+export const BlurMenuTitle = styled.div`
+  margin-left: 4px;
+
+  font-family: 'Pretendard';
+  font-size: var(--font-regular);
+  color: var(--color-grey);
+`;
+
 export const ShortInputBox = styled.div`
   display: flex;
   align-items: center;
@@ -113,6 +127,9 @@ export const ShortInputBox = styled.div`
   max-width: 152px;
 
   height: 40px;
+
+  border: ${(props) =>
+    props.isDeliveryTimeFail ? '1px solid var(--color-system-error)' : null};
   @media screen and (min-width: 764px) {
     margin-bottom: 24px;
   }
@@ -161,6 +178,11 @@ export const PriceInputBox = styled.div`
   border-radius: 12px;
   width: 152px;
   height: 40px;
+
+  border: ${(props) =>
+    props.isTargetAmountFail || props.isDeliveryFeeFail
+      ? '1px solid var(--color-system-error)'
+      : null};
 `;
 
 export const TimeInputBox = styled.div`
@@ -172,6 +194,11 @@ export const TimeInputBox = styled.div`
   width: 152px;
   height: 40px;
   margin-left: 8px;
+
+  border: ${(props) =>
+    props.isFistTimeFail || props.isSecondTimeFail
+      ? '1px solid var(--color-system-error)'
+      : null};
 `;
 
 export const ButtonBox = styled.div`
@@ -290,13 +317,16 @@ export const SelectInput = styled.div`
   background-color: var(--color-dark-white);
   align-self: center;
 
+  border: ${(props) =>
+    props.isMaxCapacityFail ? '1px solid var(--color-system-error)' : null};
+
   cursor: pointer;
   &::before {
     content: '⌵';
     position: absolute;
     top: 3px;
     left: 18px;
-    color: var(--color-orange);
+    color: var(--color-grey);
     font-size: 20px;
   }
 `;
@@ -309,6 +339,8 @@ export const SelectValue = styled.div`
   padding-top: 11px;
   align-items: center;
   color: var(--color-dark-grey);
+
+  opacity: 0.7;
 `;
 
 export const ErrorMsgBox = styled.div`

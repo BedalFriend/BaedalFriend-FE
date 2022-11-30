@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import * as ModalST from './DeleteModalStyle';
 
 export default function DeleteModal({
@@ -16,6 +17,9 @@ export default function DeleteModal({
     $body.style.overflow = 'hidden';
     return () => ($body.style.overflow = 'auto');
   }, []);
+
+  const navigate = useNavigate();
+  const { id } = useParams();
 
   return (
     <>
@@ -67,7 +71,13 @@ export default function DeleteModal({
         ) : (
           <ModalST.ModalWrap>
             <ModalST.TopBox>
-              <ModalST.SelectText>게시글 수정하기</ModalST.SelectText>
+              <ModalST.SelectText
+                onClick={() => {
+                  navigate(`/modify/${id}`);
+                }}
+              >
+                게시글 수정하기
+              </ModalST.SelectText>
             </ModalST.TopBox>
             <ModalST.SelectBox>
               <ModalST.SelectText

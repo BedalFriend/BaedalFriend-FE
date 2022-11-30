@@ -46,6 +46,24 @@ export const __addPostThunk = createAsyncThunk(
   }
 );
 
+export const __modifyPostThunk = createAsyncThunk(
+  'PATCH_MOVIES',
+  async (arg, thunkAPI) => {
+    console.log(arg);
+    try {
+      const { data } = await getInstance().put(
+        `${basePath}/auth/posts/${arg.postId}`,
+        arg
+      );
+      console.log(data);
+      return thunkAPI.fulfillWithValue(data);
+    } catch (error) {
+      console.log(error);
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 export const __deletePost = createAsyncThunk(
   'DELETE_POST',
   async (arg, thunkAPI) => {
@@ -55,6 +73,44 @@ export const __deletePost = createAsyncThunk(
       return thunkAPI.fulfillWithValue(arg);
     } catch (e) {
       return thunkAPI.rejectWithValue(e.code);
+    }
+  }
+);
+
+export const __increaseParticipantThunk = createAsyncThunk(
+  'ADD_POST', //action value
+
+  async (arg, thunkAPI) => {
+    //콜백
+
+    try {
+      const { data } = await getInstance().post(
+        `${basePath}/posts/participant/i/${arg}`,
+        arg
+      );
+
+      return thunkAPI.fulfillWithValue(data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.code);
+    }
+  }
+);
+
+export const __decreaseParticipantThunk = createAsyncThunk(
+  'ADD_POST', //action value
+
+  async (arg, thunkAPI) => {
+    //콜백
+
+    try {
+      const { data } = await getInstance().put(
+        `${basePath}/posts/participant/d/${arg}`,
+        arg
+      );
+
+      return thunkAPI.fulfillWithValue(data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.code);
     }
   }
 );
@@ -200,6 +256,19 @@ export const postsSlice = createSlice({
       state.posts.isLoading = false;
     },
 
+    //Modify Post
+    [__modifyPostThunk.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__modifyPostThunk.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.searchMovies = action.payload;
+    },
+    [__modifyPostThunk.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+
     //delete Post
     [__deletePost.pending]: (state) => {
       state.posts.isLoading = true;
@@ -217,6 +286,32 @@ export const postsSlice = createSlice({
     [__deletePost.rejected]: (state, action) => {
       state.posts.isLoading = false;
       state.posts.error = action.payload;
+    },
+
+    //increase Participant
+    [__increaseParticipantThunk.pending]: (state) => {
+      state.posts.isLoading = true;
+    },
+    [__increaseParticipantThunk.fulfilled]: (state, action) => {
+      state.posts.isLoading = false;
+      state.posts.data.push(action.payload);
+      // console.log('state.posts.data', current(state.posts.data));
+    },
+    [__increaseParticipantThunk.rejected]: (state, action) => {
+      state.posts.isLoading = false;
+    },
+
+    //decrease Participant
+    [__decreaseParticipantThunk.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__decreaseParticipantThunk.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.searchMovies = action.payload;
+    },
+    [__decreaseParticipantThunk.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
     },
 
     //get Search
