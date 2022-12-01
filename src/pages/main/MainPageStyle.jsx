@@ -17,7 +17,7 @@ export const Search = styled.div`
 
   background: var(--color-white);
   box-shadow: 0px 0px 8px rgba(187, 187, 187, 0.32);
-  border-radius: 99px;
+  border-radius: 12px;
 
   display: flex;
   align-items: center;

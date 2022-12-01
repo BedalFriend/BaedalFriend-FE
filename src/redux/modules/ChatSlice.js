@@ -75,7 +75,6 @@ export const chatSlice = createSlice({
       };
     },
     ADD_CHAT: (state, action) => {
-      console.log(action.payload);
       state.channel.data.chatMessages = [
         ...state.channel.data.chatMessages,
         action.payload,

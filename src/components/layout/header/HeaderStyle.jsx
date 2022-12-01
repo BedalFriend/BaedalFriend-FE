@@ -17,7 +17,7 @@ export const Area = styled.div`
 
 export const Address = styled.div`
   position: absolute;
-  width: 240px;
+  width: 280px;
   height: 32px;
   left: ${(props) => (props.tab === 'Home' ? '16px' : '64px')};
   top: 20px;
