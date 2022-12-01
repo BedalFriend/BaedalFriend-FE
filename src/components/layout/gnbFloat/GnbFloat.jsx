@@ -76,8 +76,15 @@ function GnbFloat() {
             fill='none'
             xmlns='http://www.w3.org/2000/svg'
             onClick={() => {
-              if (location.pathname !== `/detail/${user.onGoing}`)
-                navigate(`/detail/${user.onGoing}`);
+              if (!location.pathname.includes('/detail')) {
+                if (refreshToken) {
+                  if (user.onGoing) {
+                    navigate(`/detail/${user.onGoing}`);
+                  }
+                } else {
+                  setIsDP(true);
+                }
+              }
             }}
           >
             <path
@@ -107,7 +114,13 @@ function GnbFloat() {
             fill='none'
             xmlns='http://www.w3.org/2000/svg'
             onClick={() => {
-              if (!location.pathname.includes('/post')) navigate('/post');
+              if (!location.pathname.includes('/post')) {
+                if (refreshToken) {
+                  navigate(`/post`);
+                } else {
+                  setIsDP(true);
+                }
+              }
             }}
           >
             <path
