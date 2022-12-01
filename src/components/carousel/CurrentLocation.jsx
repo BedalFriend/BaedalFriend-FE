@@ -88,5 +88,5 @@ const MapBox = styled.div`
   height: 92px;
   border-radius: 12px;
   z-index: 1;
-  opacity: 80%;
+  /* opacity: 80%; */
 `;

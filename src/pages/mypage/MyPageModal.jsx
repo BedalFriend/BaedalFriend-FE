@@ -1,17 +1,24 @@
-import React, {useEffect, useRef} from 'react';
+import {React, useEffect, useRef} from 'react';
 import * as ModalST from './MyPageModalStyle';
 import useOutSideClick from '../../hooks/useOutSideClick';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
-export default function SearchModal({aniState, setAniState, closeModal}) {
+import { logoutUser } from '../../shared/api/Users';
+import { removeCookieToken } from '../../shared/storage/Cookie';
+import { DELETE_USER } from '../../redux/modules/UserSlice';
+import { DELETE_TOKEN } from '../../redux/modules/AuthSlice';
+
+export default function MyPageModal({closeModal}) {
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   //배경 클릭 시 모달창 닫기
   const modalRef = useRef(null)
 
   const handleClose = () => {
-    setAniState(false);
-    setTimeout(() => {
-        closeModal();
-    }, 500);
+    closeModal();
   };
 
   useOutSideClick(modalRef, handleClose);
@@ -23,16 +30,26 @@ export default function SearchModal({aniState, setAniState, closeModal}) {
     return () => ($body.style.overflow = "auto");
   }, []);
 
+  //로그아웃
+  const onLogoutHandler = async () => {
+    await logoutUser();
+    closeModal();
+    navigate('/');
+    removeCookieToken();
+    dispatch(DELETE_TOKEN());
+    dispatch(DELETE_USER());
+    
+  };
+
   return (
-    <>
-    <ModalST.Overlay aniState={aniState}>
+    <ModalST.Overlay>
       <ModalST.ModalWrap ref={modalRef}>
 
-        <ModalST.TopBox>
+        <ModalST.TopBox onClick={() => {navigate('/myEdit')}}>
             <ModalST.SelectText>프로필 수정하기</ModalST.SelectText>
         </ModalST.TopBox>
 
-        <ModalST.BottomBox>
+        <ModalST.BottomBox onClick={() => onLogoutHandler()}>
             <ModalST.SelectText>로그아웃</ModalST.SelectText>
         </ModalST.BottomBox>
 
@@ -42,6 +59,5 @@ export default function SearchModal({aniState, setAniState, closeModal}) {
 
       </ModalST.ModalWrap>
     </ModalST.Overlay>
-    </>
   );
 };

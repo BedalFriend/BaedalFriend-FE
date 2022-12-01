@@ -215,6 +215,9 @@ export const postsSlice = createSlice({
         error: null,
       };
     },
+    UPDATE_POST: (state, action) => {
+      state.post.data = action.payload;
+    },
   },
   extraReducers: {
     //get
@@ -394,5 +397,5 @@ export const postsSlice = createSlice({
   },
 });
 
-export const { CLEAR_POSTS } = postsSlice.actions;
+export const { CLEAR_POSTS, UPDATE_POST } = postsSlice.actions;
 export default postsSlice.reducer;

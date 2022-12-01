@@ -13,7 +13,7 @@ export default function MyPage() {
 
   //tab
   useEffect(() => {
-    setTab('MyPage');
+    setTab('Mypage');
     // eslint-disable-next-line
   }, []);
 
@@ -39,7 +39,7 @@ export default function MyPage() {
         <myST.MainBox>
 
           <myST.Profile>
-            <ProfilePic size='56px' border='1px solid var(--color-orange)' user={user}/>
+            <ProfilePic size='56px' border='' user={user}/>
             <myST.VerticalBox>
               <myST.NickText>{nickname}</myST.NickText>
               <myST.EmailText>{email}</myST.EmailText>
@@ -60,7 +60,7 @@ export default function MyPage() {
               </svg>
               <myST.VerticalBox>
                 <myST.ContentText>받은 리뷰</myST.ContentText>
-                <myST.CountText>4개</myST.CountText>
+                <myST.CountText>0개</myST.CountText>
               </myST.VerticalBox>
             </myST.Content>
             {/* 배프와 만남 */}
@@ -76,7 +76,7 @@ export default function MyPage() {
               </svg>
               <myST.VerticalBox>
                 <myST.ContentText>배프와 만남</myST.ContentText>
-                <myST.CountText>6번</myST.CountText>
+                <myST.CountText>0번</myST.CountText>
               </myST.VerticalBox>
             </myST.Content>
           </myST.ContentBox>
@@ -121,7 +121,7 @@ export default function MyPage() {
               </g>
             </svg>
             <myST.MenuText>이벤트 및 공지사항</myST.MenuText>
-            <myST.Alarm>+1</myST.Alarm>
+            {/* <myST.Alarm>+1</myST.Alarm> */}
           </myST.MenuTwo>
           <myST.MenuThree>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

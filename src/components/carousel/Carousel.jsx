@@ -2,12 +2,16 @@ import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as CaroST from './CarouselStyle';
 import LoginImg1 from '../carousel/img/Banner.png';
-import { getCookieToken } from '../../shared/storage/Cookie';
+
 import CurrentLocation from './CurrentLocation';
+
+import { getCookieToken } from '../../shared/storage/Cookie';
+import { useSelector } from 'react-redux';
 
 const PageOne = () => {
   const navigate = useNavigate();
   const token = getCookieToken();
+  const nickname = useSelector((state) => state.user.nickname);
 
   return (
     <div>
@@ -21,7 +25,7 @@ const PageOne = () => {
           >
             <CaroST.MiniBox>
               <CaroST.DesContent>
-                땅콩님을 기다리는 n명의 배프
+                {nickname}님을 기다리는 n명의 배프
               </CaroST.DesContent>
             </CaroST.MiniBox>
             <CurrentLocation />
