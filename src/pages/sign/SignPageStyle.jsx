@@ -46,7 +46,7 @@ export const InputSection = styled.section`
 export const InputWrapper = styled.div`
   position: relative;
   background: var(--color-dark-white);
-  border-radius: 999px;
+  border-radius: 12px;
   width: 100%;
   height: 52px;
   padding: 0 20px;
@@ -117,7 +117,7 @@ export const CancelBtn = styled.button`
   font-size: var(--font-regular);
   font-display: swap;
   line-height: 19px;
-  color: var(--color-white);
+  color: var(--color-grey);
 
   width: 171px;
   width: calc((100vw - 32px - 16px) / 2);

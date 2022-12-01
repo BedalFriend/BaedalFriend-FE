@@ -171,6 +171,8 @@ export const Nickname = styled.span`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  display: flex;
+  justify-content: center;
 `;
 
 export const Body = styled.div`
