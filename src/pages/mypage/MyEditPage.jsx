@@ -3,8 +3,9 @@ import axios from 'axios';
 import { getCookieToken } from '../../shared/storage/Cookie';
 import { basePath } from '../../shared/api/Request';
 import { checkNickname } from '../../shared/api/Users';
+import { AlarmContext } from '../../context/AlarmContext';
 
-import React, { useEffect, useState } from 'react';
+import { React, useContext, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
@@ -15,8 +16,9 @@ import MyEditModal from './MyEditModal';
 
 export default function MyEditPage() {
 
+  const { setIsDP } = useContext(AlarmContext);
   const navigate = useNavigate();
-  const formData = new FormData();  
+  const formData = new FormData();
 
   //토큰
   const authorization = store.getState()?.token?.accessToken;
@@ -61,6 +63,14 @@ export default function MyEditPage() {
       // });
   }
 
+  useEffect(() => {
+    preview();
+  }, [profilePost?.imgUrl]);
+
+  useEffect(() => {
+    setProfilepost({nickname: editNick})
+  }, [editNick]);
+
   const [inCheck, setInCheck] = useState(false);
   const [isNicknameFail, setIsNicknameFail] = useState(true);
   const [helpNicknameText, setHelpNicknameText] = useState('');
@@ -90,13 +100,17 @@ export default function MyEditPage() {
 
   //프로필 post 요청
   const onSubmitHandler = () => {
-    const info = {
-      imageUrl: profilePost.imgUrl,
-      nickname: profilePost.editNick,
-    };
+
+    formData.append('imgUrl', profilePost?.imgUrl);
+    formData.append('nickname',
+      JSON.stringify({
+        nickname: profilePost?.nickname
+      }),
+      { type: 'application/json'}
+    );
 
     axios
-      .post(`${basePath}/mypages/image/${userId}`, info,
+      .post(`${basePath}/mypages/image/${userId}`, formData,
       { headers:
         { 'Authorization' : `${authorization}`,
           'Refresh_Token' : `${refreshToken}`,
@@ -107,14 +121,6 @@ export default function MyEditPage() {
       }
     });
   }
-
-  useEffect(() => {
-    preview();
-  }, [profilePost?.imgUrl]);
-
-  useEffect(() => {
-    setProfilepost({nickname: editNick})
-  }, [editNick]);
 
   return (
     <myEditST.myEditBG>
@@ -229,7 +235,7 @@ export default function MyEditPage() {
         <myEditST.submitBtn
           onClick={onSubmitHandler}
           disabled={
-            (previewImg===null||undefined) &&
+            (previewImg===null||undefined) ||
             (isNicknameFail===true)
           }>
           적용하기
