@@ -89,6 +89,9 @@ export const InfoText = styled.div`
 `;
 
 export const ProfileNickName = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin-top: 4px;
   font-size: var(--font-micro);
   color: var(--color-grey);

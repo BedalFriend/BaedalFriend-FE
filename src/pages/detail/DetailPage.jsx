@@ -143,6 +143,16 @@ const DetailPage = () => {
 
   return (
     <Layout>
+      {isOpen && (
+        <DeleteModal
+          setIsOpen={setIsOpen}
+          aniState={aniState}
+          setAniState={setAniState}
+          onDeleteHandler={onDeleteHandler}
+          isDeleteHandler={isDeleteHandler}
+          setIsDeleteHandler={setIsDeleteHandler}
+        />
+      )}
       {index ? (
         <CurrentMap data={post} setIndex={setIndex} />
       ) : (
@@ -207,16 +217,6 @@ const DetailPage = () => {
                   />
                 </svg>
               ) : null}
-              {isOpen && (
-                <DeleteModal
-                  setIsOpen={setIsOpen}
-                  aniState={aniState}
-                  setAniState={setAniState}
-                  onDeleteHandler={onDeleteHandler}
-                  isDeleteHandler={isDeleteHandler}
-                  setIsDeleteHandler={setIsDeleteHandler}
-                />
-              )}
             </DetailST.AddressBox>
 
             <DetailST.TitleBox>
@@ -423,7 +423,7 @@ const DetailPage = () => {
           ) : null}
           {custom === 1 ? (
             <DetailST.OverLapBtn>
-              이미 다른 공구에 참여중이에요.
+              이미 다른 공구에 참여중이에요
             </DetailST.OverLapBtn>
           ) : null}
           {custom === 2 ? (
@@ -441,9 +441,7 @@ const DetailPage = () => {
             </DetailST.BottomBtnBox>
           ) : null}
           {custom === 4 ? (
-            <DetailST.OverLapBtn>
-              참가할 수 있는 최대 인원이 초과하였습니다.
-            </DetailST.OverLapBtn>
+            <DetailST.OverLapBtn>지금은 자리가 없어요</DetailST.OverLapBtn>
           ) : null}
         </DetailST.DetailBox>
       )}

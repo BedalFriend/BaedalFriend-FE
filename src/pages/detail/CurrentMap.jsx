@@ -70,13 +70,13 @@ const CurrentMap = ({ data, setIndex }) => {
 
         const markerImage = new kakao.maps.MarkerImage(
           yellowMarker,
-          new kakao.maps.Size(36, 36),
+          new kakao.maps.Size(48, 48),
           new kakao.maps.Point(13, 34)
         );
 
         const checkMarkerImage = new kakao.maps.MarkerImage(
           orangeMarker,
-          new kakao.maps.Size(36, 36),
+          new kakao.maps.Size(48, 48),
           new kakao.maps.Point(13, 34)
         );
 
@@ -117,7 +117,7 @@ const CurrentMap = ({ data, setIndex }) => {
     if (myLocation.latitude || myLocation.longitude) {
       const currentMarkerImage = new kakao.maps.MarkerImage(
         MyMarker,
-        new kakao.maps.Size(24, 24),
+        new kakao.maps.Size(32, 32),
         new kakao.maps.Point(13, 34)
       );
       // 현재 위치 받아오기
@@ -152,24 +152,25 @@ const CurrentMap = ({ data, setIndex }) => {
           height: '100vh',
         }}
       >
-        <CtMapST.BackBtn
-          onClick={() => {
-            setIndex(false);
-          }}
-          width='44'
-          height='48'
-          viewBox='0 0 44 48'
-          fill='none'
-          xmlns='http://www.w3.org/2000/svg'
-        >
-          <g mask='url(#mask0_848_1419)'>
-            <path
-              d='M22.424 33.6042L12.3295 24.7388C12.2097 24.6332 12.125 24.5189 12.0755 24.3958C12.0252 24.2726 12 24.1407 12 24C12 23.8593 12.0252 23.7274 12.0755 23.6042C12.125 23.4811 12.2097 23.3668 12.3295 23.2612L22.424 14.3694C22.7035 14.1231 23.053 14 23.4724 14C23.8917 14 24.2512 14.1319 24.5507 14.3958C24.8502 14.6596 25 14.9675 25 15.3193C25 15.6711 24.8502 15.9789 24.5507 16.2427L15.7442 24L24.5507 31.7573C24.8303 32.0035 24.97 32.3068 24.97 32.667C24.97 33.028 24.8203 33.3404 24.5207 33.6042C24.2212 33.8681 23.8717 34 23.4724 34C23.073 34 22.7235 33.8681 22.424 33.6042Z'
-              fill='#939393'
-            />
-          </g>
-        </CtMapST.BackBtn>
-
+        <div>
+          <CtMapST.BackBtn
+            onClick={() => {
+              setIndex(false);
+            }}
+            width='44'
+            height='48'
+            viewBox='0 0 44 48'
+            fill='none'
+            xmlns='http://www.w3.org/2000/svg'
+          >
+            <g mask='url(#mask0_848_1419)'>
+              <path
+                d='M22.424 33.6042L12.3295 24.7388C12.2097 24.6332 12.125 24.5189 12.0755 24.3958C12.0252 24.2726 12 24.1407 12 24C12 23.8593 12.0252 23.7274 12.0755 23.6042C12.125 23.4811 12.2097 23.3668 12.3295 23.2612L22.424 14.3694C22.7035 14.1231 23.053 14 23.4724 14C23.8917 14 24.2512 14.1319 24.5507 14.3958C24.8502 14.6596 25 14.9675 25 15.3193C25 15.6711 24.8502 15.9789 24.5507 16.2427L15.7442 24L24.5507 31.7573C24.8303 32.0035 24.97 32.3068 24.97 32.667C24.97 33.028 24.8203 33.3404 24.5207 33.6042C24.2212 33.8681 23.8717 34 23.4724 34C23.073 34 22.7235 33.8681 22.424 33.6042Z'
+                fill='var(--color-light-black)'
+              />
+            </g>
+          </CtMapST.BackBtn>
+        </div>
         <CtMapST.MarkerInfoBox>
           <CtMapST.InfoTitleBox>
             <svg

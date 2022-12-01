@@ -19,8 +19,8 @@ const FadeOut = keyframes`
 `;
 
 export const Overlay = styled.div`
-  position: fixed;
-  height: 100%;
+  position: absolute;
+  height: 100vh;
   top: 0;
   bottom: 0;
   left: 0;
