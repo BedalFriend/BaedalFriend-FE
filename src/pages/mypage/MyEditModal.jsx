@@ -1,17 +1,14 @@
-import React, {useEffect, useRef} from 'react';
+import React, { useEffect, useRef } from 'react';
 import * as ModalST from './MyEditModalStyle';
 import useOutSideClick from '../../hooks/useOutSideClick';
 
-export default function SearchModal({aniState, setAniState, closeModal}) {
+export default function MyEditModal({closeModal, setProfilepost}) {
 
   //배경 클릭 시 모달창 닫기
   const modalRef = useRef(null)
 
   const handleClose = () => {
-    setAniState(false);
-    setTimeout(() => {
-        closeModal();
-    }, 500);
+    closeModal();
   };
 
   useOutSideClick(modalRef, handleClose);
@@ -24,11 +21,21 @@ export default function SearchModal({aniState, setAniState, closeModal}) {
   }, []);
 
   return (
-    <ModalST.Overlay aniState={aniState}>
+    <ModalST.Overlay>
       <ModalST.ModalWrap ref={modalRef}>
 
         <ModalST.TopBox>
-            <ModalST.SelectText>기기에서 가져오기</ModalST.SelectText>
+            <label htmlFor="file" style={{ cursor: 'pointer'}}>
+            <ModalST.SelectText>기기에서 가져오기</ModalST.SelectText>  
+            <input
+              type="file"
+              id="file"
+              onChange={(e) => {
+                setProfilepost({imgUrl: e.target.files[0]});
+                closeModal(e);
+              }}
+              style={{ visibility: "hidden" }}/>
+            </label>
         </ModalST.TopBox>
 
         <ModalST.BottomBox>

@@ -1,23 +1,4 @@
-import styled, {keyframes} from 'styled-components';
-
-
-const FadeIn = keyframes`
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-`;
-
-const FadeOut = keyframes`
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-`;
+import styled from 'styled-components';
 
 export const Overlay = styled.div`
   position: fixed;
@@ -28,10 +9,6 @@ export const Overlay = styled.div`
   right: 0;
   background: rgba(0, 0, 0, 0.3);
   z-index: 910;
-
-  animation-duration: 0.5s;
-  animation-timing-function: ease-out;
-  animation-name: ${(props) => (props.aniState ? FadeIn : FadeOut)};
 
   @media screen and (min-width: 764px) {
       width: var(--responsive-width);

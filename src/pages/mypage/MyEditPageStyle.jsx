@@ -81,6 +81,35 @@ export const emailBox = styled.div`
   background-color: var(--color-dark-white);
 `
 
+export const nickBox = styled.div`
+  width: calc(100% - 32px);
+  height: 40px;
+  padding: 11px 20px;
+  margin-top: 12px;
+  display: flex;
+  justify-content: space-between;
+  
+  font-size: var(--font-small);
+  font-weight: var(--weight-regular);
+  color: var(--color-grey);
+
+  border-radius: 12px;
+  background-color: var(--color-dark-white);
+`
+
+export const nickText = styled.input`
+  all: unset;
+  font-size: var(--font-small);
+  font-weight: var(--weight-regular);
+  color: var(--color-grey);
+
+  ::placeholder {
+    font-size: var(--font-small);
+    font-weight: var(--weight-regular);
+    color: var(--color-grey);
+  }
+`;
+
 export const emailCheck = styled.div`
   font-size: var(--font-micro);
   font-weight: var(--weight-bold);
@@ -131,7 +160,7 @@ export const cancelBtn = styled.div`
   cursor: pointer;
 `
 
-export const submitBtn = styled.div`
+export const submitBtn = styled.button`
   position: relative;
   font-size: var(--font-regular);
   font-weight: var(--weight-bold);
@@ -146,4 +175,29 @@ export const submitBtn = styled.div`
   align-items: center;
   justify-content: center;
   cursor: pointer;
+
+  &:disabled {
+    background-color: var(--color-grey);
+    cursor: default;
+  }
 `
+
+export const HelpBox = styled.div`
+  position: relative;
+  width: calc(100% - 72px);
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  gap: 4px;
+`;
+
+export const HelpText = styled.span`
+  font-weight: var(--weight-bold);
+  font-size: var(--font-micro);
+  font-display: swap;
+  color: ${(props) =>
+    props.isFail ? 'var(--color-system-error)' : 'var(--color-system-success)'};
+
+  margin-left: 4px;
+`;
