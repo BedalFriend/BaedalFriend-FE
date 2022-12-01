@@ -3,9 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import {
+  __decreaseParticipantThunk,
   __deletePost,
   __getDetailThunk,
   __getThunk,
+  __increaseParticipantThunk,
 } from '../../redux/modules/PostSlice';
 import { __enterChannel, __exitChannel } from '../../redux/modules/ChatSlice';
 
@@ -29,10 +31,10 @@ const DetailPage = () => {
   const post = useSelector((state) => state.post.post.data);
   const posts = useSelector((state) => state.post.posts);
   const token = useSelector((state) => state.token.accessToken);
-  console.log('posts', posts);
-  console.log('post', post);
-  console.log('token', token);
-  console.log('user', user);
+  // console.log('posts', posts);
+  // console.log('post', post);
+  // console.log('token', token);
+  // console.log('user', user);
 
   //지도 화면 변환
   const [index, setIndex] = useState(false);
@@ -67,12 +69,14 @@ const DetailPage = () => {
   // 참여 핸들러
   const onEnterHandler = () => {
     dispatch(__enterChannel(id));
+    dispatch(__increaseParticipantThunk(id));
     setCustom(2);
     window.location.reload();
   };
 
   // 퇴장 핸들러
   const onExitHandler = () => {
+    dispatch(__decreaseParticipantThunk(id));
     dispatch(__exitChannel(id));
     setCustom(0);
     setIsExitOpen(false);
@@ -107,18 +111,16 @@ const DetailPage = () => {
   };
 
   // Limit 계산
-  const [limit, setLimit] = useState();
-  const [gap, setGap] = useState(parseInt((limit - new Date()) / 1000));
+
+  const [gap, setGap] = useState(
+    parseInt((new Date(post.limitTime) - new Date()) / 1000)
+  );
 
   useEffect(() => {
     if (post?.limitTime) {
-      setLimit(new Date(post.limitTime));
+      setGap(parseInt((new Date(post.limitTime) - new Date()) / 1000));
     }
   }, [post?.limitTime]);
-
-  useEffect(() => {
-    setGap(parseInt((limit - new Date()) / 1000));
-  }, [limit]);
 
   useEffect(() => {
     dispatch(__getDetailThunk(id));
@@ -128,12 +130,14 @@ const DetailPage = () => {
   useEffect(() => {
     if (user.id === post.memberId) {
       setCustom(3);
-    } else if (user.onGoing === 0 || user.onGoing === null) {
-      setCustom(0);
     } else if (user.onGoing !== 0 && user.onGoing !== post.postId) {
       setCustom(1);
     } else if (user.onGoing === post.postId) {
       setCustom(2);
+    } else if (post.maxCapacity === post.participantNumber) {
+      setCustom(4);
+    } else if (user.onGoing === 0 || user.onGoing === null) {
+      setCustom(0);
     }
   }, [user.id, post.memberId, user.onGoing, custom]);
 
@@ -435,6 +439,11 @@ const DetailPage = () => {
               <DetailST.PartyOutBtn>공구 완료하기</DetailST.PartyOutBtn>
               <DetailST.CurrentStatusBtn>진행 중</DetailST.CurrentStatusBtn>
             </DetailST.BottomBtnBox>
+          ) : null}
+          {custom === 4 ? (
+            <DetailST.OverLapBtn>
+              참가할 수 있는 최대 인원이 초과하였습니다.
+            </DetailST.OverLapBtn>
           ) : null}
         </DetailST.DetailBox>
       )}

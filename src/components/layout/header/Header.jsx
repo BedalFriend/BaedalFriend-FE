@@ -100,7 +100,7 @@ export default function Header() {
         </svg>
       </HeadST.Address>
 
-      <HeadST.ChatSVG
+      {/* <HeadST.ChatSVG
         width='48'
         height='48'
         viewBox='0 0 48 48'
@@ -128,7 +128,7 @@ export default function Header() {
             }
           />
         </g>
-      </HeadST.ChatSVG>
+      </HeadST.ChatSVG> */}
     </HeadST.Area>
   );
 }

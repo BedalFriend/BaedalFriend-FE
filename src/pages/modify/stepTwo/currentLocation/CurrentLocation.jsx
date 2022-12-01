@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
-import MapFrame from '../../../../../imgs/upload/Frame 48.png';
-import OrangeMapMarker from '../../../../../imgs/upload/Orange_Map_Marker.png';
+import MapFrame from '../../../../imgs/upload/Frame 48.png';
+import OrangeMapMarker from '../../../../imgs/upload/Orange_Map_Marker.png';
 
-import * as UploadST from '../../../UploadPageStyle';
+import * as ModifyST from '../../ModifyPageStyle';
+import * as CurrentLtST from './CurrentLocationStyle';
 
 const { kakao } = window;
 
@@ -12,6 +12,7 @@ const CurrentLocation = ({
   addressManager,
   stepTwoCheckHandler,
   isGatherNameFail,
+  setIndex,
 }) => {
   // console.log(myLocation);
   // 위치 가져오기 버튼 클릭시
@@ -54,35 +55,41 @@ const CurrentLocation = ({
 
   return (
     <div>
-      <MapBox
+      <CurrentLtST.MapBox
         id='map'
         style={{
           width: '358px',
           height: '72px',
           borderRadius: '12px',
         }}
-        isGatherNameFail={isGatherNameFail}
+        onClick={() => {
+          setIndex(2);
+        }}
       >
         {addressManager ? (
-          <SelectAddressBox>
-            <OrangeMarker
+          <CurrentLtST.SelectAddressBox>
+            <CurrentLtST.OrangeMarker
               src={OrangeMapMarker}
               style={{ width: '14px', height: '14px' }}
               alt=''
             />
-            <SelectAddress defaultValue={data.gatherName} />
-          </SelectAddressBox>
+            <CurrentLtST.SelectAddress
+              defaultValue={data.gatherName}
+              onKeyUp={stepTwoCheckHandler}
+              disabled
+            />
+          </CurrentLtST.SelectAddressBox>
         ) : (
-          <Frame
+          <CurrentLtST.Frame
             src={MapFrame}
             style={{ width: '28px', height: '28px' }}
             alt=''
           />
         )}
-      </MapBox>
+      </CurrentLtST.MapBox>
 
       {isGatherNameFail ? (
-        <UploadST.ErrorMsgBox>
+        <ModifyST.ErrorMsgBox>
           <svg
             width='14'
             height='14'
@@ -97,61 +104,11 @@ const CurrentLocation = ({
               />
             </g>
           </svg>
-          <UploadST.ErrorMsg>필드를 채워주세요!</UploadST.ErrorMsg>
-        </UploadST.ErrorMsgBox>
+          <ModifyST.ErrorMsg>필드를 채워주세요!</ModifyST.ErrorMsg>
+        </ModifyST.ErrorMsgBox>
       ) : null}
     </div>
   );
 };
 
 export default CurrentLocation;
-
-const MapBox = styled.div`
-  position: relative;
-  z-index: 1;
-
-  margin-bottom: 14px;
-
-  border: ${(props) =>
-    props.isGatherNameFail ? '1px solid var(--color-system-error)' : null};
-`;
-
-const Frame = styled.img`
-  position: relative;
-  z-index: 2;
-
-  margin: 22px 165px 22px 165px;
-`;
-
-const SelectAddressBox = styled.div`
-  position: relative;
-  z-index: 2;
-
-  display: flex;
-  align-items: center;
-
-  width: 318px;
-  height: 40px;
-
-  border-radius: 25px;
-
-  background-color: var(--color-white);
-  opacity: 80%;
-
-  margin: 16px 20px 16px 20px;
-`;
-const OrangeMarker = styled.img`
-  position: relative;
-  z-index: 2;
-  margin: 16px 13px;
-`;
-
-const SelectAddress = styled.input`
-  position: relative;
-  z-index: 2;
-
-  color: var(--color-dark-grey);
-  font-size: var(--font-small);
-
-  margin: 2px 0px 0px 5px;
-`;

@@ -5,8 +5,8 @@ export const Box = styled.div`
   bottom: 0;
   background: linear-gradient(
     180deg,
-    rgba(255, 255, 255, 0) -5.89%,
-    #ffffff 31.92%
+    rgba(255, 255, 255, 0) 0.93%,
+    #ffffff 9.23%
   );
   height: 136px;
 
@@ -33,7 +33,7 @@ export const Bar = styled.div`
   justify-content: space-between;
   align-items: flex-start;
 
-  padding: 0 36px;
+  padding: 0 28px;
 
   z-index: 900;
 

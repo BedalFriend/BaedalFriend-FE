@@ -103,11 +103,11 @@ export const SelectWord = styled.div`
 `;
 
 export const NoResult = styled.div`
-  width: calc(100% - 32px);
   position: relative;
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
+  margin: auto;
 
   color: var(--color-grey);
   font-weight: var(--weight-regular);

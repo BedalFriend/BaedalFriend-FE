@@ -17,6 +17,7 @@ import NearbyPage from '../../pages/nearby/NearbyPage';
 import CategoryPage from '../../pages/search/CategoryPage';
 import MyPage from '../../pages/mypage/MyPage'
 import MyEditPage from '../../pages/mypage/MyEditPage'
+import ModifyPage from '../../pages/modify/ModifyPage';
 
 const Router = () => {
   return (
@@ -39,6 +40,7 @@ const Router = () => {
           <Route path='/nearby' element={<NearbyPage />} />
           <Route path='/post' element={<UploadPage />} />
           <Route path='/detail/:id' element={<DetailPage />} />
+          <Route path='/modify/:id' element={<ModifyPage />} />
           <Route path='/search' element={<SearchPage />} />
           <Route path='/category/:id' element={<CategoryPage />} />
           <Route path='/mypage' element={<MyPage />} />

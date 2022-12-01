@@ -2,26 +2,23 @@ import React, { useEffect, useState } from 'react';
 
 import * as SearchST from './SearchMapStyle';
 
-import yellowMarker from '../../imgs/upload/Yellow_Marker.png';
-import orangeMarker from '../../imgs/upload/Orange_Map_Marker.png';
-import MyMarker from '../../imgs/upload/Map_LocationMark.png';
-import CurrentMark from '../../imgs/upload/Map_MyLocation.png';
+import yellowMarker from '../../../../imgs/upload/Yellow_Marker.png';
+import orangeMarker from '../../../../imgs/upload/Orange_Map_Marker.png';
+import MyMarker from '../../../../imgs/upload/Map_LocationMark.png';
+import CurrentMark from '../../../../imgs/upload/Map_MyLocation.png';
 
 //스크립트로 kakao maps api를 심어서 가져오면 window전역 객체에 들어가게 된다. 그리고 그걸 사용하려면 window에서 kakao객체를 뽑아서 사용하면 된다.
 const { kakao } = window;
 
-const SearchMap = ({ setIndex, setData, data, name, address }) => {
+const SearchMap = ({ setIndex, data, setData, setAddressManager }) => {
   const [place, setPlace] = useState('');
   const [markerInfo, setMarkerInfo] = useState('');
-
+  console.log(markerInfo);
   //내가 선택한 마커 저장소
   const [selectMarker, setSelectMarker] = useState(false);
 
   //나의 현재위치 좌표 저장소
   const [myLocation, setMyLocation] = useState('');
-
-  //선택한 마커의 좌표
-  const [distance, setDistance] = useState('');
 
   // 위치 가져오기 버튼 클릭시
   const getCurrentPosBtn = () => {
@@ -49,19 +46,23 @@ const SearchMap = ({ setIndex, setData, data, name, address }) => {
   };
 
   const onChange = (e) => {
+    // setInputText(e.target.value);
     setPlace(e.target.value);
   };
 
   const saveAddressHandler = () => {
-    const storeName = document.getElementById('storeName');
-    const storeAddress = document.getElementById('storeAddress');
+    const gatherName = document.getElementById('gatherName');
+    const gatherAddress = document.getElementById('gatherAddress');
+    const region = gatherAddress.innerHTML.split(' ')[0];
 
-    const tempArr = { ...data };
-    tempArr[`${name}`] = storeName.textContent;
-    tempArr[`${address}`] = storeAddress.textContent;
-    console.log('tempArr', tempArr);
-    setData(tempArr);
-    setIndex(0);
+    setData({
+      ...data,
+      region: region,
+      roomTitle: gatherName.innerHTML,
+      gatherName: gatherName.innerHTML,
+      gatherAddress: gatherAddress.innerHTML,
+    });
+    setIndex(1);
   };
 
   useEffect(() => {
@@ -74,6 +75,7 @@ const SearchMap = ({ setIndex, setData, data, name, address }) => {
     };
     const map = new kakao.maps.Map(container, options);
 
+    //현재위치로 지도 이동
     if (myLocation.latitude || myLocation.longitude) {
       const currentMarkerImage = new kakao.maps.MarkerImage(
         MyMarker,
@@ -164,30 +166,10 @@ const SearchMap = ({ setIndex, setData, data, name, address }) => {
         if (!selectMarker) {
           setSelectMarker(true);
         }
-        // setDistance({ La: Number(place.x), Ma: Number(place.y) });
+
         setMarkerInfo(place);
       });
     };
-
-    // // 현재위치에 대한 검색어를 좌표로 변환
-    // const coords = new kakao.maps.LatLng(
-    //   myLocation.latitude,
-    //   myLocation.longitude
-    // );
-
-    // // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-    // map.setCenter(coords);
-
-    // let line = new kakao.maps.Polyline();
-    // const mystore = new kakao.maps.LatLng(distance.Ma, distance.La);
-
-    // // 마커의 위치와 원의 중심을 경로로 하는 폴리라인 설정
-    // const path = [mystore, coords];
-    // line.setPath(path);
-
-    // // 현재위치와 마커 사이의 거리 측정
-    // const dist = line.getLength();
-
     return () => {
       clearTimeout(timer);
     };
@@ -254,17 +236,17 @@ const SearchMap = ({ setIndex, setData, data, name, address }) => {
               </g>
             </svg>
 
-            <SearchST.InfoTitle id='storeName'>
+            <SearchST.InfoTitle id='gatherName'>
               {markerInfo.place_name}
             </SearchST.InfoTitle>
           </SearchST.InfoTitleBox>
 
           {markerInfo.road_address_name ? (
-            <SearchST.InfoAddress id='storeAddress'>
+            <SearchST.InfoAddress id='gatherAddress'>
               {markerInfo.road_address_name}
             </SearchST.InfoAddress>
           ) : (
-            <SearchST.InfoAddress id='storeAddress'>
+            <SearchST.InfoAddress id='gatherAddress'>
               {markerInfo.address_name}
             </SearchST.InfoAddress>
           )}

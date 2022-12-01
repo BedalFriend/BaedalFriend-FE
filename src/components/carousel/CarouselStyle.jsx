@@ -73,9 +73,6 @@ export const BannerImg = styled.img`
   transition: all 0.5s ease-out;
   width: 630px;
   height: 380px;
-  //left: 15%;
-  top: 5px;
-  bottom: 15px;
   justify-content: center;
   align-items: center;
   text-align: center;

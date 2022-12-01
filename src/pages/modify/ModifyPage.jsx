@@ -1,21 +1,26 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { __addPostThunk } from '../../redux/modules/PostSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom';
+import {
+  __getDetailThunk,
+  __modifyPostThunk,
+} from '../../redux/modules/PostSlice';
 import { TabContext } from '../../context/TabContext';
 import Layout from '../../components/layout/Layout';
 
-import * as UploadST from './UploadPageStyle';
+import * as ModifyST from './ModifyPageStyle';
 import useMultipleInput from '../../hooks/useMultipleInput';
 
-import SearchPartyMap from './upload/searchMap/SearchPartyMap';
-import UploadCategory from './upload/UploadCategory';
-import UploadStepTwo from './upload/stepTwo/UploadStepTwo';
-import UploadStepOne from './upload/stepOne/UploadStepOne';
-import SearchMap from '../../components/searchMap/SearchMap';
+import ModifySTepTwo from './stepTwo/ModifyStepTwo';
+import ModifySTepOne from './ModifyStepOne';
+import SearchPartyMap from './stepTwo/searchMap/SearchPartyMap';
 
 const Post = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { setTab } = useContext(TabContext);
+  const { id } = useParams();
+  const detailData = useSelector((state) => state?.post?.post?.data);
 
   useEffect(() => {
     setTab('Upload');
@@ -23,15 +28,16 @@ const Post = () => {
   }, []);
 
   const [data, setData, dataHandler] = useMultipleInput({
+    postId: id,
     roomTitle: '',
     targetName: '',
     targetAddress: '',
     category: '',
-    deliveryTime: '',
-    targetAmount: '',
+    deliveryTime: 0,
+    targetAmount: 0,
     participantNumber: 1,
     hits: 0,
-    deliveryFee: '',
+    deliveryFee: 0,
     maxCapacity: 0,
     gatherName: '',
     gatherAddress: '',
@@ -39,16 +45,10 @@ const Post = () => {
     limitTime: '2022-11-20 00:00:30',
     region: '',
   });
-  console.log(data);
 
   // 페이지 전환
   const [index, setIndex] = useState(0);
-  const [addressManager, setAddressManager] = useState(false);
-
-  // 지도 입력시 삭제방지
-  const [time, setTime] = useState({ hour: '', minute: '' });
-  const [people, setPeople] = useState({ maxCapacity: 0 });
-  const [toggle, setToggle] = useState(false);
+  const [addressManager, setAddressManager] = useState(true);
 
   //버튼 on/off
   const [nextStepOne, setNextStepOne] = useState(false);
@@ -58,13 +58,11 @@ const Post = () => {
   const [isChecked, setIsChecked] = useState(false);
   const [isSecondChecked, setIsSecondChecked] = useState(false);
 
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
   const onSubmitHandler = (e) => {
     e.preventDefault();
     console.log('총데이터', data);
-    dispatch(__addPostThunk(data));
+    dispatch(__modifyPostThunk(data));
+    // navigate(`/detail/${id}`);
     navigate('/');
   };
 
@@ -76,103 +74,103 @@ const Post = () => {
     setIsSecondChecked(true);
   };
 
-  const lengthLimit = (e) => {
-    if (e.target.value.length > 4) {
-      e.target.value = e.target.value.slice(0, 4);
-    }
-  };
+  useEffect(() => {
+    dispatch(__getDetailThunk(id));
+  }, []);
 
-  useEffect(() => {}, [data.gatherName]);
+  useEffect(() => {
+    console.log('너왜와');
+    setData({
+      postId: id,
+      roomTitle: detailData?.roomTitle,
+      targetName: detailData?.targetName,
+      targetAddress: detailData?.targetAddress,
+      category: detailData?.category,
+      deliveryTime: detailData?.deliveryTime,
+      targetAmount: detailData?.targetAmount,
+      participantNumber: detailData?.participantNumber,
+      hits: 0,
+      deliveryFee: detailData?.deliveryFee,
+      maxCapacity: detailData?.maxCapacity,
+      gatherName: detailData?.gatherName,
+      gatherAddress: detailData?.gatherAddress,
+      isDone: 0,
+      limitTime: detailData?.limitTime,
+      region: detailData?.region,
+    });
+  }, [detailData]);
+
+  console.log(data);
   return (
     <Layout>
-      <UploadST.PostBox>
-        <UploadST.FormContainer>
+      <ModifyST.PostBox>
+        <ModifyST.FormContainer>
           {index === 0 ? (
             <>
-              <UploadStepOne
+              <ModifySTepOne
+                detailData={detailData}
                 setIndex={setIndex}
                 data={data}
                 setData={setData}
                 dataHandler={dataHandler}
-                lengthLimit={lengthLimit}
                 setNextStepOne={setNextStepOne}
                 isChecked={isChecked}
               />
-              <UploadST.ButtonBox>
-                <UploadST.CancelBtn
+              <ModifyST.ButtonBox>
+                <ModifyST.CancelBtn
                   onClick={() => {
                     navigate('/');
                   }}
                 >
                   취소하기
-                </UploadST.CancelBtn>
+                </ModifyST.CancelBtn>
                 {nextStepOne ? (
-                  <UploadST.NextBtn
+                  <ModifyST.NextBtn
                     onClick={() => {
-                      setIndex(3);
+                      setIndex(1);
                     }}
                   >
                     다음 단계
-                  </UploadST.NextBtn>
+                  </ModifyST.NextBtn>
                 ) : (
-                  <UploadST.StayBtn onClick={stepOneCheckHandler}>
+                  <ModifyST.StayBtn onClick={stepOneCheckHandler}>
                     다음 단계
-                  </UploadST.StayBtn>
+                  </ModifyST.StayBtn>
                 )}
-              </UploadST.ButtonBox>
+              </ModifyST.ButtonBox>
             </>
           ) : null}
           {index === 1 ? (
-            <SearchMap
-              setIndex={setIndex}
-              data={data}
-              setData={setData}
-              name='targetName'
-              address='targetAddress'
-            />
-          ) : null}
-          {index === 2 ? (
-            <UploadCategory data={data} setData={setData} setIndex={setIndex} />
-          ) : null}
-          {index === 3 ? (
             <>
-              <UploadStepTwo
-                setIndex={setIndex}
+              <ModifySTepTwo
                 data={data}
                 setData={setData}
-                dataHandler={dataHandler}
                 addressManager={addressManager}
-                lengthLimit={lengthLimit}
                 isSecondChecked={isSecondChecked}
                 setNextStepTwo={setNextStepTwo}
-                setPeople={setPeople}
-                people={people}
-                setTime={setTime}
-                time={time}
-                setToggle={setToggle}
-                toggle={toggle}
+                setIndex={setIndex}
               />
-              <UploadST.ButtonBox>
-                <UploadST.CancelBtn
+              <ModifyST.ButtonBox>
+                <ModifyST.CancelBtn
                   onClick={() => {
                     setIndex(0);
                   }}
                 >
                   이전 단계
-                </UploadST.CancelBtn>
+                </ModifyST.CancelBtn>
                 {nextStepTwo ? (
-                  <UploadST.UploadBtn onClick={onSubmitHandler}>
+                  <ModifyST.UploadBtn onClick={onSubmitHandler}>
                     업로드 하기
-                  </UploadST.UploadBtn>
+                  </ModifyST.UploadBtn>
                 ) : (
-                  <UploadST.StayBtn onClick={stepTwoCheckHandler}>
+                  <ModifyST.StayBtn onClick={stepTwoCheckHandler}>
                     업로드 하기
-                  </UploadST.StayBtn>
+                  </ModifyST.StayBtn>
                 )}
-              </UploadST.ButtonBox>
+              </ModifyST.ButtonBox>
             </>
           ) : null}
-          {index === 4 ? (
+          {index === 2 ? (
             <SearchPartyMap
               setIndex={setIndex}
               data={data}
@@ -180,8 +178,8 @@ const Post = () => {
               setAddressManager={setAddressManager}
             />
           ) : null}
-        </UploadST.FormContainer>
-      </UploadST.PostBox>
+        </ModifyST.FormContainer>
+      </ModifyST.PostBox>
     </Layout>
   );
 };

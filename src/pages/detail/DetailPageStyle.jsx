@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const DetailBox = styled.div`
-  position: absolute;
+  position: relative;
   z-index: 2;
   padding-top: 60px;
 

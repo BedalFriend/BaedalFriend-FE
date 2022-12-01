@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { data } from './data';
-import yellowMarker from '../../../imgs/upload/Yellow_Marker.png';
-import orangeMarker from '../../../imgs/upload/Orange_Map_Marker.png';
+import yellowMarker from '../../imgs/upload/Yellow_Marker.png';
+import orangeMarker from '../../imgs/upload/Orange_Map_Marker.png';
 import styled from 'styled-components';
-import MyMarker from '../../../imgs/upload/Map_LocationMark.png';
-import Card from '../../../components/elements/card/Card';
+import MyMarker from '../../imgs/upload/Map_LocationMark.png';
+import Card from '../../components/elements/card/Card';
 import { useDispatch, useSelector } from 'react-redux';
-import { __getThunk } from '../../../redux/modules/PostSlice';
+import { __getThunk } from '../../redux/modules/PostSlice';
 
 const { kakao } = window;
 
@@ -14,7 +13,7 @@ const MapContainer = ({ setTab }) => {
   const user = useSelector((state) => state.user);
   const partyData = useSelector((state) => state.post.posts.data);
   console.log('user', user);
-  console.log('data', data);
+
   console.log('partyData', partyData);
   const dispatch = useDispatch();
 
@@ -420,10 +419,9 @@ const InputBox = styled.div`
   top: 24px;
   margin-left: 16px;
   z-index: 2;
-  min-width: 358px;
   width: calc(100% - 32px);
   height: 56px;
-  border-radius: 99px;
+  border-radius: 12px;
 `;
 
 const SearchImg = styled.svg`
@@ -446,7 +444,6 @@ const NearbyInfo = styled.div`
   top: 96px;
   margin-left: 16px;
   z-index: 2;
-  min-width: 358px;
   width: calc(100% - 32px);
   height: 46px;
   border-radius: 12px;
@@ -505,7 +502,7 @@ const VeiwAll = styled.div`
   background-color: var(--color-light-orange);
   color: var(--color-orange);
 
-  border-radius: 99px;
+  border-radius: 12px;
 
   font-family: 'Pretandard';
   font-weight: var(--weight-bold);
@@ -558,7 +555,7 @@ const TitleBorder = styled.div`
   width: 100%;
   min-width: 358px;
   height: 4px;
-  border-radius: 99px;
+  border-radius: 12px;
 
   background-color: var(--color-dark-white);
 `;

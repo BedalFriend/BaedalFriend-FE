@@ -16,6 +16,7 @@ import {
 import useInput from '../../hooks/useInput';
 import { useNavigate, useParams } from 'react-router-dom';
 import SVG from '../../shared/SVG';
+import { UPDATE_USER } from '../../redux/modules/UserSlice';
 
 export default function ChatPage() {
   const { id } = useParams();
@@ -77,7 +78,7 @@ export default function ChatPage() {
   const onSubmitHandler = (e) => {
     e.preventDefault();
     if (msgInput === '') return;
-    publish(msgInput, id);
+    publish(msgInput, id, 'TALK');
     setMsgInput('');
   };
 
@@ -95,7 +96,7 @@ export default function ChatPage() {
       <ChatST.TopBox>
         <ChatST.TopFirst>
           <span style={{ color: 'var(--color-orange)' }}>
-            {channel?.data?.post?.participantNumber}
+            {channel?.data?.chatRoomMembers?.length}
           </span>
           /{channel?.data?.post?.maxCapacity} 명
         </ChatST.TopFirst>
@@ -251,32 +252,71 @@ export default function ChatPage() {
                   size='24px'
                   color='var(--color-system-error)'
                 />
-                <ChatST.InfoText style={{ width: '144px' }}>
-                  지금 공구를 종료하면
-                  <br />
-                  채팅창이 영구 삭제됩니다.
-                </ChatST.InfoText>
+                {user.id === channel?.data?.post?.member?.id ? (
+                  <ChatST.InfoText style={{ width: '100%' }}>
+                    <span style={{ fontWeight: 'var(--weight-bold)' }}>
+                      공동 구매를 완료할까요?
+                    </span>
+                    <br />
+                    공구를 종료하면 채팅방이 사라져요.
+                  </ChatST.InfoText>
+                ) : (
+                  <ChatST.InfoText style={{ width: '100%' }}>
+                    <span style={{ fontWeight: 'var(--weight-bold)' }}>
+                      채팅방을 나갈까요?
+                    </span>
+                    <br />
+                    채팅방을 나가면 참여가 취소돼요.
+                  </ChatST.InfoText>
+                )}
               </ChatST.ModalInfo>
 
               <ChatST.ModalBtnSet>
-                <ChatST.ModalBtn
-                  style={{ color: 'var(--color-system-error' }}
-                  onClick={() => {
-                    dispatch(__finishChannel(id));
-                    navigate('/');
-                  }}
-                >
-                  종료하기
-                </ChatST.ModalBtn>
-                <ChatST.ModalBtn
-                  style={{ color: 'var(--color-system-success' }}
-                  onClick={() => {
-                    setIsOpen(false);
-                    setIsWarning(false);
-                  }}
-                >
-                  돌아가기
-                </ChatST.ModalBtn>
+                {user.id === channel?.data?.post?.member?.id ? (
+                  <>
+                    <ChatST.ModalBtn
+                      style={{ color: 'var(--color-system-error' }}
+                      onClick={() => {
+                        dispatch(__finishChannel(id));
+                        dispatch(UPDATE_USER({ ...user, onGoing: null }));
+                        navigate('/');
+                      }}
+                    >
+                      완료하기
+                    </ChatST.ModalBtn>
+                    <ChatST.ModalBtn
+                      style={{ color: 'var(--color-system-success' }}
+                      onClick={() => {
+                        setIsOpen(false);
+                        setIsWarning(false);
+                      }}
+                    >
+                      돌아가기
+                    </ChatST.ModalBtn>
+                  </>
+                ) : (
+                  <>
+                    <ChatST.ModalBtn
+                      style={{ color: 'var(--color-system-error' }}
+                      onClick={() => {
+                        dispatch(__exitChannel(id));
+                        dispatch(UPDATE_USER({ ...user, onGoing: null }));
+                        navigate('/');
+                      }}
+                    >
+                      나가기
+                    </ChatST.ModalBtn>
+                    <ChatST.ModalBtn
+                      style={{ color: 'var(--color-system-success' }}
+                      onClick={() => {
+                        setIsOpen(false);
+                        setIsWarning(false);
+                      }}
+                    >
+                      돌아가기
+                    </ChatST.ModalBtn>
+                  </>
+                )}
               </ChatST.ModalBtnSet>
             </ChatST.Box>
           ) : (
@@ -289,14 +329,13 @@ export default function ChatPage() {
                       setIsWarning(true);
                     }}
                   >
-                    공구 종료하기
+                    공구 완료하기
                   </ChatST.Option>
                 ) : (
                   <ChatST.Option
                     style={{ marginBottom: '24px' }}
                     onClick={() => {
-                      dispatch(__exitChannel(id));
-                      navigate('/');
+                      setIsWarning(true);
                     }}
                   >
                     채팅방 나가기
