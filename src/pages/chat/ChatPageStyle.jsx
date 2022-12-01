@@ -148,14 +148,14 @@ export const TopLine = styled.hr`
 export const BigUsers = styled.div`
   width: 100%;
   display: flex;
-  gap: 12px;
+  gap: 4px;
 `;
 
 export const BigUser = styled.div`
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
-  width: 48px;
+  width: 63px;
   height: 66px;
 `;
 
@@ -166,13 +166,12 @@ export const Nickname = styled.span`
   font-weight: var(--weight-regular);
   font-size: var(--font-micro);
   color: var(--color-grey);
-  width: 48px;
-  max-width: 48px;
+  width: 63px;
+  max-width: 63px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  display: flex;
-  justify-content: center;
+  text-align: center;
 `;
 
 export const Body = styled.div`
