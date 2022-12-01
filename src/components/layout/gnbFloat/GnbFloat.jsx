@@ -141,8 +141,10 @@ function GnbFloat() {
           xmlns='http://www.w3.org/2000/svg'
           onClick={() => {
             if (!location.pathname.includes('/chat')) {
-              if (refreshToken !== null && refreshToken !== undefined) {
-                navigate(`/chat/${user.onGoing}`);
+              if (refreshToken) {
+                if (user.onGoing) {
+                  navigate(`/chat/${user.onGoing}`);
+                }
               } else {
                 setIsDP(true);
               }
