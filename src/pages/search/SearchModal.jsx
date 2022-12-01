@@ -2,16 +2,13 @@ import React, {useEffect, useRef} from 'react';
 import * as ModalST from './SearchModalStyle';
 import useOutSideClick from '../../hooks/useOutSideClick';
 
-export default function SearchModal({aniState, setAniState, closeModal, setSelect, select}) {
+export default function SearchModal({closeModal, setSelect, select}) {
 
   //배경 클릭 시 모달창 닫기
   const modalRef = useRef(null)
 
   const handleClose = () => {
-    setAniState(false);
-    setTimeout(() => {
-        closeModal();
-    }, 500);
+    closeModal();
   };
 
   useOutSideClick(modalRef, handleClose);
@@ -25,7 +22,7 @@ export default function SearchModal({aniState, setAniState, closeModal, setSelec
 
   return (
     <>
-    <ModalST.Overlay aniState={aniState}>
+    <ModalST.Overlay>
       <ModalST.ModalWrap ref={modalRef}>
         <ModalST.TopBox onClick={() => setSelect("마감 임박 순")}>
             <ModalST.SelectText focused={select === "마감 임박 순" ? true:false}>마감 임박 순</ModalST.SelectText>
