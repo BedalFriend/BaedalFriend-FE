@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 
 export const Banner = styled.div`
-  text-align : center;
+  text-align: center;
   align-items: center;
   justify-content: center;
   position: relative;
   top: 40px;
   z-index: 500;
-`
+`;
 
 export const IndicatorWrapper = styled.div`
   display: flex;
@@ -17,17 +17,18 @@ export const IndicatorWrapper = styled.div`
   top: 345px;
   left: 50%;
   transform: translate(-50%, -50%);
-`
+`;
 
 export const Indicator = styled.div`
   margin: 0px 4px;
-  background-color: ${(props) => (props.focused ? 'var(--color-orange)' : 'var(--color-light-orange)')};
+  background-color: ${(props) =>
+    props.focused ? 'var(--color-orange)' : 'var(--color-light-orange)'};
   transition: all ease 0.4s 0s;
   width: ${(props) => (props.focused ? '24px' : '8px')};
   height: 8px;
   border-radius: ${(props) => (props.focused ? '99px' : '50%')};
-  cursor : pointer;
-`
+  cursor: pointer;
+`;
 
 export const Wrapper = styled.div`
   margin: 20px 0px;
@@ -99,9 +100,8 @@ export const ImgDes = styled.div`
   cursor: pointer;
 `;
 
-
 export const MiniBox = styled.div`
-  position: relative;
+  position: absolute;
   width: fit-content;
   height: 33px;
   left: 24px;
@@ -115,8 +115,10 @@ export const MiniBox = styled.div`
   background: var(--color-blur-orange);
   border-radius: 99px;
 
+  z-index: 3;
+
   cursor: pointer;
-`
+`;
 
 export const LoginMiniBox = styled.div`
   position: absolute;
@@ -136,7 +138,7 @@ export const LoginMiniBox = styled.div`
   border-radius: 99px;
 
   cursor: pointer;
-`
+`;
 
 export const DesContent = styled.span`
   font-weight: var(--weight-bold);
@@ -144,7 +146,6 @@ export const DesContent = styled.span`
   color: var(--color-orange);
   word-break: keep-all;
 `;
-
 
 export const TextBox = styled.span`
   font-weight: var(--weight-regular);
@@ -155,7 +156,6 @@ export const TextBox = styled.span`
   width: fit-content;
   top: 60px;
   left: 152px;
-
 `;
 
 export const BoldText = styled.span`

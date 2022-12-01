@@ -8,6 +8,7 @@ import {
   __getDetailThunk,
   __getThunk,
   __increaseParticipantThunk,
+  UPDATE_POST,
 } from '../../redux/modules/PostSlice';
 import { __enterChannel, __exitChannel } from '../../redux/modules/ChatSlice';
 
@@ -21,6 +22,7 @@ import * as DetailST from './DetailPageStyle';
 import Timer from '../../components/elements/timer/Timer';
 import SVG from '../../shared/SVG';
 import ProfilePic from '../../components/elements/profilePic/ProfilePic';
+import { UPDATE_USER } from '../../redux/modules/UserSlice';
 
 const DetailPage = () => {
   const { id } = useParams();
@@ -28,13 +30,13 @@ const DetailPage = () => {
   const dispatch = useDispatch();
 
   const user = useSelector((state) => state.user);
-  const post = useSelector((state) => state.post.post.data);
+  let post = useSelector((state) => state.post.post.data);
   const posts = useSelector((state) => state.post.posts);
   const token = useSelector((state) => state.token.accessToken);
   // console.log('posts', posts);
-  // console.log('post', post);
+  console.log('post', post);
   // console.log('token', token);
-  // console.log('user', user);
+  console.log('user', user);
 
   //지도 화면 변환
   const [index, setIndex] = useState(false);
@@ -70,17 +72,43 @@ const DetailPage = () => {
   const onEnterHandler = () => {
     dispatch(__enterChannel(id));
     dispatch(__increaseParticipantThunk(id));
-    setCustom(2);
-    window.location.reload();
+    dispatch(UPDATE_USER({ ...user, onGoing: post.postId }));
+    // console.log(posts.chatRoomMembers);
+    const tempArr = [...post.chatRoomMembers];
+    tempArr.push({ member: user });
+    dispatch(
+      UPDATE_POST({
+        ...post,
+        chatRoomMembers: tempArr,
+      })
+    );
+
+    // window.location.reload();
   };
 
   // 퇴장 핸들러
   const onExitHandler = () => {
     dispatch(__decreaseParticipantThunk(id));
+
+    dispatch(UPDATE_USER({ ...user, onGoing: null }));
+
+    const tempArr = [...post.chatRoomMembers];
+
+    const target = tempArr.findIndex((item) => {
+      return item.member.id === user.id;
+    });
+
+    tempArr.splice(target, 1);
+
+    dispatch(
+      UPDATE_POST({
+        ...post,
+        chatRoomMembers: tempArr,
+      })
+    );
     dispatch(__exitChannel(id));
-    setCustom(0);
     setIsExitOpen(false);
-    window.location.reload();
+    // window.location.reload();
   };
 
   // 참여중인 인원
@@ -130,11 +158,11 @@ const DetailPage = () => {
   useEffect(() => {
     if (user.id === post.memberId) {
       setCustom(3);
-    } else if (user.onGoing !== 0 && user.onGoing !== post.postId) {
+    } else if (user.onGoing && user.onGoing !== post.postId) {
       setCustom(1);
     } else if (user.onGoing === post.postId) {
       setCustom(2);
-    } else if (post.maxCapacity === post.participantNumber) {
+    } else if (post.maxCapacity === post?.chatRoomMembers?.length) {
       setCustom(4);
     } else if (user.onGoing === 0 || user.onGoing === null) {
       setCustom(0);
@@ -143,6 +171,16 @@ const DetailPage = () => {
 
   return (
     <Layout>
+      {isOpen && (
+        <DeleteModal
+          setIsOpen={setIsOpen}
+          aniState={aniState}
+          setAniState={setAniState}
+          onDeleteHandler={onDeleteHandler}
+          isDeleteHandler={isDeleteHandler}
+          setIsDeleteHandler={setIsDeleteHandler}
+        />
+      )}
       {index ? (
         <CurrentMap data={post} setIndex={setIndex} />
       ) : (
@@ -207,16 +245,6 @@ const DetailPage = () => {
                   />
                 </svg>
               ) : null}
-              {isOpen && (
-                <DeleteModal
-                  setIsOpen={setIsOpen}
-                  aniState={aniState}
-                  setAniState={setAniState}
-                  onDeleteHandler={onDeleteHandler}
-                  isDeleteHandler={isDeleteHandler}
-                  setIsDeleteHandler={setIsDeleteHandler}
-                />
-              )}
             </DetailST.AddressBox>
 
             <DetailST.TitleBox>
@@ -423,7 +451,7 @@ const DetailPage = () => {
           ) : null}
           {custom === 1 ? (
             <DetailST.OverLapBtn>
-              이미 다른 공구에 참여중이에요.
+              이미 다른 공구에 참여중이에요
             </DetailST.OverLapBtn>
           ) : null}
           {custom === 2 ? (
@@ -441,9 +469,7 @@ const DetailPage = () => {
             </DetailST.BottomBtnBox>
           ) : null}
           {custom === 4 ? (
-            <DetailST.OverLapBtn>
-              참가할 수 있는 최대 인원이 초과하였습니다.
-            </DetailST.OverLapBtn>
+            <DetailST.OverLapBtn>지금은 자리가 없어요</DetailST.OverLapBtn>
           ) : null}
         </DetailST.DetailBox>
       )}
