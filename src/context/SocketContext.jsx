@@ -60,6 +60,7 @@ export function SocketProvider({ children }) {
       );
     }
   };
+
   const subscribe = (id) => {
     if (!client.current.connected) return;
     if (id !== null && id !== undefined && id !== 0) {
