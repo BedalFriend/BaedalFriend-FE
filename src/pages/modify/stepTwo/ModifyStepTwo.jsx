@@ -13,7 +13,6 @@ const ModifySTepTwo = ({
   setNextStepTwo,
   setIndex,
 }) => {
-  console.log(data.limitTime);
   // AM PM 토글 관리
   const [toggle, setToggle] = useState(false);
 
@@ -52,9 +51,11 @@ const ModifySTepTwo = ({
     const { value, name } = e.target;
     const text_length = value.replace(/<br\s*\/?>/gm, '\n').length;
 
-    const max_length = 20;
+    const max_length = 40;
 
-    if (text_length < max_length) {
+    const text_line = value.split('\n').length;
+
+    if (text_length < max_length && text_line < 3) {
       setData({ ...data, [name]: value });
       setIsTextAreaLengthFail(false);
     } else {
@@ -100,13 +101,11 @@ const ModifySTepTwo = ({
           ':' +
           '00';
 
-        console.log('시간 바뀐다');
         setData({
           ...data,
           limitTime: dateString,
         });
       } else {
-        console.log('여기왜들어오냐');
         const dateString =
           year +
           '-' +
@@ -456,7 +455,7 @@ const ModifySTepTwo = ({
               />
             </g>
           </svg>
-          <ModifyST.ErrorMsg>20글자가 초과하였습니다!</ModifyST.ErrorMsg>
+          <ModifyST.ErrorMsg>40글자가 초과하였습니다!</ModifyST.ErrorMsg>
         </ModifyST.ErrorMsgBox>
       ) : null}
     </ModifyST.StepTwoBox>

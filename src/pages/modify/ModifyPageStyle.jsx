@@ -385,7 +385,7 @@ export const TextArea = styled.textarea`
   font-weight: var(--weight-regular);
 
   padding: 12px 0px 0px 20px;
-  white-space: pre;
+  white-space: pre-line;
 
   :focus {
     outline: none;

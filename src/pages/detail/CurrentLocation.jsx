@@ -27,6 +27,9 @@ const CurrentLocation = ({ data, stepTwoCheckHandler }) => {
         map.panTo(coord);
       }
     });
+
+    // 마우스 드래그로 지도 이동 가능여부를 설정합니다
+    map.setDraggable(false);
   }, [data.gatherAddress]);
 
   return (
