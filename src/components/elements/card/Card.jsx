@@ -130,8 +130,9 @@ export default function Card({ post, isWide }) {
               </g>
             </CardST.InfoSVG>
             <CardST.InfoText>
-              - {limit.getHours() >= 12 ? 'PM' : 'AM'} {limit.getHours()}:
-              {limit.getMinutes()}
+              - {limit.getHours() >= 12 ? 'PM' : 'AM'}{' '}
+              {limit.getHours().toString().padStart(2, '0')}:
+              {limit.getMinutes().toString().padStart(2, '0')}
             </CardST.InfoText>
           </CardST.InfoLine>
 
