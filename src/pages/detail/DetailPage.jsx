@@ -25,8 +25,16 @@ import ProfilePic from '../../components/elements/profilePic/ProfilePic';
 import { UPDATE_USER } from '../../redux/modules/UserSlice';
 import { AlarmContext } from '../../context/AlarmContext';
 import { getCookieToken } from '../../shared/storage/Cookie';
+import { TabContext } from '../../context/TabContext';
 
 const DetailPage = () => {
+  const { setTab } = useContext(TabContext);
+
+  useEffect(() => {
+    setTab('Detail');
+    // eslint-disable-next-line
+  }, []);
+
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();

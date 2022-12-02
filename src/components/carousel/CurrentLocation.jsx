@@ -8,8 +8,6 @@ const CurrentLocation = () => {
   // console.log(myLocation);
   // 위치 가져오기 버튼 클릭시
   const user = useSelector((state) => state.user);
-  console.log(user);
-  console.log(user.address);
 
   useEffect(() => {
     if (navigator.geolocation) {

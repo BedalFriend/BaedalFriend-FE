@@ -258,7 +258,7 @@ const MapContainer = ({ setTab }) => {
     return () => {
       clearTimeout(timer);
     };
-  }, [searchParty, myLocation, user.address, partyData?.length]);
+  }, [searchParty, user.address, partyData?.length]);
 
   return (
     <NearbyBox>
