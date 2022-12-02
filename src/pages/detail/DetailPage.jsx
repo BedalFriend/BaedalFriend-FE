@@ -47,7 +47,7 @@ const DetailPage = () => {
   const posts = useSelector((state) => state.post.posts);
   const token = useSelector((state) => state.token.accessToken);
   // console.log('posts', posts);
-  // console.log('post', post);
+  console.log('post', post.data);
 
   // console.log('token', token);
   // console.log('user', user);
@@ -79,6 +79,7 @@ const DetailPage = () => {
   // 삭제 핸들러
   const onDeleteHandler = () => {
     dispatch(__deletePost(id));
+    dispatch(UPDATE_USER({ ...user, onGoing: null }));
     navigate('/');
   };
 
@@ -93,7 +94,7 @@ const DetailPage = () => {
       tempArr.push({ member: user });
       dispatch(
         UPDATE_POST({
-          ...post,
+          ...post.data,
           chatRoomMembers: tempArr,
         })
       );
@@ -118,7 +119,7 @@ const DetailPage = () => {
 
     dispatch(
       UPDATE_POST({
-        ...post,
+        ...post.data,
         chatRoomMembers: tempArr,
       })
     );
@@ -387,7 +388,15 @@ const DetailPage = () => {
                 </DetailST.ProfileNickName>
               </DetailST.UserInfo>
 
-              <DetailST.ContentText value={post.data.content} disabled />
+              <DetailST.ContentText>
+                {post?.data?.content?.split('\n').map((line) => {
+                  return (
+                    <div key={line} style={{ width: '100%' }}>
+                      {line}
+                    </div>
+                  );
+                })}
+              </DetailST.ContentText>
             </DetailST.ContentBox>
           </DetailST.CardBox>
 

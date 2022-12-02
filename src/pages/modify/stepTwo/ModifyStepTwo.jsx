@@ -101,10 +101,39 @@ const ModifySTepTwo = ({
           ':' +
           '00';
 
-        setData({
-          ...data,
-          limitTime: dateString,
-        });
+        if (parseInt(new Date(dateString) - new Date()) < 0) {
+          const reChangeDate = new Date(dateString);
+          const plusDate = new Date(
+            reChangeDate.setDate(reChangeDate.getDate() + 1)
+          );
+          const plusYear = plusDate.getFullYear();
+          const plusMonth = ('0' + (plusDate.getMonth() + 1)).slice(-2);
+          const plusDay = ('0' + plusDate.getDate()).slice(-2);
+
+          const plusDateString =
+            plusYear +
+            '-' +
+            plusMonth +
+            '-' +
+            plusDay +
+            ' ' +
+            (Number(nowTime.hour) + 12) +
+            ':' +
+            '0' +
+            nowTime.minute +
+            ':' +
+            '00';
+
+          setData({
+            ...data,
+            limitTime: plusDateString,
+          });
+        } else {
+          setData({
+            ...data,
+            limitTime: dateString,
+          });
+        }
       } else {
         const dateString =
           year +
@@ -119,10 +148,38 @@ const ModifySTepTwo = ({
           ':' +
           '00';
 
-        setData({
-          ...data,
-          limitTime: dateString,
-        });
+        if (parseInt(new Date(dateString) - new Date()) < 0) {
+          const reChangeDate = new Date(dateString);
+          const plusDate = new Date(
+            reChangeDate.setDate(reChangeDate.getDate() + 1)
+          );
+          const plusYear = plusDate.getFullYear();
+          const plusMonth = ('0' + (plusDate.getMonth() + 1)).slice(-2);
+          const plusDay = ('0' + plusDate.getDate()).slice(-2);
+
+          const plusDateString =
+            plusYear +
+            '-' +
+            plusMonth +
+            '-' +
+            plusDay +
+            ' ' +
+            (Number(nowTime.hour) + 12) +
+            ':' +
+            nowTime.minute +
+            ':' +
+            '00';
+
+          setData({
+            ...data,
+            limitTime: plusDateString,
+          });
+        } else {
+          setData({
+            ...data,
+            limitTime: dateString,
+          });
+        }
       }
     } else if (
       (toggle === false && nowTime.hour.length === 1) ||
@@ -144,10 +201,40 @@ const ModifySTepTwo = ({
           ':' +
           '00';
 
-        setData({
-          ...data,
-          limitTime: dateString,
-        });
+        if (parseInt(new Date(dateString) - new Date()) < 0) {
+          const reChangeDate = new Date(dateString);
+          const plusDate = new Date(
+            reChangeDate.setDate(reChangeDate.getDate() + 1)
+          );
+          const plusYear = plusDate.getFullYear();
+          const plusMonth = ('0' + (plusDate.getMonth() + 1)).slice(-2);
+          const plusDay = ('0' + plusDate.getDate()).slice(-2);
+
+          const plusDateString =
+            plusYear +
+            '-' +
+            plusMonth +
+            '-' +
+            plusDay +
+            ' ' +
+            '0' +
+            nowTime.hour +
+            ':' +
+            '0' +
+            nowTime.minute +
+            ':' +
+            '00';
+
+          setData({
+            ...data,
+            limitTime: plusDateString,
+          });
+        } else {
+          setData({
+            ...data,
+            limitTime: dateString,
+          });
+        }
       } else {
         const dateString =
           year +
@@ -163,10 +250,39 @@ const ModifySTepTwo = ({
           ':' +
           '00';
 
-        setData({
-          ...data,
-          limitTime: dateString,
-        });
+        if (parseInt(new Date(dateString) - new Date()) < 0) {
+          const reChangeDate = new Date(dateString);
+          const plusDate = new Date(
+            reChangeDate.setDate(reChangeDate.getDate() + 1)
+          );
+          const plusYear = plusDate.getFullYear();
+          const plusMonth = ('0' + (plusDate.getMonth() + 1)).slice(-2);
+          const plusDay = ('0' + plusDate.getDate()).slice(-2);
+
+          const plusDateString =
+            plusYear +
+            '-' +
+            plusMonth +
+            '-' +
+            plusDay +
+            ' ' +
+            '0' +
+            nowTime.hour +
+            ':' +
+            nowTime.minute +
+            ':' +
+            '00';
+
+          setData({
+            ...data,
+            limitTime: plusDateString,
+          });
+        } else {
+          setData({
+            ...data,
+            limitTime: dateString,
+          });
+        }
       }
     } else if (toggle === false && nowTime.hour.length === 2) {
       if (nowTime.minute.length === 1) {
@@ -184,10 +300,39 @@ const ModifySTepTwo = ({
           ':' +
           '00';
 
-        setData({
-          ...data,
-          limitTime: dateString,
-        });
+        if (parseInt(new Date(dateString) - new Date()) < 0) {
+          const reChangeDate = new Date(dateString);
+          const plusDate = new Date(
+            reChangeDate.setDate(reChangeDate.getDate() + 1)
+          );
+          const plusYear = plusDate.getFullYear();
+          const plusMonth = ('0' + (plusDate.getMonth() + 1)).slice(-2);
+          const plusDay = ('0' + plusDate.getDate()).slice(-2);
+
+          const plusDateString =
+            plusYear +
+            '-' +
+            plusMonth +
+            '-' +
+            plusDay +
+            ' ' +
+            nowTime.hour +
+            ':' +
+            '0' +
+            nowTime.minute +
+            ':' +
+            '00';
+
+          setData({
+            ...data,
+            limitTime: plusDateString,
+          });
+        } else {
+          setData({
+            ...data,
+            limitTime: dateString,
+          });
+        }
       } else {
         const dateString =
           year +
@@ -202,10 +347,38 @@ const ModifySTepTwo = ({
           ':' +
           '00';
 
-        setData({
-          ...data,
-          limitTime: dateString,
-        });
+        if (parseInt(new Date(dateString) - new Date()) < 0) {
+          const reChangeDate = new Date(dateString);
+          const plusDate = new Date(
+            reChangeDate.setDate(reChangeDate.getDate() + 1)
+          );
+          const plusYear = plusDate.getFullYear();
+          const plusMonth = ('0' + (plusDate.getMonth() + 1)).slice(-2);
+          const plusDay = ('0' + plusDate.getDate()).slice(-2);
+
+          const plusDateString =
+            plusYear +
+            '-' +
+            plusMonth +
+            '-' +
+            plusDay +
+            ' ' +
+            nowTime.hour +
+            ':' +
+            nowTime.minute +
+            ':' +
+            '00';
+
+          setData({
+            ...data,
+            limitTime: plusDateString,
+          });
+        } else {
+          setData({
+            ...data,
+            limitTime: dateString,
+          });
+        }
       }
     } else return;
   }, [nowTime.hour, toggle, nowTime.minute]);

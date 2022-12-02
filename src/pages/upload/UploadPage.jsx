@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { __addPostThunk } from '../../redux/modules/PostSlice';
 import { TabContext } from '../../context/TabContext';
@@ -13,8 +13,10 @@ import UploadCategory from './upload/UploadCategory';
 import UploadStepTwo from './upload/stepTwo/UploadStepTwo';
 import UploadStepOne from './upload/stepOne/UploadStepOne';
 import SearchMap from '../../components/searchMap/SearchMap';
+import { UPDATE_USER } from '../../redux/modules/UserSlice';
 
 const Post = () => {
+  const user = useSelector((state) => state.user);
   const { setTab } = useContext(TabContext);
 
   useEffect(() => {
@@ -41,6 +43,7 @@ const Post = () => {
     content: '',
   });
 
+  console.log(data);
   // 페이지 전환
   const [index, setIndex] = useState(0);
   const [addressManager, setAddressManager] = useState(false);
@@ -64,8 +67,10 @@ const Post = () => {
   const onSubmitHandler = (e) => {
     e.preventDefault();
     console.log('총데이터', data);
-    dispatch(__addPostThunk(data));
-    navigate('/');
+    dispatch(__addPostThunk(data)).then((response) => {
+      dispatch(UPDATE_USER({ ...user, onGoing: response.payload.data.postId }));
+      navigate(`/detail/${response.payload.data.postId}`);
+    });
   };
 
   const stepOneCheckHandler = (event) => {

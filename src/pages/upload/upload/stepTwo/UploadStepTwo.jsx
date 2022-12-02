@@ -97,13 +97,45 @@ const UploadStepTwo = ({
           ':' +
           '00';
 
-        setData({
-          ...data,
-          limitTime: dateString,
-          maxCapacity: Number(currentValue) + 1,
-        });
-        setTime({ hour: nowTime.hour, minute: nowTime.minute });
-        setPeople({ maxCapacity: Number(currentValue) });
+        if (parseInt(new Date(dateString) - new Date()) < 0) {
+          const reChangeDate = new Date(dateString);
+          const plusDate = new Date(
+            reChangeDate.setDate(reChangeDate.getDate() + 1)
+          );
+          const plusYear = plusDate.getFullYear();
+          const plusMonth = ('0' + (plusDate.getMonth() + 1)).slice(-2);
+          const plusDay = ('0' + plusDate.getDate()).slice(-2);
+
+          const plusDateString =
+            plusYear +
+            '-' +
+            plusMonth +
+            '-' +
+            plusDay +
+            ' ' +
+            (Number(nowTime.hour) + 12) +
+            ':' +
+            '0' +
+            nowTime.minute +
+            ':' +
+            '00';
+
+          setData({
+            ...data,
+            limitTime: plusDateString,
+            maxCapacity: Number(currentValue) + 1,
+          });
+          setTime({ hour: nowTime.hour, minute: nowTime.minute });
+          setPeople({ maxCapacity: Number(currentValue) });
+        } else {
+          setData({
+            ...data,
+            limitTime: dateString,
+            maxCapacity: Number(currentValue) + 1,
+          });
+          setTime({ hour: nowTime.hour, minute: nowTime.minute });
+          setPeople({ maxCapacity: Number(currentValue) });
+        }
       } else {
         const dateString =
           year +
@@ -118,13 +150,44 @@ const UploadStepTwo = ({
           ':' +
           '00';
 
-        setData({
-          ...data,
-          limitTime: dateString,
-          maxCapacity: Number(currentValue) + 1,
-        });
-        setTime({ hour: nowTime.hour, minute: nowTime.minute });
-        setPeople({ maxCapacity: Number(currentValue) });
+        if (parseInt(new Date(dateString) - new Date()) < 0) {
+          const reChangeDate = new Date(dateString);
+          const plusDate = new Date(
+            reChangeDate.setDate(reChangeDate.getDate() + 1)
+          );
+          const plusYear = plusDate.getFullYear();
+          const plusMonth = ('0' + (plusDate.getMonth() + 1)).slice(-2);
+          const plusDay = ('0' + plusDate.getDate()).slice(-2);
+
+          const plusDateString =
+            plusYear +
+            '-' +
+            plusMonth +
+            '-' +
+            plusDay +
+            ' ' +
+            (Number(nowTime.hour) + 12) +
+            ':' +
+            nowTime.minute +
+            ':' +
+            '00';
+
+          setData({
+            ...data,
+            limitTime: plusDateString,
+            maxCapacity: Number(currentValue) + 1,
+          });
+          setTime({ hour: nowTime.hour, minute: nowTime.minute });
+          setPeople({ maxCapacity: Number(currentValue) });
+        } else {
+          setData({
+            ...data,
+            limitTime: dateString,
+            maxCapacity: Number(currentValue) + 1,
+          });
+          setTime({ hour: nowTime.hour, minute: nowTime.minute });
+          setPeople({ maxCapacity: Number(currentValue) });
+        }
       }
     } else if (
       (isTime === 'PM' && nowTime.hour.length === 1) ||
@@ -146,13 +209,46 @@ const UploadStepTwo = ({
           ':' +
           '00';
 
-        setData({
-          ...data,
-          limitTime: dateString,
-          maxCapacity: Number(currentValue) + 1,
-        });
-        setTime({ hour: nowTime.hour, minute: nowTime.minute });
-        setPeople({ maxCapacity: Number(currentValue) });
+        if (parseInt(new Date(dateString) - new Date()) < 0) {
+          const reChangeDate = new Date(dateString);
+          const plusDate = new Date(
+            reChangeDate.setDate(reChangeDate.getDate() + 1)
+          );
+          const plusYear = plusDate.getFullYear();
+          const plusMonth = ('0' + (plusDate.getMonth() + 1)).slice(-2);
+          const plusDay = ('0' + plusDate.getDate()).slice(-2);
+
+          const plusDateString =
+            plusYear +
+            '-' +
+            plusMonth +
+            '-' +
+            plusDay +
+            ' ' +
+            '0' +
+            nowTime.hour +
+            ':' +
+            '0' +
+            nowTime.minute +
+            ':' +
+            '00';
+
+          setData({
+            ...data,
+            limitTime: plusDateString,
+            maxCapacity: Number(currentValue) + 1,
+          });
+          setTime({ hour: nowTime.hour, minute: nowTime.minute });
+          setPeople({ maxCapacity: Number(currentValue) });
+        } else {
+          setData({
+            ...data,
+            limitTime: dateString,
+            maxCapacity: Number(currentValue) + 1,
+          });
+          setTime({ hour: nowTime.hour, minute: nowTime.minute });
+          setPeople({ maxCapacity: Number(currentValue) });
+        }
       } else {
         const dateString =
           year +
@@ -168,13 +264,45 @@ const UploadStepTwo = ({
           ':' +
           '00';
 
-        setData({
-          ...data,
-          limitTime: dateString,
-          maxCapacity: Number(currentValue) + 1,
-        });
-        setTime({ hour: nowTime.hour, minute: nowTime.minute });
-        setPeople({ maxCapacity: Number(currentValue) });
+        if (parseInt(new Date(dateString) - new Date()) < 0) {
+          const reChangeDate = new Date(dateString);
+          const plusDate = new Date(
+            reChangeDate.setDate(reChangeDate.getDate() + 1)
+          );
+          const plusYear = plusDate.getFullYear();
+          const plusMonth = ('0' + (plusDate.getMonth() + 1)).slice(-2);
+          const plusDay = ('0' + plusDate.getDate()).slice(-2);
+
+          const plusDateString =
+            plusYear +
+            '-' +
+            plusMonth +
+            '-' +
+            plusDay +
+            ' ' +
+            '0' +
+            nowTime.hour +
+            ':' +
+            nowTime.minute +
+            ':' +
+            '00';
+
+          setData({
+            ...data,
+            limitTime: plusDateString,
+            maxCapacity: Number(currentValue) + 1,
+          });
+          setTime({ hour: nowTime.hour, minute: nowTime.minute });
+          setPeople({ maxCapacity: Number(currentValue) });
+        } else {
+          setData({
+            ...data,
+            limitTime: dateString,
+            maxCapacity: Number(currentValue) + 1,
+          });
+          setTime({ hour: nowTime.hour, minute: nowTime.minute });
+          setPeople({ maxCapacity: Number(currentValue) });
+        }
       }
     } else if (isTime === 'PM' && nowTime.hour.length === 2) {
       if (nowTime.minute.length === 1) {
@@ -192,13 +320,45 @@ const UploadStepTwo = ({
           ':' +
           '00';
 
-        setData({
-          ...data,
-          limitTime: dateString,
-          maxCapacity: Number(currentValue) + 1,
-        });
-        setTime({ hour: nowTime.hour, minute: nowTime.minute });
-        setPeople({ maxCapacity: Number(currentValue) });
+        if (parseInt(new Date(dateString) - new Date()) < 0) {
+          const reChangeDate = new Date(dateString);
+          const plusDate = new Date(
+            reChangeDate.setDate(reChangeDate.getDate() + 1)
+          );
+          const plusYear = plusDate.getFullYear();
+          const plusMonth = ('0' + (plusDate.getMonth() + 1)).slice(-2);
+          const plusDay = ('0' + plusDate.getDate()).slice(-2);
+
+          const plusDateString =
+            plusYear +
+            '-' +
+            plusMonth +
+            '-' +
+            plusDay +
+            ' ' +
+            nowTime.hour +
+            ':' +
+            '0' +
+            nowTime.minute +
+            ':' +
+            '00';
+
+          setData({
+            ...data,
+            limitTime: plusDateString,
+            maxCapacity: Number(currentValue) + 1,
+          });
+          setTime({ hour: nowTime.hour, minute: nowTime.minute });
+          setPeople({ maxCapacity: Number(currentValue) });
+        } else {
+          setData({
+            ...data,
+            limitTime: dateString,
+            maxCapacity: Number(currentValue) + 1,
+          });
+          setTime({ hour: nowTime.hour, minute: nowTime.minute });
+          setPeople({ maxCapacity: Number(currentValue) });
+        }
       } else {
         const dateString =
           year +
@@ -213,13 +373,44 @@ const UploadStepTwo = ({
           ':' +
           '00';
 
-        setData({
-          ...data,
-          limitTime: dateString,
-          maxCapacity: Number(currentValue) + 1,
-        });
-        setTime({ hour: nowTime.hour, minute: nowTime.minute });
-        setPeople({ maxCapacity: Number(currentValue) });
+        if (parseInt(new Date(dateString) - new Date()) < 0) {
+          const reChangeDate = new Date(dateString);
+          const plusDate = new Date(
+            reChangeDate.setDate(reChangeDate.getDate() + 1)
+          );
+          const plusYear = plusDate.getFullYear();
+          const plusMonth = ('0' + (plusDate.getMonth() + 1)).slice(-2);
+          const plusDay = ('0' + plusDate.getDate()).slice(-2);
+
+          const plusDateString =
+            plusYear +
+            '-' +
+            plusMonth +
+            '-' +
+            plusDay +
+            ' ' +
+            nowTime.hour +
+            ':' +
+            nowTime.minute +
+            ':' +
+            '00';
+
+          setData({
+            ...data,
+            limitTime: plusDateString,
+            maxCapacity: Number(currentValue) + 1,
+          });
+          setTime({ hour: nowTime.hour, minute: nowTime.minute });
+          setPeople({ maxCapacity: Number(currentValue) });
+        } else {
+          setData({
+            ...data,
+            limitTime: dateString,
+            maxCapacity: Number(currentValue) + 1,
+          });
+          setTime({ hour: nowTime.hour, minute: nowTime.minute });
+          setPeople({ maxCapacity: Number(currentValue) });
+        }
       }
     } else return;
   }, [nowTime.hour, isTime, nowTime.minute, currentValue, data.gatherName]);
