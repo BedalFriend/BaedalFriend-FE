@@ -3,7 +3,6 @@ import styled from 'styled-components';
 export const MapBox = styled.div`
   position: relative;
   z-index: 1;
-
   margin-bottom: 14px;
 `;
 
