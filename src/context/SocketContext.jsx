@@ -1,11 +1,11 @@
-import { createContext, useEffect, useRef } from 'react';
+import { createContext, useEffect, useRef, useState } from 'react';
 import SockJS from 'sockjs-client';
 import * as StompJS from '@stomp/stompjs';
 
 import { getCookieToken } from '../shared/storage/Cookie';
 import { ADD_CHAT } from '../redux/modules/ChatSlice';
 import store from '../redux/config/ConfigStore';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 export const SocketContext = createContext();
 
@@ -35,7 +35,7 @@ export function SocketProvider({ children }) {
       heartbeatIncoming: 4000,
       heartbeatOutgoing: 4000,
       onConnect: () => {
-        subscribe();
+        //subscribe();
         //unsubscribe();
       },
     });
@@ -43,39 +43,31 @@ export function SocketProvider({ children }) {
     client.current.activate();
   };
 
-  const subscribe = async () => {
-    const { user } = await getInfo();
+  const subscribe = (id) => {
     if (!client.current.connected) return;
-    if (
-      user.onGoing !== null &&
-      user.onGoing !== undefined &&
-      user.onGoing !== 0
-    ) {
-      console.log('well...');
-      client.current.subscribe(
-        `/sub/chat/room/${user.onGoing}`,
-        onMessageReceived,
-        {
-          id: `sub-${user.onGoing}`,
-        }
-      );
+    if (id !== null && id !== undefined && id !== 0) {
+      client.current.subscribe(`/sub/chat/room/${id}`, onMessageReceived, {
+        id: `sub-${id}`,
+      });
     }
   };
 
-  const unsubscribe = async () => {
-    const { user } = await getInfo();
+  const user = useSelector((state) => state.user);
+  useEffect(() => {
+    subscribe(user.onGoing);
+    return () => {
+      unsubscribe(user.onGoing);
+    };
+  }, [user.onGoing]);
+
+  const unsubscribe = (id) => {
     if (!client.current.connected) return;
-    if (
-      user.onGoing !== null &&
-      user.onGoing !== undefined &&
-      user.onGoing !== 0
-    ) {
-      client.current.unsubscribe(`sub-${user.onGoing}`);
+    if (id !== null && id !== undefined && id !== 0) {
+      client.current.unsubscribe(`sub-${id}`);
     }
   };
 
-  const onMessageReceived = async (payload) => {
-    const { user } = await getInfo();
+  const onMessageReceived = (payload) => {
     const received = JSON.parse(payload.body);
     if (received.roomId === user.onGoing) dispatch(ADD_CHAT(received));
   };

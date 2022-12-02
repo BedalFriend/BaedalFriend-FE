@@ -7,17 +7,11 @@ import { TabContext } from '../../context/TabContext';
 import { AlarmContext } from '../../context/AlarmContext';
 import Alarm from '../alarm/Alarm';
 import { useSelector } from 'react-redux';
+import { SocketContext } from '../../context/SocketContext';
 
 export default function Layout(props) {
   const { tab } = useContext(TabContext);
   const { isDP } = useContext(AlarmContext);
-  const user = useSelector((state) => state.user);
-  const { subscribe, unsubscribe } = useContext(AlarmContext);
-
-  useEffect(() => {
-    console.log('change onGoing');
-    console.log('onGoing:', user.onGoing);
-  }, [user.onGoing]);
 
   return (
     <LayoutST.Box>
