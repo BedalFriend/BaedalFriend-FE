@@ -280,7 +280,6 @@ export default function CategoryPage() {
             ref={scrollRef}
             onTouchStart={touchStartHandler}
             onTouchEnd={touchEndHandler}
-            onTouchMove={isTouch ? throttleHandler : null}
             onMouseDown={dragStartHandler}
             onMouseUp={dragEndHandler}
             onMouseMove={isDrag ? throttleHandler : null}

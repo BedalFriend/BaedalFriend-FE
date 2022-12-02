@@ -212,7 +212,7 @@ export default function SearchPage() {
   return (
     <Layout>
       <SearchST.SearchBg>
-        <div style={{ width: '100%', height: '84px' }}></div>
+        <div style={{ width: '100%', height: '84px'}}></div>
 
         {/* 검색창 */}
         <SearchST.Search>
@@ -238,7 +238,7 @@ export default function SearchPage() {
         </SearchST.Search>
 
         {/* 최근 검색어 */}
-        {/* <SearchST.RecentSection>
+        <SearchST.RecentSection>
           <SearchST.RecentTitle>최근 검색어</SearchST.RecentTitle>
           <SearchST.RecentDisplay
             ref={scrollRef}
@@ -249,14 +249,10 @@ export default function SearchPage() {
             onMouseUp={dragEndHandler}
             onMouseMove={isDrag ? throttleHandler : null}
             onMouseLeave={dragEndHandler}>
-            {recents.map((recent, index) => {
-              <RecentWord
-                key={index}
-                />
-            }) }
+
             <div style={{ width: '50%', height: '30px'}}></div>
           </SearchST.RecentDisplay>
-        </SearchST.RecentSection> */}
+        </SearchST.RecentSection>
 
         <SearchST.Line />
 
@@ -307,7 +303,7 @@ export default function SearchPage() {
         <SearchST.ResultBox>
           {posts.data.length === 0 && searched === true ? (
             <SearchST.NoResult>
-              <img src={NRImage} alt='결과없음' />
+              <SearchST.NoResultImg src={NRImage} alt='결과없음' />
               <SearchST.NoResultText>'{searchTerm}'</SearchST.NoResultText>{' '}
               <br />
               관련 배프가 없어요 :(

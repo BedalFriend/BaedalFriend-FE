@@ -99,10 +99,10 @@ export default function MyEditPage() {
           'Content-Type' : 'multipart/form-data'} })
       .then((res) => {
       console.log(res);
-      if (res.data.success) {
-        window.location.replace("/mypage")
-      }
-      console.log(res);
+      // if (res.data.success) {
+      //   window.location.replace("/mypage")
+      // }
+      // console.log(res);
       });
   }
 
