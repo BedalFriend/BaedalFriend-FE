@@ -10,6 +10,7 @@ import MyMarker from '../../imgs/upload/Map_LocationMark.png';
 const { kakao } = window;
 
 const CurrentMap = ({ data, setIndex }) => {
+  console.log('data,', data);
   //내가 선택한 마커 저장소
   const [selectMarker, setSelectMarker] = useState(false);
 

@@ -1,9 +1,7 @@
 import { useState } from 'react';
 import styled, { css } from 'styled-components';
 
-export const Toggle = ({ toggle, setToggle, data, setIsTime }) => {
-  console.log('지금시간', data.limitTime);
-  // const [toggle, setToggle] = useState(false);
+export const Toggle = ({ toggle, setToggle, setIsTime }) => {
   const clickedToggle = () => {
     const time = document.getElementById('time');
     setToggle((prev) => !prev);

@@ -17,6 +17,7 @@ import CurrentLocation from './CurrentLocation';
 import ExitModal from './ExitModal';
 import DeleteModal from './DeleteModal';
 import CurrentMap from './CurrentMap';
+import BannerPath from '../../pages/search/banner 1.png';
 
 import * as DetailST from './DetailPageStyle';
 import Timer from '../../components/elements/timer/Timer';
@@ -42,11 +43,12 @@ const DetailPage = () => {
   const { setIsDP } = useContext(AlarmContext);
 
   const user = useSelector((state) => state.user);
-  let post = useSelector((state) => state.post.post.data);
+  let post = useSelector((state) => state.post.post);
   const posts = useSelector((state) => state.post.posts);
   const token = useSelector((state) => state.token.accessToken);
   // console.log('posts', posts);
   // console.log('post', post);
+
   // console.log('token', token);
   // console.log('user', user);
 
@@ -85,9 +87,9 @@ const DetailPage = () => {
     if (refreshToken) {
       dispatch(__enterChannel(id));
       dispatch(__increaseParticipantThunk(id));
-      dispatch(UPDATE_USER({ ...user, onGoing: post.postId }));
+      dispatch(UPDATE_USER({ ...user, onGoing: post.data.postId }));
 
-      const tempArr = [...post.chatRoomMembers];
+      const tempArr = [...post.data.chatRoomMembers];
       tempArr.push({ member: user });
       dispatch(
         UPDATE_POST({
@@ -98,8 +100,6 @@ const DetailPage = () => {
     } else {
       setIsDP(true);
     }
-
-    // window.location.reload();
   };
 
   // 퇴장 핸들러
@@ -108,7 +108,7 @@ const DetailPage = () => {
 
     dispatch(UPDATE_USER({ ...user, onGoing: null }));
 
-    const tempArr = [...post.chatRoomMembers];
+    const tempArr = [...post.data.chatRoomMembers];
 
     const target = tempArr.findIndex((item) => {
       return item.member.id === user.id;
@@ -131,7 +131,7 @@ const DetailPage = () => {
     const result = [];
     for (
       let i = 0;
-      i < post?.maxCapacity - post?.chatRoomMembers?.length;
+      i < post?.data.maxCapacity - post?.data.chatRoomMembers?.length;
       i++
     ) {
       result.push(
@@ -156,14 +156,14 @@ const DetailPage = () => {
   // Limit 계산
 
   const [gap, setGap] = useState(
-    parseInt((new Date(post.limitTime) - new Date()) / 1000)
+    parseInt((new Date(post?.data?.limitTime) - new Date()) / 1000)
   );
 
   useEffect(() => {
-    if (post?.limitTime) {
-      setGap(parseInt((new Date(post.limitTime) - new Date()) / 1000));
+    if (post?.data?.limitTime) {
+      setGap(parseInt((new Date(post.data.limitTime) - new Date()) / 1000));
     }
-  }, [post?.limitTime]);
+  }, [post?.data?.limitTime]);
 
   useEffect(() => {
     dispatch(__getDetailThunk(id));
@@ -171,18 +171,18 @@ const DetailPage = () => {
   }, []);
 
   useEffect(() => {
-    if (user.id === post.memberId) {
+    if (user.id === post?.data?.memberId) {
       setCustom(3);
-    } else if (user.onGoing && user.onGoing !== post.postId) {
+    } else if (user.onGoing && user.onGoing !== post.data.postId) {
       setCustom(1);
-    } else if (user.onGoing === post.postId) {
+    } else if (user.onGoing === post.data.postId) {
       setCustom(2);
-    } else if (post.maxCapacity === post?.chatRoomMembers?.length) {
+    } else if (post.data.maxCapacity === post?.data.chatRoomMembers?.length) {
       setCustom(4);
     } else if (user.onGoing === 0 || user.onGoing === null) {
       setCustom(0);
     }
-  }, [user.id, post.memberId, user.onGoing, custom]);
+  }, [user.id, post?.data?.memberId, user.onGoing, custom]);
 
   return (
     <Layout>
@@ -196,8 +196,22 @@ const DetailPage = () => {
           setIsDeleteHandler={setIsDeleteHandler}
         />
       )}
+      {isExitOpen && (
+        <ExitModal
+          setIsExitOpen={setIsExitOpen}
+          onExitHandler={onExitHandler}
+          aniState={aniState}
+          setAniState={setAniState}
+        />
+      )}
+      {post.error === 'NOT_FOUND_POST' ? (
+        <DetailST.ErrorPage>
+          <DetailST.ErrorImg src={BannerPath} alt='' />
+          <DetailST.ErrorTitle>존재하지 않는 공구에요:(</DetailST.ErrorTitle>
+        </DetailST.ErrorPage>
+      ) : null}
       {index ? (
-        <CurrentMap data={post} setIndex={setIndex} />
+        <CurrentMap data={post.data} setIndex={setIndex} />
       ) : (
         <DetailST.DetailBox>
           <DetailST.CardBox>
@@ -225,10 +239,10 @@ const DetailPage = () => {
                 </DetailST.YellowMarkSvg>
 
                 <DetailST.CardAddress>
-                  {post?.targetAddress}
+                  {post?.data?.targetAddress}
                 </DetailST.CardAddress>
               </DetailST.AddressHeader>
-              {user.id === post.memberId ? (
+              {user.id === post.data.memberId ? (
                 <svg
                   onClick={openModal}
                   width='28'
@@ -265,11 +279,11 @@ const DetailPage = () => {
             <DetailST.TitleBox>
               <DetailST.NameBox>
                 <SVG
-                  category={post?.category}
+                  category={post?.data.category}
                   size='24px'
                   color='var(--color-light-black)'
                 />
-                <DetailST.TagetName>{post?.targetName}</DetailST.TagetName>
+                <DetailST.TagetName>{post?.data.targetName}</DetailST.TagetName>
               </DetailST.NameBox>
               <DetailST.CardTimer>
                 {gap < 0 ? (
@@ -299,7 +313,7 @@ const DetailPage = () => {
                 </svg>
 
                 <DetailST.InfoText>
-                  {post?.deliveryTime}분 소요 예상
+                  {post?.data.deliveryTime}분 소요 예상
                 </DetailST.InfoText>
               </DetailST.DeliveryInfo>
               <DetailST.DeliveryInfo>
@@ -321,7 +335,7 @@ const DetailPage = () => {
                 </svg>
 
                 <DetailST.InfoText>
-                  {post?.targetAmount}만원 이상 {post?.deliveryFee}원
+                  {post?.data.targetAmount}만원 이상 {post?.data.deliveryFee}원
                 </DetailST.InfoText>
               </DetailST.DeliveryInfo>
               <DetailST.DeliveryInfo>
@@ -343,15 +357,18 @@ const DetailPage = () => {
                 </svg>
 
                 <DetailST.InfoText>
-                  {post?.limitTime?.split(' ')[1].split(':')[0] > 12 ? (
+                  {post?.data.limitTime?.split(' ')[1].split(':')[0] > 12 ? (
                     <div>
-                      오후 {post?.limitTime?.split(' ')[1].split(':')[0] - 12}시
-                      {post?.limitTime?.split(' ')[1].split(':')[1]}분 신청 마감
+                      오후{' '}
+                      {post?.data.limitTime?.split(' ')[1].split(':')[0] - 12}시
+                      {post?.data.limitTime?.split(' ')[1].split(':')[1]}분 신청
+                      마감
                     </div>
                   ) : (
                     <div>
-                      오전 {post?.limitTime?.split(' ')[1].split(':')[0]}시
-                      {post?.limitTime?.split(' ')[1].split(':')[1]}분 신청 마감
+                      오전 {post?.data.limitTime?.split(' ')[1].split(':')[0]}시
+                      {post?.data.limitTime?.split(' ')[1].split(':')[1]}분 신청
+                      마감
                     </div>
                   )}
                 </DetailST.InfoText>
@@ -361,23 +378,19 @@ const DetailPage = () => {
             <DetailST.ContentBox>
               <DetailST.UserInfo>
                 <ProfilePic
-                  key={user.id}
                   size='36px'
                   border='1px solid var(--color-orange)'
-                  user={user}
+                  user={post.data}
                 />
                 <DetailST.ProfileNickName>
-                  {post.nickname}
+                  {post.data.nickname}
                 </DetailST.ProfileNickName>
               </DetailST.UserInfo>
 
-              <DetailST.Content>
-                <DetailST.ContentText>
-                  안녕하세요! 매너있는 공구 진행해요.
-                </DetailST.ContentText>
-              </DetailST.Content>
+              <DetailST.ContentText value={post.data.content} disabled />
             </DetailST.ContentBox>
           </DetailST.CardBox>
+
           <div>
             <DetailST.PartyHeaderBox>
               <DetailST.PartyHeader>
@@ -399,12 +412,12 @@ const DetailPage = () => {
                 <DetailST.PartyTitle>참여중인 배프</DetailST.PartyTitle>
               </DetailST.PartyHeader>
               <DetailST.PartyTotalMember>
-                {post?.chatRoomMembers?.length}/{post.maxCapacity}
+                {post?.data.chatRoomMembers?.length}/{post.data.maxCapacity}
               </DetailST.PartyTotalMember>
             </DetailST.PartyHeaderBox>
 
             <DetailST.PtPicBox>
-              {post.chatRoomMembers?.map((user) => (
+              {post.data.chatRoomMembers?.map((user) => (
                 <DetailST.UserInfo key={user.member.id}>
                   <ProfilePic
                     key={user.member.id}
@@ -441,23 +454,15 @@ const DetailPage = () => {
               </svg>
               <DetailST.PartyTitle>만나는 장소</DetailST.PartyTitle>
             </DetailST.PtMapTitle>
+
             <div
               onClick={() => {
                 setIndex(true);
               }}
             >
-              <CurrentLocation data={post} />
+              <CurrentLocation data={post.data} />
             </div>
           </DetailST.PtMapBox>
-
-          {isExitOpen && (
-            <ExitModal
-              setIsExitOpen={setIsExitOpen}
-              onExitHandler={onExitHandler}
-              aniState={aniState}
-              setAniState={setAniState}
-            />
-          )}
 
           {custom === 0 ? (
             <DetailST.JoinBtn onClick={onEnterHandler}>

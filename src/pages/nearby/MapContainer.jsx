@@ -314,7 +314,7 @@ const MapContainer = ({ setTab }) => {
             id='map'
             style={{
               width: '100%',
-              height: 'calc(100vh - 196px)',
+              height: '100%',
             }}
           >
             <InputBox>
@@ -405,7 +405,7 @@ export default MapContainer;
 const NearbyBox = styled.div`
   position: relative;
   padding-top: 60px;
-  width: calc(100% - 32px);
+  width: 100%;
   height: 100vh;
   z-index: 0;
 `;
@@ -416,7 +416,7 @@ const InputBox = styled.div`
   display: flex;
   align-items: center;
 
-  top: 24px;
+  top: 16px;
   margin-left: 16px;
   z-index: 2;
   width: calc(100% - 32px);
@@ -441,7 +441,7 @@ const NearbyInfo = styled.div`
   display: flex;
   align-items: center;
 
-  top: 96px;
+  top: 80px;
   margin-left: 16px;
   z-index: 2;
   width: calc(100% - 32px);
@@ -484,7 +484,7 @@ const BottomBtnBox = styled.div`
   width: calc(100% - 32px);
   margin-left: 16px;
   z-index: 3;
-  bottom: ${(props) => (props.slotManager ? '265px' : '20px')};
+  bottom: ${(props) => (props.slotManager ? '265px' : '158px')};
 `;
 
 const SearchBtn = styled.svg`

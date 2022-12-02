@@ -40,7 +40,6 @@ const Post = () => {
     region: '',
     content: '',
   });
-  console.log(data);
 
   // 페이지 전환
   const [index, setIndex] = useState(0);
@@ -95,7 +94,7 @@ const Post = () => {
               <UploadST.ButtonBox>
                 <UploadST.CancelBtn
                   onClick={() => {
-                    navigate('/');
+                    navigate(-1);
                   }}
                 >
                   취소하기

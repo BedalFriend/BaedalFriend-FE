@@ -22,7 +22,11 @@ export const __getDetailThunk = createAsyncThunk(
         `${basePath}/posts/detail/${arg}`
       );
 
-      return thunkAPI.fulfillWithValue(data.data);
+      if (data.success) {
+        return thunkAPI.fulfillWithValue(data.data);
+      } else if (data.error.code === 'NOT_FOUND_POST') {
+        return thunkAPI.rejectWithValue(data.error.code);
+      }
     } catch (error) {
       return thunkAPI.rejectWithValue(error.code);
     }
@@ -238,10 +242,12 @@ export const postsSlice = createSlice({
     },
     [__getDetailThunk.rejected]: (state, action) => {
       state.post.isLoading = false;
+
       state.post.error = action.payload;
     },
     [__getDetailThunk.fulfilled]: (state, action) => {
       state.post.isLoading = false;
+
       state.post.data = action.payload;
     },
 

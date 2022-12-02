@@ -13,7 +13,7 @@ const { kakao } = window;
 const SearchMap = ({ setIndex, data, setData, setAddressManager }) => {
   const [place, setPlace] = useState('');
   const [markerInfo, setMarkerInfo] = useState('');
-  console.log(markerInfo);
+
   //내가 선택한 마커 저장소
   const [selectMarker, setSelectMarker] = useState(false);
 
@@ -66,7 +66,6 @@ const SearchMap = ({ setIndex, data, setData, setAddressManager }) => {
   };
 
   useEffect(() => {
-    console.log('data', data);
     //지도 생성
     const container = document.getElementById('myMap');
     const options = {
