@@ -1,7 +1,7 @@
 import React from 'react';
 
 import * as MainST from '../../main/MainPageStyle';
-import * as UploadST from '../UploadPageStyle';
+import * as UploadST from '../UploadStyle';
 
 const UploadCategory = ({ data, setData, setIndex }) => {
   return (

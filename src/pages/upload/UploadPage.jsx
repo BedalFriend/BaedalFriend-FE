@@ -5,7 +5,7 @@ import { __addPostThunk } from '../../redux/modules/PostSlice';
 import { TabContext } from '../../context/TabContext';
 import Layout from '../../components/layout/Layout';
 
-import * as UploadST from './UploadPageStyle';
+import * as UploadST from './UploadStyle';
 import useMultipleInput from '../../hooks/useMultipleInput';
 
 import SearchPartyMap from './upload/searchMap/SearchPartyMap';
@@ -38,6 +38,7 @@ const Post = () => {
     isDone: 0,
     limitTime: '2022-11-20 00:00:30',
     region: '',
+    content: '',
   });
   console.log(data);
 
@@ -76,12 +77,6 @@ const Post = () => {
     setIsSecondChecked(true);
   };
 
-  const lengthLimit = (e) => {
-    if (e.target.value.length > 4) {
-      e.target.value = e.target.value.slice(0, 4);
-    }
-  };
-
   useEffect(() => {}, [data.gatherName]);
   return (
     <Layout>
@@ -94,7 +89,6 @@ const Post = () => {
                 data={data}
                 setData={setData}
                 dataHandler={dataHandler}
-                lengthLimit={lengthLimit}
                 setNextStepOne={setNextStepOne}
                 isChecked={isChecked}
               />
@@ -142,7 +136,6 @@ const Post = () => {
                 setData={setData}
                 dataHandler={dataHandler}
                 addressManager={addressManager}
-                lengthLimit={lengthLimit}
                 isSecondChecked={isSecondChecked}
                 setNextStepTwo={setNextStepTwo}
                 setPeople={setPeople}

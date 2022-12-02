@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import MapFrame from '../../../../../imgs/upload/Frame 48.png';
 import OrangeMapMarker from '../../../../../imgs/upload/Orange_Map_Marker.png';
 
-import * as UploadST from '../../../UploadPageStyle';
+import * as UploadST from '../../../UploadStyle';
 
 const { kakao } = window;
 
