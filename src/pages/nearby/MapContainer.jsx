@@ -390,7 +390,7 @@ const MapContainer = ({ setTab }) => {
 
             <div>
               <CardBox slotManager={slotManager}>
-                {slotManager ? <Card post={markerInfo} /> : null}
+                {slotManager ? <Card post={markerInfo} isWide={true} /> : null}
               </CardBox>
             </div>
           </div>

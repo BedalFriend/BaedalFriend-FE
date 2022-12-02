@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -23,20 +23,24 @@ import Timer from '../../components/elements/timer/Timer';
 import SVG from '../../shared/SVG';
 import ProfilePic from '../../components/elements/profilePic/ProfilePic';
 import { UPDATE_USER } from '../../redux/modules/UserSlice';
+import { AlarmContext } from '../../context/AlarmContext';
+import { getCookieToken } from '../../shared/storage/Cookie';
 
 const DetailPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const refreshToken = getCookieToken();
+  const { setIsDP } = useContext(AlarmContext);
 
   const user = useSelector((state) => state.user);
   let post = useSelector((state) => state.post.post.data);
   const posts = useSelector((state) => state.post.posts);
   const token = useSelector((state) => state.token.accessToken);
   // console.log('posts', posts);
-  console.log('post', post);
+  // console.log('post', post);
   // console.log('token', token);
-  console.log('user', user);
+  // console.log('user', user);
 
   //지도 화면 변환
   const [index, setIndex] = useState(false);
@@ -70,18 +74,22 @@ const DetailPage = () => {
 
   // 참여 핸들러
   const onEnterHandler = () => {
-    dispatch(__enterChannel(id));
-    dispatch(__increaseParticipantThunk(id));
-    dispatch(UPDATE_USER({ ...user, onGoing: post.postId }));
-    // console.log(posts.chatRoomMembers);
-    const tempArr = [...post.chatRoomMembers];
-    tempArr.push({ member: user });
-    dispatch(
-      UPDATE_POST({
-        ...post,
-        chatRoomMembers: tempArr,
-      })
-    );
+    if (refreshToken) {
+      dispatch(__enterChannel(id));
+      dispatch(__increaseParticipantThunk(id));
+      dispatch(UPDATE_USER({ ...user, onGoing: post.postId }));
+
+      const tempArr = [...post.chatRoomMembers];
+      tempArr.push({ member: user });
+      dispatch(
+        UPDATE_POST({
+          ...post,
+          chatRoomMembers: tempArr,
+        })
+      );
+    } else {
+      setIsDP(true);
+    }
 
     // window.location.reload();
   };
@@ -108,7 +116,6 @@ const DetailPage = () => {
     );
     dispatch(__exitChannel(id));
     setIsExitOpen(false);
-    // window.location.reload();
   };
 
   // 참여중인 인원
