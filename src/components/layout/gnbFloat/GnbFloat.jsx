@@ -16,7 +16,7 @@ function GnbFloat() {
   const { setIsDP } = useContext(AlarmContext);
 
   return (
-    <GnbST.Box>
+    <GnbST.Box tab={tab}>
       <GnbST.Bar>
         <GnbST.GnbSVG
           width='48'

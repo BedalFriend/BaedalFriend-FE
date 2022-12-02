@@ -19,7 +19,13 @@ export const Address = styled.div`
   position: absolute;
   width: 280px;
   height: 32px;
-  left: ${(props) => (props.tab === 'Home' ? '16px' : '64px')};
+  left: ${(props) =>
+    props.tab === 'Home' ||
+    props.tab === 'Mypage' ||
+    props.tab === 'Upload' ||
+    props.tab === 'Nearby'
+      ? '16px'
+      : '64px'};
   top: 20px;
   padding: 0 16px;
 

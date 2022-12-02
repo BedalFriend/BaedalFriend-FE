@@ -28,12 +28,15 @@ export function SocketProvider({ children }) {
       debug: (str) => {
         console.log(str);
       },
+      onChangeState: (e) => {
+        console.log('change!', e);
+      },
       reconnectDelay: 5000,
       heartbeatIncoming: 4000,
       heartbeatOutgoing: 4000,
       onConnect: () => {
         subscribe();
-        // unsubscribe();
+        //unsubscribe();
       },
     });
 
@@ -48,6 +51,7 @@ export function SocketProvider({ children }) {
       user.onGoing !== undefined &&
       user.onGoing !== 0
     ) {
+      console.log('well...');
       client.current.subscribe(
         `/sub/chat/room/${user.onGoing}`,
         onMessageReceived,
