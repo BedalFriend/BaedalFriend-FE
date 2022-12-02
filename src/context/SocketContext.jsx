@@ -35,7 +35,7 @@ export function SocketProvider({ children }) {
       heartbeatIncoming: 4000,
       heartbeatOutgoing: 4000,
       onConnect: () => {
-        //subscribe();
+        initSub();
         //unsubscribe();
       },
     });
@@ -43,6 +43,23 @@ export function SocketProvider({ children }) {
     client.current.activate();
   };
 
+  const initSub = async () => {
+    const { user } = await getInfo();
+    if (!client.current.connected) return;
+    if (
+      user.onGoing !== null &&
+      user.onGoing !== undefined &&
+      user.onGoing !== 0
+    ) {
+      client.current.subscribe(
+        `/sub/chat/room/${user.onGoing}`,
+        onMessageReceived,
+        {
+          id: `sub-${user.onGoing}`,
+        }
+      );
+    }
+  };
   const subscribe = (id) => {
     if (!client.current.connected) return;
     if (id !== null && id !== undefined && id !== 0) {
