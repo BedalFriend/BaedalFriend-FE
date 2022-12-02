@@ -85,7 +85,8 @@ export function SocketProvider({ children }) {
     }
   };
 
-  const onMessageReceived = (payload) => {
+  const onMessageReceived = async (payload) => {
+    const { user } = await getInfo();
     const received = JSON.parse(payload.body);
     if (received.roomId === user.onGoing) dispatch(ADD_CHAT(received));
   };
