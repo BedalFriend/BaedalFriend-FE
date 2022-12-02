@@ -88,7 +88,15 @@ export function SocketProvider({ children }) {
   const onMessageReceived = async (payload) => {
     const { user } = await getInfo();
     const received = JSON.parse(payload.body);
-    if (received.roomId === user.onGoing) dispatch(ADD_CHAT(received));
+    console.log(received);
+    if (received.roomId === user.onGoing) {
+      switch (received.type) {
+        case 'TALK':
+          return dispatch(ADD_CHAT(received));
+        default:
+          return;
+      }
+    }
   };
 
   const publish = async (message, roomId, type) => {
