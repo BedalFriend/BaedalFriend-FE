@@ -59,7 +59,6 @@ export default function MainPage(props) {
     const target2 = post.data.findIndex(
       (post) => (new Date(post.limitTime) - new Date()) / 1000 > 0
     );
-    console.log(target1, target2);
     setTarget1(target1);
     setTarget2(target2);
   }, [post?.data?.length]);

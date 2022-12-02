@@ -8,6 +8,11 @@ export const Box = styled.div`
     rgba(255, 255, 255, 0) 0.93%,
     #ffffff 9.23%
   );
+
+  background: ${(props) =>
+    props.tab === 'Nearby'
+      ? 'transparent'
+      : 'linear-gradient(180deg,rgba(255, 255, 255, 0) 0.93%,#ffffff 9.23%)'};
   height: 136px;
 
   @media screen and (min-width: 764px) {
