@@ -30,50 +30,25 @@ export default function MyEditPage() {
   const nickname = useSelector(state => state.user.nickname);
   const userId = useSelector((state) => state.user.id);
 
+  //프로필사진, 닉네임
+  const [previewImg, setPreviewImg] = useState();
+  const [editNick, setEditNick] = useState();
+  const [profilePost, setProfilepost] = useState();
+  const [profileNull, setProfileNull] = useState();
+
+  //닉네임 중복검사
+  const [inCheck, setInCheck] = useState(false);
+  const [isNicknameFail, setIsNicknameFail] = useState(true);
+  const [helpNicknameText, setHelpNicknameText] = useState('');
+
   //모달
   const [isOpen, setIsOpen] = useState(false);
-  const [aniState, setAniState] = useState(false);
   const openModal = () => {
-    setAniState(true);
     setIsOpen(true);
   }
   const closeModal = () => {
     setIsOpen(false);
   }
-
-  const [previewImg, setPreviewImg] = useState();
-  const [editNick, setEditNick] = useState();
-  const [profilePost, setProfilepost] = useState();
-
-  //이미지 미리보기
-  const preview = () => {
-    console.log('imgUrl', profilePost?.imgUrl);
-
-    formData.append('imgUrl', profilePost?.imgUrl);
-
-    axios
-      .put(`${basePath}/mypages/image/${userId}`, formData,
-      { headers:
-        { 'Authorization' : `${authorization}`,
-          'Refresh_Token' : `${refreshToken}`,
-          'Content-Type' : 'multipart/form-data'} })
-      // .then((res) => {
-      //   setPreviewImg(res.data.data.imageUrl);
-      //   console.log('previewImg', previewImg);
-      // });
-  }
-
-  useEffect(() => {
-    preview();
-  }, [profilePost?.imgUrl]);
-
-  useEffect(() => {
-    setProfilepost({nickname: editNick})
-  }, [editNick]);
-
-  const [inCheck, setInCheck] = useState(false);
-  const [isNicknameFail, setIsNicknameFail] = useState(true);
-  const [helpNicknameText, setHelpNicknameText] = useState('');
 
   useEffect(() => {
     setInCheck(true);
@@ -98,28 +73,36 @@ export default function MyEditPage() {
     };
   }, [editNick]);
 
-  //프로필 post 요청
-  const onSubmitHandler = () => {
+  useEffect(() => {
+    setProfilepost({nickname: editNick})
+  }, [editNick]);
 
+  //수정사항 적용하기
+  const onSubmitHandler = () => {
     formData.append('imgUrl', profilePost?.imgUrl);
     formData.append('nickname',
-      JSON.stringify({
-        nickname: profilePost?.nickname
-      }),
-      { type: 'application/json'}
+      new Blob(
+        [
+          JSON.stringify({
+            nickname: profilePost?.nickname,
+          }),
+        ],
+        { type: 'application/json'}
+      )
     );
 
     axios
-      .post(`${basePath}/mypages/image/${userId}`, formData,
+      .patch(`https://sparta-bds.shop/v1/mypages/edit/${userId}`, formData,
       { headers:
         { 'Authorization' : `${authorization}`,
           'Refresh_Token' : `${refreshToken}`,
           'Content-Type' : 'multipart/form-data'} })
       .then((res) => {
-      if (res.data.success) {
-        navigate(-1);
-      }
-    });
+      console.log(res);
+      // if (res.data.success) {
+      //   window.location.replace("/mypage")
+      // }
+      });
   }
 
   return (
@@ -142,17 +125,17 @@ export default function MyEditPage() {
       <myEditST.picText>프로필 사진</myEditST.picText>
       <myEditST.picWrap>
         {previewImg ?
-          <img src={previewImg} alt="profile"/> :
+          <myEditST.EditPic src={previewImg} alt="previewImg"/>
+          :
           <ProfilePic size='100px' border='' user={user}/>
         }
         <myEditST.picButton onClick={openModal}>변경하기</myEditST.picButton>
         {isOpen &&
           (<MyEditModal
-            aniState={aniState}
-            setAniState={setAniState}
             closeModal={closeModal}
-            profilePost={profilePost}
-            setProfilepost={setProfilepost}/>)}
+            setProfilepost={setProfilepost}
+            setPreviewImg={setPreviewImg}
+            setProfileNull={setProfileNull}/>)}
       </myEditST.picWrap>
 
       {/* 이메일 아이디 */}
@@ -235,7 +218,7 @@ export default function MyEditPage() {
         <myEditST.submitBtn
           onClick={onSubmitHandler}
           disabled={
-            (previewImg===null||undefined) ||
+            (previewImg===null||undefined) &&
             (isNicknameFail===true)
           }>
           적용하기

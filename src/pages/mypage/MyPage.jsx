@@ -19,9 +19,7 @@ export default function MyPage() {
 
   //정렬 모달창
   const [isOpen, setIsOpen] = useState(false);
-  const [aniState, setAniState] = useState(false);
   const openModal = () => {
-    setAniState(true);
     setIsOpen(true);
   }
   const closeModal = () => {
@@ -88,11 +86,7 @@ export default function MyPage() {
               <circle cx="22" cy="22" r="2" transform="rotate(-90 22 22)" fill="#FF5B15"/>
             </svg>
           </myST.MenuDot>
-          {isOpen &&
-          (<MyPageModal
-            aniState={aniState}
-            setAniState={setAniState}
-            closeModal={closeModal}/>)}
+          {isOpen && (<MyPageModal closeModal={closeModal}/>)}
 
         </myST.MainBox>
 

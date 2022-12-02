@@ -29,9 +29,7 @@ export default function SearchPage() {
 
   //정렬 모달창
   const [isOpen, setIsOpen] = useState(false);
-  const [aniState, setAniState] = useState(false);
   const openModal = () => {
-    setAniState(true);
     setIsOpen(true);
   };
   const closeModal = () => {
@@ -147,6 +145,7 @@ export default function SearchPage() {
         }
         setSearched(true);
       }
+    
     }, 600);
     return () => {
       clearTimeout(searchHandler);
@@ -156,6 +155,7 @@ export default function SearchPage() {
 
   //clean up
   useEffect(() => {
+    dispatch(CLEAR_POSTS());
     return () => {
       dispatch(CLEAR_POSTS());
     };
@@ -239,22 +239,24 @@ export default function SearchPage() {
 
         {/* 최근 검색어 */}
         {/* <SearchST.RecentSection>
-      <SearchST.RecentTitle>최근 검색어</SearchST.RecentTitle>
-      <SearchST.RecentDisplay
-        ref={scrollRef}
-        onTouchStart={touchStartHandler}
-        onTouchEnd={touchEndHandler}
-        onTouchMove={isTouch ? throttleHandler : null}
-        onMouseDown={dragStartHandler}
-        onMouseUp={dragEndHandler}
-        onMouseMove={isDrag ? throttleHandler : null}
-        onMouseLeave={dragEndHandler}>
-        <RecentWord/>
-        <RecentWord/>
-        <RecentWord/>
-        <div style={{ width: '50%', height: '30px'}}></div>
-      </SearchST.RecentDisplay>
-    </SearchST.RecentSection> */}
+          <SearchST.RecentTitle>최근 검색어</SearchST.RecentTitle>
+          <SearchST.RecentDisplay
+            ref={scrollRef}
+            onTouchStart={touchStartHandler}
+            onTouchEnd={touchEndHandler}
+            onTouchMove={isTouch ? throttleHandler : null}
+            onMouseDown={dragStartHandler}
+            onMouseUp={dragEndHandler}
+            onMouseMove={isDrag ? throttleHandler : null}
+            onMouseLeave={dragEndHandler}>
+            {recents.map((recent, index) => {
+              <RecentWord
+                key={index}
+                />
+            }) }
+            <div style={{ width: '50%', height: '30px'}}></div>
+          </SearchST.RecentDisplay>
+        </SearchST.RecentSection> */}
 
         <SearchST.Line />
 
@@ -295,8 +297,6 @@ export default function SearchPage() {
         </SearchST.DropDownSection>
         {isOpen && (
           <SearchModal
-            aniState={aniState}
-            setAniState={setAniState}
             closeModal={closeModal}
             setSelect={setSelect}
             select={select}

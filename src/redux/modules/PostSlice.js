@@ -199,6 +199,20 @@ export const __getEntireCateThunk = createAsyncThunk(
   }
 );
 
+export const __getRecentWordThunk = createAsyncThunk(
+  'GET_RECENTWORD',
+  async (arg, thunkAPI) => {
+    try {
+      const { data } = await getInstance().get(
+        `${basePath}/posts/entireCategory/search?page=1&size=1000&${arg}`
+      );
+      return thunkAPI.fulfillWithValue(data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.code);
+    }
+  }
+);
+
 const initialState = {
   post: { data: {}, isLoading: false, error: null },
   posts: { data: [], isLoading: false, error: null },
@@ -388,6 +402,19 @@ export const postsSlice = createSlice({
       state.posts.error = action.payload;
     },
     [__getEntireCateThunk.fulfilled]: (state, action) => {
+      state.posts.isLoading = false;
+      state.posts.data = action.payload.data;
+    },
+
+    //get RecentWord
+    [__getRecentWordThunk.pending]: (state) => {
+      state.posts.isLoading = true;
+    },
+    [__getRecentWordThunk.rejected]: (state, action) => {
+      state.posts.isLoading = false;
+      state.posts.error = action.payload;
+    },
+    [__getRecentWordThunk.fulfilled]: (state, action) => {
       state.posts.isLoading = false;
       state.posts.data = action.payload.data;
     },

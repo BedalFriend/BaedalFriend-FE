@@ -201,3 +201,11 @@ export const HelpText = styled.span`
 
   margin-left: 4px;
 `;
+
+export const EditPic = styled.img`
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: none;
+  object-fit: cover;
+`;
