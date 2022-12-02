@@ -24,7 +24,7 @@ export const myEditBG = styled.div`
 export const backSVG = styled.div`
   position: relative;
   width: calc(100% - 32px);
-  height: 60px;
+  height: 100px;
   cursor: pointer;
 `
 
