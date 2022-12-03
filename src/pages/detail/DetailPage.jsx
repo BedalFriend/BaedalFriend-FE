@@ -47,8 +47,7 @@ const DetailPage = () => {
   const posts = useSelector((state) => state.post.posts);
   const token = useSelector((state) => state.token.accessToken);
   // console.log('posts', posts);
-  console.log('post', post.data);
-
+  // console.log('post', post.data);
   // console.log('token', token);
   // console.log('user', user);
 
