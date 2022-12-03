@@ -52,7 +52,6 @@ export const __addPostThunk = createAsyncThunk(
 export const __modifyPostThunk = createAsyncThunk(
   'PATCH_MOVIES',
   async (arg, thunkAPI) => {
-    console.log(arg);
     try {
       const { data } = await getInstance().put(
         `${basePath}/auth/posts/${arg.postId}`,

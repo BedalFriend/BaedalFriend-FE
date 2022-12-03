@@ -68,19 +68,19 @@ const ModifySTepTwo = ({
       data.limitTime.split(' ')[1].split(':')[0] > 12 &&
       data.limitTime.split(' ')[1].split(':')[0] !== ''
     ) {
-      setToggle(true);
       setNowTime({
         hour: data.limitTime.split(' ')[1].split(':')[0] - 12,
         minute: data.limitTime.split(' ')[1].split(':')[1],
       });
+      setToggle(true);
     } else {
-      setToggle(false);
       setNowTime({
         hour: data.limitTime.split(' ')[1].split(':')[0],
         minute: data.limitTime.split(' ')[1].split(':')[1],
       });
+      setToggle(false);
     }
-  }, [data.limitTime]);
+  }, []);
 
   // 에러메세지 유효성검사
 
@@ -182,8 +182,9 @@ const ModifySTepTwo = ({
         }
       }
     } else if (
-      (toggle === false && nowTime.hour.length === 1) ||
-      nowTime.hour === ''
+      toggle === false &&
+      (data.limitTime.split(' ')[1].split(':')[0].length === 1 ||
+        data.limitTime.split(' ')[1].split(':')[0] === '')
     ) {
       if (nowTime.minute.length === 1) {
         const dateString =
@@ -284,7 +285,116 @@ const ModifySTepTwo = ({
           });
         }
       }
-    } else if (toggle === false && nowTime.hour.length === 2) {
+    } else if (
+      toggle === false &&
+      data.limitTime.split(' ')[1].split(':')[0].length === 2 &&
+      data.limitTime.split(' ')[1].split(':')[0] > 12 &&
+      data.limitTime.split(' ')[1].split(':')[0] < 22
+    ) {
+      if (nowTime.minute.length === 1) {
+        const dateString =
+          year +
+          '-' +
+          month +
+          '-' +
+          day +
+          ' ' +
+          '0' +
+          nowTime.hour +
+          ':' +
+          '0' +
+          nowTime.minute +
+          ':' +
+          '00';
+
+        if (parseInt(new Date(dateString) - new Date()) < 0) {
+          const reChangeDate = new Date(dateString);
+          const plusDate = new Date(
+            reChangeDate.setDate(reChangeDate.getDate() + 1)
+          );
+          const plusYear = plusDate.getFullYear();
+          const plusMonth = ('0' + (plusDate.getMonth() + 1)).slice(-2);
+          const plusDay = ('0' + plusDate.getDate()).slice(-2);
+
+          const plusDateString =
+            plusYear +
+            '-' +
+            plusMonth +
+            '-' +
+            plusDay +
+            ' ' +
+            '0' +
+            nowTime.hour +
+            ':' +
+            '0' +
+            nowTime.minute +
+            ':' +
+            '00';
+
+          setData({
+            ...data,
+            limitTime: plusDateString,
+          });
+        } else {
+          setData({
+            ...data,
+            limitTime: dateString,
+          });
+        }
+      } else {
+        const dateString =
+          year +
+          '-' +
+          month +
+          '-' +
+          day +
+          ' ' +
+          '0' +
+          nowTime.hour +
+          ':' +
+          nowTime.minute +
+          ':' +
+          '00';
+
+        if (parseInt(new Date(dateString) - new Date()) < 0) {
+          const reChangeDate = new Date(dateString);
+          const plusDate = new Date(
+            reChangeDate.setDate(reChangeDate.getDate() + 1)
+          );
+          const plusYear = plusDate.getFullYear();
+          const plusMonth = ('0' + (plusDate.getMonth() + 1)).slice(-2);
+          const plusDay = ('0' + plusDate.getDate()).slice(-2);
+
+          const plusDateString =
+            plusYear +
+            '-' +
+            plusMonth +
+            '-' +
+            plusDay +
+            ' ' +
+            '0' +
+            nowTime.hour +
+            ':' +
+            nowTime.minute +
+            ':' +
+            '00';
+
+          setData({
+            ...data,
+            limitTime: plusDateString,
+          });
+        } else {
+          setData({
+            ...data,
+            limitTime: dateString,
+          });
+        }
+      }
+    } else if (
+      toggle === false &&
+      data.limitTime.split(' ')[1].split(':')[0].length === 2 &&
+      nowTime.hour < 12
+    ) {
       if (nowTime.minute.length === 1) {
         const dateString =
           year +
@@ -380,7 +490,7 @@ const ModifySTepTwo = ({
           });
         }
       }
-    } else return;
+    }
   }, [nowTime.hour, toggle, nowTime.minute]);
 
   // FistTime
