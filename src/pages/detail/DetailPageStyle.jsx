@@ -64,6 +64,7 @@ export const NameBox = styled.div`
 `;
 export const TagetName = styled.div`
   font-size: var(--font-large);
+  font-weight: var(--weight-bold);
   margin-left: 8px;
 `;
 
@@ -93,6 +94,7 @@ export const ProfileNickName = styled.div`
   font-size: var(--font-micro);
   color: var(--color-grey);
 
+  text-align: center;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -117,7 +119,6 @@ export const Content = styled.div`
   display: flex;
   align-items: center;
   margin-left: 8px;
-  padding-left: 20px;
   width: calc(100% - 32px);
 
   height: 64px;
@@ -128,13 +129,27 @@ export const Content = styled.div`
 `;
 
 export const ContentText = styled.div`
-  width: 80%;
-  height: 30px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 2; // 원하는 라인수
-  -webkit-box-orient: vertical;
+  width: 100%;
+  height: 64px;
+  margin-left: 8px;
+  background-color: var(--color-dark-white);
+  border: transparent;
+
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+
+  border-radius: 12px 12px 12px 0px;
+  margin-bottom: 12px;
+
+  color: var(--color-dark-grey);
+
+  font-family: 'Pretendard';
+  font-size: var(--font-small);
+  font-weight: var(--weight-regular);
+
+  padding: 0px 20px;
+  resize: none;
 `;
 
 export const PartyHeaderBox = styled.div`
@@ -208,6 +223,7 @@ export const JoinBtn = styled.div`
   background-color: var(--color-orange);
   color: var(--color-white);
 
+  font-family: 'Pretendard';
   font-size: var(--font-regular);
   font-weight: var(--weight-semi-bold);
 `;
@@ -228,6 +244,7 @@ export const OverLapBtn = styled.div`
   background-color: var(--color-light-orange);
   color: var(--color-orange);
 
+  font-family: 'Pretendard';
   font-size: var(--font-regular);
   font-weight: var(--weight-semi-bold);
 `;
@@ -250,6 +267,7 @@ export const PartyOutBtn = styled.button`
   background-color: var(--color-blur-white);
   color: var(--color-white);
 
+  font-family: 'Pretendard';
   font-size: var(--font-regular);
   font-weight: var(--weight-semi-bold);
 `;
@@ -263,6 +281,36 @@ export const CurrentStatusBtn = styled.button`
   background-color: var(--color-light-yellow);
   color: var(--color-yellow);
 
+  font-family: 'Pretendard';
   font-size: var(--font-regular);
   font-weight: var(--weight-semi-bold);
+`;
+
+export const ErrorPage = styled.div`
+  position: absolute;
+  background-color: var(--color-white);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding-top: 60px;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+`;
+
+export const ErrorImg = styled.img`
+  position: absolute;
+  top: 316px;
+`;
+export const ErrorTitle = styled.div`
+  position: absolute;
+  top: 510px;
+
+  color: var(--color-grey);
+
+  font-family: 'Pretendard';
+  font-weight: var(--weight-bold);
+  font-size: var(--font-small);
 `;

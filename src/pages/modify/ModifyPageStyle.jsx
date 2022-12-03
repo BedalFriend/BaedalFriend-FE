@@ -364,3 +364,30 @@ export const SearchSvg = styled.svg`
 export const DropDownSvg = styled.svg`
   margin: 0px 8px 0px 20px;
 `;
+
+export const TextArea = styled.textarea`
+  width: 100%;
+  height: 72px;
+  background-color: var(--color-dark-white);
+  border: ${(props) =>
+    props.isTextAreaFail
+      ? '1px solid var(--color-system-error)'
+      : 'transparent'};
+
+  border-radius: 12px;
+  margin-bottom: 12px;
+  resize: none;
+
+  color: var(--color-dark-grey);
+
+  font-family: 'Pretendard';
+  font-size: var(--font-small);
+  font-weight: var(--weight-regular);
+
+  padding: 12px 0px 0px 20px;
+  white-space: pre-line;
+
+  :focus {
+    outline: none;
+  }
+`;

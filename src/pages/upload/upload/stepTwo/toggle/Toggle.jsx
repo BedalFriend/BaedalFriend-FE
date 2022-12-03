@@ -1,9 +1,7 @@
 import { useState } from 'react';
 import styled, { css } from 'styled-components';
 
-export const Toggle = ({ toggle, setToggle, data, setIsTime }) => {
-  console.log('지금시간', data.limitTime);
-  // const [toggle, setToggle] = useState(false);
+export const Toggle = ({ toggle, setToggle, setIsTime }) => {
   const clickedToggle = () => {
     const time = document.getElementById('time');
     setToggle((prev) => !prev);
@@ -32,7 +30,7 @@ const ToggleBtn = styled.button`
   border: none;
   cursor: pointer;
   background-color: ${(props) =>
-    !props.toggle ? 'var(--color-light-orange)' : 'var(--color-light-orange)'};
+    !props.toggle ? 'var(--color-dark-white)' : 'var(--color-dark-white)'};
   position: relative;
   display: flex;
   justify-content: center;

@@ -1,7 +1,8 @@
 import GlobalStyle from './styles/GlobalStyle';
 import Router from './shared/router/Router';
+import * as Sentry from '@sentry/react';
 
-export default function App() {
+function App() {
   return (
     <>
       <GlobalStyle />
@@ -9,3 +10,5 @@ export default function App() {
     </>
   );
 }
+
+export default Sentry.withProfiler(App);

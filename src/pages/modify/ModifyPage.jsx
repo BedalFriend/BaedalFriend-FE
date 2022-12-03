@@ -44,6 +44,7 @@ const Post = () => {
     isDone: 0,
     limitTime: '2022-11-20 00:00:30',
     region: '',
+    content: '',
   });
 
   // 페이지 전환
@@ -79,7 +80,6 @@ const Post = () => {
   }, []);
 
   useEffect(() => {
-    console.log('너왜와');
     setData({
       postId: id,
       roomTitle: detailData?.roomTitle,
@@ -97,10 +97,10 @@ const Post = () => {
       isDone: 0,
       limitTime: detailData?.limitTime,
       region: detailData?.region,
+      content: detailData?.content,
     });
   }, [detailData]);
 
-  console.log(data);
   return (
     <Layout>
       <ModifyST.PostBox>

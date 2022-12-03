@@ -57,6 +57,10 @@ export const CurrentBox = styled.div`
   z-index: 2;
   margin-left: 16px;
   bottom: 167px;
+
+  :hover {
+    cursor: pointer;
+  }
 `;
 
 export const BackBtn = styled.svg`

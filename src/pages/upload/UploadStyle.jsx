@@ -64,6 +64,11 @@ export const LongInputBox = styled.div`
   display: flex;
   align-items: center;
 
+  border: ${(props) =>
+    props.isTargetFail || props.isCategoryFail
+      ? '1px solid var(--color-system-error)'
+      : null};
+
   background-color: var(--color-dark-white);
   border-radius: 12px;
   width: 100%;
@@ -113,6 +118,9 @@ export const ShortInputBox = styled.div`
   max-width: 152px;
 
   height: 40px;
+
+  border: ${(props) =>
+    props.isDeliveryTimeFail ? '1px solid var(--color-system-error)' : null};
   @media screen and (min-width: 764px) {
     margin-bottom: 24px;
   }
@@ -161,6 +169,11 @@ export const PriceInputBox = styled.div`
   border-radius: 12px;
   width: 152px;
   height: 40px;
+
+  border: ${(props) =>
+    props.isTargetAmountFail || props.isDeliveryFeeFail
+      ? '1px solid var(--color-system-error)'
+      : null};
 `;
 
 export const TimeInputBox = styled.div`
@@ -172,6 +185,11 @@ export const TimeInputBox = styled.div`
   width: 152px;
   height: 40px;
   margin-left: 8px;
+
+  border: ${(props) =>
+    props.isFistTimeFail || props.isSecondTimeFail
+      ? '1px solid var(--color-system-error)'
+      : null};
 `;
 
 export const ButtonBox = styled.div`
@@ -235,12 +253,12 @@ export const StayBtn = styled.button`
 
 export const SelectBox = styled.div`
   position: relative;
-  margin-bottom: 28px;
+  margin-bottom: 12px;
 `;
 
 export const LimitTimeBox = styled.div`
   display: flex;
-  margin-bottom: 29px;
+  margin-bottom: 12px;
 `;
 
 export const UploadBtn = styled.button`
@@ -290,6 +308,9 @@ export const SelectInput = styled.div`
   background-color: var(--color-dark-white);
   align-self: center;
 
+  border: ${(props) =>
+    props.isMaxCapacityFail ? '1px solid var(--color-system-error)' : null};
+
   cursor: pointer;
   &::before {
     content: '⌵';
@@ -331,4 +352,31 @@ export const SearchSvg = styled.svg`
 
 export const DropDownSvg = styled.svg`
   margin: 0px 8px 0px 20px;
+`;
+
+export const TextArea = styled.textarea`
+  width: 100%;
+  height: 72px;
+  background-color: var(--color-dark-white);
+  border: ${(props) =>
+    props.isTextAreaFail
+      ? '1px solid var(--color-system-error)'
+      : 'transparent'};
+
+  border-radius: 12px;
+  margin-bottom: 12px;
+  resize: none;
+
+  color: var(--color-dark-grey);
+
+  font-family: 'Pretendard';
+  font-size: var(--font-small);
+  font-weight: var(--weight-regular);
+
+  padding: 12px 0px 0px 20px;
+  white-space: pre-line;
+
+  :focus {
+    outline: none;
+  }
 `;

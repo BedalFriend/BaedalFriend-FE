@@ -6,7 +6,7 @@ import ProfilePic from '../profilePic/ProfilePic';
 import SVG from '../../../shared/SVG';
 import { useNavigate } from 'react-router-dom';
 
-export default function Card({ post }) {
+export default function Card({ post, isWide }) {
   const VacUser = () => {
     const result = [];
     for (let i = 0; i < post.maxCapacity - post.chatRoomMembers.length; i++) {
@@ -46,6 +46,7 @@ export default function Card({ post }) {
 
   return (
     <CardST.Box
+      style={isWide ? { width: '100%' } : null}
       onClick={() => {
         navigate(`/detail/${post.postId}`);
       }}
@@ -129,8 +130,9 @@ export default function Card({ post }) {
               </g>
             </CardST.InfoSVG>
             <CardST.InfoText>
-              - {limit.getHours() >= 12 ? 'PM' : 'AM'} {limit.getHours()}:
-              {limit.getMinutes()}
+              - {limit.getHours() >= 12 ? 'PM' : 'AM'}{' '}
+              {limit.getHours().toString().padStart(2, '0')}:
+              {limit.getMinutes().toString().padStart(2, '0')}
             </CardST.InfoText>
           </CardST.InfoLine>
 

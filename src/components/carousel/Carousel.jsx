@@ -1,48 +1,61 @@
-import { useState, useRef, useEffect} from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import * as CaroST from './CarouselStyle';
 import LoginImg1 from '../carousel/img/Banner.png';
-import { getCookieToken } from "../../shared/storage/Cookie";
-import { useSelector } from "react-redux";
 
+import CurrentLocation from './CurrentLocation';
+
+import { getCookieToken } from '../../shared/storage/Cookie';
+import { useSelector } from 'react-redux';
 
 const PageOne = () => {
-
   const navigate = useNavigate();
   const token = getCookieToken();
   const nickname = useSelector((state) => state.user.nickname);
 
   return (
     <div>
-      { token !== null && token !== undefined ?
-        (<>
-          <CaroST.BannerImg src={LoginImg1} alt='로그인배너'/>
-          <CaroST.ImgDes>
+      {token !== null && token !== undefined ? (
+        <>
+          <CaroST.BannerImg src={LoginImg1} alt='로그인배너' />
+          <CaroST.ImgDes
+            onClick={() => {
+              navigate('/nearby');
+            }}
+          >
             <CaroST.MiniBox>
-              <CaroST.DesContent>{nickname}님을 기다리는 n명의 배프</CaroST.DesContent>
+              <CaroST.DesContent>
+                {nickname}님을 기다리는 n명의 배프
+              </CaroST.DesContent>
             </CaroST.MiniBox>
+            <CurrentLocation />
           </CaroST.ImgDes>
-        </>)
-        :
-        (<>
-          <CaroST.BannerImg src={LoginImg1} alt='로그인배너'/>
+        </>
+      ) : (
+        <>
+          <CaroST.BannerImg src={LoginImg1} alt='로그인배너' />
           <CaroST.TextBox>
-            <CaroST.BoldText>로그인</CaroST.BoldText> 하고<br/>
+            <CaroST.BoldText>로그인</CaroST.BoldText> 하고
+            <br />
             <CaroST.BfText>배프</CaroST.BfText>가 되어주세요!
           </CaroST.TextBox>
-          <CaroST.LoginMiniBox onClick={() => {navigate('/login')}}>
-          <CaroST.DesContent>
-            로그인하고 내 근처 배프 만나러 가기
-          </CaroST.DesContent>
+          <CaroST.LoginMiniBox
+            onClick={() => {
+              navigate('/login');
+            }}
+          >
+            <CaroST.DesContent>
+              로그인하고 내 근처 배프 만나러 가기
+            </CaroST.DesContent>
           </CaroST.LoginMiniBox>
-        </>)
-      }
+        </>
+      )}
     </div>
-  )
-}
+  );
+};
 
 //배너 페이지
-const BannerImg = [ PageOne ];
+const BannerImg = [PageOne];
 
 export default function Carousel() {
   //화면크기 인식
@@ -51,9 +64,9 @@ export default function Carousel() {
     setWindowWidth(window.innerWidth);
   };
   useEffect(() => {
-    window.addEventListener("resize", resizeWidth);
+    window.addEventListener('resize', resizeWidth);
     return () => {
-      window.removeEventListener("resize", resizeWidth);
+      window.removeEventListener('resize', resizeWidth);
     };
   }, []);
 
@@ -85,27 +98,27 @@ export default function Carousel() {
       return;
     }
     //반응형 애니메이션
-    if(windowWidth < 400) setX(-165);
-    else if(windowWidth < 425) setX(-155);
-    else if(windowWidth < 450) setX(-147);
-    else if(windowWidth < 475) setX(-137);
-    else if(windowWidth < 500) setX(-130);
-    else if(windowWidth < 525) setX(-123);
-    else if(windowWidth < 550) setX(-116);
-    else if(windowWidth < 575) setX(-111);
-    else if(windowWidth < 600) setX(-107);
-    else if(windowWidth < 625) setX(-100);
-    else if(windowWidth < 650) setX(-99);
-    else if(windowWidth < 675) setX(-94);
-    else if(windowWidth < 700) setX(-92);
-    else if(windowWidth < 725) setX(-89);
-    else if(windowWidth < 750) setX(-86);
-    else if(windowWidth < 764) setX(-84);
+    if (windowWidth < 400) setX(-165);
+    else if (windowWidth < 425) setX(-155);
+    else if (windowWidth < 450) setX(-147);
+    else if (windowWidth < 475) setX(-137);
+    else if (windowWidth < 500) setX(-130);
+    else if (windowWidth < 525) setX(-123);
+    else if (windowWidth < 550) setX(-116);
+    else if (windowWidth < 575) setX(-111);
+    else if (windowWidth < 600) setX(-107);
+    else if (windowWidth < 625) setX(-100);
+    else if (windowWidth < 650) setX(-99);
+    else if (windowWidth < 675) setX(-94);
+    else if (windowWidth < 700) setX(-92);
+    else if (windowWidth < 725) setX(-89);
+    else if (windowWidth < 750) setX(-86);
+    else if (windowWidth < 764) setX(-84);
     else setX(-82);
 
     setIsSlide(true);
     await setTimeout(() => {
-      setIndex((prev) => (prev === (BannerImg.length-1) ? 0 : prev + 1));
+      setIndex((prev) => (prev === BannerImg.length - 1 ? 0 : prev + 1));
       setX(0);
       setIsSlide(false);
     }, 500);
@@ -117,36 +130,46 @@ export default function Carousel() {
       return;
     }
     //반응형 애니메이션
-    if(windowWidth < 400) setX(+165);
-    else if(windowWidth < 425) setX(+155);
-    else if(windowWidth < 450) setX(+147);
-    else if(windowWidth < 475) setX(+137);
-    else if(windowWidth < 500) setX(+130);
-    else if(windowWidth < 525) setX(+123);
-    else if(windowWidth < 550) setX(+116);
-    else if(windowWidth < 575) setX(+111);
-    else if(windowWidth < 600) setX(+107);
-    else if(windowWidth < 625) setX(+100);
-    else if(windowWidth < 650) setX(+99);
-    else if(windowWidth < 675) setX(+94);
-    else if(windowWidth < 700) setX(+92);
-    else if(windowWidth < 725) setX(+89);
-    else if(windowWidth < 750) setX(+86);
-    else if(windowWidth < 764) setX(+84);
+    if (windowWidth < 400) setX(+165);
+    else if (windowWidth < 425) setX(+155);
+    else if (windowWidth < 450) setX(+147);
+    else if (windowWidth < 475) setX(+137);
+    else if (windowWidth < 500) setX(+130);
+    else if (windowWidth < 525) setX(+123);
+    else if (windowWidth < 550) setX(+116);
+    else if (windowWidth < 575) setX(+111);
+    else if (windowWidth < 600) setX(+107);
+    else if (windowWidth < 625) setX(+100);
+    else if (windowWidth < 650) setX(+99);
+    else if (windowWidth < 675) setX(+94);
+    else if (windowWidth < 700) setX(+92);
+    else if (windowWidth < 725) setX(+89);
+    else if (windowWidth < 750) setX(+86);
+    else if (windowWidth < 764) setX(+84);
     else setX(+82);
 
     setIsSlide(true);
     await setTimeout(() => {
-      setIndex((prev) => (prev === 0 ? (BannerImg.length-1) : prev - 1));
+      setIndex((prev) => (prev === 0 ? BannerImg.length - 1 : prev - 1));
       setX(0);
       setIsSlide(false);
     }, 500);
   };
 
-  const morePrevImg = index === 1 ? (BannerImg.length-1) : index === 0 ? (BannerImg.length-2) : index - 2;
-  const PrevImg = index === 0 ? (BannerImg.length-1) : index - 1;
-  const NextImg = index === (BannerImg.length-1) ? 0 : index + 1;
-  const moreNextImg = index === (BannerImg.length-1) ? 1 : index === (BannerImg.length-2) ? 0 : index + 2;
+  const morePrevImg =
+    index === 1
+      ? BannerImg.length - 1
+      : index === 0
+      ? BannerImg.length - 2
+      : index - 2;
+  const PrevImg = index === 0 ? BannerImg.length - 1 : index - 1;
+  const NextImg = index === BannerImg.length - 1 ? 0 : index + 1;
+  const moreNextImg =
+    index === BannerImg.length - 1
+      ? 1
+      : index === BannerImg.length - 2
+      ? 0
+      : index + 2;
 
   //마우스 인식 관련 함수
   const onMouseDown = (event) => {
@@ -222,7 +245,7 @@ export default function Carousel() {
   //     else if(windowWidth < 750) setX(-86);
   //     else if(windowWidth < 764) setX(-84);
   //     else setX(-82);
-      
+
   //     setIsSlide(true);
   //     setTimeout(() => {
   //       setIndex((prev) => (prev === (BannerImg.length-1) ? 0 : prev + 1));
@@ -230,13 +253,12 @@ export default function Carousel() {
   //       setIsSlide(false);
   //     }, 500);
   //     }, 4000);
-    
+
   //     return () => {
   //       clearTimeout(autoPage);
   //     };
   //   }
   // }, [index, isClick, isTouch]);
-
 
   return (
     <CaroST.Banner>
@@ -250,8 +272,8 @@ export default function Carousel() {
           onMouseMove={onMouseMove}
           onTouchEnd={onTouchEnd}
           onTouchStart={onTouchStart}
-          style={{transform: `translateX(${x}%)`}}>
-
+          style={{ transform: `translateX(${x}%)` }}
+        >
           {/* <CaroST.Container>
               {BannerImg[morePrevImg]()} 
           </CaroST.Container>
@@ -260,9 +282,7 @@ export default function Carousel() {
               {BannerImg[PrevImg]()}
           </CaroST.Container> */}
 
-          <CaroST.ImgWrapper>
-              {BannerImg[index]()}        
-          </CaroST.ImgWrapper>
+          <CaroST.ImgWrapper>{BannerImg[index]()}</CaroST.ImgWrapper>
 
           {/* <CaroST.Container>
               {BannerImg[NextImg]()}
@@ -271,16 +291,16 @@ export default function Carousel() {
           <CaroST.Container>
               {BannerImg[moreNextImg]()}
           </CaroST.Container> */}
-          
         </CaroST.Row>
       </CaroST.Wrapper>
-    
+
       {/* indicator */}
       <CaroST.IndicatorWrapper>
-        {Array.from({length: BannerImg.length}, (_, i) => i).map((i) => (
+        {Array.from({ length: BannerImg.length }, (_, i) => i).map((i) => (
           <CaroST.Indicator
-            key={`indicator_${i}`} 
-            focused={i === index ? true:false}/>
+            key={`indicator_${i}`}
+            focused={i === index ? true : false}
+          />
         ))}
       </CaroST.IndicatorWrapper>
     </CaroST.Banner>

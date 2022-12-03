@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 
 import * as CtMapST from './CurrentMapStyle';
 
-import yellowMarker from '../../imgs/upload/Yellow_Marker.png';
 import orangeMarker from '../../imgs/upload/Orange_Map_Marker.png';
 import CurrentMark from '../../imgs/upload/Map_MyLocation.png';
 import MyMarker from '../../imgs/upload/Map_LocationMark.png';
@@ -10,9 +9,6 @@ import MyMarker from '../../imgs/upload/Map_LocationMark.png';
 const { kakao } = window;
 
 const CurrentMap = ({ data, setIndex }) => {
-  //내가 선택한 마커 저장소
-  const [selectMarker, setSelectMarker] = useState(false);
-
   //선택한 위치 정보
   const [markerInfo, setMarkerInfo] = useState('');
 
@@ -60,23 +56,14 @@ const CurrentMap = ({ data, setIndex }) => {
     // 주소-좌표 변환 객체를 생성합니다.
     const geocoder = new kakao.maps.services.Geocoder();
 
-    let selectedMarker = null;
-
     geocoder.addressSearch(data.gatherAddress, function (result, status) {
       // 정상적으로 검색이 완료됐으면
       if (status === kakao.maps.services.Status.OK) {
         const coord = new kakao.maps.LatLng(result[0].y, result[0].x);
-        console.log('coord', coord);
-
-        const markerImage = new kakao.maps.MarkerImage(
-          yellowMarker,
-          new kakao.maps.Size(36, 36),
-          new kakao.maps.Point(13, 34)
-        );
 
         const checkMarkerImage = new kakao.maps.MarkerImage(
           orangeMarker,
-          new kakao.maps.Size(36, 36),
+          new kakao.maps.Size(48, 48),
           new kakao.maps.Point(13, 34)
         );
 
@@ -84,32 +71,13 @@ const CurrentMap = ({ data, setIndex }) => {
         const marker = new kakao.maps.Marker({
           map: map,
           position: new kakao.maps.LatLng(coord.Ma, coord.La),
-          image: markerImage,
+          image: checkMarkerImage,
         });
 
         // 지도 이동(기존 위치와 가깝다면 부드럽게 이동)
         map.panTo(coord);
 
-        kakao.maps.event.addListener(marker, 'click', function () {
-          // 클릭된 마커가 없고, click 마커가 클릭된 마커가 아니면
-          // 마커의 이미지를 클릭 이미지로 변경합니다
-          if (!selectedMarker || selectedMarker !== marker) {
-            // 클릭된 마커 객체가 null이 아니면
-            // 클릭된 마커의 이미지를 기본 이미지로 변경하고
-            !!selectedMarker && selectedMarker.setImage(markerImage);
-
-            // 현재 클릭된 마커의 이미지는 클릭 이미지로 변경합니다
-            marker.setImage(checkMarkerImage);
-          }
-
-          // 클릭된 마커를 현재 클릭된 마커 객체로 설정합니다
-          selectedMarker = marker;
-
-          if (!selectMarker) {
-            setSelectMarker(true);
-          }
-          setMarkerInfo(data);
-        });
+        setMarkerInfo(data);
       }
     });
 
@@ -117,7 +85,7 @@ const CurrentMap = ({ data, setIndex }) => {
     if (myLocation.latitude || myLocation.longitude) {
       const currentMarkerImage = new kakao.maps.MarkerImage(
         MyMarker,
-        new kakao.maps.Size(24, 24),
+        new kakao.maps.Size(32, 32),
         new kakao.maps.Point(13, 34)
       );
       // 현재 위치 받아오기
@@ -125,8 +93,6 @@ const CurrentMap = ({ data, setIndex }) => {
         myLocation.latitude,
         myLocation.longitude
       );
-
-      console.log(currentPos);
 
       // 지도 이동(기존 위치와 가깝다면 부드럽게 이동)
       map.panTo(currentPos);
@@ -152,24 +118,25 @@ const CurrentMap = ({ data, setIndex }) => {
           height: '100vh',
         }}
       >
-        <CtMapST.BackBtn
-          onClick={() => {
-            setIndex(false);
-          }}
-          width='44'
-          height='48'
-          viewBox='0 0 44 48'
-          fill='none'
-          xmlns='http://www.w3.org/2000/svg'
-        >
-          <g mask='url(#mask0_848_1419)'>
-            <path
-              d='M22.424 33.6042L12.3295 24.7388C12.2097 24.6332 12.125 24.5189 12.0755 24.3958C12.0252 24.2726 12 24.1407 12 24C12 23.8593 12.0252 23.7274 12.0755 23.6042C12.125 23.4811 12.2097 23.3668 12.3295 23.2612L22.424 14.3694C22.7035 14.1231 23.053 14 23.4724 14C23.8917 14 24.2512 14.1319 24.5507 14.3958C24.8502 14.6596 25 14.9675 25 15.3193C25 15.6711 24.8502 15.9789 24.5507 16.2427L15.7442 24L24.5507 31.7573C24.8303 32.0035 24.97 32.3068 24.97 32.667C24.97 33.028 24.8203 33.3404 24.5207 33.6042C24.2212 33.8681 23.8717 34 23.4724 34C23.073 34 22.7235 33.8681 22.424 33.6042Z'
-              fill='#939393'
-            />
-          </g>
-        </CtMapST.BackBtn>
-
+        <div>
+          <CtMapST.BackBtn
+            onClick={() => {
+              setIndex(false);
+            }}
+            width='44'
+            height='48'
+            viewBox='0 0 44 48'
+            fill='none'
+            xmlns='http://www.w3.org/2000/svg'
+          >
+            <g mask='url(#mask0_848_1419)'>
+              <path
+                d='M22.424 33.6042L12.3295 24.7388C12.2097 24.6332 12.125 24.5189 12.0755 24.3958C12.0252 24.2726 12 24.1407 12 24C12 23.8593 12.0252 23.7274 12.0755 23.6042C12.125 23.4811 12.2097 23.3668 12.3295 23.2612L22.424 14.3694C22.7035 14.1231 23.053 14 23.4724 14C23.8917 14 24.2512 14.1319 24.5507 14.3958C24.8502 14.6596 25 14.9675 25 15.3193C25 15.6711 24.8502 15.9789 24.5507 16.2427L15.7442 24L24.5507 31.7573C24.8303 32.0035 24.97 32.3068 24.97 32.667C24.97 33.028 24.8203 33.3404 24.5207 33.6042C24.2212 33.8681 23.8717 34 23.4724 34C23.073 34 22.7235 33.8681 22.424 33.6042Z'
+                fill='var(--color-light-black)'
+              />
+            </g>
+          </CtMapST.BackBtn>
+        </div>
         <CtMapST.MarkerInfoBox>
           <CtMapST.InfoTitleBox>
             <svg

@@ -7,7 +7,6 @@ export const __getThunk = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const { data } = await getInstance().get(`${basePath}/posts`);
-      console.log(data.data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error.code);
@@ -23,7 +22,11 @@ export const __getDetailThunk = createAsyncThunk(
         `${basePath}/posts/detail/${arg}`
       );
 
-      return thunkAPI.fulfillWithValue(data.data);
+      if (data.success) {
+        return thunkAPI.fulfillWithValue(data.data);
+      } else if (data.error.code === 'NOT_FOUND_POST') {
+        return thunkAPI.rejectWithValue(data.error.code);
+      }
     } catch (error) {
       return thunkAPI.rejectWithValue(error.code);
     }
@@ -49,7 +52,6 @@ export const __addPostThunk = createAsyncThunk(
 export const __modifyPostThunk = createAsyncThunk(
   'PATCH_MOVIES',
   async (arg, thunkAPI) => {
-    console.log(arg);
     try {
       const { data } = await getInstance().put(
         `${basePath}/auth/posts/${arg.postId}`,
@@ -229,6 +231,9 @@ export const postsSlice = createSlice({
         error: null,
       };
     },
+    UPDATE_POST: (state, action) => {
+      state.post.data = action.payload;
+    },
   },
   extraReducers: {
     //get
@@ -250,10 +255,12 @@ export const postsSlice = createSlice({
     },
     [__getDetailThunk.rejected]: (state, action) => {
       state.post.isLoading = false;
+
       state.post.error = action.payload;
     },
     [__getDetailThunk.fulfilled]: (state, action) => {
       state.post.isLoading = false;
+
       state.post.data = action.payload;
     },
 
@@ -421,5 +428,5 @@ export const postsSlice = createSlice({
   },
 });
 
-export const { CLEAR_POSTS } = postsSlice.actions;
+export const { CLEAR_POSTS, UPDATE_POST } = postsSlice.actions;
 export default postsSlice.reducer;

@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { __addPostThunk } from '../../redux/modules/PostSlice';
 import { TabContext } from '../../context/TabContext';
 import Layout from '../../components/layout/Layout';
 
-import * as UploadST from './UploadPageStyle';
+import * as UploadST from './UploadStyle';
 import useMultipleInput from '../../hooks/useMultipleInput';
 
 import SearchPartyMap from './upload/searchMap/SearchPartyMap';
@@ -13,8 +13,10 @@ import UploadCategory from './upload/UploadCategory';
 import UploadStepTwo from './upload/stepTwo/UploadStepTwo';
 import UploadStepOne from './upload/stepOne/UploadStepOne';
 import SearchMap from '../../components/searchMap/SearchMap';
+import { UPDATE_USER } from '../../redux/modules/UserSlice';
 
 const Post = () => {
+  const user = useSelector((state) => state.user);
   const { setTab } = useContext(TabContext);
 
   useEffect(() => {
@@ -38,9 +40,10 @@ const Post = () => {
     isDone: 0,
     limitTime: '2022-11-20 00:00:30',
     region: '',
+    content: '',
   });
-  console.log(data);
 
+  console.log(data);
   // 페이지 전환
   const [index, setIndex] = useState(0);
   const [addressManager, setAddressManager] = useState(false);
@@ -64,8 +67,10 @@ const Post = () => {
   const onSubmitHandler = (e) => {
     e.preventDefault();
     console.log('총데이터', data);
-    dispatch(__addPostThunk(data));
-    navigate('/');
+    dispatch(__addPostThunk(data)).then((response) => {
+      dispatch(UPDATE_USER({ ...user, onGoing: response.payload.data.postId }));
+      navigate(`/detail/${response.payload.data.postId}`);
+    });
   };
 
   const stepOneCheckHandler = (event) => {
@@ -74,12 +79,6 @@ const Post = () => {
 
   const stepTwoCheckHandler = (event) => {
     setIsSecondChecked(true);
-  };
-
-  const lengthLimit = (e) => {
-    if (e.target.value.length > 4) {
-      e.target.value = e.target.value.slice(0, 4);
-    }
   };
 
   useEffect(() => {}, [data.gatherName]);
@@ -94,14 +93,13 @@ const Post = () => {
                 data={data}
                 setData={setData}
                 dataHandler={dataHandler}
-                lengthLimit={lengthLimit}
                 setNextStepOne={setNextStepOne}
                 isChecked={isChecked}
               />
               <UploadST.ButtonBox>
                 <UploadST.CancelBtn
                   onClick={() => {
-                    navigate('/');
+                    navigate(-1);
                   }}
                 >
                   취소하기
@@ -142,7 +140,6 @@ const Post = () => {
                 setData={setData}
                 dataHandler={dataHandler}
                 addressManager={addressManager}
-                lengthLimit={lengthLimit}
                 isSecondChecked={isSecondChecked}
                 setNextStepTwo={setNextStepTwo}
                 setPeople={setPeople}
