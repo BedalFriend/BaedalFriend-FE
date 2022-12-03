@@ -75,7 +75,7 @@ export const ContentText = styled.div`
 export const CountText = styled.div`
   font-size: 24px;
   font-weight: var(--weight-bold);
-  color: var(--color-orange);
+  color: var(--color-light-black);
   white-space: nowrap;
 `
 
@@ -103,9 +103,9 @@ export const NickText = styled.div`
 export const EmailText = styled.div`
   font-size: var(--font-micro);
   font-weight: var(--weight-regular);
-  color: var(--color-orange);
+  color: var(--color-grey);
 
-  background-color: var(--color-blur-orange);
+  background-color: var(--color-dark-white);
   border-radius: 999px;
   padding: 4px 12px;
   margin-top: 4px;
@@ -197,4 +197,26 @@ export const Alarm = styled.div`
   font-size: var(--font-minor);
   font-weight: var(--weight-bold);
   color: var(--color-orange)
+`;
+
+export const FlexBox = styled.div`
+  position: relative;
+  width: fit-content;
+  display: flex;
+  align-items: center;
+`;
+
+export const Star = styled.div`
+  display: flex;
+  margin-left: 8px;
+  cursor: pointer;
+`;
+
+export const StarAvg = styled.div`
+  font-size: var(--font-regular);
+  font-weight: var(--weight-regular);
+  color: var(--color-yellow);
+
+  display: flex;
+  cursor: pointer;
 `;

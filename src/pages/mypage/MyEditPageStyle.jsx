@@ -24,7 +24,7 @@ export const myEditBG = styled.div`
 export const backSVG = styled.div`
   position: relative;
   width: calc(100% - 32px);
-  height: 60px;
+  height: 100px;
   cursor: pointer;
 `
 
@@ -200,4 +200,12 @@ export const HelpText = styled.span`
     props.isFail ? 'var(--color-system-error)' : 'var(--color-system-success)'};
 
   margin-left: 4px;
+`;
+
+export const EditPic = styled.img`
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: none;
+  object-fit: cover;
 `;
