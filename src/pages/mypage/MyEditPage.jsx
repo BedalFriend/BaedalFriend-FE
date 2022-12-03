@@ -34,7 +34,6 @@ export default function MyEditPage() {
   const [editNick, setEditNick] = useState();
   const [profilePost, setProfilepost] = useState();
   const [changed, setChanged] = useState(false);
-  const [profileNull, setProfileNull] = useState();
 
   //닉네임 중복검사
   const [inCheck, setInCheck] = useState(false);
@@ -136,7 +135,6 @@ export default function MyEditPage() {
             closeModal={closeModal}
             setProfilepost={setProfilepost}
             setPreviewImg={setPreviewImg}
-            setProfileNull={setProfileNull}
             profilePost={profilePost}
             setChanged={setChanged}/>)}
       </myEditST.picWrap>

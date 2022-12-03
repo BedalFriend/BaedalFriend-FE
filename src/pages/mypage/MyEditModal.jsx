@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import * as ModalST from './MyEditModalStyle';
 import useOutSideClick from '../../hooks/useOutSideClick';
 
-export default function MyEditModal({closeModal, setProfilepost, profilePost, setPreviewImg, setChanged, setProfileNull}) {
+export default function MyEditModal({closeModal, setProfilepost, profilePost, setPreviewImg, setChanged}) {
 
   //배경 클릭 시 모달창 닫기
   const modalRef = useRef(null)
@@ -54,8 +54,14 @@ export default function MyEditModal({closeModal, setProfilepost, profilePost, se
             </label>
         </ModalST.TopBox>
 
-        {/* <ModalST.BottomBox onClick={setProfileNull(true)}> */}
-        <ModalST.BottomBox>
+        <ModalST.BottomBox
+          // onClick={(e) => {
+          //   encodeFileToBase64(null);
+          //   setProfilepost({
+          //     ...profilePost,
+          //     imgUrl: null});
+          //   closeModal(e);}}
+            >
             <ModalST.SelectText>기본 이미지로 변경</ModalST.SelectText>
         </ModalST.BottomBox>    
 
