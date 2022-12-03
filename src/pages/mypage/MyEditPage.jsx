@@ -18,7 +18,6 @@ export default function MyEditPage() {
 
   const { setIsDP } = useContext(AlarmContext);
   const navigate = useNavigate();
-  const formData = new FormData();
 
   //토큰
   const authorization = store.getState()?.token?.accessToken;
@@ -74,11 +73,15 @@ export default function MyEditPage() {
   }, [editNick]);
 
   useEffect(() => {
-    setProfilepost({nickname: editNick})
+    setProfilepost({
+      ...profilePost,
+      nickname: editNick})
   }, [editNick]);
 
   //수정사항 적용하기
   const onSubmitHandler = () => {
+    const formData = new FormData();
+
     formData.append('imgUrl', profilePost?.imgUrl);
     formData.append('nickname',
       new Blob(
@@ -91,6 +94,9 @@ export default function MyEditPage() {
       )
     );
 
+    // for (const keyValue of formData)
+    // console.log(keyValue);
+
     axios
       .patch(`https://sparta-bds.shop/v1/mypages/edit/${userId}`, formData,
       { headers:
@@ -98,11 +104,9 @@ export default function MyEditPage() {
           'Refresh_Token' : `${refreshToken}`,
           'Content-Type' : 'multipart/form-data'} })
       .then((res) => {
-      console.log(res);
-      // if (res.data.success) {
-      //   window.location.replace("/mypage")
-      // }
-      // console.log(res);
+      if (res.data.success) {
+        window.location.replace("/mypage")
+      }
       });
   }
 
@@ -127,7 +131,8 @@ export default function MyEditPage() {
             closeModal={closeModal}
             setProfilepost={setProfilepost}
             setPreviewImg={setPreviewImg}
-            setProfileNull={setProfileNull}/>)}
+            setProfileNull={setProfileNull}
+            profilePost={profilePost}/>)}
       </myEditST.picWrap>
 
       {/* 이메일 아이디 */}
