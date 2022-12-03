@@ -1,17 +1,24 @@
 import { createContext, useEffect, useRef, useState } from 'react';
 import SockJS from 'sockjs-client';
 import * as StompJS from '@stomp/stompjs';
+
 import { getCookieToken } from '../shared/storage/Cookie';
-import { useSelector } from 'react-redux';
+import { ADD_CHAT } from '../redux/modules/ChatSlice';
+import store from '../redux/config/ConfigStore';
+import { useDispatch, useSelector } from 'react-redux';
 
 export const SocketContext = createContext();
 
 export function SocketProvider({ children }) {
-  const user = useSelector((state) => state.user);
-  const authorization = useSelector((state) => state.token.accessToken);
-  const refreshToken = getCookieToken();
-
+  const dispatch = useDispatch();
   const client = useRef({});
+
+  const getInfo = async () => {
+    const user = store.getState()?.user;
+    const authorization = store.getState()?.token?.accessToken;
+    const refreshToken = getCookieToken();
+    return { user, authorization, refreshToken };
+  };
 
   const connect = () => {
     client.current = new StompJS.Client({
@@ -21,56 +28,104 @@ export function SocketProvider({ children }) {
       debug: (str) => {
         console.log(str);
       },
+      onChangeState: (e) => {
+        console.log('change!', e);
+      },
       reconnectDelay: 5000,
       heartbeatIncoming: 4000,
       heartbeatOutgoing: 4000,
       onConnect: () => {
-        console.log('Connect...!');
-        subscribe();
-      },
-      onStompError: (frame) => {
-        console.error(frame);
+        initSub();
+        //unsubscribe();
       },
     });
 
-    //client.current.activate();
+    client.current.activate();
   };
 
-  const subscribe = () => {
-    client.current.subscribe(
-      `/sub/chat/room/1`,
-      (e) => {
-        console.log('yes!');
-        console.log(JSON.parse(e));
-      },
-      { id: `sub-1` }
-    );
-  };
-
-  const publish = (message) => {
+  const initSub = async () => {
+    const { user } = await getInfo();
     if (!client.current.connected) return;
+    if (
+      user.onGoing !== null &&
+      user.onGoing !== undefined &&
+      user.onGoing !== 0
+    ) {
+      client.current.subscribe(
+        `/sub/chat/room/${user.onGoing}`,
+        onMessageReceived,
+        {
+          id: `sub-${user.onGoing}`,
+        }
+      );
+    }
+  };
 
+  const subscribe = (id) => {
+    if (!client.current.connected) return;
+    if (id !== null && id !== undefined && id !== 0) {
+      client.current.subscribe(`/sub/chat/room/${id}`, onMessageReceived, {
+        id: `sub-${id}`,
+      });
+    }
+  };
+
+  const user = useSelector((state) => state.user);
+  useEffect(() => {
+    subscribe(user.onGoing);
+    return () => {
+      unsubscribe(user.onGoing);
+    };
+  }, [user.onGoing]);
+
+  const unsubscribe = (id) => {
+    if (!client.current.connected) return;
+    if (id !== null && id !== undefined && id !== 0) {
+      client.current.unsubscribe(`sub-${id}`);
+    }
+  };
+
+  const onMessageReceived = async (payload) => {
+    const { user } = await getInfo();
+    const received = JSON.parse(payload.body);
+    console.log(received);
+    if (received.roomId === user.onGoing) {
+      switch (received.type) {
+        case 'TALK':
+          return dispatch(ADD_CHAT(received));
+        default:
+          return;
+      }
+    }
+  };
+
+  const publish = async (message, roomId, type) => {
+    const { user, authorization, refreshToken } = await getInfo();
+    if (!client.current.connected) return;
     client.current.publish({
-      destination: '/chat/message',
+      destination: '/pub/chat/message',
       body: JSON.stringify({
-        type: 'TALK',
-        roomId: '1',
-        sender: 'kim',
+        type,
+        roomId,
+        sender: user.nickname,
         message,
       }),
+      headers: { Authorization: authorization, Refresh_Token: refreshToken },
     });
+  };
+
+  const disconnect = () => {
+    client.current.deactivate();
   };
 
   useEffect(() => {
     connect();
-    window.setTimeout(() => {
-      publish('안녕하세요!');
-    }, 3000);
-    //return () => disconnect();
+    return () => disconnect();
+    // eslint-disable-next-line
   }, []);
 
   return (
-    <SocketContext.Provider value={{ client }}>
+    <SocketContext.Provider value={{ client, subscribe, unsubscribe, publish }}>
       {children}
     </SocketContext.Provider>
   );

@@ -29,7 +29,7 @@ export default function TestPage(props) {
     email: 'test@gmail.com',
     password: 'qwer1234*',
     passwordConfirm: 'qwer1234*',
-    nickname: 'test1234',
+    nickname: 'test12',
     role: 0,
   };
 
@@ -68,7 +68,7 @@ export default function TestPage(props) {
   };
 
   useEffect(() => {
-    setTab('Upload');
+    setTab('Mypage');
     // eslint-disable-next-line
   }, []);
 
@@ -89,23 +89,11 @@ export default function TestPage(props) {
       <Timer limit='10' />
       <h1
         onClick={() => {
-          console.log(new Date('2022-11-10 17:30:25') - new Date());
+          console.log(new Date('2022-11-19T10:05:48.282494'));
         }}
       >
         Date Generator!
       </h1>
-      <h1>Scroll Generator...</h1>
-      <h1>Scroll Generator...</h1>
-      <h1>Scroll Generator...</h1>
-      <h1>Scroll Generator...</h1>
-      <h1>Scroll Generator...</h1>
-      <h1>Scroll Generator...</h1>
-      <h1>Scroll Generator...</h1>
-      <h1>Scroll Generator...</h1>
-      <h1>Scroll Generator...</h1>
-      <h1>Scroll Generator...</h1>
-      <h1>Scroll Generator...</h1>
-      <h1>Scroll Generator...</h1>
     </Layout>
   );
 }
@@ -116,6 +104,7 @@ const Box = styled.div`
   width: 300px;
   font-weight: 300;
   font-display: swap;
+  min-height: 100vh;
 `;
 
 const Button = styled.button`
