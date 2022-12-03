@@ -27,6 +27,21 @@ export const MainBox = styled.div`
   box-shadow: 0px 0px 8px rgba(187, 187, 187, 0.32);
 `
 
+export const GuestMainBox = styled.div`
+  position: relative;
+  background-color: var(--color-white);
+
+  width: calc(100% - 32px);
+  height: 96px;
+  margin-top: 92px;
+
+  align-items: center;
+  justify-content: center;
+  
+  border-radius: 12px;
+  box-shadow: 0px 0px 8px rgba(187, 187, 187, 0.32);
+`
+
 export const Profile = styled.div`
   position: relative;
   display: flex;
@@ -160,6 +175,13 @@ export const MenuText = styled.div`
   margin-left: 8px;
 `
 
+export const DisabledText = styled.div`
+  font-size: var(--font-regular);
+  font-weight: var(--weight-regular);
+  color: var(--color-blur-white);
+  margin-left: 8px;
+`
+
 export const Line = styled.hr`
   position: relative;
 
@@ -178,7 +200,7 @@ export const QuitBox = styled.div`
   
   font-size: var(--font-regular);
   font-weight: var(--weight-regular);
-  color: var(--color-blur-white);
+  color: var(--color-grey);
 
   cursor: pointer;
 `;

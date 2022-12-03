@@ -3,9 +3,8 @@ import axios from 'axios';
 import { getCookieToken } from '../../shared/storage/Cookie';
 import { basePath } from '../../shared/api/Request';
 import { checkNickname } from '../../shared/api/Users';
-import { AlarmContext } from '../../context/AlarmContext';
 
-import { React, useContext, useEffect, useState } from 'react';
+import { React, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
@@ -16,7 +15,6 @@ import MyEditModal from './MyEditModal';
 
 export default function MyEditPage() {
 
-  const { setIsDP } = useContext(AlarmContext);
   const navigate = useNavigate();
 
   //토큰
