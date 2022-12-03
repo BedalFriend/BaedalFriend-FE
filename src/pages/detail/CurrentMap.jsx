@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 
 import * as CtMapST from './CurrentMapStyle';
 
-import yellowMarker from '../../imgs/upload/Yellow_Marker.png';
 import orangeMarker from '../../imgs/upload/Orange_Map_Marker.png';
 import CurrentMark from '../../imgs/upload/Map_MyLocation.png';
 import MyMarker from '../../imgs/upload/Map_LocationMark.png';
@@ -10,10 +9,6 @@ import MyMarker from '../../imgs/upload/Map_LocationMark.png';
 const { kakao } = window;
 
 const CurrentMap = ({ data, setIndex }) => {
-  console.log('data,', data);
-  //내가 선택한 마커 저장소
-  const [selectMarker, setSelectMarker] = useState(false);
-
   //선택한 위치 정보
   const [markerInfo, setMarkerInfo] = useState('');
 
@@ -61,19 +56,10 @@ const CurrentMap = ({ data, setIndex }) => {
     // 주소-좌표 변환 객체를 생성합니다.
     const geocoder = new kakao.maps.services.Geocoder();
 
-    let selectedMarker = null;
-
     geocoder.addressSearch(data.gatherAddress, function (result, status) {
       // 정상적으로 검색이 완료됐으면
       if (status === kakao.maps.services.Status.OK) {
         const coord = new kakao.maps.LatLng(result[0].y, result[0].x);
-        console.log('coord', coord);
-
-        const markerImage = new kakao.maps.MarkerImage(
-          yellowMarker,
-          new kakao.maps.Size(48, 48),
-          new kakao.maps.Point(13, 34)
-        );
 
         const checkMarkerImage = new kakao.maps.MarkerImage(
           orangeMarker,
@@ -85,32 +71,13 @@ const CurrentMap = ({ data, setIndex }) => {
         const marker = new kakao.maps.Marker({
           map: map,
           position: new kakao.maps.LatLng(coord.Ma, coord.La),
-          image: markerImage,
+          image: checkMarkerImage,
         });
 
         // 지도 이동(기존 위치와 가깝다면 부드럽게 이동)
         map.panTo(coord);
 
-        kakao.maps.event.addListener(marker, 'click', function () {
-          // 클릭된 마커가 없고, click 마커가 클릭된 마커가 아니면
-          // 마커의 이미지를 클릭 이미지로 변경합니다
-          if (!selectedMarker || selectedMarker !== marker) {
-            // 클릭된 마커 객체가 null이 아니면
-            // 클릭된 마커의 이미지를 기본 이미지로 변경하고
-            !!selectedMarker && selectedMarker.setImage(markerImage);
-
-            // 현재 클릭된 마커의 이미지는 클릭 이미지로 변경합니다
-            marker.setImage(checkMarkerImage);
-          }
-
-          // 클릭된 마커를 현재 클릭된 마커 객체로 설정합니다
-          selectedMarker = marker;
-
-          if (!selectMarker) {
-            setSelectMarker(true);
-          }
-          setMarkerInfo(data);
-        });
+        setMarkerInfo(data);
       }
     });
 
@@ -126,8 +93,6 @@ const CurrentMap = ({ data, setIndex }) => {
         myLocation.latitude,
         myLocation.longitude
       );
-
-      console.log(currentPos);
 
       // 지도 이동(기존 위치와 가깝다면 부드럽게 이동)
       map.panTo(currentPos);

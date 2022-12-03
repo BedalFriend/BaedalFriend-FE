@@ -128,20 +128,19 @@ export const Content = styled.div`
   font-weight: var(--weight-regular);
 `;
 
-export const ContentText = styled.textarea`
+export const ContentText = styled.div`
   width: 100%;
   height: 64px;
   margin-left: 8px;
   background-color: var(--color-dark-white);
   border: transparent;
 
-  display: felx;
-  align-items: center;
+  display: flex;
+  flex-flow: column nowrap;
   justify-content: center;
 
   border-radius: 12px 12px 12px 0px;
   margin-bottom: 12px;
-  resize: none;
 
   color: var(--color-dark-grey);
 
@@ -149,8 +148,8 @@ export const ContentText = styled.textarea`
   font-size: var(--font-small);
   font-weight: var(--weight-regular);
 
-  padding: 12px 20px 12px 20px;
-  white-space: pre-line;
+  padding: 0px 20px;
+  resize: none;
 `;
 
 export const PartyHeaderBox = styled.div`
