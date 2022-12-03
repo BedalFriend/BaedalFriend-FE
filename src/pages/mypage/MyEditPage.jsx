@@ -33,6 +33,7 @@ export default function MyEditPage() {
   const [previewImg, setPreviewImg] = useState();
   const [editNick, setEditNick] = useState();
   const [profilePost, setProfilepost] = useState();
+  const [changed, setChanged] = useState(false);
   const [profileNull, setProfileNull] = useState();
 
   //닉네임 중복검사
@@ -51,7 +52,11 @@ export default function MyEditPage() {
 
   useEffect(() => {
     setInCheck(true);
-    if(nickname === editNick) return;
+    if(nickname === editNick) {
+      setInCheck(false);
+      setIsNicknameFail(false);
+      setHelpNicknameText('이전과 같은 닉네임이에요!');
+    }
     const nicknameHandler = setTimeout(async() => {
       const response = await checkNickname(editNick);
       if (response.status) {
@@ -132,7 +137,8 @@ export default function MyEditPage() {
             setProfilepost={setProfilepost}
             setPreviewImg={setPreviewImg}
             setProfileNull={setProfileNull}
-            profilePost={profilePost}/>)}
+            profilePost={profilePost}
+            setChanged={setChanged}/>)}
       </myEditST.picWrap>
 
       {/* 이메일 아이디 */}
@@ -159,7 +165,9 @@ export default function MyEditPage() {
           placeholder="6자 이하로 설정해주세요."
           maxLength='6'
           defaultValue={nickname}
-          onChange={(e) => setEditNick(e.target.value)}
+          onChange={(e) => {
+            setEditNick(e.target.value);
+          }}
           />
         {/* <myEditST.nickEditBtn>변경하기</myEditST.nickEditBtn> */}
       </myEditST.nickBox>
@@ -215,7 +223,7 @@ export default function MyEditPage() {
         <myEditST.submitBtn
           onClick={onSubmitHandler}
           disabled={
-            (previewImg===null||undefined) &&
+            (changed===false) &&
             (isNicknameFail===true)
           }>
           적용하기

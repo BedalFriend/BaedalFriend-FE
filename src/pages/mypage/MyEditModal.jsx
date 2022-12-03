@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import * as ModalST from './MyEditModalStyle';
 import useOutSideClick from '../../hooks/useOutSideClick';
 
-export default function MyEditModal({closeModal, setProfilepost, profilePost, setPreviewImg, setProfileNull}) {
+export default function MyEditModal({closeModal, setProfilepost, profilePost, setPreviewImg, setChanged, setProfileNull}) {
 
   //배경 클릭 시 모달창 닫기
   const modalRef = useRef(null)
@@ -27,6 +27,7 @@ export default function MyEditModal({closeModal, setProfilepost, profilePost, se
     return new Promise((resolve) => {
       reader.onload = () => {
         setPreviewImg(reader.result);
+        setChanged(true);
         resolve();
       };
     });
@@ -43,7 +44,6 @@ export default function MyEditModal({closeModal, setProfilepost, profilePost, se
               type="file"
               id="file"
               onChange={(e) => {
-                console.log(e.target.files[0]);
                 encodeFileToBase64(e.target.files[0]);
                 setProfilepost({
                   ...profilePost,
