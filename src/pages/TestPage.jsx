@@ -82,6 +82,7 @@ export default function TestPage(props) {
           <Button onClick={onLoginHandler}>LOGIN TEST BUTTON</Button>
           <Button onClick={onLogoutHandler}>LOGOUT TEST BUTTON</Button>
           <Button onClick={onReissueHandler}>REISSUE TEST BUTTON</Button>
+          <button onClick={methodDoesNotExist}>Bad Button</button>;
           <img src={kakaoPath} alt='kakao login' onClick={onGetKakaoCode} />
         </Box>
       </Init>
