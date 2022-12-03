@@ -12,11 +12,8 @@ import { SocketProvider } from './context/SocketContext';
 import { AlarmProvider } from './context/AlarmContext';
 
 Sentry.init({
-  dsn: 'https://e6aed16528b74f7fb83d5ae8914b0e6f@o4504263565312000.ingest.sentry.io/4504263568523264',
+  dsn: process.env.REACT_APP_SENTRY_DSN,
   integrations: [new BrowserTracing()],
-  // Set tracesSampleRate to 1.0 to capture 100%
-  // of transactions for performance monitoring.
-  // We recommend adjusting this value in production
   tracesSampleRate: 1.0,
 });
 

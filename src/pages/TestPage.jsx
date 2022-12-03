@@ -72,6 +72,10 @@ export default function TestPage(props) {
     // eslint-disable-next-line
   }, []);
 
+  const throwKnownError = () => {
+    throw new Error('This is an error from sentry tutorial');
+  };
+
   return (
     <Layout>
       <Init>
@@ -82,7 +86,7 @@ export default function TestPage(props) {
           <Button onClick={onLoginHandler}>LOGIN TEST BUTTON</Button>
           <Button onClick={onLogoutHandler}>LOGOUT TEST BUTTON</Button>
           <Button onClick={onReissueHandler}>REISSUE TEST BUTTON</Button>
-          <button onClick={methodDoesNotExist}>Bad Button</button>;
+          <button onClick={throwKnownError}>Bad Button</button>
           <img src={kakaoPath} alt='kakao login' onClick={onGetKakaoCode} />
         </Box>
       </Init>
