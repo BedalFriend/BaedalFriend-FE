@@ -33,9 +33,7 @@ export default function CategoryPage() {
 
   //정렬 모달창
   const [isOpen, setIsOpen] = useState(false);
-  const [aniState, setAniState] = useState(false);
   const openModal = () => {
-    setAniState(true);
     setIsOpen(true);
   };
   const closeModal = () => {
@@ -282,7 +280,6 @@ export default function CategoryPage() {
             ref={scrollRef}
             onTouchStart={touchStartHandler}
             onTouchEnd={touchEndHandler}
-            onTouchMove={isTouch ? throttleHandler : null}
             onMouseDown={dragStartHandler}
             onMouseUp={dragEndHandler}
             onMouseMove={isDrag ? throttleHandler : null}
@@ -341,8 +338,6 @@ export default function CategoryPage() {
         </CateST.DropDownSection>
         {isOpen && (
           <SearchModal
-            aniState={aniState}
-            setAniState={setAniState}
             closeModal={closeModal}
             setSelect={setSelect}
             select={select}

@@ -3,8 +3,9 @@ import axios from 'axios';
 import { getCookieToken } from '../../shared/storage/Cookie';
 import { basePath } from '../../shared/api/Request';
 import { checkNickname } from '../../shared/api/Users';
+import { AlarmContext } from '../../context/AlarmContext';
 
-import React, { useEffect, useState } from 'react';
+import { React, useContext, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
@@ -15,8 +16,8 @@ import MyEditModal from './MyEditModal';
 
 export default function MyEditPage() {
 
+  const { setIsDP } = useContext(AlarmContext);
   const navigate = useNavigate();
-  const formData = new FormData();  
 
   //토큰
   const authorization = store.getState()?.token?.accessToken;
@@ -28,46 +29,33 @@ export default function MyEditPage() {
   const nickname = useSelector(state => state.user.nickname);
   const userId = useSelector((state) => state.user.id);
 
+  //프로필사진, 닉네임
+  const [previewImg, setPreviewImg] = useState();
+  const [editNick, setEditNick] = useState();
+  const [profilePost, setProfilepost] = useState();
+  const [changed, setChanged] = useState(false);
+
+  //닉네임 중복검사
+  const [inCheck, setInCheck] = useState(false);
+  const [isNicknameFail, setIsNicknameFail] = useState(true);
+  const [helpNicknameText, setHelpNicknameText] = useState('');
+
   //모달
   const [isOpen, setIsOpen] = useState(false);
-  const [aniState, setAniState] = useState(false);
   const openModal = () => {
-    setAniState(true);
     setIsOpen(true);
   }
   const closeModal = () => {
     setIsOpen(false);
   }
 
-  const [previewImg, setPreviewImg] = useState();
-  const [editNick, setEditNick] = useState();
-  const [profilePost, setProfilepost] = useState();
-
-  //이미지 미리보기
-  const preview = () => {
-    console.log('imgUrl', profilePost?.imgUrl);
-
-    formData.append('imgUrl', profilePost?.imgUrl);
-
-    axios
-      .put(`${basePath}/mypages/image/${userId}`, formData,
-      { headers:
-        { 'Authorization' : `${authorization}`,
-          'Refresh_Token' : `${refreshToken}`,
-          'Content-Type' : 'multipart/form-data'} })
-      // .then((res) => {
-      //   setPreviewImg(res.data.data.imageUrl);
-      //   console.log('previewImg', previewImg);
-      // });
-  }
-
-  const [inCheck, setInCheck] = useState(false);
-  const [isNicknameFail, setIsNicknameFail] = useState(true);
-  const [helpNicknameText, setHelpNicknameText] = useState('');
-
   useEffect(() => {
     setInCheck(true);
-    if(nickname === editNick) return;
+    if(nickname === editNick) {
+      setInCheck(false);
+      setIsNicknameFail(false);
+      setHelpNicknameText('이전과 같은 닉네임이에요!');
+    }
     const nicknameHandler = setTimeout(async() => {
       const response = await checkNickname(editNick);
       if (response.status) {
@@ -88,65 +76,67 @@ export default function MyEditPage() {
     };
   }, [editNick]);
 
-  //프로필 post 요청
+  useEffect(() => {
+    setProfilepost({
+      ...profilePost,
+      nickname: editNick})
+  }, [editNick]);
+
+  //수정사항 적용하기
   const onSubmitHandler = () => {
-    const info = {
-      imageUrl: profilePost.imgUrl,
-      nickname: profilePost.editNick,
-    };
+    const formData = new FormData();
+
+    formData.append('imgUrl', profilePost?.imgUrl);
+    formData.append('nickname',
+      new Blob(
+        [
+          JSON.stringify({
+            nickname: profilePost?.nickname,
+          }),
+        ],
+        { type: 'application/json'}
+      )
+    );
+
+    // for (const keyValue of formData)
+    // console.log(keyValue);
 
     axios
-      .post(`${basePath}/mypages/image/${userId}`, info,
+      .patch(`https://sparta-bds.shop/v1/mypages/edit/${userId}`, formData,
       { headers:
         { 'Authorization' : `${authorization}`,
           'Refresh_Token' : `${refreshToken}`,
           'Content-Type' : 'multipart/form-data'} })
       .then((res) => {
       if (res.data.success) {
-        navigate(-1);
+        window.location.replace("/mypage")
       }
-    });
+      });
   }
-
-  useEffect(() => {
-    preview();
-  }, [profilePost?.imgUrl]);
-
-  useEffect(() => {
-    setProfilepost({nickname: editNick})
-  }, [editNick]);
 
   return (
     <myEditST.myEditBG>
       {/* 뒤로가기 */}
       <myEditST.backSVG>
-        <svg
-          width='44' height='48' viewBox='0 0 44 48' fill='none' xmlns='http://www.w3.org/2000/svg'
-          style={{ position: 'absolute', bottom: '0px'}} onClick={() => {navigate(-1);}}>
-          <g mask='url(#mask0_243_490)'>
-            <path
-              d='M22.424 33.6042L12.3295 24.7388C12.2097 24.6332 12.125 24.5189 12.0755 24.3958C12.0252 24.2726 12 24.1407 12 24C12 23.8593 12.0252 23.7274 12.0755 23.6042C12.125 23.4811 12.2097 23.3668 12.3295 23.2612L22.424 14.3694C22.7035 14.1231 23.053 14 23.4724 14C23.8917 14 24.2512 14.1319 24.5507 14.3958C24.8502 14.6596 25 14.9675 25 15.3193C25 15.6711 24.8502 15.9789 24.5507 16.2427L15.7442 24L24.5507 31.7573C24.8303 32.0035 24.97 32.3068 24.97 32.667C24.97 33.028 24.8203 33.3404 24.5207 33.6042C24.2212 33.8681 23.8717 34 23.4724 34C23.073 34 22.7235 33.8681 22.424 33.6042Z'
-              fill='var(--color-grey)'
-            />
-          </g>
-        </svg>
+
       </myEditST.backSVG>
 
       {/* 프로필사진 변경 */}
       <myEditST.picText>프로필 사진</myEditST.picText>
       <myEditST.picWrap>
         {previewImg ?
-          <img src={previewImg} alt="profile"/> :
+          <myEditST.EditPic src={previewImg} alt="previewImg"/>
+          :
           <ProfilePic size='100px' border='' user={user}/>
         }
         <myEditST.picButton onClick={openModal}>변경하기</myEditST.picButton>
         {isOpen &&
           (<MyEditModal
-            aniState={aniState}
-            setAniState={setAniState}
             closeModal={closeModal}
+            setProfilepost={setProfilepost}
+            setPreviewImg={setPreviewImg}
             profilePost={profilePost}
-            setProfilepost={setProfilepost}/>)}
+            setChanged={setChanged}/>)}
       </myEditST.picWrap>
 
       {/* 이메일 아이디 */}
@@ -173,7 +163,9 @@ export default function MyEditPage() {
           placeholder="6자 이하로 설정해주세요."
           maxLength='6'
           defaultValue={nickname}
-          onChange={(e) => setEditNick(e.target.value)}
+          onChange={(e) => {
+            setEditNick(e.target.value);
+          }}
           />
         {/* <myEditST.nickEditBtn>변경하기</myEditST.nickEditBtn> */}
       </myEditST.nickBox>
@@ -229,7 +221,7 @@ export default function MyEditPage() {
         <myEditST.submitBtn
           onClick={onSubmitHandler}
           disabled={
-            (previewImg===null||undefined) &&
+            (changed===false) &&
             (isNicknameFail===true)
           }>
           적용하기
