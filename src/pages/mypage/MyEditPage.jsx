@@ -140,7 +140,7 @@ export default function MyEditPage() {
       <myEditST.checkText>이메일 아이디</myEditST.checkText>
       <myEditST.emailBox>
         { email !== null && email !== undefined ?
-          ({email})
+          (email)
           :
           ("이메일이 등록되지 않았습니다.")
         }

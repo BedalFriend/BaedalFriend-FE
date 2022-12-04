@@ -62,7 +62,7 @@ export default function MyPage() {
               </myST.FlexBox>
               <myST.EmailText>
                 { email !== null && email !== undefined ?
-                  ({email})
+                  (email)
                   :
                   ("이메일이 등록되지 않았습니다.")
                 }
