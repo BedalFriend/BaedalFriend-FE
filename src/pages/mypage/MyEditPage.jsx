@@ -26,6 +26,7 @@ export default function MyEditPage() {
   const email = useSelector(state => state.user.email);
   const nickname = useSelector(state => state.user.nickname);
   const userId = useSelector((state) => state.user.id);
+  const profileURL = useSelector((state) => state.user.profileURL);
 
   //프로필사진, 닉네임
   const [previewImg, setPreviewImg] = useState();
@@ -68,32 +69,48 @@ export default function MyEditPage() {
       }
     }, 500);
 
-    return () => {
-      clearTimeout(nicknameHandler);
-    };
-  }, [editNick]);
-
-  useEffect(() => {
     setProfilepost({
       ...profilePost,
       nickname: editNick})
+
+    return () => {
+      clearTimeout(nicknameHandler);
+    };
   }, [editNick]);
 
   //수정사항 적용하기
   const onSubmitHandler = () => {
     const formData = new FormData();
 
-    formData.append('imgUrl', profilePost?.imgUrl);
-    formData.append('nickname',
-      new Blob(
-        [
-          JSON.stringify({
-            nickname: profilePost?.nickname,
-          }),
-        ],
-        { type: 'application/json'}
-      )
-    );
+    if(profilePost?.imgUrl === null || profilePost?.imgUrl === undefined) {
+      formData.append('imgUrl', profileURL);
+    } else {
+      formData.append('imgUrl', profilePost?.imgUrl);
+    }
+    
+    if(profilePost?.nickname === null || profilePost?.nickname === undefined) {
+      formData.append('nickname',
+        new Blob(
+          [
+            JSON.stringify({
+              nickname: nickname,
+            }),
+          ],
+          { type: 'application/json'}
+        )
+      );
+    } else {
+      formData.append('nickname',
+        new Blob(
+          [
+            JSON.stringify({
+              nickname: profilePost?.nickname,
+            }),
+          ],
+          { type: 'application/json'}
+        )
+      );
+    }
 
     // for (const keyValue of formData)
     // console.log(keyValue);
@@ -105,9 +122,9 @@ export default function MyEditPage() {
           'Refresh_Token' : `${refreshToken}`,
           'Content-Type' : 'multipart/form-data'} })
       .then((res) => {
-      if (res.data.success) {
-        window.location.replace("/mypage")
-      }
+        if (res.data.success) {
+          window.location.replace("/mypage")
+        }
       });
   }
 
