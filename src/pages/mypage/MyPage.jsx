@@ -60,7 +60,13 @@ export default function MyPage() {
                   4.5
                 </myST.StarAvg>
               </myST.FlexBox>
-              <myST.EmailText>{email}</myST.EmailText>
+              <myST.EmailText>
+                { email !== null && email !== undefined ?
+                  ({email})
+                  :
+                  ("이메일이 등록되지 않았습니다.")
+                }
+              </myST.EmailText>
             </myST.VerticalBox>
           </myST.Profile>
 
