@@ -61,6 +61,7 @@ const Nearby = () => {
           />
         ) : (
           <NearbyMap
+            user={user}
             data={partyData.data}
             setTab={setTab}
             setIndex={setIndex}

@@ -10,6 +10,7 @@ import yellowMarker from '../../imgs/upload/Yellow_Marker.png';
 import orangeMarker from '../../imgs/upload/Orange_Map_Marker.png';
 
 export default function NearbyMap({
+  user,
   data,
   setTab,
   setIndex,
@@ -18,11 +19,10 @@ export default function NearbyMap({
   searchData,
   setSearchParty,
 }) {
-  console.log(data);
+  // console.log(data);
   const [kakaoMap, setKakaoMap] = useState(null);
-  // const [searchParty, setSearchParty] = useState('');
 
-  const user = { address: '경기 성남시 분당구 판교역로 235' };
+  // const user = { address: '경기 성남시 분당구 판교역로 235' };
 
   let totalData = [];
 
@@ -31,10 +31,6 @@ export default function NearbyMap({
   //내가 선택한 마커 저장소
   const [markerInfo, setMarkerInfo] = useState('');
   const [slotManager, setSlotManager] = useState(false);
-
-  //검색한 값 && 반경 1km 값
-  // const [searchData, setSearchData] = useState();
-  // console.log('searchData', searchData);
 
   // 주소-좌표 변환 객체를 생성합니다.
   const geocoder = new kakao.maps.services.Geocoder();
@@ -52,7 +48,6 @@ export default function NearbyMap({
   );
 
   const [myLocation, setMyLocation] = useState('');
-  console.log('myLocation', myLocation);
 
   // 위치 가져오기 버튼 클릭시
   const getCurrentPosBtn = () => {
@@ -87,22 +82,34 @@ export default function NearbyMap({
 
     script.onload = () => {
       kakao.maps.load(() => {
-        // 현재위치에 대한 검색어를 좌표로 변환
-        geocoder.addressSearch(user.address, function (results, status) {
-          // 정상적으로 검색이 완료됐으면
-          if (status === kakao.maps.services.Status.OK) {
-            const center = new kakao.maps.LatLng(results[0].y, results[0].x);
-            // const center = new kakao.maps.LatLng(37.50802, 127.062835);
-            const options = {
-              center,
-              level: 3,
-            };
-            const map = new kakao.maps.Map(container.current, options);
+        if (user.address === null) {
+          const center = new kakao.maps.LatLng(37.50802, 127.062835);
+          const options = {
+            center,
+            level: 3,
+          };
+          const map = new kakao.maps.Map(container.current, options);
 
-            //setMapCenter(center);
-            setKakaoMap(map);
-          }
-        });
+          //setMapCenter(center);
+          setKakaoMap(map);
+        } else {
+          // 현재위치에 대한 검색어를 좌표로 변환
+          geocoder.addressSearch(user.address, function (results, status) {
+            // 정상적으로 검색이 완료됐으면
+            if (status === kakao.maps.services.Status.OK) {
+              const center = new kakao.maps.LatLng(results[0].y, results[0].x);
+              // const center = new kakao.maps.LatLng(37.50802, 127.062835);
+              const options = {
+                center,
+                level: 3,
+              };
+              const map = new kakao.maps.Map(container.current, options);
+
+              //setMapCenter(center);
+              setKakaoMap(map);
+            }
+          });
+        }
       });
     };
   }, [container, searchParty]);
@@ -118,10 +125,7 @@ export default function NearbyMap({
     kakaoMap.setCenter(center);
 
     let timer = setTimeout(() => {
-      console.log('timertimertimer');
-      console.log(data);
       const filterData = data.filter((p) => {
-        console.log('againagainagina');
         if (
           p.targetName
             .replace('', '')
