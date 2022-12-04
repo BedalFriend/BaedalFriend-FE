@@ -46,6 +46,7 @@ const Post = () => {
     region: '',
     content: '',
   });
+  console.log(data);
 
   // 페이지 전환
   const [index, setIndex] = useState(0);
@@ -63,8 +64,8 @@ const Post = () => {
     e.preventDefault();
     console.log('총데이터', data);
     dispatch(__modifyPostThunk(data));
-    // navigate(`/detail/${id}`);
-    navigate('/');
+    navigate(`/detail/${id}`);
+    // navigate('/');
   };
 
   const stepOneCheckHandler = (event) => {
