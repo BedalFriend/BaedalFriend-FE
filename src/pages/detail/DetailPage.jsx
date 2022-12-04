@@ -360,13 +360,13 @@ const DetailPage = () => {
                   {post?.data.limitTime?.split(' ')[1].split(':')[0] > 12 ? (
                     <div>
                       오후{' '}
-                      {post?.data.limitTime?.split(' ')[1].split(':')[0] - 12}시
+                      {post?.data.limitTime?.split(' ')[1].split(':')[0] - 12}시{' '}
                       {post?.data.limitTime?.split(' ')[1].split(':')[1]}분 신청
                       마감
                     </div>
                   ) : (
                     <div>
-                      오전 {post?.data.limitTime?.split(' ')[1].split(':')[0]}시
+                      오전 {post?.data.limitTime?.split(' ')[1].split(':')[0]}시{' '}
                       {post?.data.limitTime?.split(' ')[1].split(':')[1]}분 신청
                       마감
                     </div>
