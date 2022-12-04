@@ -49,11 +49,6 @@ export default function MyEditPage() {
 
   useEffect(() => {
     setInCheck(true);
-    if(nickname === editNick) {
-      setInCheck(false);
-      setIsNicknameFail(false);
-      setHelpNicknameText('이전과 같은 닉네임이에요!');
-    }
     const nicknameHandler = setTimeout(async() => {
       const response = await checkNickname(editNick);
       if (response.status) {
@@ -63,8 +58,12 @@ export default function MyEditPage() {
       } else {
         setInCheck(false);
         setIsNicknameFail(true);
-        if (response.headers.message)
+        if (response.headers.message && (nickname === editNick)) {
+          setHelpNicknameText('이전과 같은 닉네임이에요!');
+        }
+        else if(response.headers.message) {
           setHelpNicknameText('다른 사용자가 사용 중인 별명이에요.');
+        }
         else setHelpNicknameText(response.headers.error.message);
       }
     }, 500);

@@ -7,7 +7,7 @@ export const Overlay = styled.div`
   bottom: 0;
   left: 0;
   right: 0;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(33, 33, 33, 0.3);
   z-index: 910;
 
   @media screen and (min-width: 764px) {
@@ -22,16 +22,21 @@ export const Overlay = styled.div`
 `;
 
 export const ModalWrap = styled.div`
-  width: fit-content;
-  height: fit-content;
+  width: 326px;
   position: absolute;
 
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 920;
 
   align-items: center;
+
+  cursor: pointer;
+`;
+
+export const ModalMainWrap = styled.div`
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
 
   cursor: pointer;
 `;
@@ -39,20 +44,14 @@ export const ModalWrap = styled.div`
 export const TopBox = styled.div`
   position: relative;
   height: 57px;
-  background-color: rgba(255, 255, 255, 0.80);
   text-align: center;  
-  border-top-left-radius: 12px;
-  border-top-right-radius : 12px;
   padding-top: 13px;
 `;
 
 export const BottomBox = styled.div`
   position: relative;
   height: 57px;
-  background-color: rgba(255, 255, 255, 0.80);
   text-align: center;    
-  border-bottom-left-radius: 12px;
-  border-bottom-right-radius: 12px;
   padding-bottom: 13px;
 `;
 
@@ -60,7 +59,7 @@ export const SelectBox = styled.div`
   position: relative;
   width: 325px;
   height: 52px;
-  background-color: rgba(255, 255, 255, 0.80);
+  background-color: rgba(255, 255, 255, 0.9);
   border-radius: 12px;
   text-align: center;
   margin-top: 12px;
