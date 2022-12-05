@@ -27,9 +27,11 @@ import { UPDATE_USER } from '../../redux/modules/UserSlice';
 import { AlarmContext } from '../../context/AlarmContext';
 import { getCookieToken } from '../../shared/storage/Cookie';
 import { TabContext } from '../../context/TabContext';
+import { SocketContext } from '../../context/SocketContext';
 
 const DetailPage = () => {
   const { setTab } = useContext(TabContext);
+  const { publish } = useContext(SocketContext); // 12.05 재명: 채팅방 관련 context
 
   useEffect(() => {
     setTab('Detail');
@@ -88,7 +90,7 @@ const DetailPage = () => {
       dispatch(__enterChannel(id));
       dispatch(__increaseParticipantThunk(id));
       dispatch(UPDATE_USER({ ...user, onGoing: post.data.postId }));
-
+      publish('', id, 'ENTER'); // 12.05 재명: 채팅방 입장 publish
       const tempArr = [...post.data.chatRoomMembers];
       tempArr.push({ member: user });
       dispatch(
@@ -105,17 +107,13 @@ const DetailPage = () => {
   // 퇴장 핸들러
   const onExitHandler = () => {
     dispatch(__decreaseParticipantThunk(id));
-
     dispatch(UPDATE_USER({ ...user, onGoing: null }));
-
+    publish('', id, 'EXIT'); // 12.05 재명: 채팅방 퇴장 publish
     const tempArr = [...post.data.chatRoomMembers];
-
     const target = tempArr.findIndex((item) => {
       return item.member.id === user.id;
     });
-
     tempArr.splice(target, 1);
-
     dispatch(
       UPDATE_POST({
         ...post.data,

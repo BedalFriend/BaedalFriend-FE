@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { AlarmContext } from '../../../context/AlarmContext';
 import { TabContext } from '../../../context/TabContext';
 import { getCookieToken } from '../../../shared/storage/Cookie';
 import * as HeadST from './HeaderStyle';
@@ -12,9 +11,6 @@ export default function Header() {
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
   const refreshToken = getCookieToken();
-
-  const [isOpen, setIsOpen] = useState(false);
-  const { setIsDP } = useContext(AlarmContext);
 
   const getAddress = (address) => {
     const arr = address
@@ -41,7 +37,11 @@ export default function Header() {
           cursor: 'pointer',
         }}
         onClick={() => {
-          navigate(-1);
+          if (tab === 'NearbyList') {
+            navigate('/nearby');
+          } else {
+            navigate(-1);
+          }
         }}
       >
         <g mask='url(#mask0_243_490)'>
@@ -99,36 +99,6 @@ export default function Header() {
           </g>
         </svg>
       </HeadST.Address>
-
-      {/* <HeadST.ChatSVG
-        width='48'
-        height='48'
-        viewBox='0 0 48 48'
-        fill='none'
-        xmlns='http://www.w3.org/2000/svg'
-        onClick={() => {
-          if (!location.pathname.includes('/chat')) {
-            if (refreshToken !== null && refreshToken !== undefined) {
-              navigate(`/chat/${user.onGoing}`);
-            } else {
-              setIsDP(true);
-            }
-          }
-        }}
-      >
-        <g mask='url(#mask0_159_110)'>
-          <path
-            d='M36 34.615V13.6873C36 12.9483 35.7648 12.3155 35.2944 11.7887C34.8248 11.2629 34.26 11 33.6 11H14.4C13.74 11 13.1748 11.2629 12.7044 11.7887C12.2348 12.3155 12 12.9483 12 13.6873V29.8114C12 30.5504 12.2348 31.1833 12.7044 31.71C13.1748 32.2358 13.74 32.4988 14.4 32.4988H31.2L33.96 35.5892C34.34 36.0147 34.7752 36.1097 35.2656 35.8741C35.7552 35.6394 36 35.2197 36 34.615Z'
-            fill={
-              refreshToken !== null && refreshToken !== undefined
-                ? user.onGoing === 0
-                  ? 'var(--color-light-orange)'
-                  : 'var(--color-orange)'
-                : 'var(--color-light-orange)'
-            }
-          />
-        </g>
-      </HeadST.ChatSVG> */}
     </HeadST.Area>
   );
 }

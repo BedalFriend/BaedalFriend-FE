@@ -1,9 +1,9 @@
-import { createContext, useEffect, useRef, useState } from 'react';
+import { createContext, useEffect, useRef } from 'react';
 import SockJS from 'sockjs-client';
 import * as StompJS from '@stomp/stompjs';
 
 import { getCookieToken } from '../shared/storage/Cookie';
-import { ADD_CHAT } from '../redux/modules/ChatSlice';
+import { ADD_CHAT, UPDATE_CHANNEL } from '../redux/modules/ChatSlice';
 import store from '../redux/config/ConfigStore';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -88,10 +88,32 @@ export function SocketProvider({ children }) {
   const onMessageReceived = async (payload) => {
     const { user } = await getInfo();
     const received = JSON.parse(payload.body);
-    console.log(received);
     if (received.roomId === user.onGoing) {
       switch (received.type) {
         case 'TALK':
+          return dispatch(ADD_CHAT(received));
+        case 'ENTER':
+          {
+            const channel = store.getState()?.chat?.channel;
+            const tempMembers = [...channel.data.chatRoomMembers];
+            tempMembers.push({ member: received.member });
+            dispatch(
+              UPDATE_CHANNEL({ ...channel.data, chatRoomMembers: tempMembers })
+            );
+          }
+          return dispatch(ADD_CHAT(received));
+        case 'EXIT':
+          {
+            const channel = store.getState()?.chat?.channel;
+            const target = channel.data.chatRoomMembers.findIndex(
+              (item) => item.member.id === received.member.id
+            );
+            const tempMembers = [...channel.data.chatRoomMembers];
+            tempMembers.splice(target, 1);
+            dispatch(
+              UPDATE_CHANNEL({ ...channel.data, chatRoomMembers: tempMembers })
+            );
+          }
           return dispatch(ADD_CHAT(received));
         default:
           return;
@@ -99,7 +121,7 @@ export function SocketProvider({ children }) {
     }
   };
 
-  const publish = async (message, roomId, type) => {
+  const publish = async (payload, roomId, type) => {
     const { user, authorization, refreshToken } = await getInfo();
     if (!client.current.connected) return;
     client.current.publish({
@@ -108,7 +130,7 @@ export function SocketProvider({ children }) {
         type,
         roomId,
         sender: user.nickname,
-        message,
+        message: payload,
       }),
       headers: { Authorization: authorization, Refresh_Token: refreshToken },
     });
