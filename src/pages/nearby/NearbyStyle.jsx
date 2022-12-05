@@ -79,11 +79,22 @@ export const CardBox = styled.div`
 export const BottomBtnBox = styled.div`
   position: absolute;
   display: flex;
-  justify-content: space-between;
+  justify-content: left;
+  align-items: center;
+  /* width: calc(100% - 32px); */
+  margin-left: 16px;
+  z-index: 3;
+  bottom: ${(props) => (props.slotManager ? '405px' : '156px')};
+`;
+
+export const ListBtnBox = styled.div`
+  position: absolute;
+  display: flex;
+  justify-content: right;
   align-items: center;
   width: calc(100% - 32px);
   margin-left: 16px;
-  z-index: 3;
+  /* z-index: 3; */
   bottom: ${(props) => (props.slotManager ? '405px' : '156px')};
 `;
 
@@ -103,6 +114,7 @@ export const VeiwAll = styled.div`
   color: var(--color-orange);
 
   border-radius: 12px;
+  z-index: 3;
 
   font-family: 'Pretandard';
   font-weight: var(--weight-bold);
@@ -163,6 +175,12 @@ export const TitleBorder = styled.div`
 
 export const Select = styled.div`
   margin: 16px 0px 20px 0px;
+
+  display: flex;
+  align-items: center;
+  :hover {
+    cursor: pointer;
+  }
 
   color: var(--color-grey);
   font-family: 'Pretendard';
