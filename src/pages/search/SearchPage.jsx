@@ -13,11 +13,12 @@ import NRImage from './banner 1.png';
 import {
   __getSearchThunk,
   __getReSearchThunk,
+  __postRecentWord,
+  __getRecentWord,
   CLEAR_POSTS,
 } from '../../redux/modules/PostSlice';
 
 export default function SearchPage() {
-  window.scrollTo(0, 0);
   const dispatch = useDispatch();
   const { setTab } = useContext(TabContext);
 
@@ -130,6 +131,7 @@ export default function SearchPage() {
   };
 
   useEffect(() => {
+    setSearchTerm(searchTerm.replace(/ /g,""))
     setSearched(false);
     setIsOpen(false);
     queryHandler();
@@ -144,9 +146,13 @@ export default function SearchPage() {
           dispatch(__getReSearchThunk(query));
         }
         setSearched(true);
+      
+        setTimeout(async() => {
+          dispatch(__postRecentWord(`${searchTerm}`))
+        }, 300) 
       }
-    
     }, 600);
+
     return () => {
       clearTimeout(searchHandler);
       setSearched(false);
@@ -155,6 +161,8 @@ export default function SearchPage() {
 
   //clean up
   useEffect(() => {
+    window.scrollTo(0, 0);  
+    dispatch(__getRecentWord);
     dispatch(CLEAR_POSTS());
     return () => {
       dispatch(CLEAR_POSTS());

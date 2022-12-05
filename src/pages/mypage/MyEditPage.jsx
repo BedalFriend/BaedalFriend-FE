@@ -82,9 +82,35 @@ export default function MyEditPage() {
   const onSubmitHandler = () => {
     const formData = new FormData();
 
+    console.log("profilePost?.imgUrl", profilePost?.imgUrl);
+
     if(profilePost?.imgUrl === null || profilePost?.imgUrl === undefined) {
       formData.append('imgUrl', profileURL);
-    } else {
+    } else if (profilePost?.imgUrl === "basic" && profilePost?.nickname) {
+      formData.append('nickname',
+      new Blob(
+        [
+          JSON.stringify({
+            nickname: profilePost?.nickname,
+            profileURL: "BasicProfile",
+          }),
+        ],
+        { type: 'application/json'}
+      )
+      ); 
+    } else if (profilePost?.imgUrl === "basic") {
+      formData.append('nickname',
+      new Blob(
+        [
+          JSON.stringify({
+            profileURL: "BasicProfile",
+          }),
+        ],
+        { type: 'application/json'}
+      )
+    );
+    } 
+    else {
       formData.append('imgUrl', profilePost?.imgUrl);
     }
     
@@ -112,8 +138,8 @@ export default function MyEditPage() {
       );
     }
 
-    // for (const keyValue of formData)
-    // console.log(keyValue);
+    for (const keyValue of formData)
+    console.log(keyValue);
 
     axios
       .patch(`https://sparta-bds.shop/v1/mypages/edit/${userId}`, formData,
@@ -125,6 +151,8 @@ export default function MyEditPage() {
         if (res.data.success) {
           window.location.replace("/mypage")
         }
+        for (const keyValue of formData)
+        console.log(keyValue);
       });
   }
 
