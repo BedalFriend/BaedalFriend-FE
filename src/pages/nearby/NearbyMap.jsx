@@ -342,7 +342,10 @@ export default function NearbyMap({
             />
           </g>
         </NearbyST.SearchBtn>
-        {slotManager && searchData.length > 1 && searchParty !== '' ? (
+      </NearbyST.BottomBtnBox>
+
+      <NearbyST.ListBtnBox slotManager={slotManager}>
+        {searchData?.length > 1 || searchParty === '' ? (
           <NearbyST.VeiwAll
             onClick={() => {
               setIndex(true);
@@ -352,7 +355,7 @@ export default function NearbyMap({
             모두보기
           </NearbyST.VeiwAll>
         ) : null}
-      </NearbyST.BottomBtnBox>
+      </NearbyST.ListBtnBox>
 
       <div>
         <NearbyST.CardBox slotManager={slotManager}>

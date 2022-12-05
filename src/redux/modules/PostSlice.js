@@ -176,6 +176,7 @@ export const __getReCateSearchThunk = createAsyncThunk(
 export const __getReEntireCateThunk = createAsyncThunk(
   'GET_REENTIRECATE',
   async (arg, thunkAPI) => {
+    console.log(arg);
     try {
       const { data } = await getInstance().get(
         `${basePath}/posts/regionEntireCategory/search?page=1&size=1000&${arg}`

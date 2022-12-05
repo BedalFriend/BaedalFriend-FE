@@ -1,13 +1,73 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as NearbyST from './NearbyStyle';
 
 import Card from '../../components/elements/card/Card';
+import NearbyModal from './NearbyModal';
 
 const NearbyList = ({ searchParty, filterSearchData, setTab }) => {
+  //정렬 모달 선택
+  const [select, setSelect] = useState('마감 임박 순');
+
+  //정렬 모달창
+  const [isOpen, setIsOpen] = useState(false);
+  const openModal = () => {
+    setIsOpen(true);
+  };
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+
+  //정렬된 파티
+  const [partyList, setPartyList] = useState(filterSearchData);
+
+  //마감 임박 순
+  const imminentLimitTimeHandler = [...partyList].sort(function (a, b) {
+    return new Date(a.limitTime) - new Date(b.limitTime);
+  });
+
+  //신규 등록 순
+  const createdAtHandler = [...partyList].sort(function (a, b) {
+    return new Date(b.createdAt) - new Date(a.createdAt);
+  });
+
+  //참여자 많은 순
+  const highParticipantHandler = [...partyList].sort(function (a, b) {
+    return a.chatRoomMembers.length > b.chatRoomMembers.length
+      ? -1
+      : a.chatRoomMembers.length < b.chatRoomMembers.length
+      ? 1
+      : 0;
+  });
+
+  //참여자 적은 순
+  const lowParticipantHandler = [...partyList].sort(function (a, b) {
+    return a.chatRoomMembers.length < b.chatRoomMembers.length
+      ? -1
+      : a.chatRoomMembers.length > b.chatRoomMembers.length
+      ? 1
+      : 0;
+  });
+
   useEffect(() => {
-    setTab('Upload');
+    setTab('NearbyList');
     // eslint-disable-next-line
   }, []);
+
+  useEffect(() => {
+    if (select === '마감 임박 순') {
+      setPartyList(imminentLimitTimeHandler);
+    }
+    if (select === '신규 등록 순') {
+      setPartyList(createdAtHandler);
+    }
+    if (select === '참여자 많은 순') {
+      setPartyList(highParticipantHandler);
+    }
+    if (select === '참여자 적은 순') {
+      setPartyList(lowParticipantHandler);
+    }
+    // eslint-disable-next-line
+  }, [select]);
   return (
     <NearbyST.SearchResult>
       <NearbyST.ResultTitle>
@@ -40,12 +100,52 @@ const NearbyList = ({ searchParty, filterSearchData, setTab }) => {
       </NearbyST.ResultTitle>
       <NearbyST.TitleBorder />
 
-      <NearbyST.Select>마감 임박 순</NearbyST.Select>
+      <NearbyST.Select onClick={openModal}>
+        {select}
+        <svg
+          width='16'
+          height='16'
+          viewBox='0 0 16 16'
+          fill='none'
+          xmlns='http://www.w3.org/2000/svg'
+        >
+          <mask
+            id='mask0_536_236'
+            mask-type='alpha'
+            maskUnits='userSpaceOnUse'
+            x='0'
+            y='-2'
+            width='16'
+            height='18'
+          >
+            <rect
+              y='16'
+              width='17.4545'
+              height='16'
+              transform='rotate(-90 0 16)'
+              fill='#D9D9D9'
+            />
+          </mask>
+          <g mask='url(#mask0_536_236)'>
+            <path
+              d='M11.8417 6.39017L8.29551 10.5315C8.2533 10.5806 8.20756 10.6154 8.15831 10.6357C8.10906 10.6563 8.05629 10.6667 8 10.6667C7.94371 10.6667 7.89094 10.6563 7.84169 10.6357C7.79244 10.6154 7.7467 10.5806 7.70448 10.5315L4.14776 6.39017C4.04925 6.27547 4 6.1321 4 5.96006C4 5.78802 4.05277 5.64055 4.15831 5.51766C4.26385 5.39477 4.38698 5.33333 4.5277 5.33333C4.66843 5.33333 4.79156 5.39477 4.8971 5.51766L8 9.13057L11.1029 5.51766C11.2014 5.40297 11.3227 5.34562 11.4668 5.34562C11.6112 5.34562 11.7361 5.40706 11.8417 5.52995C11.9472 5.65284 12 5.79621 12 5.96006C12 6.12391 11.9472 6.26728 11.8417 6.39017Z'
+              fill='#939393'
+            />
+          </g>
+        </svg>
+      </NearbyST.Select>
+
+      {isOpen && (
+        <NearbyModal
+          closeModal={closeModal}
+          setSelect={setSelect}
+          select={select}
+        />
+      )}
 
       <NearbyST.SelectBox>
         <NearbyST.SelectList>
-          {filterSearchData.map((data) => {
-            console.log('data', data);
+          {partyList.map((data) => {
             return <Card key={data.postId} post={data} />;
           })}
         </NearbyST.SelectList>
