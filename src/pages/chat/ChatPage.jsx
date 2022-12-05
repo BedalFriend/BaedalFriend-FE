@@ -4,6 +4,7 @@ import * as ChatST from './ChatPageStyle';
 import Layout from '../../components/layout/Layout';
 import ProfilePic from '../../components/elements/profilePic/ProfilePic';
 import Chat from './Chat';
+import Notice from './Notice';
 
 import { SocketContext } from '../../context/SocketContext';
 import { TabContext } from '../../context/TabContext';
@@ -167,13 +168,30 @@ export default function ChatPage() {
       <ChatST.Body id='body'>
         <div style={{ height: '136px' }}></div>
         {channel?.data?.chatMessages?.map((chat, index) => {
-          if (
-            index > 0 &&
-            channel.data.chatMessages[index - 1].member.id === chat.member.id
-          ) {
-            return <Chat key={chat.id} chat={chat} isSame={true} />;
-          } else {
-            return <Chat key={chat.id} chat={chat} isSame={false} />;
+          switch (chat.type) {
+            case 'TALK':
+              if (
+                index > 0 &&
+                channel.data.chatMessages[index - 1].type !== 'TALK' &&
+                chat.type === 'TALK'
+              ) {
+                return <Chat key={chat.id} chat={chat} isSame={false} />;
+              }
+              if (
+                index > 0 &&
+                channel.data.chatMessages[index - 1].member.id ===
+                  chat.member.id
+              ) {
+                return <Chat key={chat.id} chat={chat} isSame={true} />;
+              } else {
+                return <Chat key={chat.id} chat={chat} isSame={false} />;
+              }
+            case 'ENTER':
+              return <Notice key={chat.id} chat={chat} action='ENTER' />;
+            case 'EXIT':
+              return <Notice key={chat.id} chat={chat} action='EXIT' />;
+            default:
+              return;
           }
         })}
         <div style={{ height: '130px' }}></div>
@@ -301,6 +319,7 @@ export default function ChatPage() {
                       onClick={() => {
                         dispatch(__exitChannel(id));
                         dispatch(UPDATE_USER({ ...user, onGoing: null }));
+                        publish(msgInput, id, 'EXIT');
                         navigate('/');
                       }}
                     >

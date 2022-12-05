@@ -17,7 +17,10 @@ export default function Layout(props) {
     <LayoutST.Box>
       <Header />
       {props.children}
-      {tab === 'Chat' || tab === 'Upload' || tab === 'Detail' ? (
+      {tab === 'Chat' ||
+      tab === 'Upload' ||
+      tab === 'Detail' ||
+      tab === 'NearbyList' ? (
         <></>
       ) : (
         <GnbFloat />
