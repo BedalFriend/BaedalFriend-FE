@@ -9,6 +9,7 @@ export const Box = styled.div`
   flex-flow: column nowrap;
   justify-content: center;
   align-items: center;
+  z-index: 950;
 
   @media screen and (min-width: 764px) {
     width: var(--responsive-width);
