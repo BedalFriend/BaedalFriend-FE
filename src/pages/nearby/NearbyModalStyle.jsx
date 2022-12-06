@@ -11,11 +11,11 @@ export const Overlay = styled.div`
   z-index: 910;
 
   @media screen and (min-width: 764px) {
-      width: var(--responsive-width);
+    width: var(--responsive-width);
   }
 
   @media screen and (max-width: 764px) {
-      width: 100%;
+    width: 100%;
   }
 
   cursor: pointer;
@@ -30,7 +30,7 @@ export const ModalWrap = styled.div`
   transform: translate(-50%, -50%);
 
   align-items: center;
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: white;
   border-radius: 12px;
 
   cursor: pointer;
@@ -46,21 +46,23 @@ export const SelectBox = styled.div`
 export const TopBox = styled.div`
   position: relative;
   height: 50px;
-  text-align: center;  
+  text-align: center;
   padding-top: 10px;
 `;
 
 export const BottomBox = styled.div`
   position: relative;
   height: 50px;
-  text-align: center;    
+  text-align: center;
   padding-bottom: 10px;
 `;
 
 export const SelectText = styled.div`
   font-size: var(--weight-small);
-  font-weight: ${(props) => (props.focused ? 'var(--weight-bold)' : 'var(--weight-regular)')};
-  color: ${(props) => (props.focused ? 'var(--color-orange)' : 'var(--color-dark-grey)')};
+  font-weight: ${(props) =>
+    props.focused ? 'var(--weight-bold)' : 'var(--weight-regular)'};
+  color: ${(props) =>
+    props.focused ? 'var(--color-orange)' : 'var(--color-dark-grey)'};
 
   position: relative;
   top: 50%;

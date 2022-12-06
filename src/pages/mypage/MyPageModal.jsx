@@ -45,6 +45,7 @@ export default function MyPageModal({closeModal}) {
     <ModalST.Overlay>
       <ModalST.ModalWrap ref={modalRef}>
 
+        <ModalST.ModalMainWrap>
         <ModalST.TopBox onClick={() => {navigate('/myEdit')}}>
             <ModalST.SelectText>프로필 수정하기</ModalST.SelectText>
         </ModalST.TopBox>
@@ -52,6 +53,7 @@ export default function MyPageModal({closeModal}) {
         <ModalST.BottomBox onClick={() => onLogoutHandler()}>
             <ModalST.SelectText>로그아웃</ModalST.SelectText>
         </ModalST.BottomBox>
+        </ModalST.ModalMainWrap>
 
         <ModalST.SelectBox onClick={() => handleClose()}>
             <ModalST.BackText>돌아가기</ModalST.BackText>

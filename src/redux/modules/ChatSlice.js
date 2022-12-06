@@ -80,6 +80,9 @@ export const chatSlice = createSlice({
         action.payload,
       ];
     },
+    UPDATE_CHANNEL: (state, action) => {
+      state.channel.data = action.payload;
+    },
   },
   extraReducers: {
     /* 보고있는 해당 채널 정보 받기 */
@@ -88,16 +91,16 @@ export const chatSlice = createSlice({
     },
     [__getChannel.fulfilled]: (state, action) => {
       state.channel.data = action.payload.data;
-      console.log('fullfilled', state.channel.data);
+      //console.log('fullfilled', state.channel.data);
       state.channel.isLoading = false;
     },
     [__getChannel.rejected]: (state, action) => {
-      console.log('error', action.payload);
+      //console.log('error', action.payload);
       state.channel.isLoading = false;
       state.channel.error = action.payload;
     },
   },
 });
 
-export const { CLEAR_CHANNEL, ADD_CHAT } = chatSlice.actions;
+export const { CLEAR_CHANNEL, ADD_CHAT, UPDATE_CHANNEL } = chatSlice.actions;
 export default chatSlice.reducer;

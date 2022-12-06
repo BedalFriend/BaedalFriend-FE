@@ -188,3 +188,8 @@ export const BottomBtnBox = styled.div`
   display: flex;
   gap: 15px;
 `;
+
+export const ModalBox = styled.div`
+  background-color: white;
+  border-radius: 12px;
+`;

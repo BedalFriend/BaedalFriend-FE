@@ -70,26 +70,28 @@ export default function DeleteModal({
           </ModalST.ModalWrap>
         ) : (
           <ModalST.ModalWrap>
-            <ModalST.TopBox>
-              <ModalST.SelectText
-                onClick={() => {
-                  navigate(`/modify/${id}`);
-                }}
-              >
-                게시글 수정하기
-              </ModalST.SelectText>
-            </ModalST.TopBox>
-            <ModalST.SelectBox>
-              <ModalST.SelectText
-                onClick={() => {
-                  setIsDeleteHandler(true);
-                }}
-              >
-                게시글 삭제하기
-              </ModalST.SelectText>
-            </ModalST.SelectBox>
+            <ModalST.ModalBox>
+              <ModalST.TopBox>
+                <ModalST.SelectText
+                  onClick={() => {
+                    navigate(`/modify/${id}`);
+                  }}
+                >
+                  게시글 수정하기
+                </ModalST.SelectText>
+              </ModalST.TopBox>
+              <ModalST.SelectBox>
+                <ModalST.SelectText
+                  onClick={() => {
+                    setIsDeleteHandler(true);
+                  }}
+                >
+                  게시글 삭제하기
+                </ModalST.SelectText>
+              </ModalST.SelectBox>
 
-            <ModalST.BottomBox></ModalST.BottomBox>
+              <ModalST.BottomBox></ModalST.BottomBox>
+            </ModalST.ModalBox>
 
             <ModalST.CloseSelectBox>
               <ModalST.SelectText

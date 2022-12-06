@@ -3,9 +3,8 @@ import axios from 'axios';
 import { getCookieToken } from '../../shared/storage/Cookie';
 import { basePath } from '../../shared/api/Request';
 import { checkNickname } from '../../shared/api/Users';
-import { AlarmContext } from '../../context/AlarmContext';
 
-import { React, useContext, useEffect, useState } from 'react';
+import { React, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
@@ -16,7 +15,6 @@ import MyEditModal from './MyEditModal';
 
 export default function MyEditPage() {
 
-  const { setIsDP } = useContext(AlarmContext);
   const navigate = useNavigate();
 
   //토큰
@@ -28,6 +26,7 @@ export default function MyEditPage() {
   const email = useSelector(state => state.user.email);
   const nickname = useSelector(state => state.user.nickname);
   const userId = useSelector((state) => state.user.id);
+  const profileURL = useSelector((state) => state.user.profileURL);
 
   //프로필사진, 닉네임
   const [previewImg, setPreviewImg] = useState();
@@ -51,11 +50,6 @@ export default function MyEditPage() {
 
   useEffect(() => {
     setInCheck(true);
-    if(nickname === editNick) {
-      setInCheck(false);
-      setIsNicknameFail(false);
-      setHelpNicknameText('이전과 같은 닉네임이에요!');
-    }
     const nicknameHandler = setTimeout(async() => {
       const response = await checkNickname(editNick);
       if (response.status) {
@@ -65,41 +59,87 @@ export default function MyEditPage() {
       } else {
         setInCheck(false);
         setIsNicknameFail(true);
-        if (response.headers.message)
+        if (response.headers.message && (nickname === editNick)) {
+          setHelpNicknameText('이전과 같은 닉네임이에요!');
+        }
+        else if(response.headers.message) {
           setHelpNicknameText('다른 사용자가 사용 중인 별명이에요.');
+        }
         else setHelpNicknameText(response.headers.error.message);
       }
     }, 500);
+
+    setProfilepost({
+      ...profilePost,
+      nickname: editNick})
 
     return () => {
       clearTimeout(nicknameHandler);
     };
   }, [editNick]);
 
-  useEffect(() => {
-    setProfilepost({
-      ...profilePost,
-      nickname: editNick})
-  }, [editNick]);
-
   //수정사항 적용하기
   const onSubmitHandler = () => {
     const formData = new FormData();
 
-    formData.append('imgUrl', profilePost?.imgUrl);
-    formData.append('nickname',
+    console.log("profilePost?.imgUrl", profilePost?.imgUrl);
+
+    if(profilePost?.imgUrl === null || profilePost?.imgUrl === undefined) {
+      formData.append('imgUrl', profileURL);
+    } else if (profilePost?.imgUrl === "basic" && profilePost?.nickname) {
+      formData.append('nickname',
       new Blob(
         [
           JSON.stringify({
             nickname: profilePost?.nickname,
+            profileURL: "BasicProfile",
+          }),
+        ],
+        { type: 'application/json'}
+      )
+      ); 
+    } else if (profilePost?.imgUrl === "basic") {
+      formData.append('nickname',
+      new Blob(
+        [
+          JSON.stringify({
+            profileURL: "BasicProfile",
           }),
         ],
         { type: 'application/json'}
       )
     );
+    } 
+    else {
+      formData.append('imgUrl', profilePost?.imgUrl);
+    }
+    
+    if(profilePost?.nickname === null || profilePost?.nickname === undefined) {
+      formData.append('nickname',
+        new Blob(
+          [
+            JSON.stringify({
+              nickname: nickname,
+            }),
+          ],
+          { type: 'application/json'}
+        )
+      );
+    } else {
+      formData.append('nickname',
+        new Blob(
+          [
+            JSON.stringify({
+              nickname: profilePost?.nickname,
+            }),
+          ],
+          { type: 'application/json'}
+        )
+      );
+    }
 
-    // for (const keyValue of formData)
-    // console.log(keyValue);
+    for (const keyValue of formData)
+    console.log(keyValue);
 
     axios
       .patch(`https://sparta-bds.shop/v1/mypages/edit/${userId}`, formData,
@@ -108,9 +148,11 @@ export default function MyEditPage() {
           'Refresh_Token' : `${refreshToken}`,
           'Content-Type' : 'multipart/form-data'} })
       .then((res) => {
-      if (res.data.success) {
-        window.location.replace("/mypage")
-      }
+        if (res.data.success) {
+          window.location.replace("/mypage")
+        }
+        for (const keyValue of formData)
+        console.log(keyValue);
       });
   }
 
@@ -141,17 +183,30 @@ export default function MyEditPage() {
 
       {/* 이메일 아이디 */}
       <myEditST.checkText>이메일 아이디</myEditST.checkText>
-      <myEditST.emailBox>{email}</myEditST.emailBox>
+      <myEditST.emailBox>
+        { email !== null && email !== undefined ?
+          (email)
+          :
+          ("이메일이 등록되지 않았습니다.")
+        }
+      </myEditST.emailBox>
       <myEditST.emailCheck>
-        <svg width="14" height="14" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <mask id="mask0_616_793" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="25" height="25">
-            <rect x="0.187866" y="0.200195" width="24" height="24" fill="#D9D9D9"/>
-          </mask>
-          <g mask="url(#mask0_616_793)">
-            <path d="M10.7879 14.0002L8.61287 11.8252C8.42953 11.6419 8.20453 11.5502 7.93787 11.5502C7.6712 11.5502 7.43787 11.6502 7.23787 11.8502C7.05453 12.0335 6.96287 12.2669 6.96287 12.5502C6.96287 12.8335 7.05453 13.0669 7.23787 13.2502L10.0879 16.1002C10.2712 16.2835 10.5045 16.3752 10.7879 16.3752C11.0712 16.3752 11.3045 16.2835 11.4879 16.1002L17.1629 10.4252C17.3462 10.2419 17.4379 10.0169 17.4379 9.7502C17.4379 9.48353 17.3379 9.2502 17.1379 9.0502C16.9545 8.86686 16.7212 8.7752 16.4379 8.7752C16.1545 8.7752 15.9212 8.86686 15.7379 9.0502L10.7879 14.0002ZM12.1879 22.2002C10.8045 22.2002 9.50453 21.9375 8.28787 21.4122C7.0712 20.8875 6.01287 20.1752 5.11287 19.2752C4.21287 18.3752 3.50053 17.3169 2.97587 16.1002C2.45053 14.8835 2.18787 13.5835 2.18787 12.2002C2.18787 10.8169 2.45053 9.51686 2.97587 8.3002C3.50053 7.08353 4.21287 6.0252 5.11287 5.1252C6.01287 4.2252 7.0712 3.51253 8.28787 2.9872C9.50453 2.46253 10.8045 2.2002 12.1879 2.2002C13.5712 2.2002 14.8712 2.46253 16.0879 2.9872C17.3045 3.51253 18.3629 4.2252 19.2629 5.1252C20.1629 6.0252 20.8752 7.08353 21.3999 8.3002C21.9252 9.51686 22.1879 10.8169 22.1879 12.2002C22.1879 13.5835 21.9252 14.8835 21.3999 16.1002C20.8752 17.3169 20.1629 18.3752 19.2629 19.2752C18.3629 20.1752 17.3045 20.8875 16.0879 21.4122C14.8712 21.9375 13.5712 22.2002 12.1879 22.2002Z" fill="#51D486"/>
-          </g>
-        </svg>
-        인증이 완료된 아이디에요.
+        { email !== null && email !== undefined ?
+        (<>
+          <svg width="14" height="14" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <mask id="mask0_616_793" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="25" height="25">
+              <rect x="0.187866" y="0.200195" width="24" height="24" fill="#D9D9D9"/>
+            </mask>
+            <g mask="url(#mask0_616_793)">
+              <path d="M10.7879 14.0002L8.61287 11.8252C8.42953 11.6419 8.20453 11.5502 7.93787 11.5502C7.6712 11.5502 7.43787 11.6502 7.23787 11.8502C7.05453 12.0335 6.96287 12.2669 6.96287 12.5502C6.96287 12.8335 7.05453 13.0669 7.23787 13.2502L10.0879 16.1002C10.2712 16.2835 10.5045 16.3752 10.7879 16.3752C11.0712 16.3752 11.3045 16.2835 11.4879 16.1002L17.1629 10.4252C17.3462 10.2419 17.4379 10.0169 17.4379 9.7502C17.4379 9.48353 17.3379 9.2502 17.1379 9.0502C16.9545 8.86686 16.7212 8.7752 16.4379 8.7752C16.1545 8.7752 15.9212 8.86686 15.7379 9.0502L10.7879 14.0002ZM12.1879 22.2002C10.8045 22.2002 9.50453 21.9375 8.28787 21.4122C7.0712 20.8875 6.01287 20.1752 5.11287 19.2752C4.21287 18.3752 3.50053 17.3169 2.97587 16.1002C2.45053 14.8835 2.18787 13.5835 2.18787 12.2002C2.18787 10.8169 2.45053 9.51686 2.97587 8.3002C3.50053 7.08353 4.21287 6.0252 5.11287 5.1252C6.01287 4.2252 7.0712 3.51253 8.28787 2.9872C9.50453 2.46253 10.8045 2.2002 12.1879 2.2002C13.5712 2.2002 14.8712 2.46253 16.0879 2.9872C17.3045 3.51253 18.3629 4.2252 19.2629 5.1252C20.1629 6.0252 20.8752 7.08353 21.3999 8.3002C21.9252 9.51686 22.1879 10.8169 22.1879 12.2002C22.1879 13.5835 21.9252 14.8835 21.3999 16.1002C20.8752 17.3169 20.1629 18.3752 19.2629 19.2752C18.3629 20.1752 17.3045 20.8875 16.0879 21.4122C14.8712 21.9375 13.5712 22.2002 12.1879 22.2002Z" fill="#51D486"/>
+            </g>
+          </svg>
+          인증이 완료된 아이디에요.
+        </>  
+        )
+        :
+        (null)
+        }
       </myEditST.emailCheck>
 
       {/* 닉네임 */}
