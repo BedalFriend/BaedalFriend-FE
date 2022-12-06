@@ -2,7 +2,6 @@ import React, { useEffect, useState, useContext, useRef } from 'react';
 import * as CateST from './CategoryPageStyle';
 import { useDispatch, useSelector } from 'react-redux';
 import { TabContext } from '../../context/TabContext';
-import { useParams } from 'react-router-dom';
 
 import Layout from '../../components/layout/Layout';
 import SearchModal from './SearchModal';
@@ -20,9 +19,7 @@ import {
 } from '../../redux/modules/PostSlice';
 
 export default function CategoryPage() {
-  window.scrollTo(0, 0);
   const dispatch = useDispatch();
-  const { id } = useParams();
   const { setTab } = useContext(TabContext);
 
   //tab
@@ -92,7 +89,7 @@ export default function CategoryPage() {
   const throttleHandler = throttle(dragMoveHandler, delay);
 
   //선택한 카테고리
-  const [searchCate, setSearchCate] = useState(id);
+  const [searchCate, setSearchCate] = useState(localStorage.getItem('searchCate'));
   const [searched, setSearched] = useState();
 
   const cates = [
@@ -210,8 +207,10 @@ export default function CategoryPage() {
 
   //clean up
   useEffect(() => {
+    window.scrollTo(0, 0);
     return () => {
       dispatch(CLEAR_POSTS());
+      localStorage.removeItem('searchCate')
     };
   }, []);
 

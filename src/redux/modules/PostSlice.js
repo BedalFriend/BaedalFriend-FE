@@ -202,17 +202,23 @@ export const __getEntireCateThunk = createAsyncThunk(
   }
 );
 
-export const __getRecentWordThunk = createAsyncThunk(
+export const __postRecentWord = createAsyncThunk(
+  'POST_RECENTWORD',
+  async (arg) => {
+    let payload = JSON.stringify({keyword: arg})
+    await getInstance().post(
+      `${basePath}/posts/keyword/create`, payload
+    );
+  }
+);
+
+export const __getRecentWord = createAsyncThunk(
   'GET_RECENTWORD',
-  async (arg, thunkAPI) => {
-    try {
-      const { data } = await getInstance().get(
-        `${basePath}/posts/entireCategory/search?page=1&size=1000&${arg}`
-      );
-      return thunkAPI.fulfillWithValue(data);
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.code);
-    }
+  async () => {
+    const { data } = await getInstance().get(
+      `${basePath}/posts/keyword/my`
+    );
+    console.log("data찍어줘", data);
   }
 );
 
@@ -410,19 +416,6 @@ export const postsSlice = createSlice({
       state.posts.error = action.payload;
     },
     [__getEntireCateThunk.fulfilled]: (state, action) => {
-      state.posts.isLoading = false;
-      state.posts.data = action.payload.data;
-    },
-
-    //get RecentWord
-    [__getRecentWordThunk.pending]: (state) => {
-      state.posts.isLoading = true;
-    },
-    [__getRecentWordThunk.rejected]: (state, action) => {
-      state.posts.isLoading = false;
-      state.posts.error = action.payload;
-    },
-    [__getRecentWordThunk.fulfilled]: (state, action) => {
       state.posts.isLoading = false;
       state.posts.data = action.payload.data;
     },

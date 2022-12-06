@@ -122,6 +122,7 @@ export const EmailText = styled.div`
 
   background-color: var(--color-dark-white);
   border-radius: 999px;
+  width: fit-content;
   padding: 4px 12px;
   margin-top: 4px;
 `
