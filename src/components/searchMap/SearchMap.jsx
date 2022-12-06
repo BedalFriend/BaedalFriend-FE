@@ -129,7 +129,7 @@ const SearchMap = ({ setIndex, setData, data, name, address }) => {
           };
 
           ps.keywordSearch(place, placesSearchCB);
-        }, 500);
+        }, 1000);
 
         let selectedMarker = null;
 
