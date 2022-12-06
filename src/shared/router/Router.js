@@ -46,7 +46,7 @@ const Router = () => {
           <Route path='/modify/:id' element={<ModifyPage />} />
           <Route path='/review' element={<ReviewPage />} />
           <Route path='/search' element={<SearchPage />} />
-          <Route path='/category/:id' element={<CategoryPage />} />
+          <Route path='/category' element={<CategoryPage />} />
           <Route path='/mypage' element={<MyPage />} />
           <Route path='/myEdit' element={<MyEditPage />} />
           <Route path='*' element={<MainPage />} />

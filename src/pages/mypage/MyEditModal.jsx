@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import * as ModalST from './MyEditModalStyle';
 import useOutSideClick from '../../hooks/useOutSideClick';
+import BasicPath from '../../imgs/BasicProfile.png'
 
 export default function MyEditModal({closeModal, setProfilepost, profilePost, setPreviewImg, setChanged}) {
 
@@ -55,12 +56,13 @@ export default function MyEditModal({closeModal, setProfilepost, profilePost, se
         </ModalST.TopBox>
 
         <ModalST.BottomBox
-          // onClick={(e) => {
-          //   encodeFileToBase64(null);
-          //   setProfilepost({
-          //     ...profilePost,
-          //     imgUrl: null});
-          //   closeModal(e);}}
+          onClick={(e) => {
+            setPreviewImg(BasicPath);
+            setProfilepost({
+              ...profilePost,
+              imgUrl: "basic"});
+            setChanged(true);
+            closeModal(e);}}
             >
             <ModalST.SelectText>기본 이미지로 변경</ModalST.SelectText>
         </ModalST.BottomBox>    

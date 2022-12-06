@@ -93,7 +93,10 @@ export default function MainPage(props) {
       </MainST.Search>
 
       <MainST.CtgSection>
-        <MainST.CtgBox onClick={() => navigate(`/category/전체`)}>
+        <MainST.CtgBox onClick={() => {
+          localStorage.setItem('searchCate', '전체');
+          navigate('/category');
+          }}>
           <svg
             width='36'
             height='36'
@@ -112,8 +115,10 @@ export default function MainPage(props) {
           <MainST.CtgText>전체</MainST.CtgText>
         </MainST.CtgBox>
 
-        <MainST.CtgBox onClick={() => navigate(`/category/패스트푸드`)}>
-          <svg
+        <MainST.CtgBox onClick={() => {
+          localStorage.setItem('searchCate', '패스트푸드');
+          navigate('/category');
+          }}>          <svg
             width='36'
             height='36'
             viewBox='0 0 36 36'
@@ -130,8 +135,10 @@ export default function MainPage(props) {
           <MainST.CtgText>패스트푸드</MainST.CtgText>
         </MainST.CtgBox>
 
-        <MainST.CtgBox onClick={() => navigate(`/category/치킨`)}>
-          <svg
+        <MainST.CtgBox onClick={() => {
+          localStorage.setItem('searchCate', '치킨');
+          navigate('/category');
+          }}>          <svg
             width='36'
             height='36'
             viewBox='0 0 36 36'
@@ -151,8 +158,10 @@ export default function MainPage(props) {
           <MainST.CtgText>치킨</MainST.CtgText>
         </MainST.CtgBox>
 
-        <MainST.CtgBox onClick={() => navigate(`/category/분식`)}>
-          <svg
+        <MainST.CtgBox onClick={() => {
+          localStorage.setItem('searchCate', '분식');
+          navigate('/category');
+          }}>          <svg
             width='36'
             height='36'
             viewBox='0 0 36 36'
@@ -169,8 +178,10 @@ export default function MainPage(props) {
           <MainST.CtgText>분식</MainST.CtgText>
         </MainST.CtgBox>
 
-        <MainST.CtgBox onClick={() => navigate(`/category/야식`)}>
-          <svg
+        <MainST.CtgBox onClick={() => {
+          localStorage.setItem('searchCate', '야식');
+          navigate('/category');
+          }}>          <svg
             width='36'
             height='36'
             viewBox='0 0 36 36'
@@ -188,8 +199,10 @@ export default function MainPage(props) {
           <MainST.CtgText>야식</MainST.CtgText>
         </MainST.CtgBox>
 
-        <MainST.CtgBox onClick={() => navigate(`/category/한식`)}>
-          <svg
+        <MainST.CtgBox onClick={() => {
+          localStorage.setItem('searchCate', '한식');
+          navigate('/category');
+          }}>          <svg
             width='36'
             height='36'
             viewBox='0 0 36 36'
@@ -207,8 +220,10 @@ export default function MainPage(props) {
           <MainST.CtgText>한식</MainST.CtgText>
         </MainST.CtgBox>
 
-        <MainST.CtgBox onClick={() => navigate(`/category/중식`)}>
-          <svg
+        <MainST.CtgBox onClick={() => {
+          localStorage.setItem('searchCate', '중식');
+          navigate('/category');
+          }}>          <svg
             width='36'
             height='36'
             viewBox='0 0 36 36'
@@ -226,8 +241,10 @@ export default function MainPage(props) {
           <MainST.CtgText>중식</MainST.CtgText>
         </MainST.CtgBox>
 
-        <MainST.CtgBox onClick={() => navigate(`/category/양식`)}>
-          <svg
+        <MainST.CtgBox onClick={() => {
+          localStorage.setItem('searchCate', '양식');
+          navigate('/category');
+          }}>          <svg
             width='36'
             height='36'
             viewBox='0 0 36 36'
@@ -244,8 +261,10 @@ export default function MainPage(props) {
           <MainST.CtgText>양식</MainST.CtgText>
         </MainST.CtgBox>
 
-        <MainST.CtgBox onClick={() => navigate(`/category/일식`)}>
-          <svg
+        <MainST.CtgBox onClick={() => {
+          localStorage.setItem('searchCate', '일식/회');
+          navigate('/category');
+          }}>          <svg
             width='36'
             height='36'
             viewBox='0 0 36 36'
@@ -263,8 +282,10 @@ export default function MainPage(props) {
           <MainST.CtgText>일식/회</MainST.CtgText>
         </MainST.CtgBox>
 
-        <MainST.CtgBox onClick={() => navigate(`/category/디저트`)}>
-          <svg
+        <MainST.CtgBox onClick={() => {
+          localStorage.setItem('searchCate', '디저트');
+          navigate('/category');
+          }}>          <svg
             width='36'
             height='36'
             viewBox='0 0 36 36'
@@ -282,8 +303,10 @@ export default function MainPage(props) {
           <MainST.CtgText>디저트</MainST.CtgText>
         </MainST.CtgBox>
 
-        <MainST.CtgBox onClick={() => navigate(`/category/채식`)}>
-          <svg
+        <MainST.CtgBox onClick={() => {
+          localStorage.setItem('searchCate', '채식');
+          navigate('/category');
+          }}>          <svg
             width='36'
             height='36'
             viewBox='0 0 36 36'
@@ -301,8 +324,10 @@ export default function MainPage(props) {
           <MainST.CtgText>채식</MainST.CtgText>
         </MainST.CtgBox>
 
-        <MainST.CtgBox onClick={() => navigate(`/category/아시안`)}>
-          <svg
+        <MainST.CtgBox onClick={() => {
+          localStorage.setItem('searchCate', '아시안');
+          navigate('/category');
+          }}>          <svg
             width='36'
             height='36'
             viewBox='0 0 36 36'
@@ -320,8 +345,10 @@ export default function MainPage(props) {
           <MainST.CtgText>아시안</MainST.CtgText>
         </MainST.CtgBox>
 
-        <MainST.CtgBox onClick={() => navigate(`/category/건강식`)}>
-          <svg
+        <MainST.CtgBox onClick={() => {
+          localStorage.setItem('searchCate', '건강식');
+          navigate('/category');
+          }}>          <svg
             width='36'
             height='36'
             viewBox='0 0 36 36'
@@ -337,8 +364,10 @@ export default function MainPage(props) {
           <MainST.CtgText>건강식</MainST.CtgText>
         </MainST.CtgBox>
 
-        <MainST.CtgBox onClick={() => navigate(`/category/샌드위치`)}>
-          <svg
+        <MainST.CtgBox onClick={() => {
+          localStorage.setItem('searchCate', '샌드위치');
+          navigate('/category');
+          }}>          <svg
             width='36'
             height='36'
             viewBox='0 0 36 36'
@@ -356,8 +385,10 @@ export default function MainPage(props) {
           <MainST.CtgText>샌드위치</MainST.CtgText>
         </MainST.CtgBox>
 
-        <MainST.CtgBox onClick={() => navigate(`/category/편의점`)}>
-          <svg
+        <MainST.CtgBox onClick={() => {
+          localStorage.setItem('searchCate', '편의점');
+          navigate('/category');
+          }}>          <svg
             width='36'
             height='36'
             viewBox='0 0 36 36'
