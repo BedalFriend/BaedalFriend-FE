@@ -3,12 +3,12 @@ import styled from 'styled-components';
 export const SearchBg = styled.div`
   background-color: var(--color-white);
   width: 100%;
-  min-height: 1200px;
+  min-height: ${(props) => (props.focused ? '100vh' : '1200px')};
 
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
-  position: absolute;
+  position: relative;
 `
 
 export const Search = styled.div`
@@ -65,6 +65,7 @@ export const RecentDisplay = styled.div`
   align-items: flex-start;
   background-color: var(--color-white);
   overflow-x: scroll;
+  gap: 8px;
   ::-webkit-scrollbar {
     display: none;
   }

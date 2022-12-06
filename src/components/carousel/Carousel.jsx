@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as CaroST from './CarouselStyle';
-import LoginImg1 from '../carousel/img/Banner.png';
+import MainBanner1 from '../../imgs/carousel/MainBanner1.png';
 
 import CurrentLocation from './CurrentLocation';
 
@@ -17,7 +17,7 @@ const PageOne = () => {
     <div>
       {token !== null && token !== undefined ? (
         <>
-          <CaroST.BannerImg src={LoginImg1} alt='로그인배너' />
+          <CaroST.BannerImg src={MainBanner1} alt='메인배너' />
           <CaroST.ImgDes
             onClick={() => {
               navigate('/nearby');
@@ -33,7 +33,7 @@ const PageOne = () => {
         </>
       ) : (
         <>
-          <CaroST.BannerImg src={LoginImg1} alt='로그인배너' />
+          <CaroST.BannerImg src={MainBanner1} alt='메인배너' />
           <CaroST.TextBox>
             <CaroST.BoldText>로그인</CaroST.BoldText> 하고
             <br />
