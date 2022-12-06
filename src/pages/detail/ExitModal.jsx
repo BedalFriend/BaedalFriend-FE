@@ -1,11 +1,7 @@
 import React, { useEffect } from 'react';
 import * as ModalST from './DeleteModalStyle';
 
-export default function DeleteModal({
-  aniState,
-  onExitHandler,
-  setIsExitOpen,
-}) {
+export default function DeleteModal({ onExitHandler, setIsExitOpen }) {
   //외부 스크롤 막기
   useEffect(() => {
     const $body = document.querySelector('body');
@@ -15,7 +11,7 @@ export default function DeleteModal({
 
   return (
     <>
-      <ModalST.Overlay aniState={aniState}>
+      <ModalST.Overlay>
         <ModalST.ModalWrap>
           <ModalST.ReTopBox>
             <div>
@@ -38,8 +34,6 @@ export default function DeleteModal({
               </ModalST.ExitInfoText>
             </div>
           </ModalST.ReTopBox>
-
-          <ModalST.BottomBox></ModalST.BottomBox>
 
           <ModalST.BottomBtnBox>
             <ModalST.DeleteBtnBox>
