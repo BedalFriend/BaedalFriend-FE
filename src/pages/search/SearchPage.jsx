@@ -170,12 +170,12 @@ export default function SearchPage() {
   const keywords = useSelector((state) => state.post.keywords);
 
   useEffect(() => {
-      dispatch(__getRecentWord());          
+    dispatch(__getRecentWord());          
   }, [keywords])
 
   return (
     <Layout>
-      <SearchST.SearchBg focused={posts.data.length === 0 ? true:false}>
+      <SearchST.SearchBg focused={posts&&posts.data.length > 0 ? true:false}>
         <div style={{ width: '100%', height: '84px'}}></div>
 
         {/* 검색창 */}
@@ -202,6 +202,8 @@ export default function SearchPage() {
         </SearchST.Search>
 
         {/* 최근 검색어 */}
+        {keywords&&keywords.length>0 ?
+        (
         <SearchST.RecentSection>
           <SearchST.RecentTitle>최근 검색어</SearchST.RecentTitle>
           <SearchST.RecentDisplay
@@ -221,7 +223,10 @@ export default function SearchPage() {
                   />
               ))}
           </SearchST.RecentDisplay>
-        </SearchST.RecentSection>
+        </SearchST.RecentSection>          
+        )
+        :
+        ('')}
 
         <SearchST.Line />
 

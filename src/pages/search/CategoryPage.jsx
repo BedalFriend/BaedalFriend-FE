@@ -217,7 +217,7 @@ export default function CategoryPage() {
 
   return (
     <Layout>
-      <CateST.SearchBg focused={posts.data.length === 0 ? true:false}>
+      <CateST.SearchBg focused={posts&&posts.data.length > 0 ? true:false}>
         <div style={{ width: '100%', height: '84px' }}></div>
 
         {/* 카테고리 슬라이드 */}

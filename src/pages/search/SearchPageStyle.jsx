@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const SearchBg = styled.div`
   background-color: var(--color-white);
   width: 100%;
-  min-height: ${(props) => (props.focused ? '100vh' : '1200px')};
+  min-height: ${(props) => (props.focused ? '500px' : '100vh')};
 
   display: flex;
   flex-flow: column nowrap;
