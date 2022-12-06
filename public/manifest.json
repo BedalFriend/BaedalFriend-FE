@@ -4,7 +4,7 @@
   "icons": [
     {
       "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
+      "sizes": "128x128 64x64 32x32 24x24 16x16",
       "type": "image/x-icon",
       "purpose": "any"
     },
@@ -19,13 +19,18 @@
       "type": "image/png",
       "sizes": "512x512",
       "purpose": "maskable"
+    },
+    {
+      "src": "logo1024.png",
+      "type": "image/png",
+      "sizes": "1024x1024",
+      "purpose": "maskable"
     }
   ],
   "start_url": ".",
   "display": "standalone",
   "display_override": ["standalone"],
   "orientation": "portrait",
-  "theme_color": "#FF5B15",
   "background_color": "#FF5B15",
   "description": "당신의 주변에서 배달프렌드를 구해보세요!",
   "lang": "ko",
