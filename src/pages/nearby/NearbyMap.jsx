@@ -20,10 +20,7 @@ export default function NearbyMap({
   searchData,
   setSearchParty,
 }) {
-  // console.log(data);
   const [kakaoMap, setKakaoMap] = useState(null);
-
-  // const user = { address: '경기 성남시 분당구 판교역로 235' };
 
   let totalData = [];
 
