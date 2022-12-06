@@ -8,6 +8,7 @@ import Layout from '../../components/layout/Layout';
 import * as myST from './MyPageStyle'
 import ProfilePic from '../../components/elements/profilePic/ProfilePic'
 import MyPageModal from './MyPageModal'
+import QuitModal from './QuitModal'
 
 export default function MyPage() {
 
@@ -21,13 +22,21 @@ export default function MyPage() {
     // eslint-disable-next-line
   }, []);
 
-  //정렬 모달창
+  //모달창
   const [isOpen, setIsOpen] = useState(false);
   const openModal = () => {
     setIsOpen(true);
   }
   const closeModal = () => {
     setIsOpen(false);
+  }
+
+  const [isOpen2, setIsOpen2] = useState(false);
+  const openModal2 = () => {
+    setIsOpen2(true);
+  }
+  const closeModal2 = () => {
+    setIsOpen2(false);
   }
 
   const user = useSelector(state => state.user);
@@ -38,6 +47,7 @@ export default function MyPage() {
     <Layout>
       <myST.SearchBg>
         {isOpen && (<MyPageModal closeModal={closeModal}/>)}
+        {isOpen2 && (<QuitModal closeModal2={closeModal2}/>)}
         
         {/* 프로필 */}
         { token !== null && token !== undefined ?
@@ -160,7 +170,7 @@ export default function MyPage() {
         <myST.Line/>
 
         {/* 탈퇴하기 */}
-        <myST.QuitBox>
+        <myST.QuitBox onClick={openModal2}>
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
             <mask id="mask0_1249_1575" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="20" height="20">
               <rect width="20" height="20" fill="#D9D9D9"/>
