@@ -25,6 +25,7 @@ export const CardAddress = styled.div`
   background-color: var(--color-dark-white);
   border-radius: 99px;
 
+  font-family: 'Pretendard';
   color: var(--color-grey);
   font-weight: var(--weight-regular);
   font-size: var(--font-minor);
@@ -84,6 +85,7 @@ export const DeliveryInfo = styled.div`
 
 export const InfoText = styled.div`
   margin-left: 8px;
+  font-family: 'Pretendard';
   font-size: var(--font-small);
   font-weight: var(--weight-regular);
   color: var(--color-dark-grey);
@@ -91,6 +93,7 @@ export const InfoText = styled.div`
 
 export const ProfileNickName = styled.div`
   margin-top: 4px;
+  font-family: 'Pretendard';
   font-size: var(--font-micro);
   color: var(--color-grey);
 
@@ -124,6 +127,7 @@ export const Content = styled.div`
   height: 64px;
   border-radius: 12px;
 
+  font-family: 'Pretendard';
   font-size: var(--font-micro);
   font-weight: var(--weight-regular);
 `;
@@ -170,6 +174,7 @@ export const PartyHeader = styled.div`
 export const PartyTitle = styled.div`
   margin-left: 8px;
 
+  font-family: 'Pretendard';
   color: var(--color-light-black);
   font-size: var(--font-regular);
   font-weight: var(--weight-regular);
@@ -186,6 +191,7 @@ export const PartyTotalMember = styled.div`
   background-color: var(--color-light-orange);
   color: var(--color-orange);
 
+  font-family: 'Pretendard';
   font-size: var(--font-micro);
   font-weight: var(--weight-regular);
 `;

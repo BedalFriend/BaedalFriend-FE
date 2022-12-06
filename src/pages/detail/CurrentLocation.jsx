@@ -27,6 +27,10 @@ const CurrentLocation = ({ data, stepTwoCheckHandler }) => {
         // 주소-좌표 변환 객체를 생성합니다.
         const geocoder = new kakao.maps.services.Geocoder();
 
+        if (data.gatherAddress === '') {
+          return;
+        }
+
         geocoder.addressSearch(data.gatherAddress, function (result, status) {
           // 정상적으로 검색이 완료됐으면
           if (status === kakao.maps.services.Status.OK) {
@@ -41,7 +45,7 @@ const CurrentLocation = ({ data, stepTwoCheckHandler }) => {
         map.setDraggable(false);
       });
     };
-  }, [data.gatherAddress]);
+  }, [data.gatherAddress, container]);
 
   return (
     <CtLocationST.MapBox

@@ -1,5 +1,5 @@
 /* global kakao */
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import * as SearchST from './AddressPageStyle';
 
@@ -10,15 +10,12 @@ import MyMarker from '../../imgs/upload/Map_LocationMark.png';
 import CurrentMark from '../../imgs/upload/Map_MyLocation.png';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { TabContext } from '../../context/TabContext';
 
 const SearchMap = ({ setData, data, name, address }) => {
   const container = useRef();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-
-  const { setTab } = useContext(TabContext);
 
   const [place, setPlace] = useState('');
   const [markerInfo, setMarkerInfo] = useState('');
@@ -189,11 +186,7 @@ const SearchMap = ({ setData, data, name, address }) => {
         };
       });
     };
-  }, [data, place, myLocation]);
-
-  useEffect(() => {
-    setTab('Address');
-  }, []);
+  }, [data, place, myLocation, container]);
 
   return (
     <Layout>

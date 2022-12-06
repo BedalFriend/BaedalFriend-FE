@@ -60,14 +60,11 @@ const SearchMap = ({ setIndex, setData, data, name, address }) => {
     const tempArr = { ...data };
     tempArr[`${name}`] = storeName.textContent;
     tempArr[`${address}`] = storeAddress.textContent;
-    console.log('tempArr', tempArr);
     setData(tempArr);
     setIndex(0);
   };
 
   useEffect(() => {
-    console.log('data', data);
-
     const script = document.createElement('script');
 
     script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.REACT_APP_KAKAO_MAP_KEY}&libraries=services&autoload=false`;

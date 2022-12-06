@@ -212,7 +212,8 @@ export const BackBtn = styled.div`
   height: 48px;
 
   position: absolute;
-  left: 0px;
+  left: 16px;
+  top: 12px;
   z-index: 999;
 
   :hover {

@@ -14,7 +14,7 @@ const SearchMap = ({ setIndex, data, setData, setAddressManager }) => {
 
   const [place, setPlace] = useState('');
   const [markerInfo, setMarkerInfo] = useState('');
-  console.log(markerInfo);
+
   //내가 선택한 마커 저장소
   const [selectMarker, setSelectMarker] = useState(false);
 

@@ -61,6 +61,10 @@ const CurrentMap = ({ data, setIndex }) => {
         // 주소-좌표 변환 객체를 생성합니다.
         const geocoder = new kakao.maps.services.Geocoder();
 
+        if (data.gatherAddress === '') {
+          return;
+        }
+
         geocoder.addressSearch(data.gatherAddress, function (result, status) {
           // 정상적으로 검색이 완료됐으면
           if (status === kakao.maps.services.Status.OK) {
@@ -68,7 +72,7 @@ const CurrentMap = ({ data, setIndex }) => {
 
             const checkMarkerImage = new kakao.maps.MarkerImage(
               orangeMarker,
-              new kakao.maps.Size(48, 48),
+              new kakao.maps.Size(36, 36),
               new kakao.maps.Point(13, 34)
             );
 
@@ -114,7 +118,7 @@ const CurrentMap = ({ data, setIndex }) => {
         }
       });
     };
-  }, [data.gatherAddress, myLocation]);
+  }, [data.gatherAddress, myLocation, container]);
 
   return (
     <CtMapST.NearbyBox>

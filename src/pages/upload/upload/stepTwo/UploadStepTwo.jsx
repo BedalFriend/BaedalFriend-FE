@@ -50,7 +50,6 @@ const UploadStepTwo = ({
   });
 
   const newHourHandler = (e) => {
-    console.log(e.target.value);
     const { value, name } = e.target;
     if (value.length < 3 && value < 13) {
       setNowTime({ ...nowTime, [name]: value.replace(/[^0-9]/g, '') });

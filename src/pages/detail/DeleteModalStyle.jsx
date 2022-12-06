@@ -95,7 +95,7 @@ export const BottomBox = styled.div`
 `;
 
 export const SelectText = styled.div`
-  font-size: var(--weight-small);
+  font-size: var(--font-small);
   font-weight: var(--weight-regular);
   color: var(--color-dark-grey);
 
@@ -123,7 +123,8 @@ export const ReTopBox = styled.div`
 `;
 
 export const InfoText = styled.div`
-  font-size: var(--weight-small);
+  font-family: 'Pretendard';
+  font-size: var(--font-small);
   font-weight: var(--weight-regular);
   color: var(--color-dark-grey);
 
@@ -134,7 +135,8 @@ export const InfoText = styled.div`
 `;
 
 export const ExitInfoText = styled.div`
-  font-size: var(--weight-small);
+  font-family: 'Pretendard';
+  font-size: var(--font-small);
   font-weight: var(--weight-regular);
   color: var(--color-dark-grey);
 
@@ -151,7 +153,8 @@ export const ErrorSvg = styled.svg`
 export const DeleteBtn = styled.div`
   width: 152px;
 
-  font-size: var(--weight-small);
+  font-family: 'Pretendard';
+  font-size: var(--font-small);
   font-weight: var(--weight-regular);
   color: var(--color-system-error);
 
@@ -164,7 +167,8 @@ export const DeleteBtn = styled.div`
 export const CancelBtn = styled.div`
   width: 152px;
 
-  font-size: var(--weight-small);
+  font-family: 'Pretendard';
+  font-size: var(--font-small);
   font-weight: var(--weight-regular);
   color: var(--color-system-success);
 

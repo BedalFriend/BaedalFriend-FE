@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const PostBox = styled.div`
   width: calc(100% - 32px);
-  height: 100vh;
+  height: 100%;
 `;
 
 export const FormContainer = styled.div`
