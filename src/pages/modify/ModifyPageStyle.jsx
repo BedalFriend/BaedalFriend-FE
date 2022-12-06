@@ -369,11 +369,8 @@ export const TextArea = styled.textarea`
   width: 100%;
   height: 72px;
   background-color: var(--color-dark-white);
-  border: ${(props) =>
-    props.isTextAreaFail
-      ? '1px solid var(--color-system-error)'
-      : 'transparent'};
 
+  border: transparent;
   border-radius: 12px;
   margin-bottom: 12px;
   resize: none;
@@ -390,4 +387,50 @@ export const TextArea = styled.textarea`
   :focus {
     outline: none;
   }
+`;
+
+export const Frame = styled.svg`
+  position: absolute;
+
+  margin: 22px 165px 22px 165px;
+`;
+
+export const SelectAddressBox = styled.div`
+  position: absolute;
+
+  display: flex;
+  align-items: center;
+
+  width: 318px;
+  height: 40px;
+
+  border-radius: 25px;
+
+  background-color: var(--color-white);
+  opacity: 80%;
+
+  margin: 16px 20px 16px 20px;
+`;
+export const OrangeMarker = styled.svg`
+  position: absolute;
+
+  margin: 16px 13px;
+`;
+
+export const SelectAddress = styled.input`
+  position: absolute;
+
+  font-family: 'Pretendard';
+  font-size: var(--font-small);
+  color: var(--color-dark-grey);
+
+  margin: 2px 0px 0px 36px;
+`;
+
+export const SelectMapBox = styled.div`
+  display: flex;
+
+  border-radius: 12px;
+
+  margin-bottom: 28px;
 `;

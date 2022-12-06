@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from 'react';
+/* global kakao */
+
+import React, { useEffect, useRef, useState } from 'react';
 
 import * as SearchST from './SearchMapStyle';
 
@@ -7,10 +9,9 @@ import orangeMarker from '../../../../imgs/upload/Orange_Map_Marker.png';
 import MyMarker from '../../../../imgs/upload/Map_LocationMark.png';
 import CurrentMark from '../../../../imgs/upload/Map_MyLocation.png';
 
-//스크립트로 kakao maps api를 심어서 가져오면 window전역 객체에 들어가게 된다. 그리고 그걸 사용하려면 window에서 kakao객체를 뽑아서 사용하면 된다.
-const { kakao } = window;
+const SearchMap = ({ setIndex, data, setData }) => {
+  const container = useRef();
 
-const SearchMap = ({ setIndex, data, setData, setAddressManager }) => {
   const [place, setPlace] = useState('');
   const [markerInfo, setMarkerInfo] = useState('');
 
@@ -74,12 +75,13 @@ const SearchMap = ({ setIndex, data, setData, setAddressManager }) => {
     script.onload = () => {
       kakao.maps.load(() => {
         //지도 생성
-        const container = document.getElementById('myMap');
+        const center = new kakao.maps.LatLng(37.50802, 127.062835);
         const options = {
-          center: new kakao.maps.LatLng(33.450701, 126.570667),
-          level: 3,
+          center: center,
+          level: 3, // 지도의 확대 레벨
         };
-        const map = new kakao.maps.Map(container, options);
+        // 지도를 생성한다
+        const map = new kakao.maps.Map(container.current, options);
 
         //현재위치로 지도 이동
         if (myLocation.latitude || myLocation.longitude) {
@@ -181,12 +183,13 @@ const SearchMap = ({ setIndex, data, setData, setAddressManager }) => {
         };
       });
     };
-  }, [data, place, myLocation]);
+  }, [data, place, myLocation, container]);
 
   return (
     <SearchST.SearchMapBox>
       <div
-        id='myMap'
+        id='container'
+        ref={container}
         style={{
           width: '100%',
           height: '100%',

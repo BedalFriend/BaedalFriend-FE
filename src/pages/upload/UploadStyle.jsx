@@ -377,7 +377,7 @@ export const TextArea = styled.textarea`
   }
 `;
 
-export const Frame = styled.img`
+export const Frame = styled.svg`
   position: absolute;
 
   margin: 22px 165px 22px 165px;
@@ -399,7 +399,7 @@ export const SelectAddressBox = styled.div`
 
   margin: 16px 20px 16px 20px;
 `;
-export const OrangeMarker = styled.img`
+export const OrangeMarker = styled.svg`
   position: absolute;
 
   margin: 16px 13px;

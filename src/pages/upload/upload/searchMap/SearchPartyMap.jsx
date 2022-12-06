@@ -184,7 +184,7 @@ const SearchMap = ({ setIndex, data, setData, setAddressManager }) => {
         };
       });
     };
-  }, [data, place, myLocation]);
+  }, [data, place, myLocation, container]);
 
   return (
     <SearchST.SearchMapBox>
