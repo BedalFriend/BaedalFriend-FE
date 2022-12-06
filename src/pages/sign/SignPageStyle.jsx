@@ -7,6 +7,7 @@ export const Body = styled.div`
 
   display: flex;
   flex-flow: column nowrap;
+  z-index: 950;
 
   @media screen and (min-width: 764px) {
     width: var(--responsive-width);
