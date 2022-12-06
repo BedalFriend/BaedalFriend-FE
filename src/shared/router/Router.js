@@ -19,6 +19,7 @@ import MyPage from '../../pages/mypage/MyPage';
 import MyEditPage from '../../pages/mypage/MyEditPage';
 import ModifyPage from '../../pages/modify/ModifyPage';
 import ReviewPage from '../../pages/review/ReviewPage';
+import AddressPage from '../../pages/address/AddressPage';
 
 const Router = () => {
   return (
@@ -37,6 +38,7 @@ const Router = () => {
 
         <Route element={<GlobalRoute />}>
           <Route path='/' element={<MainPage />} />
+          <Route path='/address' element={<AddressPage />} />
           <Route path='/test' element={<TestPage />} />
           <Route path='/nearby' element={<NearbyPage />} />
           <Route path='/post' element={<UploadPage />} />

@@ -206,3 +206,16 @@ export const SelectList = styled.div`
   gap: 16px;
   /* background-color: skyblue; */
 `;
+
+export const BackBtn = styled.div`
+  width: 44px;
+  height: 48px;
+
+  position: absolute;
+  left: 0px;
+  z-index: 999;
+
+  :hover {
+    cursor: pointer;
+  }
+`;

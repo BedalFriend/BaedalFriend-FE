@@ -1,6 +1,6 @@
 /* global kakao */
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import * as SearchST from './SearchMapStyle';
 
@@ -10,6 +10,8 @@ import MyMarker from '../../imgs/upload/Map_LocationMark.png';
 import CurrentMark from '../../imgs/upload/Map_MyLocation.png';
 
 const SearchMap = ({ setIndex, setData, data, name, address }) => {
+  const container = useRef();
+
   const [place, setPlace] = useState('');
   const [markerInfo, setMarkerInfo] = useState('');
 
@@ -74,12 +76,13 @@ const SearchMap = ({ setIndex, setData, data, name, address }) => {
     script.onload = () => {
       kakao.maps.load(() => {
         //지도 생성
-        const container = document.getElementById('myMap');
+        const center = new kakao.maps.LatLng(37.50802, 127.062835);
         const options = {
-          center: new kakao.maps.LatLng(33.450701, 126.570667),
-          level: 3,
+          center: center,
+          level: 3, // 지도의 확대 레벨
         };
-        const map = new kakao.maps.Map(container, options);
+        // 지도를 생성한다
+        const map = new kakao.maps.Map(container.current, options);
 
         if (myLocation.latitude || myLocation.longitude) {
           const currentMarkerImage = new kakao.maps.MarkerImage(
@@ -205,7 +208,8 @@ const SearchMap = ({ setIndex, setData, data, name, address }) => {
   return (
     <SearchST.SearchMapBox>
       <div
-        id='myMap'
+        id='container'
+        ref={container}
         style={{
           width: '100%',
           height: '100%',

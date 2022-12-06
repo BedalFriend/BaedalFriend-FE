@@ -1,40 +1,52 @@
-import React, { useEffect } from 'react';
+/* global kakao */
+
+import React, { useEffect, useRef } from 'react';
 import OrangeMapMarker from '../../imgs/upload/Orange_Map_Marker.png';
 
 import * as CtLocationST from './CurrentLocationStyle';
 
-const { kakao } = window;
-
 const CurrentLocation = ({ data, stepTwoCheckHandler }) => {
+  const container = useRef();
+
   useEffect(() => {
-    const mapContainer = document.getElementById('map'), // 지도를 표시할 div
-      mapOption = {
-        center: new kakao.maps.LatLng(37.56646, 126.98121), // 지도의 중심좌표
-        level: 3, // 지도의 확대 레벨
-      };
-    // 지도를 생성한다
-    const map = new kakao.maps.Map(mapContainer, mapOption);
+    const script = document.createElement('script');
 
-    // 주소-좌표 변환 객체를 생성합니다.
-    const geocoder = new kakao.maps.services.Geocoder();
+    script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.REACT_APP_KAKAO_MAP_KEY}&libraries=services&autoload=false`;
+    document.head.appendChild(script);
 
-    geocoder.addressSearch(data.gatherAddress, function (result, status) {
-      // 정상적으로 검색이 완료됐으면
-      if (status === kakao.maps.services.Status.OK) {
-        const coord = new kakao.maps.LatLng(result[0].y, result[0].x);
+    script.onload = () => {
+      kakao.maps.load(() => {
+        const center = new kakao.maps.LatLng(37.50802, 127.062835);
+        const options = {
+          center: center,
+          level: 3, // 지도의 확대 레벨
+        };
+        // 지도를 생성한다
+        const map = new kakao.maps.Map(container.current, options);
 
-        // 지도 이동(기존 위치와 가깝다면 부드럽게 이동)
-        map.panTo(coord);
-      }
-    });
+        // 주소-좌표 변환 객체를 생성합니다.
+        const geocoder = new kakao.maps.services.Geocoder();
 
-    // 마우스 드래그로 지도 이동 가능여부를 설정합니다
-    map.setDraggable(false);
+        geocoder.addressSearch(data.gatherAddress, function (result, status) {
+          // 정상적으로 검색이 완료됐으면
+          if (status === kakao.maps.services.Status.OK) {
+            const coord = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+            // 지도 이동(기존 위치와 가깝다면 부드럽게 이동)
+            map.panTo(coord);
+          }
+        });
+
+        // 마우스 드래그로 지도 이동 가능여부를 설정합니다
+        map.setDraggable(false);
+      });
+    };
   }, [data.gatherAddress]);
 
   return (
     <CtLocationST.MapBox
-      id='map'
+      id='container'
+      ref={container}
       style={{
         minwidth: '358px',
         height: '72px',

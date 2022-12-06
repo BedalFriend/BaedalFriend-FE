@@ -9,6 +9,7 @@ import {
   __getThunk,
 } from '../../redux/modules/PostSlice';
 import NearbyList from './NearbyList';
+import styled from 'styled-components';
 
 const Nearby = () => {
   const { setTab } = useContext(TabContext);
@@ -67,6 +68,14 @@ const Nearby = () => {
   }, []);
   return (
     <Layout>
+      {!index ? null : (
+        <NearbyST.BackBtn
+          onClick={() => {
+            setIndex(false);
+            setTab('Nearby');
+          }}
+        />
+      )}
       <NearbyST.NearbyBox>
         {index ? (
           <NearbyList

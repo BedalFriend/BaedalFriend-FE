@@ -8,6 +8,7 @@ import Card from '../../components/elements/card/Card';
 import MyMarker from '../../imgs/upload/Map_LocationMark.png';
 import yellowMarker from '../../imgs/upload/Yellow_Marker.png';
 import orangeMarker from '../../imgs/upload/Orange_Map_Marker.png';
+import { useAsyncError } from 'react-router-dom';
 
 export default function NearbyMap({
   user,
@@ -32,20 +33,20 @@ export default function NearbyMap({
   const [markerInfo, setMarkerInfo] = useState('');
   const [slotManager, setSlotManager] = useState(false);
 
-  // 주소-좌표 변환 객체를 생성합니다.
-  const geocoder = new kakao.maps.services.Geocoder();
+  // // 주소-좌표 변환 객체를 생성합니다.
+  // const geocoder = new kakao.maps.services.Geocoder();
 
-  // 마커 이미지 설정
-  const markerImage = new kakao.maps.MarkerImage(
-    yellowMarker,
-    new kakao.maps.Size(36, 36),
-    new kakao.maps.Point(13, 34)
-  );
-  const checkMarkerImage = new kakao.maps.MarkerImage(
-    orangeMarker,
-    new kakao.maps.Size(36, 36),
-    new kakao.maps.Point(13, 34)
-  );
+  // // 마커 이미지 설정
+  // const markerImage = new kakao.maps.MarkerImage(
+  //   yellowMarker,
+  //   new kakao.maps.Size(36, 36),
+  //   new kakao.maps.Point(13, 34)
+  // );
+  // const checkMarkerImage = new kakao.maps.MarkerImage(
+  //   orangeMarker,
+  //   new kakao.maps.Size(36, 36),
+  //   new kakao.maps.Point(13, 34)
+  // );
 
   const [myLocation, setMyLocation] = useState('');
 
@@ -93,6 +94,9 @@ export default function NearbyMap({
           //setMapCenter(center);
           setKakaoMap(map);
         } else {
+          // 주소-좌표 변환 객체를 생성합니다.
+          const geocoder = new kakao.maps.services.Geocoder();
+
           // 현재위치에 대한 검색어를 좌표로 변환
           geocoder.addressSearch(user.address, function (results, status) {
             // 정상적으로 검색이 완료됐으면
@@ -118,6 +122,20 @@ export default function NearbyMap({
     if (kakaoMap === null) {
       return;
     }
+    // 주소-좌표 변환 객체를 생성합니다.
+    const geocoder = new kakao.maps.services.Geocoder();
+
+    // 마커 이미지 설정
+    const markerImage = new kakao.maps.MarkerImage(
+      yellowMarker,
+      new kakao.maps.Size(36, 36),
+      new kakao.maps.Point(13, 34)
+    );
+    const checkMarkerImage = new kakao.maps.MarkerImage(
+      orangeMarker,
+      new kakao.maps.Size(36, 36),
+      new kakao.maps.Point(13, 34)
+    );
     // save center position
     const center = kakaoMap.getCenter();
 
@@ -126,6 +144,10 @@ export default function NearbyMap({
 
     let timer = setTimeout(() => {
       const filterData = data.filter((p) => {
+        if (searchParty === '') {
+          return data;
+        }
+
         if (
           p.targetName
             .replace('', '')
@@ -345,7 +367,7 @@ export default function NearbyMap({
       </NearbyST.BottomBtnBox>
 
       <NearbyST.ListBtnBox slotManager={slotManager}>
-        {searchData?.length > 1 || searchParty === '' ? (
+        {searchData?.length > 1 || (searchParty === '' && user.address) ? (
           <NearbyST.VeiwAll
             onClick={() => {
               setIndex(true);
