@@ -5,12 +5,14 @@ import { getCookieToken } from '../../shared/storage/Cookie';
 import React, { useEffect, useRef } from 'react';
 import * as QuitST from './QuitModalStyle'
 import useOutSideClick from '../../hooks/useOutSideClick';
+import { useSelector } from 'react-redux';
 
 export default function QuitModal({closeModal2}) {
 
   //토큰
   const authorization = store.getState()?.token?.accessToken;
   const refreshToken = getCookieToken();
+  const userId = useSelector((state) => state.user.id);
 
   const modalRef = useRef(null)
 
@@ -29,7 +31,7 @@ export default function QuitModal({closeModal2}) {
 
   const onQuitHandler = () => {
     axios
-      .patch(`https://sparta-bds.shop/v1/mypages/edit/${userId}`,
+      .delete(`https://sparta-bds.shop/v1/withdrawal/${userId}`,
       { headers:
         { 'Authorization' : `${authorization}`,
           'Refresh_Token' : `${refreshToken}`,} })
