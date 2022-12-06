@@ -31,6 +31,7 @@
   "display": "standalone",
   "display_override": ["standalone"],
   "orientation": "portrait",
+  "theme_color": "#FF5B15",
   "background_color": "#FF5B15",
   "description": "당신의 주변에서 배달프렌드를 구해보세요!",
   "lang": "ko",
