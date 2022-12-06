@@ -162,7 +162,7 @@ export default function SearchPage() {
   //clean up
   useEffect(() => {
     window.scrollTo(0, 0);  
-    dispatch(__getRecentWord);
+    dispatch(__getRecentWord());
     dispatch(CLEAR_POSTS());
     return () => {
       dispatch(CLEAR_POSTS());

@@ -37,6 +37,8 @@ export default function MyPage() {
   return (
     <Layout>
       <myST.SearchBg>
+        {isOpen && (<MyPageModal closeModal={closeModal}/>)}
+        
         {/* 프로필 */}
         { token !== null && token !== undefined ?
         (<>
@@ -112,7 +114,6 @@ export default function MyPage() {
               <circle cx="22" cy="22" r="2" transform="rotate(-90 22 22)" fill="#FF5B15"/>
             </svg>
           </myST.MenuDot>
-          {isOpen && (<MyPageModal closeModal={closeModal}/>)}
         </myST.MainBox>
 
         {/* 메뉴 */}

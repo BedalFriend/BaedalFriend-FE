@@ -104,7 +104,6 @@ export const DropDownText = styled.div`
 export const ResultBox = styled.div`
   position: relative;
   width: calc(100% - 32px);
-  height: calc(100vh - 428px);
   background-color: var(--color-white);
   display: flex;
   flex-flow: row wrap;
@@ -117,6 +116,8 @@ export const NoResult = styled.div`
   flex-flow: column nowrap;
   align-items: center;
 
+  top: -20px;
+  height: calc(100vh - 428px);
   margin: auto;
   padding-bottom: 50px;
 

@@ -214,11 +214,14 @@ export const __postRecentWord = createAsyncThunk(
 
 export const __getRecentWord = createAsyncThunk(
   'GET_RECENTWORD',
-  async () => {
-    const { data } = await getInstance().get(
-      `${basePath}/posts/keyword/my`
-    );
-    console.log("data찍어줘", data);
+  async (_, thunkAPI) => {
+    try {
+      const { data } = await getInstance().get(`${basePath}/posts/keyword/my`);
+      console.log(data.data);
+      return thunkAPI.fulfillWithValue(data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.code);
+    }
   }
 );
 
@@ -418,6 +421,19 @@ export const postsSlice = createSlice({
     [__getEntireCateThunk.fulfilled]: (state, action) => {
       state.posts.isLoading = false;
       state.posts.data = action.payload.data;
+    },
+
+    //get Recent Word
+    [__getRecentWord.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__getRecentWord.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    [__getRecentWord.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.data = action.payload;
     },
   },
 });
