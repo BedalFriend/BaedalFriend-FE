@@ -76,28 +76,36 @@ export default function NearbyMap({
           setKakaoMap(map);
         } else {
           // 주소-좌표 변환 객체를 생성합니다.
-          const geocoder = new kakao.maps.services.Geocoder();
+          let timer = setTimeout(() => {
+            const geocoder = new kakao.maps.services.Geocoder();
 
-          // 현재위치에 대한 검색어를 좌표로 변환
-          geocoder.addressSearch(user.address, function (results, status) {
-            // 정상적으로 검색이 완료됐으면
-            if (status === kakao.maps.services.Status.OK) {
-              const center = new kakao.maps.LatLng(results[0].y, results[0].x);
-              // const center = new kakao.maps.LatLng(37.50802, 127.062835);
-              const options = {
-                center,
-                level: 3,
-              };
-              const map = new kakao.maps.Map(container.current, options);
+            // 현재위치에 대한 검색어를 좌표로 변환
+            geocoder.addressSearch(user.address, function (results, status) {
+              // 정상적으로 검색이 완료됐으면
+              if (status === kakao.maps.services.Status.OK) {
+                const center = new kakao.maps.LatLng(
+                  results[0].y,
+                  results[0].x
+                );
+                // const center = new kakao.maps.LatLng(37.50802, 127.062835);
+                const options = {
+                  center,
+                  level: 3,
+                };
+                const map = new kakao.maps.Map(container.current, options);
 
-              //setMapCenter(center);
-              setKakaoMap(map);
-            }
-          });
+                //setMapCenter(center);
+                setKakaoMap(map);
+              }
+            });
+          }, 1000);
+          return () => {
+            clearTimeout(timer);
+          };
         }
       });
     };
-  }, [container, searchParty]);
+  }, [container]);
 
   useEffect(() => {
     if (kakaoMap === null) {
@@ -239,7 +247,7 @@ export default function NearbyMap({
     return () => {
       clearTimeout(timer);
     };
-  }, [kakaoMap, data?.length]);
+  }, [kakaoMap, data?.length, searchParty]);
 
   useEffect(() => {
     if (kakaoMap === null) {

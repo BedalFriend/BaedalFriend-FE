@@ -35,7 +35,6 @@ const SearchMap = ({ setIndex, data, setData, setAddressManager }) => {
         },
         (error) => {
           console.error(error);
-          alert('GPS를 지원하지 않습니다1');
         },
         {
           enableHighAccuracy: true,
@@ -68,6 +67,7 @@ const SearchMap = ({ setIndex, data, setData, setAddressManager }) => {
     setIndex(3);
     setAddressManager(true);
   };
+
   useEffect(() => {
     const script = document.createElement('script');
 
@@ -117,7 +117,7 @@ const SearchMap = ({ setIndex, data, setData, setAddressManager }) => {
       };
 
       ps.keywordSearch(place, placesSearchCB);
-    }, 500);
+    }, 1000);
 
     let selectedMarker = null;
 
@@ -166,7 +166,7 @@ const SearchMap = ({ setIndex, data, setData, setAddressManager }) => {
     return () => {
       clearTimeout(timer);
     };
-  }, [data, place]);
+  }, [kakaoMap, data, place]);
 
   useEffect(() => {
     if (kakaoMap === null) {
