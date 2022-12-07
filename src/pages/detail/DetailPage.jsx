@@ -9,6 +9,7 @@ import {
   __getThunk,
   __increaseParticipantThunk,
   UPDATE_POST,
+  __completePost,
 } from '../../redux/modules/PostSlice';
 import { __enterChannel, __exitChannel } from '../../redux/modules/ChatSlice';
 
@@ -28,6 +29,7 @@ import { AlarmContext } from '../../context/AlarmContext';
 import { getCookieToken } from '../../shared/storage/Cookie';
 import { TabContext } from '../../context/TabContext';
 import { SocketContext } from '../../context/SocketContext';
+import CompleteModal from './CompleteModal';
 
 const DetailPage = () => {
   const { setTab } = useContext(TabContext);
@@ -65,16 +67,21 @@ const DetailPage = () => {
   //퇴장 모달창
   const [isExitOpen, setIsExitOpen] = useState(false);
 
-  const [aniState, setAniState] = useState(false);
+  //완료 모달창
+  const [isCompleteOpen, setIsCompleteOpen] = useState(false);
+
   const [isDeleteHandler, setIsDeleteHandler] = useState(false);
+
   const openModal = () => {
-    setAniState(true);
     setIsOpen(true);
   };
 
   const openExitModal = () => {
-    setAniState(true);
     setIsExitOpen(true);
+  };
+
+  const openCompleteModal = () => {
+    setIsCompleteOpen(true);
   };
 
   // 삭제 핸들러
@@ -122,6 +129,10 @@ const DetailPage = () => {
     );
     dispatch(__exitChannel(id));
     setIsExitOpen(false);
+  };
+
+  const onCompleteHandler = () => {
+    dispatch(__completePost(id));
   };
 
   // 참여중인 인원
@@ -187,8 +198,6 @@ const DetailPage = () => {
       {isOpen && (
         <DeleteModal
           setIsOpen={setIsOpen}
-          aniState={aniState}
-          setAniState={setAniState}
           onDeleteHandler={onDeleteHandler}
           isDeleteHandler={isDeleteHandler}
           setIsDeleteHandler={setIsDeleteHandler}
@@ -198,10 +207,15 @@ const DetailPage = () => {
         <ExitModal
           setIsExitOpen={setIsExitOpen}
           onExitHandler={onExitHandler}
-          aniState={aniState}
-          setAniState={setAniState}
         />
       )}
+      {isCompleteOpen && (
+        <CompleteModal
+          setIsCompleteOpen={setIsCompleteOpen}
+          onCompleteHandler={onCompleteHandler}
+        />
+      )}
+
       {post.error === 'NOT_FOUND_POST' ? (
         <DetailST.ErrorPage>
           <DetailST.ErrorImg src={BannerPath} alt='' />
@@ -489,7 +503,9 @@ const DetailPage = () => {
           ) : null}
           {custom === 3 ? (
             <DetailST.BottomBtnBox>
-              <DetailST.PartyOutBtn>공구 완료하기</DetailST.PartyOutBtn>
+              <DetailST.PartyOutBtn onClick={openCompleteModal}>
+                공구 완료하기
+              </DetailST.PartyOutBtn>
               <DetailST.CurrentStatusBtn>진행 중</DetailST.CurrentStatusBtn>
             </DetailST.BottomBtnBox>
           ) : null}
