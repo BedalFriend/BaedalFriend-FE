@@ -95,13 +95,20 @@ export function SocketProvider({ children }) {
         case 'ENTER':
           {
             const channel = store.getState()?.chat?.channel;
-            const tempMembers = [...channel.data.chatRoomMembers];
-            tempMembers.push({ member: received.member });
-            dispatch(
-              UPDATE_CHANNEL({ ...channel.data, chatRoomMembers: tempMembers })
-            );
+            if (channel.data.chatRoomMembers) {
+              console.log(channel.data.chatRoomMembers);
+              const tempMembers = [...channel.data.chatRoomMembers];
+              tempMembers.push({ member: received.member });
+              dispatch(
+                UPDATE_CHANNEL({
+                  ...channel.data,
+                  chatRoomMembers: tempMembers,
+                })
+              );
+              dispatch(ADD_CHAT(received));
+            }
           }
-          return dispatch(ADD_CHAT(received));
+          return;
         case 'EXIT':
           {
             const channel = store.getState()?.chat?.channel;

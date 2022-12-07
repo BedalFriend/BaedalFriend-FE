@@ -373,8 +373,6 @@ export const postsSlice = createSlice({
     },
     [__increaseParticipantThunk.fulfilled]: (state, action) => {
       state.posts.isLoading = false;
-      state.posts.data.push(action.payload);
-      // console.log('state.posts.data', current(state.posts.data));
     },
     [__increaseParticipantThunk.rejected]: (state, action) => {
       state.posts.isLoading = false;
@@ -386,7 +384,6 @@ export const postsSlice = createSlice({
     },
     [__decreaseParticipantThunk.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.searchMovies = action.payload;
     },
     [__decreaseParticipantThunk.rejected]: (state, action) => {
       state.isLoading = false;
