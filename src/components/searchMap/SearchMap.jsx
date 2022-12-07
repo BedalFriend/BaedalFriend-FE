@@ -248,6 +248,7 @@ const SearchMap = ({ setIndex, setData, data, name, address }) => {
           </SearchST.SearchImage>
 
           <SearchST.SearchInput
+            id='Map'
             placeholder='만날 장소를 검색해주세요'
             onChange={onChange}
             value={place}
