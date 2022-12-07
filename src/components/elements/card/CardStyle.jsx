@@ -11,14 +11,7 @@ export const Box = styled.div`
   opacity: ${(props) => (props.done || props.closed ? '0.5' : null)};
   box-shadow: 0px 0px 8px rgba(187, 187, 187, 0.32);
   border-radius: 12px;
-
-  @media screen and (min-width: 764px) {
-    width: 358px;
-  }
-
-  @media screen and (max-width: 763px) {
-    width: 100%;
-  }
+  width: 100%;
 `;
 
 export const Line = styled.hr`
@@ -140,10 +133,20 @@ export const InfoText = styled.div`
   font-size: var(--font-small);
   font-display: swap;
 `;
+
 export const Area = styled.div`
   position: relative;
   margin-top: 4px;
+
+  @media screen and (min-width: 764px) {
+    width: 358px;
+  }
+
+  @media screen and (max-width: 763px) {
+    width: 100%;
+  }
 `;
+
 export const Badge = styled.div`
   position: absolute;
   top: 50%;
