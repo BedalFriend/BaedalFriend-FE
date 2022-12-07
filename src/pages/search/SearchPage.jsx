@@ -104,15 +104,15 @@ export default function SearchPage() {
   const queryHandler = () => {
     if (select === '마감 임박 순') {
       if (fullAddress === null || fullAddress === undefined) {
-        query = `sortBy=limit_time&isAsc=true&keyword=${searchTerm}`;
+        query = `sortBy=limit_time&isAsc=false&keyword=${searchTerm}`;
       } else {
-        query = `sortBy=limit_time&isAsc=true&region=${address[0]}&keyword=${searchTerm}`;
+        query = `sortBy=limit_time&isAsc=false&region=${address[0]}&keyword=${searchTerm}`;
       }
     } else if (select === '신규 등록 순') {
       if (fullAddress === null || fullAddress === undefined) {
-        query = `sortBy=created_at&isAsc=true&keyword=${searchTerm}`;
+        query = `sortBy=created_at&isAsc=false&keyword=${searchTerm}`;
       } else {
-        query = `sortBy=created_at&isAsc=true&region=${address[0]}&keyword=${searchTerm}`;
+        query = `sortBy=created_at&isAsc=false&region=${address[0]}&keyword=${searchTerm}`;
       }
     } else if (select === '참여자 많은 순') {
       if (fullAddress === null || fullAddress === undefined) {

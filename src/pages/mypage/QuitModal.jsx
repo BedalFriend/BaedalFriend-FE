@@ -2,10 +2,11 @@ import store from '../../redux/config/ConfigStore';
 import axios from 'axios';
 import { getCookieToken } from '../../shared/storage/Cookie';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
 import * as QuitST from './QuitModalStyle'
 import useOutSideClick from '../../hooks/useOutSideClick';
-import { useSelector } from 'react-redux';
+import ErrorModal from './ErrorModal';
 
 export default function QuitModal({closeModal2}) {
 
@@ -15,6 +16,11 @@ export default function QuitModal({closeModal2}) {
   const userId = useSelector((state) => state.user.id);
 
   const modalRef = useRef(null)
+  const [errorOpen, setErrorOpen] = useState(false);
+
+  const closeErrorModal = () => {
+    setErrorOpen(false);
+  }
 
   const handleClose = () => {
     closeModal2();
@@ -36,16 +42,24 @@ export default function QuitModal({closeModal2}) {
         { 'Authorization' : `${authorization}`,
           'Refresh_Token' : `${refreshToken}`,} })
       .then((res) => {
-        if (res.data.success) {
+        if (res.data.success === false) {
+          setErrorOpen(true);
+        } else {
           window.location.replace("/")
         }
+        console.log(res)
       });
   }
 
   return (
     <QuitST.Overlay>
       <QuitST.ModalWrap ref={modalRef}>
-
+        {errorOpen === true ?
+          (<ErrorModal
+            closeErrorModal={closeErrorModal}
+            closeModal2={closeModal2}/>)
+          :
+          (<>
           <QuitST.InfoBox>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <mask id="mask0_566_568" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
@@ -77,7 +91,8 @@ export default function QuitModal({closeModal2}) {
               돌아가기
             </QuitST.ModalBtn>
           </QuitST.ModalBtnSet>
-
+          </>)
+        }
       </QuitST.ModalWrap>
     </QuitST.Overlay>
   );

@@ -122,29 +122,29 @@ export default function CategoryPage() {
     if (select === '마감 임박 순') {
       if (searchCate === '전체') {
         if (fullAddress === null || fullAddress === undefined) {
-          query = `keyword=&sortBy=limit_time&isAsc=true`;
+          query = `keyword=&sortBy=limit_time&isAsc=false`;
         } else {
-          query = `keyword=${address[0]}&region=${address[0]}&sortBy=limit_time&isAsc=true`;
+          query = `keyword=${address[0]}&region=${address[0]}&sortBy=limit_time&isAsc=false`;
         }
       } else {
         if (fullAddress === null || fullAddress === undefined) {
-          query = `sortBy=limit_time&isAsc=true&keyword=${searchCate}`;
+          query = `sortBy=limit_time&isAsc=false&keyword=${searchCate}`;
         } else {
-          query = `sortBy=limit_time&isAsc=true&region=${address[0]}&keyword=${searchCate}`;
+          query = `sortBy=limit_time&isAsc=false&region=${address[0]}&keyword=${searchCate}`;
         }
       }
     } else if (select === '신규 등록 순') {
       if (searchCate === '전체') {
         if (fullAddress === null || fullAddress === undefined) {
-          query = `keyword=&sortBy=created_at&isAsc=true`;
+          query = `keyword=&sortBy=created_at&isAsc=false`;
         } else {
-          query = `keyword=${address[0]}&region=${address[0]}&sortBy=created_at&isAsc=true`;
+          query = `keyword=${address[0]}&region=${address[0]}&sortBy=created_at&isAsc=false`;
         }
       } else {
         if (fullAddress === null || fullAddress === undefined) {
-          query = `sortBy=created_at&isAsc=true&keyword=${searchCate}`;
+          query = `sortBy=created_at&isAsc=false&keyword=${searchCate}`;
         } else {
-          query = `sortBy=created_at&isAsc=true&region=${address[0]}&keyword=${searchCate}`;
+          query = `sortBy=created_at&isAsc=false&region=${address[0]}&keyword=${searchCate}`;
         }
       }
     } else if (select === '참여자 많은 순') {
