@@ -2,6 +2,9 @@ import styled from 'styled-components';
 
 export const MapBox = styled.div`
   position: relative;
+  width: 100%;
+  height: 72px;
+  border-radius: 12px;
 
   margin-bottom: 14px;
 `;

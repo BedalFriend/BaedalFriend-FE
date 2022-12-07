@@ -105,7 +105,7 @@ export default function NearbyMap({
         }
       });
     };
-  }, [container]);
+  }, [container, searchParty]);
 
   useEffect(() => {
     if (kakaoMap === null) {
@@ -246,7 +246,7 @@ export default function NearbyMap({
     return () => {
       clearTimeout(timer);
     };
-  }, [kakaoMap, data?.length, searchParty]);
+  }, [kakaoMap, data?.length]);
 
   useEffect(() => {
     if (kakaoMap === null) {
@@ -355,10 +355,7 @@ export default function NearbyMap({
       </NearbyST.BottomBtnBox>
 
       <NearbyST.ListBtnBox slotManager={slotManager}>
-        {searchData?.length > 1 ||
-        (searchParty === '' &&
-          user.address &&
-          searchData?.length !== undefined) ? (
+        {searchData?.length <= 1 && searchParty === '' && user.address ? (
           <NearbyST.VeiwAll
             onClick={() => {
               setIndex(true);

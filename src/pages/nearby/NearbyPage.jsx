@@ -9,7 +9,6 @@ import {
   __getThunk,
 } from '../../redux/modules/PostSlice';
 import NearbyList from './NearbyList';
-import styled from 'styled-components';
 
 const Nearby = () => {
   const { setTab } = useContext(TabContext);

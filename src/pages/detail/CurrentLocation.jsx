@@ -48,15 +48,7 @@ const CurrentLocation = ({ data, stepTwoCheckHandler }) => {
   }, [data.gatherAddress, container]);
 
   return (
-    <CtLocationST.MapBox
-      id='container'
-      ref={container}
-      style={{
-        minwidth: '358px',
-        height: '72px',
-        borderRadius: '12px',
-      }}
-    >
+    <CtLocationST.MapBox id='container' ref={container}>
       <CtLocationST.SelectAddressBox>
         <CtLocationST.OrangeMarker
           src={OrangeMapMarker}

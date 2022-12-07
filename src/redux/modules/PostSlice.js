@@ -70,7 +70,6 @@ export const __deletePost = createAsyncThunk(
   'DELETE_POST',
   async (arg, thunkAPI) => {
     try {
-      console.log('delete', arg);
       await getInstance().delete(`${basePath}/auth/posts/${arg}`);
       return thunkAPI.fulfillWithValue(arg);
     } catch (e) {
@@ -195,7 +194,6 @@ export const __getReCateSearchThunk = createAsyncThunk(
 export const __getReEntireCateThunk = createAsyncThunk(
   'GET_REENTIRECATE',
   async (arg, thunkAPI) => {
-    console.log(arg);
     try {
       const { data } = await getInstance().get(
         `${basePath}/posts/regionEntireCategory/search?page=1&size=1000&${arg}`
@@ -315,12 +313,11 @@ export const postsSlice = createSlice({
     },
     [__deletePost.fulfilled]: (state, action) => {
       state.posts.isLoading = false;
-      console.log('Delete.action.payload', action.payload);
-      console.log('state.posts.data', current(state));
+
       const target = state.posts.data.findIndex(
         (post) => post.postId === parseInt(action.payload)
       );
-      console.log('target', target);
+
       state.posts.data.splice(target, 1);
     },
     [__deletePost.rejected]: (state, action) => {

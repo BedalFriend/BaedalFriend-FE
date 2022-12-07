@@ -292,7 +292,7 @@ const SearchMap = ({ setIndex, data, setData, setAddressManager }) => {
         <SearchST.MapBtnBox>
           <SearchST.MapCancelBtn
             onClick={() => {
-              setIndex(0);
+              setIndex(3);
             }}
           >
             돌아가기
