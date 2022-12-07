@@ -60,7 +60,7 @@ export default function MyPage() {
             <myST.VerticalBox>
               <myST.FlexBox>
                 <myST.NickText>{nickname}</myST.NickText>
-                <myST.Star>
+                {/* <myST.Star>
                   <svg width="20" height="20" viewBox="0 0.5 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <mask id="mask0_1750_2458" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="20" height="20">
                       <rect width="20" height="20" fill="#D9D9D9"/>
@@ -72,7 +72,7 @@ export default function MyPage() {
                 </myST.Star>
                 <myST.StarAvg>
                   4.5
-                </myST.StarAvg>
+                </myST.StarAvg> */}
               </myST.FlexBox>
               <myST.EmailText>
                 { email !== null && email !== undefined ?
@@ -98,7 +98,7 @@ export default function MyPage() {
               </svg>
               <myST.VerticalBox>
                 <myST.ContentText>받은 리뷰</myST.ContentText>
-                <myST.CountText>0개</myST.CountText>
+                <myST.CountText>준비중</myST.CountText>
               </myST.VerticalBox>
             </myST.Content>
             {/* 배프와 만남 */}
