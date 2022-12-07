@@ -51,7 +51,7 @@ const DetailPage = () => {
   const posts = useSelector((state) => state.post.posts);
   const token = useSelector((state) => state.token.accessToken);
   // console.log('posts', posts);
-  console.log('post', post.data);
+  // console.log('post', post.data);
   // console.log('token', token);
   // console.log('user', user);
 
@@ -71,6 +71,7 @@ const DetailPage = () => {
   const [isCompleteOpen, setIsCompleteOpen] = useState(false);
 
   const [isDeleteHandler, setIsDeleteHandler] = useState(false);
+  const [isCompleteHandler, setIsCompleteHandler] = useState(false);
 
   const openModal = () => {
     setIsOpen(true);
@@ -133,6 +134,13 @@ const DetailPage = () => {
 
   const onCompleteHandler = () => {
     dispatch(__completePost(id));
+    dispatch(
+      UPDATE_POST({
+        ...post.data,
+        closed: true,
+      })
+    );
+    setIsCompleteHandler(true);
   };
 
   // 참여중인 인원
@@ -180,7 +188,9 @@ const DetailPage = () => {
   }, []);
 
   useEffect(() => {
-    if (user.id === post?.data?.memberId) {
+    if (post.data.closed === true) {
+      setCustom(5);
+    } else if (user.id === post?.data?.memberId) {
       setCustom(3);
     } else if (user.onGoing && user.onGoing !== post.data.postId) {
       setCustom(1);
@@ -191,7 +201,7 @@ const DetailPage = () => {
     } else if (user.onGoing === 0 || user.onGoing === null) {
       setCustom(0);
     }
-  }, [user.id, post?.data?.memberId, user.onGoing, custom]);
+  }, [user.id, post?.data?.memberId, user.onGoing, custom, post.data.closed]);
 
   return (
     <Layout>
@@ -211,6 +221,8 @@ const DetailPage = () => {
       )}
       {isCompleteOpen && (
         <CompleteModal
+          isCompleteHandler={isCompleteHandler}
+          setIsCompleteHandler={setIsCompleteHandler}
           setIsCompleteOpen={setIsCompleteOpen}
           onCompleteHandler={onCompleteHandler}
         />

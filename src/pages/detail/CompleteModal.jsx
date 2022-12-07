@@ -4,11 +4,11 @@ import { useNavigate, useParams } from 'react-router-dom';
 import * as ModalST from './DeleteModalStyle';
 
 export default function CompleteModal({
+  isCompleteHandler,
+  setIsCompleteHandler,
   setIsCompleteOpen,
   onCompleteHandler,
 }) {
-  const [index, setIndex] = useState(false);
-
   //외부 스크롤 막기
   useEffect(() => {
     const $body = document.querySelector('body');
@@ -16,12 +16,9 @@ export default function CompleteModal({
     return () => ($body.style.overflow = 'auto');
   }, []);
 
-  const navigate = useNavigate();
-  const { id } = useParams();
-
   return (
     <>
-      {index ? (
+      {isCompleteHandler ? (
         <ModalST.Overlay>
           <ModalST.ModalWrap>
             <ModalST.ReTopBox>
@@ -50,6 +47,7 @@ export default function CompleteModal({
                 <ModalST.DeleteBtn
                   onClick={() => {
                     setIsCompleteOpen(false);
+                    setIsCompleteHandler(false);
                   }}
                 >
                   나중에 남기기

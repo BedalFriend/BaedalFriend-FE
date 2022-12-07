@@ -133,7 +133,6 @@ export const __changeAddressThunk = createAsyncThunk(
 
   async (arg, thunkAPI) => {
     //콜백
-    console.log(arg);
     try {
       const { data } = await getInstance().put(
         `${basePath}/mypages/address/${arg.id}`,
