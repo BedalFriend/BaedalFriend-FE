@@ -140,4 +140,8 @@ export const CurrentBox = styled.div`
   z-index: 2;
   margin-left: 16px;
   bottom: 255px;
+
+  :hover {
+    cursor: pointer;
+  }
 `;

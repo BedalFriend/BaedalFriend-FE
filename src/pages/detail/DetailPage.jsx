@@ -49,7 +49,7 @@ const DetailPage = () => {
   const posts = useSelector((state) => state.post.posts);
   const token = useSelector((state) => state.token.accessToken);
   // console.log('posts', posts);
-  // console.log('post', post.data);
+  console.log('post', post.data);
   // console.log('token', token);
   // console.log('user', user);
 
@@ -460,7 +460,6 @@ const DetailPage = () => {
               </svg>
               <DetailST.PartyTitle>만나는 장소</DetailST.PartyTitle>
             </DetailST.PtMapTitle>
-
             <div
               onClick={() => {
                 setIndex(true);

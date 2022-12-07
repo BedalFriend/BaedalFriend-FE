@@ -38,6 +38,7 @@ const Router = () => {
 
         <Route element={<GlobalRoute />}>
           <Route path='/' element={<MainPage />} />
+          <Route path='/address' element={<AddressPage />} />
           <Route path='/test' element={<TestPage />} />
           <Route path='/nearby' element={<NearbyPage />} />
           <Route path='/post' element={<UploadPage />} />
