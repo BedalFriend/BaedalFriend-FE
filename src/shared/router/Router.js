@@ -20,6 +20,7 @@ import MyEditPage from '../../pages/mypage/MyEditPage';
 import ModifyPage from '../../pages/modify/ModifyPage';
 import ReviewPage from '../../pages/review/ReviewPage';
 import MyPostPage from '../../pages/mypage/MyPostPage'
+import AddressPage from '../../pages/address/AddressPage';
 
 const Router = () => {
   return (
