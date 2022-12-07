@@ -78,6 +78,18 @@ export const __deletePost = createAsyncThunk(
   }
 );
 
+export const __completePost = createAsyncThunk(
+  'COMPLETE_POST',
+  async (arg, thunkAPI) => {
+    try {
+      await getInstance().put(`chat/channel/close/${arg}`);
+      return thunkAPI.fulfillWithValue(arg);
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.code);
+    }
+  }
+);
+
 export const __increaseParticipantThunk = createAsyncThunk(
   'INCREASE_PARTICIPANT', //action value
 
@@ -121,7 +133,6 @@ export const __changeAddressThunk = createAsyncThunk(
 
   async (arg, thunkAPI) => {
     //콜백
-    console.log(arg);
     try {
       const { data } = await getInstance().put(
         `${basePath}/mypages/address/${arg.id}`,
@@ -230,9 +241,9 @@ export const __postRecentWord = createAsyncThunk(
 export const __deleteRecentWord = createAsyncThunk(
   'DELETE_RECENTWORD',
   async (arg) => {
-    await getInstance().delete(
-      `${basePath}/posts/keyword/delete`,
-      {params: {keywordId: arg}});
+    await getInstance().delete(`${basePath}/posts/keyword/delete`, {
+      params: { keywordId: arg },
+    });
   }
 );
 
@@ -370,6 +381,20 @@ export const postsSlice = createSlice({
       state.searchMovies = action.payload;
     },
     [__decreaseParticipantThunk.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+
+    //Complete Post
+    [__completePost.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__completePost.fulfilled]: (state, action) => {
+      console.log(state, action);
+      state.isLoading = false;
+      state.searchMovies = action.payload;
+    },
+    [__completePost.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },

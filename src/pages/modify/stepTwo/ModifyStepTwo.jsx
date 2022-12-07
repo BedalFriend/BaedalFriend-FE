@@ -83,8 +83,6 @@ const ModifySTepTwo = ({
     }
   }, []);
 
-  // 에러메세지 유효성검사
-
   useEffect(() => {
     if (toggle === true) {
       if (nowTime.minute.length === 1) {
@@ -184,8 +182,9 @@ const ModifySTepTwo = ({
       }
     } else if (
       toggle === false &&
-      (data.limitTime.split(' ')[1].split(':')[0].length === 1 ||
-        data.limitTime.split(' ')[1].split(':')[0] === '')
+      nowTime.hour.length === 2 &&
+      nowTime.hour >= 0 &&
+      nowTime.hour < 13
     ) {
       if (nowTime.minute.length === 1) {
         const dateString =
@@ -195,7 +194,6 @@ const ModifySTepTwo = ({
           '-' +
           day +
           ' ' +
-          '0' +
           nowTime.hour +
           ':' +
           '0' +
@@ -219,7 +217,6 @@ const ModifySTepTwo = ({
             '-' +
             plusDay +
             ' ' +
-            '0' +
             nowTime.hour +
             ':' +
             '0' +
@@ -245,7 +242,6 @@ const ModifySTepTwo = ({
           '-' +
           day +
           ' ' +
-          '0' +
           nowTime.hour +
           ':' +
           nowTime.minute +
@@ -268,7 +264,6 @@ const ModifySTepTwo = ({
             '-' +
             plusDay +
             ' ' +
-            '0' +
             nowTime.hour +
             ':' +
             nowTime.minute +
@@ -288,9 +283,9 @@ const ModifySTepTwo = ({
       }
     } else if (
       toggle === false &&
-      data.limitTime.split(' ')[1].split(':')[0].length === 2 &&
-      data.limitTime.split(' ')[1].split(':')[0] > 12 &&
-      data.limitTime.split(' ')[1].split(':')[0] < 22
+      nowTime.hour.length === 1 &&
+      nowTime.hour >= 0 &&
+      nowTime.hour < 10
     ) {
       if (nowTime.minute.length === 1) {
         const dateString =
@@ -374,106 +369,6 @@ const ModifySTepTwo = ({
             plusDay +
             ' ' +
             '0' +
-            nowTime.hour +
-            ':' +
-            nowTime.minute +
-            ':' +
-            '00';
-
-          setData({
-            ...data,
-            limitTime: plusDateString,
-          });
-        } else {
-          setData({
-            ...data,
-            limitTime: dateString,
-          });
-        }
-      }
-    } else if (
-      toggle === false &&
-      data.limitTime.split(' ')[1].split(':')[0].length === 2 &&
-      nowTime.hour < 12
-    ) {
-      if (nowTime.minute.length === 1) {
-        const dateString =
-          year +
-          '-' +
-          month +
-          '-' +
-          day +
-          ' ' +
-          nowTime.hour +
-          ':' +
-          '0' +
-          nowTime.minute +
-          ':' +
-          '00';
-
-        if (parseInt(new Date(dateString) - new Date()) < 0) {
-          const reChangeDate = new Date(dateString);
-          const plusDate = new Date(
-            reChangeDate.setDate(reChangeDate.getDate() + 1)
-          );
-          const plusYear = plusDate.getFullYear();
-          const plusMonth = ('0' + (plusDate.getMonth() + 1)).slice(-2);
-          const plusDay = ('0' + plusDate.getDate()).slice(-2);
-
-          const plusDateString =
-            plusYear +
-            '-' +
-            plusMonth +
-            '-' +
-            plusDay +
-            ' ' +
-            nowTime.hour +
-            ':' +
-            '0' +
-            nowTime.minute +
-            ':' +
-            '00';
-
-          setData({
-            ...data,
-            limitTime: plusDateString,
-          });
-        } else {
-          setData({
-            ...data,
-            limitTime: dateString,
-          });
-        }
-      } else {
-        const dateString =
-          year +
-          '-' +
-          month +
-          '-' +
-          day +
-          ' ' +
-          nowTime.hour +
-          ':' +
-          nowTime.minute +
-          ':' +
-          '00';
-
-        if (parseInt(new Date(dateString) - new Date()) < 0) {
-          const reChangeDate = new Date(dateString);
-          const plusDate = new Date(
-            reChangeDate.setDate(reChangeDate.getDate() + 1)
-          );
-          const plusYear = plusDate.getFullYear();
-          const plusMonth = ('0' + (plusDate.getMonth() + 1)).slice(-2);
-          const plusDay = ('0' + plusDate.getDate()).slice(-2);
-
-          const plusDateString =
-            plusYear +
-            '-' +
-            plusMonth +
-            '-' +
-            plusDay +
-            ' ' +
             nowTime.hour +
             ':' +
             nowTime.minute +
@@ -493,6 +388,8 @@ const ModifySTepTwo = ({
       }
     }
   }, [nowTime.hour, toggle, nowTime.minute]);
+
+  // 에러메세지 유효성검사
 
   // FistTime
   useEffect(() => {

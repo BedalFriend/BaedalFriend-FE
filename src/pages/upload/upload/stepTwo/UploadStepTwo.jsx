@@ -20,10 +20,9 @@ const UploadStepTwo = ({
   time,
   toggle,
   setToggle,
+  isTime,
+  setIsTime,
 }) => {
-  // AM PM 토글 관리
-  const [isTime, setIsTime] = useState('PM');
-
   // Select
   const optionData = [{ value: 1 }, { value: 2 }, { value: 3 }, { value: 4 }];
 

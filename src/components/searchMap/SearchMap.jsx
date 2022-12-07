@@ -9,7 +9,7 @@ import orangeMarker from '../../imgs/upload/Orange_Map_Marker.png';
 import MyMarker from '../../imgs/upload/Map_LocationMark.png';
 import CurrentMark from '../../imgs/upload/Map_MyLocation.png';
 
-const SearchMap = ({ setIndex, setData, data, name, address }) => {
+const SearchMap = ({ setIndex, setData, data, name, address, roomTitle }) => {
   const target = document.querySelector('#Map');
 
   const container = useRef();
@@ -63,6 +63,7 @@ const SearchMap = ({ setIndex, setData, data, name, address }) => {
     const tempArr = { ...data };
     tempArr[`${name}`] = storeName.textContent;
     tempArr[`${address}`] = storeAddress.textContent;
+    tempArr[`${roomTitle}`] = storeName.textContent;
     setData(tempArr);
     setIndex(0);
   };

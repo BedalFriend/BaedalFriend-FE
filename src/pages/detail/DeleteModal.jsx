@@ -4,7 +4,6 @@ import * as ModalST from './DeleteModalStyle';
 
 export default function DeleteModal({
   setIsOpen,
-
   onDeleteHandler,
   isDeleteHandler,
   setIsDeleteHandler,
