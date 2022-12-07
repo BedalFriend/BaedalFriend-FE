@@ -233,6 +233,7 @@ const SearchMap = () => {
             </SearchST.SearchImage>
 
             <SearchST.SearchInput
+              id='Map'
               placeholder='현재 위치를 검색해주세요'
               onChange={onChange}
               value={place}
