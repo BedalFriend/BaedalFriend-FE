@@ -512,6 +512,9 @@ const DetailPage = () => {
           {custom === 4 ? (
             <DetailST.OverLapBtn>지금은 자리가 없어요</DetailST.OverLapBtn>
           ) : null}
+          {custom === 5 ? (
+            <DetailST.OverLapBtn>이미 종료된 공구입니다</DetailST.OverLapBtn>
+          ) : null}
         </DetailST.DetailBox>
       )}
     </Layout>

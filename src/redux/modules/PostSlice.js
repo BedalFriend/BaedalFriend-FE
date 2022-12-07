@@ -242,9 +242,9 @@ export const __postRecentWord = createAsyncThunk(
 export const __deleteRecentWord = createAsyncThunk(
   'DELETE_RECENTWORD',
   async (arg) => {
-    await getInstance().delete(
-      `${basePath}/posts/keyword/delete`,
-      {params: {keywordId: arg}});
+    await getInstance().delete(`${basePath}/posts/keyword/delete`, {
+      params: { keywordId: arg },
+    });
   }
 );
 
