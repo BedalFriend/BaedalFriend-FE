@@ -58,10 +58,12 @@ export default function MyPostPage() {
       :
       (
         <MyPostST.RowWrap>
-        {posts.data.map((post, index) => (
-          <MyPostST.CardWrap focused={windowWidth < 760 ? true:false}>
-            <CreatedAt key={post.id} post={post}/>
-            <Card key={index} post={post}/>
+        {posts.data.map((post) => (
+          <MyPostST.CardWrap
+            focused={windowWidth < 760 ? true:false}
+            key={post.postId}>
+            <CreatedAt post={post}/>
+            <Card post={post}/>
           </MyPostST.CardWrap>
         ))}
         </MyPostST.RowWrap>
