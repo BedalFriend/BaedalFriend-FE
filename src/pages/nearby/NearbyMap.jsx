@@ -8,7 +8,6 @@ import Card from '../../components/elements/card/Card';
 import MyMarker from '../../imgs/upload/Map_LocationMark.png';
 import yellowMarker from '../../imgs/upload/Yellow_Marker.png';
 import orangeMarker from '../../imgs/upload/Orange_Map_Marker.png';
-import { useAsyncError } from 'react-router-dom';
 
 export default function NearbyMap({
   user,
@@ -44,6 +43,7 @@ export default function NearbyMap({
         },
         (error) => {
           console.error(error);
+          alert(error);
         },
         {
           enableHighAccuracy: true,
@@ -217,7 +217,6 @@ export default function NearbyMap({
                   marker.setMap(null);
                 }
 
-                // setDistMarker({ coord, marker });
                 kakao.maps.event.addListener(marker, 'click', function () {
                   // 클릭된 마커가 없고, click 마커가 클릭된 마커가 아니면
                   // 마커의 이미지를 클릭 이미지로 변경합니다
@@ -242,7 +241,7 @@ export default function NearbyMap({
           });
         }
       });
-    }, 500);
+    }, 1000);
 
     return () => {
       clearTimeout(timer);
