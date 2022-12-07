@@ -7,6 +7,7 @@ import SVG from '../../../shared/SVG';
 import { useNavigate } from 'react-router-dom';
 
 export default function Card({ post, isWide }) {
+  console.log(post);
   const VacUser = () => {
     const result = [];
     for (let i = 0; i < post.maxCapacity - post.chatRoomMembers.length; i++) {
