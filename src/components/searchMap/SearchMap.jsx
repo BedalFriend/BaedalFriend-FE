@@ -10,6 +10,8 @@ import MyMarker from '../../imgs/upload/Map_LocationMark.png';
 import CurrentMark from '../../imgs/upload/Map_MyLocation.png';
 
 const SearchMap = ({ setIndex, setData, data, name, address }) => {
+  const target = document.querySelector('#Map');
+
   const container = useRef();
   const [kakaoMap, setKakaoMap] = useState(null);
 
@@ -113,6 +115,7 @@ const SearchMap = ({ setIndex, setData, data, name, address }) => {
       };
 
       ps.keywordSearch(place, placesSearchCB);
+      target.blur();
     }, 1000);
 
     let selectedMarker = null;

@@ -14,6 +14,8 @@ import { __changeAddressThunk } from '../../redux/modules/PostSlice';
 import { UPDATE_USER } from '../../redux/modules/UserSlice';
 
 const SearchMap = () => {
+  const target = document.querySelector('#Map');
+
   const container = useRef();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -116,6 +118,7 @@ const SearchMap = () => {
       };
 
       ps.keywordSearch(place, placesSearchCB);
+      target.blur();
     }, 1000);
 
     let selectedMarker = null;
