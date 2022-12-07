@@ -6,6 +6,7 @@ export const myEditBG = styled.div`
   width: 100%;
   height: 100vh;
   align-items: center;
+  z-index: 950;
   
   display: flex;
   flex-flow: column nowrap;

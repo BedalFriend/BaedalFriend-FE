@@ -4,11 +4,8 @@ export const Overlay = styled.div`
   position: fixed;
   height: 100%;
   top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
   background: rgba(33, 33, 33, 0.3);
-  z-index: 910;
+  z-index: 950;
 
   @media screen and (min-width: 764px) {
       width: var(--responsive-width);

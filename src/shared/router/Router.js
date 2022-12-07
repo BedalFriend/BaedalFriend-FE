@@ -19,6 +19,7 @@ import MyPage from '../../pages/mypage/MyPage';
 import MyEditPage from '../../pages/mypage/MyEditPage';
 import ModifyPage from '../../pages/modify/ModifyPage';
 import ReviewPage from '../../pages/review/ReviewPage';
+import MyPostPage from '../../pages/mypage/MyPostPage'
 import AddressPage from '../../pages/address/AddressPage';
 
 const Router = () => {
@@ -49,6 +50,7 @@ const Router = () => {
           <Route path='/category' element={<CategoryPage />} />
           <Route path='/mypage' element={<MyPage />} />
           <Route path='/myEdit' element={<MyEditPage />} />
+          <Route path='/myPost' element={<MyPostPage />} />
           <Route path='*' element={<MainPage />} />
         </Route>
       </Routes>

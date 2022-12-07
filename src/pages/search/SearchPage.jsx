@@ -7,8 +7,8 @@ import Layout from '../../components/layout/Layout';
 import SearchModal from './SearchModal';
 import useInput from '../../hooks/useInput';
 import Card from '../../components/elements/card/Card';
-//import RecentWord from './RecentWord';
-import NRImage from './banner 1.png';
+import RecentWord from './RecentWord';
+import NRImage from '../../imgs/Banner1.png';
 
 import {
   __getSearchThunk,
@@ -24,6 +24,7 @@ export default function SearchPage() {
 
   //tab
   useEffect(() => {
+    dispatch(CLEAR_POSTS());
     setTab('Search');
     // eslint-disable-next-line
   }, []);
@@ -90,7 +91,7 @@ export default function SearchPage() {
 
   //검색어
   const [searchTerm, setSearchTerm, searchHandler] = useInput('');
-  const [searched, setSearched] = useState();
+  const [searched, setSearched] = useState(false);
 
   //주소 받아오기
   const fullAddress = useSelector((state) => state.user.address);
@@ -103,15 +104,15 @@ export default function SearchPage() {
   const queryHandler = () => {
     if (select === '마감 임박 순') {
       if (fullAddress === null || fullAddress === undefined) {
-        query = `sortBy=limit_time&isAsc=true&keyword=${searchTerm}`;
+        query = `sortBy=limit_time&isAsc=false&keyword=${searchTerm}`;
       } else {
-        query = `sortBy=limit_time&isAsc=true&region=${address[0]}&keyword=${searchTerm}`;
+        query = `sortBy=limit_time&isAsc=false&region=${address[0]}&keyword=${searchTerm}`;
       }
     } else if (select === '신규 등록 순') {
       if (fullAddress === null || fullAddress === undefined) {
-        query = `sortBy=created_at&isAsc=true&keyword=${searchTerm}`;
+        query = `sortBy=created_at&isAsc=false&keyword=${searchTerm}`;
       } else {
-        query = `sortBy=created_at&isAsc=true&region=${address[0]}&keyword=${searchTerm}`;
+        query = `sortBy=created_at&isAsc=false&region=${address[0]}&keyword=${searchTerm}`;
       }
     } else if (select === '참여자 많은 순') {
       if (fullAddress === null || fullAddress === undefined) {
@@ -131,6 +132,7 @@ export default function SearchPage() {
   };
 
   useEffect(() => {
+    dispatch(__getRecentWord());  
     setSearchTerm(searchTerm.replace(/ /g,""))
     setSearched(false);
     setIsOpen(false);
@@ -145,11 +147,8 @@ export default function SearchPage() {
         } else {
           dispatch(__getReSearchThunk(query));
         }
-        setSearched(true);
-      
-        setTimeout(async() => {
-          dispatch(__postRecentWord(`${searchTerm}`))
-        }, 300) 
+        setSearched(true);     
+        dispatch(__postRecentWord(`${searchTerm}`))
       }
     }, 600);
 
@@ -162,64 +161,21 @@ export default function SearchPage() {
   //clean up
   useEffect(() => {
     window.scrollTo(0, 0);  
-    dispatch(__getRecentWord);
-    dispatch(CLEAR_POSTS());
     return () => {
       dispatch(CLEAR_POSTS());
     };
   }, []);
 
-  //게시물 받아오기
   const posts = useSelector((state) => state.post.posts);
+  const keywords = useSelector((state) => state.post.keywords);
 
-  //스크롤방지
-  var keys = { 37: 1, 38: 1, 39: 1, 40: 1 };
-  function preventDefault(e) {
-    e.preventDefault();
-  }
-  function preventDefaultForScrollKeys(e) {
-    if (keys[e.keyCode]) {
-      preventDefault(e);
-      return false;
-    }
-  }
-  var supportsPassive = false;
-  try {
-    window.addEventListener(
-      'test',
-      null,
-      Object.defineProperty({}, 'passive', {
-        get: function () {
-          supportsPassive = true;
-        },
-      })
-    );
-  } catch (e) {}
-  var wheelOpt = supportsPassive ? { passive: false } : false;
-  var wheelEvent =
-    'onwheel' in document.createElement('div') ? 'wheel' : 'mousewheel';
-  function disableScroll() {
-    window.addEventListener('DOMMouseScroll', preventDefault, false);
-    window.addEventListener(wheelEvent, preventDefault, wheelOpt);
-    window.addEventListener('touchmove', preventDefault, wheelOpt);
-    window.addEventListener('keydown', preventDefaultForScrollKeys, false);
-  }
-  function enableScroll() {
-    window.removeEventListener('DOMMouseScroll', preventDefault, false);
-    window.removeEventListener(wheelEvent, preventDefault, wheelOpt);
-    window.removeEventListener('touchmove', preventDefault, wheelOpt);
-    window.removeEventListener('keydown', preventDefaultForScrollKeys, false);
-  }
   useEffect(() => {
-    if (posts.data.length === 0) {
-      disableScroll();
-    }
-    return () => enableScroll();
-  }, [posts]);
+    dispatch(__getRecentWord());          
+  }, [keywords])
 
   return (
     <Layout>
-      <SearchST.SearchBg>
+      <SearchST.SearchBg focused={posts&&posts.data.length > 0 ? true:false}>
         <div style={{ width: '100%', height: '84px'}}></div>
 
         {/* 검색창 */}
@@ -246,21 +202,31 @@ export default function SearchPage() {
         </SearchST.Search>
 
         {/* 최근 검색어 */}
+        {keywords&&keywords.length>0 ?
+        (
         <SearchST.RecentSection>
           <SearchST.RecentTitle>최근 검색어</SearchST.RecentTitle>
           <SearchST.RecentDisplay
             ref={scrollRef}
             onTouchStart={touchStartHandler}
             onTouchEnd={touchEndHandler}
-            onTouchMove={isTouch ? throttleHandler : null}
             onMouseDown={dragStartHandler}
             onMouseUp={dragEndHandler}
             onMouseMove={isDrag ? throttleHandler : null}
-            onMouseLeave={dragEndHandler}>
-
-            <div style={{ width: '50%', height: '30px'}}></div>
+            onMouseLeave={dragEndHandler}
+            >
+              { keywords && keywords.map((keyword, index) => (
+                  <RecentWord
+                    key={index}
+                    id={keyword.id}
+                    keyword={keyword.keyword}
+                  />
+              ))}
           </SearchST.RecentDisplay>
-        </SearchST.RecentSection>
+        </SearchST.RecentSection>          
+        )
+        :
+        ('')}
 
         <SearchST.Line />
 
