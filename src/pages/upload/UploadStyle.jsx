@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const PostBox = styled.div`
   width: calc(100% - 32px);
-  height: 100vh;
+  height: 100%;
 `;
 
 export const FormContainer = styled.div`
@@ -74,18 +74,17 @@ export const LongInputBox = styled.div`
   width: 100%;
   height: 40px;
 
-  @media screen and (min-width: 764px) {
-    margin-bottom: 27px;
-  }
-
-  @media screen and (max-width: 764px) {
-    margin-bottom: 16px;
-  }
+  margin-bottom: ${(props) =>
+    props.isTargetFail || props.isCategoryFail ? '12px' : '29px'};
 `;
 
 export const LongInput = styled.input`
   font-size: var(--font-small);
   color: var(--color-dark-grey);
+`;
+export const SecondQuestion = styled.div`
+  margin-bottom: ${(props) =>
+    props.isFistTimeFail || props.isSecondTimeFail ? '12px' : '28px'};
 `;
 
 export const MenuBox = styled.div`
@@ -121,13 +120,8 @@ export const ShortInputBox = styled.div`
 
   border: ${(props) =>
     props.isDeliveryTimeFail ? '1px solid var(--color-system-error)' : null};
-  @media screen and (min-width: 764px) {
-    margin-bottom: 24px;
-  }
 
-  @media screen and (max-width: 764px) {
-    margin-bottom: 12px;
-  }
+  margin-bottom: ${(props) => (props.isDeliveryTimeFail ? '12px' : '29px')};
 `;
 
 export const ShortInput = styled.input`
@@ -311,6 +305,8 @@ export const SelectInput = styled.div`
   border: ${(props) =>
     props.isMaxCapacityFail ? '1px solid var(--color-system-error)' : null};
 
+  margin-bottom: ${(props) => (props.isMaxCapacityFail ? '12px' : '28px')};
+
   cursor: pointer;
   &::before {
     content: '⌵';
@@ -379,4 +375,51 @@ export const TextArea = styled.textarea`
   :focus {
     outline: none;
   }
+`;
+
+export const Frame = styled.svg`
+  position: absolute;
+`;
+
+export const SelectAddressBox = styled.div`
+  position: absolute;
+
+  display: flex;
+  align-items: center;
+
+  width: calc(100% - 72px);
+  height: 40px;
+
+  border-radius: 25px;
+
+  background-color: var(--color-white);
+  opacity: 80%;
+
+  margin: 16px 20px 16px 20px;
+`;
+export const OrangeMarker = styled.svg`
+  position: absolute;
+
+  margin: 16px 13px;
+`;
+
+export const SelectAddress = styled.input`
+  position: absolute;
+
+  font-family: 'Pretendard';
+  font-size: var(--font-small);
+  color: var(--color-dark-grey);
+
+  margin: 2px 0px 0px 36px;
+`;
+
+export const SelectMapBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 12px;
+  border: ${(props) =>
+    props.isGatherNameFail ? '1px solid var(--color-system-error)' : null};
+  margin-bottom: ${(props) => (props.isGatherNameFail ? '12px' : '28px')};
 `;

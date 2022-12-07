@@ -28,7 +28,7 @@ const PageOne = () => {
                 {nickname}님을 기다리는 n명의 배프
               </CaroST.DesContent>
             </CaroST.MiniBox>
-            <CurrentLocation />
+            {/* <CurrentLocation /> */}
           </CaroST.ImgDes>
         </>
       ) : (

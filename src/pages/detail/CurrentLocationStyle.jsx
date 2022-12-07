@@ -2,7 +2,10 @@ import styled from 'styled-components';
 
 export const MapBox = styled.div`
   position: relative;
-  z-index: 1;
+  width: 100%;
+  height: 72px;
+  border-radius: 12px;
+
   margin-bottom: 14px;
 `;
 
@@ -25,13 +28,12 @@ export const SelectAddressBox = styled.div`
 `;
 export const OrangeMarker = styled.img`
   position: relative;
-  z-index: 2;
+
   margin: 16px 13px;
 `;
 
 export const SelectAddress = styled.input`
   position: relative;
-  z-index: 2;
 
   color: var(--color-dark-grey);
   font-size: var(--font-small);

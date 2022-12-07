@@ -1,22 +1,4 @@
-import styled, { keyframes } from 'styled-components';
-
-const FadeIn = keyframes`
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-`;
-
-const FadeOut = keyframes`
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-`;
+import styled from 'styled-components';
 
 export const Overlay = styled.div`
   position: absolute;
@@ -27,10 +9,6 @@ export const Overlay = styled.div`
   right: 0;
   background: rgba(0, 0, 0, 0.3);
   z-index: 980;
-
-  animation-duration: 0.5s;
-  animation-timing-function: ease-out;
-  animation-name: ${(props) => (props.aniState ? FadeIn : FadeOut)};
 
   @media screen and (min-width: 764px) {
     width: var(--responsive-width);
@@ -52,16 +30,11 @@ export const ModalWrap = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 920;
-
-  align-items: center;
-
-  cursor: pointer;
 `;
 
 export const SelectBox = styled.div`
   position: relative;
-  height: 50px;
-  background-color: white;
+  height: 114px;
   text-align: center;
 `;
 
@@ -71,6 +44,7 @@ export const CloseSelectBox = styled.div`
   height: 52px;
   border-radius: 12px;
   background-color: white;
+  opacity: 90%;
   text-align: center;
 `;
 
@@ -94,47 +68,76 @@ export const BottomBox = styled.div`
   padding-bottom: 10px;
 `;
 
-export const SelectText = styled.div`
-  font-size: var(--weight-small);
+export const ModifyText = styled.div`
+  font-family: 'Pretendard';
+  font-size: var(--font-small);
   font-weight: var(--weight-regular);
   color: var(--color-dark-grey);
 
-  position: relative;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  padding: 28px 119px 24px 118px;
 
   :hover {
     color: var(--color-orange);
   }
 `;
 
+export const DeleteText = styled.div`
+  font-family: 'Pretendard';
+  font-size: var(--font-small);
+  font-weight: var(--weight-regular);
+  color: var(--color-dark-grey);
+
+  padding: 0px 119px 24px 118px;
+
+  :hover {
+    color: var(--color-orange);
+  }
+`;
+
+export const BackText = styled.div`
+  font-family: 'Pretendard';
+  font-size: var(--font-small);
+  font-weight: var(--weight-regular);
+  color: var(--color-system-error);
+
+  padding: 17px 119px 17px 118px;
+`;
+
 export const ReTopBox = styled.div`
   position: relative;
   height: 110px;
   background-color: white;
+  opacity: 90%;
   text-align: center;
-  border-top-left-radius: 12px;
-  border-top-right-radius: 12px;
-  padding-top: 10px;
+  border-radius: 12px;
+
+  align-items: center;
 
   display: flex;
   flex-direction: column;
 `;
 
+export const InfoBoldText = styled.div`
+  font-family: 'Pretendard';
+  font-size: var(--font-small);
+  font-weight: var(--weight-bold);
+  color: var(--color-dark-grey);
+
+  margin-top: 8px;
+`;
+
 export const InfoText = styled.div`
-  font-size: var(--weight-small);
+  font-family: 'Pretendard';
+  font-size: var(--font-small);
   font-weight: var(--weight-regular);
   color: var(--color-dark-grey);
 
-  position: relative;
-  top: calc(50% - 25px);
-  left: 50%;
-  transform: translate(-50%, -50%);
+  margin-top: 4px;
 `;
 
 export const ExitInfoText = styled.div`
-  font-size: var(--weight-small);
+  font-family: 'Pretendard';
+  font-size: var(--font-small);
   font-weight: var(--weight-regular);
   color: var(--color-dark-grey);
 
@@ -151,7 +154,8 @@ export const ErrorSvg = styled.svg`
 export const DeleteBtn = styled.div`
   width: 152px;
 
-  font-size: var(--weight-small);
+  font-family: 'Pretendard';
+  font-size: var(--font-small);
   font-weight: var(--weight-regular);
   color: var(--color-system-error);
 
@@ -164,7 +168,8 @@ export const DeleteBtn = styled.div`
 export const CancelBtn = styled.div`
   width: 152px;
 
-  font-size: var(--weight-small);
+  font-family: 'Pretendard';
+  font-size: var(--font-small);
   font-weight: var(--weight-regular);
   color: var(--color-system-success);
 
@@ -176,7 +181,7 @@ export const CancelBtn = styled.div`
 
 export const DeleteBtnBox = styled.div`
   position: relative;
-  margin-top: 20px;
+  margin-top: 12px;
   width: 156px;
   height: 52px;
   border-radius: 12px;
@@ -186,10 +191,14 @@ export const DeleteBtnBox = styled.div`
 
 export const BottomBtnBox = styled.div`
   display: flex;
+  opacity: 90%;
   gap: 15px;
 `;
 
 export const ModalBox = styled.div`
   background-color: white;
+  opacity: 90%;
+  width: 326px;
+  height: 114px;
   border-radius: 12px;
 `;

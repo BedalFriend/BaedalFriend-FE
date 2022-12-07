@@ -56,6 +56,7 @@ export default function Header() {
         tab={tab}
         onClick={() => {
           if (refreshToken !== null && refreshToken !== undefined) {
+            navigate('/address');
           } else {
             navigate('/login');
           }

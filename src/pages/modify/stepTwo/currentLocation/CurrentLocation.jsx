@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import MapFrame from '../../../../imgs/upload/Frame 48.png';
 import OrangeMapMarker from '../../../../imgs/upload/Orange_Map_Marker.png';
 
@@ -14,6 +14,8 @@ const CurrentLocation = ({
   isGatherNameFail,
   setIndex,
 }) => {
+  const container = useRef();
+
   useEffect(() => {
     const script = document.createElement('script');
 
@@ -26,13 +28,13 @@ const CurrentLocation = ({
           // GPS를 지원하면
           navigator.geolocation.getCurrentPosition(
             (position) => {
-              const mapContainer = document.getElementById('map'), // 지도를 표시할 div
-                mapOption = {
-                  center: new kakao.maps.LatLng(37.56646, 126.98121), // 지도의 중심좌표
-                  level: 3, // 지도의 확대 레벨
-                };
+              const center = new kakao.maps.LatLng(37.50802, 127.062835);
+              const options = {
+                center: center,
+                level: 3, // 지도의 확대 레벨
+              };
               // 지도를 생성한다
-              const map = new kakao.maps.Map(mapContainer, mapOption);
+              const map = new kakao.maps.Map(container.current, options);
 
               // 현재 위치 받아오기
               const currentPos = new kakao.maps.LatLng(
@@ -62,7 +64,8 @@ const CurrentLocation = ({
   return (
     <div>
       <CurrentLtST.MapBox
-        id='map'
+        id='container'
+        ref={container}
         style={{
           width: '358px',
           height: '72px',
