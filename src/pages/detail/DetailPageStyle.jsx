@@ -221,6 +221,8 @@ export const JoinBtn = styled.div`
   justify-content: center;
   align-items: center;
 
+  z-index: 3;
+
   width: calc(100% - 32px);
   height: 52px;
   border-radius: 12px;
@@ -240,6 +242,8 @@ export const OverLapBtn = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  z-index: 3;
 
   width: calc(100% - 32px);
   min-width: 358px;
@@ -262,6 +266,7 @@ export const BottomBtnBox = styled.div`
   width: calc(100% - 32px);
   margin-left: 16px;
   gap: 16px;
+  z-index: 3;
 `;
 
 export const PartyOutBtn = styled.button`

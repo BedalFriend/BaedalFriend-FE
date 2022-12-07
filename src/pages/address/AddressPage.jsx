@@ -10,13 +10,16 @@ import MyMarker from '../../imgs/upload/Map_LocationMark.png';
 import CurrentMark from '../../imgs/upload/Map_MyLocation.png';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { __changeAddressThunk } from '../../redux/modules/PostSlice';
+import { UPDATE_USER } from '../../redux/modules/UserSlice';
 
-const SearchMap = ({ setData, data, name, address }) => {
+const SearchMap = () => {
   const container = useRef();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
 
+  const [kakaoMap, setKakaoMap] = useState(null);
   const [place, setPlace] = useState('');
   const [markerInfo, setMarkerInfo] = useState('');
 
@@ -56,20 +59,15 @@ const SearchMap = ({ setData, data, name, address }) => {
   };
 
   const saveAddressHandler = () => {
-    const storeName = document.getElementById('storeName');
-    const storeAddress = document.getElementById('storeAddress');
+    const myAddress = document.getElementById('myAddress');
 
-    const tempArr = { ...data };
-    tempArr[`${name}`] = storeName.textContent;
-    tempArr[`${address}`] = storeAddress.textContent;
-    console.log('tempArr', tempArr);
-    // setData(tempArr);
+    dispatch(__changeAddressThunk({ ...user, address: myAddress.textContent }));
+    dispatch(UPDATE_USER({ ...user, address: myAddress.textContent }));
+
     navigate(-1);
   };
 
   useEffect(() => {
-    console.log('data', data);
-
     const script = document.createElement('script');
 
     script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.REACT_APP_KAKAO_MAP_KEY}&libraries=services&autoload=false`;
@@ -86,107 +84,121 @@ const SearchMap = ({ setData, data, name, address }) => {
         // 지도를 생성한다
         const map = new kakao.maps.Map(container.current, options);
 
-        if (myLocation.latitude || myLocation.longitude) {
-          const currentMarkerImage = new kakao.maps.MarkerImage(
-            MyMarker,
-            new kakao.maps.Size(24, 24),
-            new kakao.maps.Point(13, 34)
-          );
-          // 현재 위치 받아오기
-          const currentPos = new kakao.maps.LatLng(
-            myLocation.latitude,
-            myLocation.longitude
-          );
-
-          // 지도 이동(기존 위치와 가깝다면 부드럽게 이동)
-          map.panTo(currentPos);
-
-          // 마커 생성
-          const CurrentMarker = new kakao.maps.Marker({
-            position: currentPos,
-            image: currentMarkerImage,
-          });
-
-          // 기존에 마커가 있다면 제거
-          CurrentMarker.setMap(null);
-          CurrentMarker.setMap(map);
-        }
-
-        if (place === '') {
-          return;
-        }
-
-        // //검색어따라 지도에서 찾기
-        let timer = setTimeout(() => {
-          const ps = new kakao.maps.services.Places();
-
-          const placesSearchCB = (data, status, pagination) => {
-            if (status === kakao.maps.services.Status.OK) {
-              let bounds = new kakao.maps.LatLngBounds();
-
-              for (let i = 0; i < data.length; i++) {
-                displayMarker(data[i]);
-                bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
-              }
-
-              map.setBounds(bounds);
-            }
-          };
-
-          ps.keywordSearch(place, placesSearchCB);
-        }, 500);
-
-        let selectedMarker = null;
-
-        // 지도에 마커를 표시하는 함수
-        const displayMarker = (place) => {
-          const markerImage = new kakao.maps.MarkerImage(
-            yellowMarker,
-            new kakao.maps.Size(36, 36),
-            new kakao.maps.Point(13, 34)
-          );
-          const checkMarkerImage = new kakao.maps.MarkerImage(
-            orangeMarker,
-            new kakao.maps.Size(36, 36),
-            new kakao.maps.Point(13, 34)
-          );
-
-          // 마커를 생성하고 지도에 표시
-          const marker = new kakao.maps.Marker({
-            map: map,
-            position: new kakao.maps.LatLng(place.y, place.x),
-            image: markerImage,
-          });
-
-          kakao.maps.event.addListener(marker, 'click', function () {
-            // 클릭된 마커가 없고, click 마커가 클릭된 마커가 아니면
-            // 마커의 이미지를 클릭 이미지로 변경합니다
-            if (!selectedMarker || selectedMarker !== marker) {
-              // 클릭된 마커 객체가 null이 아니면
-              // 클릭된 마커의 이미지를 기본 이미지로 변경하고
-              !!selectedMarker && selectedMarker.setImage(markerImage);
-
-              // 현재 클릭된 마커의 이미지는 클릭 이미지로 변경합니다
-              marker.setImage(checkMarkerImage);
-            }
-
-            // 클릭된 마커를 현재 클릭된 마커 객체로 설정합니다
-            selectedMarker = marker;
-
-            if (!selectMarker) {
-              setSelectMarker(true);
-            }
-
-            setMarkerInfo(place);
-          });
-        };
-
-        return () => {
-          clearTimeout(timer);
-        };
+        setKakaoMap(map);
       });
     };
-  }, [data, place, myLocation, container]);
+  }, [container]);
+
+  useEffect(() => {
+    if (kakaoMap === null) {
+      return;
+    }
+
+    if (place === '') {
+      return;
+    }
+
+    // //검색어따라 지도에서 찾기
+    let timer = setTimeout(() => {
+      const ps = new kakao.maps.services.Places();
+
+      const placesSearchCB = (data, status, pagination) => {
+        if (status === kakao.maps.services.Status.OK) {
+          let bounds = new kakao.maps.LatLngBounds();
+
+          for (let i = 0; i < data.length; i++) {
+            displayMarker(data[i]);
+            bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
+          }
+
+          kakaoMap.setBounds(bounds);
+        }
+      };
+
+      ps.keywordSearch(place, placesSearchCB);
+    }, 1000);
+
+    let selectedMarker = null;
+
+    // 지도에 마커를 표시하는 함수
+    const displayMarker = (place) => {
+      const markerImage = new kakao.maps.MarkerImage(
+        yellowMarker,
+        new kakao.maps.Size(36, 36),
+        new kakao.maps.Point(13, 34)
+      );
+      const checkMarkerImage = new kakao.maps.MarkerImage(
+        orangeMarker,
+        new kakao.maps.Size(36, 36),
+        new kakao.maps.Point(13, 34)
+      );
+
+      // 마커를 생성하고 지도에 표시
+      const marker = new kakao.maps.Marker({
+        map: kakaoMap,
+        position: new kakao.maps.LatLng(place.y, place.x),
+        image: markerImage,
+      });
+
+      kakao.maps.event.addListener(marker, 'click', function () {
+        // 클릭된 마커가 없고, click 마커가 클릭된 마커가 아니면
+        // 마커의 이미지를 클릭 이미지로 변경합니다
+        if (!selectedMarker || selectedMarker !== marker) {
+          // 클릭된 마커 객체가 null이 아니면
+          // 클릭된 마커의 이미지를 기본 이미지로 변경하고
+          !!selectedMarker && selectedMarker.setImage(markerImage);
+
+          // 현재 클릭된 마커의 이미지는 클릭 이미지로 변경합니다
+          marker.setImage(checkMarkerImage);
+        }
+
+        // 클릭된 마커를 현재 클릭된 마커 객체로 설정합니다
+        selectedMarker = marker;
+
+        if (!selectMarker) {
+          setSelectMarker(true);
+        }
+
+        setMarkerInfo(place);
+      });
+    };
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [kakaoMap, place]);
+
+  useEffect(() => {
+    if (kakaoMap === null) {
+      return;
+    }
+    //현재위치로 지도 이동
+    if (myLocation.latitude || myLocation.longitude) {
+      const currentMarkerImage = new kakao.maps.MarkerImage(
+        MyMarker,
+        new kakao.maps.Size(24, 24),
+        new kakao.maps.Point(13, 34)
+      );
+      // 현재 위치 받아오기
+      const currentPos = new kakao.maps.LatLng(
+        myLocation.latitude,
+        myLocation.longitude
+      );
+
+      // 지도 이동(기존 위치와 가깝다면 부드럽게 이동)
+      kakaoMap.panTo(currentPos);
+
+      // 마커 생성
+      const CurrentMarker = new kakao.maps.Marker({
+        position: currentPos,
+        image: currentMarkerImage,
+      });
+
+      // 기존에 마커가 있다면 제거
+      CurrentMarker.setMap(null);
+      CurrentMarker.setMap(kakaoMap);
+    }
+  }, [kakaoMap, myLocation]);
 
   return (
     <Layout>
@@ -251,17 +263,17 @@ const SearchMap = ({ setData, data, name, address }) => {
                 </g>
               </svg>
 
-              <SearchST.InfoTitle id='storeName'>
+              <SearchST.InfoTitle id='myAddressName'>
                 {markerInfo.place_name}
               </SearchST.InfoTitle>
             </SearchST.InfoTitleBox>
 
             {markerInfo.road_address_name ? (
-              <SearchST.InfoAddress id='storeAddress'>
+              <SearchST.InfoAddress id='myAddress'>
                 {markerInfo.road_address_name}
               </SearchST.InfoAddress>
             ) : (
-              <SearchST.InfoAddress id='storeAddress'>
+              <SearchST.InfoAddress id='myAddress'>
                 {markerInfo.address_name}
               </SearchST.InfoAddress>
             )}

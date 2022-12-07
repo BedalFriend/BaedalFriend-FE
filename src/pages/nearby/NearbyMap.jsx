@@ -355,7 +355,10 @@ export default function NearbyMap({
       </NearbyST.BottomBtnBox>
 
       <NearbyST.ListBtnBox slotManager={slotManager}>
-        {searchData?.length > 1 || (searchParty === '' && user.address) ? (
+        {searchData?.length > 1 ||
+        (searchParty === '' &&
+          user.address &&
+          searchData?.length !== undefined) ? (
           <NearbyST.VeiwAll
             onClick={() => {
               setIndex(true);

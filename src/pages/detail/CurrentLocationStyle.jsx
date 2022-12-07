@@ -8,6 +8,7 @@ export const MapBox = styled.div`
 
 export const SelectAddressBox = styled.div`
   position: relative;
+  z-index: 2;
 
   display: flex;
   align-items: center;

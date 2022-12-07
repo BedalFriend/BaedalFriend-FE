@@ -379,8 +379,6 @@ export const TextArea = styled.textarea`
 
 export const Frame = styled.svg`
   position: absolute;
-
-  margin: 22px 165px 22px 165px;
 `;
 
 export const SelectAddressBox = styled.div`
@@ -389,7 +387,7 @@ export const SelectAddressBox = styled.div`
   display: flex;
   align-items: center;
 
-  width: 318px;
+  width: calc(100% - 72px);
   height: 40px;
 
   border-radius: 25px;
@@ -417,6 +415,8 @@ export const SelectAddress = styled.input`
 
 export const SelectMapBox = styled.div`
   display: flex;
+  justify-content: center;
+  align-items: center;
 
   border-radius: 12px;
   border: ${(props) =>

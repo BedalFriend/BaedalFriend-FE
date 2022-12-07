@@ -44,6 +44,7 @@ export const CloseSelectBox = styled.div`
   height: 52px;
   border-radius: 12px;
   background-color: white;
+  opacity: 90%;
   text-align: center;
 `;
 
@@ -106,6 +107,7 @@ export const ReTopBox = styled.div`
   position: relative;
   height: 110px;
   background-color: white;
+  opacity: 90%;
   text-align: center;
   border-radius: 12px;
 
@@ -189,11 +191,13 @@ export const DeleteBtnBox = styled.div`
 
 export const BottomBtnBox = styled.div`
   display: flex;
+  opacity: 90%;
   gap: 15px;
 `;
 
 export const ModalBox = styled.div`
   background-color: white;
+  opacity: 90%;
   width: 326px;
   height: 114px;
   border-radius: 12px;
