@@ -35,7 +35,7 @@ export const Address = styled.div`
 
   display: flex;
   align-items: center;
-  transition: all var(--animation-duration) ease-in;
+  transition: all 200ms ease;
 
   cursor: pointer;
 `;
