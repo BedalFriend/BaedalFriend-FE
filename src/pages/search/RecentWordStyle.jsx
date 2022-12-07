@@ -5,23 +5,19 @@ export const Recent = styled.div`
   align-items: center;
 
   position: relative;
-  margin-top: 9px;
-  margin-right: 8px;
+  margin-top: 8px;
 `;
 
 export const RecentBox = styled.div`
   position: relative;
   display: flex;
   flex-direction: row;
-  flex-flow: row wrap;
-  align-items: flex-start;
   padding: 4px 12px;
 
-  width: 100%;
+  width: fit-content;
   height: 25px;
-  margin-right: 4px;
 
-  background: #FFEBE3;
+  background: var(--color-dark-white);
   border-radius: 99px;
 
   cursor: pointer;
@@ -31,6 +27,10 @@ export const RecentWord = styled.div`
   font-weight: var(--weight-regular);
   font-size: var(--weight-small);
   line-height: 17px;
-  color: var(--color-orange);
-  word-break: keep-all;
+  color: var(--color-grey);
+  white-space: nowrap;
+`;
+
+export const Delete = styled.div`
+  margin-left: 4px;
 `;

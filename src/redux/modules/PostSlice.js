@@ -227,6 +227,28 @@ export const __postRecentWord = createAsyncThunk(
   }
 );
 
+export const __deleteRecentWord = createAsyncThunk(
+  'DELETE_RECENTWORD',
+  async (arg) => {
+    await getInstance().delete(
+      `${basePath}/posts/keyword/delete`,
+      {params: {keywordId: arg}});
+  }
+);
+
+export const __getMyPostThunk = createAsyncThunk(
+  'GET_MYPOST',
+  async (arg, thunkAPI) => {
+    try {
+      const { data } = await getInstance().get(
+        `${basePath}/mypages/posts/${arg}`
+      );
+      return thunkAPI.fulfillWithValue(data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.code);
+    }
+  }
+);
 export const __getRecentWord = createAsyncThunk('GET_RECENTWORD', async () => {
   const { data } = await getInstance().get(`${basePath}/posts/keyword/my`);
   console.log('data찍어줘', data);
@@ -235,6 +257,7 @@ export const __getRecentWord = createAsyncThunk('GET_RECENTWORD', async () => {
 const initialState = {
   post: { data: {}, isLoading: false, error: null },
   posts: { data: [], isLoading: false, error: null },
+  keyword: { data: {} },
 };
 
 export const postsSlice = createSlice({
@@ -438,6 +461,24 @@ export const postsSlice = createSlice({
       state.posts.error = action.payload;
     },
     [__getEntireCateThunk.fulfilled]: (state, action) => {
+      state.posts.isLoading = false;
+      state.posts.data = action.payload.data;
+    },
+
+    //get Recent Word
+    [__getRecentWord.fulfilled]: (state, action) => {
+      state.keywords = action.payload.data;
+    },
+
+    //get My Post
+    [__getMyPostThunk.pending]: (state) => {
+      state.posts.isLoading = true;
+    },
+    [__getMyPostThunk.rejected]: (state, action) => {
+      state.posts.isLoading = false;
+      state.posts.error = action.payload;
+    },
+    [__getMyPostThunk.fulfilled]: (state, action) => {
       state.posts.isLoading = false;
       state.posts.data = action.payload.data;
     },

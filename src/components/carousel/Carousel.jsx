@@ -1,24 +1,23 @@
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as CaroST from './CarouselStyle';
-import LoginImg1 from '../carousel/img/Banner.png';
-
-import CurrentLocation from './CurrentLocation';
+import MainBanner1 from '../../imgs/carousel/MainBanner1.png';
+import MainBanner2 from '../../imgs/carousel/MainBanner2.png';
 
 import { getCookieToken } from '../../shared/storage/Cookie';
-import { useSelector } from 'react-redux';
+//import { useSelector } from 'react-redux';
 
 const PageOne = () => {
   const navigate = useNavigate();
   const token = getCookieToken();
-  const nickname = useSelector((state) => state.user.nickname);
+  //const nickname = useSelector((state) => state.user.nickname);
 
   return (
     <div>
       {token !== null && token !== undefined ? (
         <>
-          <CaroST.BannerImg src={LoginImg1} alt='로그인배너' />
-          <CaroST.ImgDes
+          <CaroST.BannerImg src={MainBanner2} alt='메인배너2' />
+          {/* <CaroST.ImgDes
             onClick={() => {
               navigate('/nearby');
             }}
@@ -28,12 +27,11 @@ const PageOne = () => {
                 {nickname}님을 기다리는 n명의 배프
               </CaroST.DesContent>
             </CaroST.MiniBox>
-            {/* <CurrentLocation /> */}
-          </CaroST.ImgDes>
+          </CaroST.ImgDes> */}
         </>
       ) : (
         <>
-          <CaroST.BannerImg src={LoginImg1} alt='로그인배너' />
+          <CaroST.BannerImg src={MainBanner1} alt='메인배너1' />
           <CaroST.TextBox>
             <CaroST.BoldText>로그인</CaroST.BoldText> 하고
             <br />

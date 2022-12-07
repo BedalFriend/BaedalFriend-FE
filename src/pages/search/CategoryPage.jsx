@@ -8,7 +8,7 @@ import SearchModal from './SearchModal';
 import Card from '../../components/elements/card/Card';
 import CategorySelect from './CategorySelect';
 import SVG from '../../shared/SVG';
-import NRImage from './banner 1.png';
+import NRImage from '../../imgs/Banner1.png';
 
 import {
   __getCateSearchThunk,
@@ -24,8 +24,8 @@ export default function CategoryPage() {
 
   //tab
   useEffect(() => {
+    dispatch(CLEAR_POSTS());
     setTab('Category');
-    // eslint-disable-next-line
   }, []);
 
   //정렬 모달창
@@ -122,29 +122,29 @@ export default function CategoryPage() {
     if (select === '마감 임박 순') {
       if (searchCate === '전체') {
         if (fullAddress === null || fullAddress === undefined) {
-          query = `keyword=&sortBy=limit_time&isAsc=true`;
+          query = `keyword=&sortBy=limit_time&isAsc=false`;
         } else {
-          query = `keyword=${address[0]}&region=${address[0]}&sortBy=limit_time&isAsc=true`;
+          query = `keyword=${address[0]}&region=${address[0]}&sortBy=limit_time&isAsc=false`;
         }
       } else {
         if (fullAddress === null || fullAddress === undefined) {
-          query = `sortBy=limit_time&isAsc=true&keyword=${searchCate}`;
+          query = `sortBy=limit_time&isAsc=false&keyword=${searchCate}`;
         } else {
-          query = `sortBy=limit_time&isAsc=true&region=${address[0]}&keyword=${searchCate}`;
+          query = `sortBy=limit_time&isAsc=false&region=${address[0]}&keyword=${searchCate}`;
         }
       }
     } else if (select === '신규 등록 순') {
       if (searchCate === '전체') {
         if (fullAddress === null || fullAddress === undefined) {
-          query = `keyword=&sortBy=created_at&isAsc=true`;
+          query = `keyword=&sortBy=created_at&isAsc=false`;
         } else {
-          query = `keyword=${address[0]}&region=${address[0]}&sortBy=created_at&isAsc=true`;
+          query = `keyword=${address[0]}&region=${address[0]}&sortBy=created_at&isAsc=false`;
         }
       } else {
         if (fullAddress === null || fullAddress === undefined) {
-          query = `sortBy=created_at&isAsc=true&keyword=${searchCate}`;
+          query = `sortBy=created_at&isAsc=false&keyword=${searchCate}`;
         } else {
-          query = `sortBy=created_at&isAsc=true&region=${address[0]}&keyword=${searchCate}`;
+          query = `sortBy=created_at&isAsc=false&region=${address[0]}&keyword=${searchCate}`;
         }
       }
     } else if (select === '참여자 많은 순') {
@@ -210,62 +210,14 @@ export default function CategoryPage() {
     window.scrollTo(0, 0);
     return () => {
       dispatch(CLEAR_POSTS());
-      localStorage.removeItem('searchCate')
     };
   }, []);
 
-  //게시물 받아오기
   const posts = useSelector((state) => state.post.posts);
-
-  //스크롤방지
-  var keys = { 37: 1, 38: 1, 39: 1, 40: 1 };
-  function preventDefault(e) {
-    e.preventDefault();
-  }
-  function preventDefaultForScrollKeys(e) {
-    if (keys[e.keyCode]) {
-      preventDefault(e);
-      return false;
-    }
-  }
-  var supportsPassive = false;
-  try {
-    window.addEventListener(
-      'test',
-      null,
-      Object.defineProperty({}, 'passive', {
-        get: function () {
-          supportsPassive = true;
-        },
-      })
-    );
-  } catch (e) {}
-  var wheelOpt = supportsPassive ? { passive: false } : false;
-  var wheelEvent =
-    'onwheel' in document.createElement('div') ? 'wheel' : 'mousewheel';
-  function disableScroll() {
-    window.addEventListener('DOMMouseScroll', preventDefault, false);
-    window.addEventListener(wheelEvent, preventDefault, wheelOpt);
-    window.addEventListener('touchmove', preventDefault, wheelOpt);
-    window.addEventListener('keydown', preventDefaultForScrollKeys, false);
-  }
-  function enableScroll() {
-    window.removeEventListener('DOMMouseScroll', preventDefault, false);
-    window.removeEventListener(wheelEvent, preventDefault, wheelOpt);
-    window.removeEventListener('touchmove', preventDefault, wheelOpt);
-    window.removeEventListener('keydown', preventDefaultForScrollKeys, false);
-  }
-  useEffect(() => {
-    if (posts.data.length === 0) {
-      disableScroll();
-    }
-    // modal 닫히면 다시 스크롤 가능하도록 함
-    return () => enableScroll();
-  }, [posts]);
 
   return (
     <Layout>
-      <CateST.SearchBg>
+      <CateST.SearchBg focused={posts&&posts.data.length > 0 ? true:false}>
         <div style={{ width: '100%', height: '84px' }}></div>
 
         {/* 카테고리 슬라이드 */}
@@ -285,7 +237,6 @@ export default function CategoryPage() {
             onMouseLeave={dragEndHandler}
           >
             <CateST.Row>
-              <div style={{ width: '0.1px', height: '30px' }}></div>
               {cates.map((cate, index) => (
                 <CategorySelect
                   searchCate={searchCate}
@@ -347,7 +298,7 @@ export default function CategoryPage() {
         <CateST.ResultBox>
           {posts.data.length === 0 && searched === true ? (
             <CateST.NoResult>
-              <img src={NRImage} alt='결과없음' />
+              <CateST.NoResultImg src={NRImage} alt='결과없음' />
               <CateST.NoResultText>'{searchCate}'</CateST.NoResultText> <br />
               관련 배프가 없어요 :(
             </CateST.NoResult>

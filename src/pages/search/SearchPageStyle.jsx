@@ -3,12 +3,12 @@ import styled from 'styled-components';
 export const SearchBg = styled.div`
   background-color: var(--color-white);
   width: 100%;
-  min-height: 1200px;
+  min-height: ${(props) => (props.focused ? '500px' : '100vh')};
 
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
-  position: absolute;
+  position: relative;
 `
 
 export const Search = styled.div`
@@ -65,6 +65,7 @@ export const RecentDisplay = styled.div`
   align-items: flex-start;
   background-color: var(--color-white);
   overflow-x: scroll;
+  gap: 8px;
   ::-webkit-scrollbar {
     display: none;
   }
@@ -104,7 +105,6 @@ export const DropDownText = styled.div`
 export const ResultBox = styled.div`
   position: relative;
   width: calc(100% - 32px);
-  height: calc(100vh - 428px);
   background-color: var(--color-white);
   display: flex;
   flex-flow: row wrap;
@@ -117,6 +117,8 @@ export const NoResult = styled.div`
   flex-flow: column nowrap;
   align-items: center;
 
+  top: -20px;
+  height: calc(100vh - 428px);
   margin: auto;
   padding-bottom: 50px;
 

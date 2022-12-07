@@ -55,11 +55,12 @@ export const Profile = styled.div`
 
 export const ContentBox = styled.div`
   position: relative;
+  width: calc(100% - 48px);
+  
   display: flex;
   justify-content: space-between;
   margin: auto;
-
-  width: calc(100% - 48px);
+  gap: 16px;
 `
 
 export const Content = styled.div`
@@ -68,7 +69,7 @@ export const Content = styled.div`
   align-items: center;
   justify-content: left;
 
-  width: 48.5%;
+  width: 100%;
   height: 93px;
   margin-top: 20px;
   gap: 12px;
