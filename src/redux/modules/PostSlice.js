@@ -238,6 +238,18 @@ export const __postRecentWord = createAsyncThunk(
   }
 );
 
+export const __getRecentWord = createAsyncThunk(
+  'GET_RECENTWORD',
+  async (_, thunkAPI) => {
+    try {
+      const { data } = await getInstance().get(`${basePath}/posts/keyword/my`);
+      return thunkAPI.fulfillWithValue(data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.code);
+    }
+  }
+);
+
 export const __deleteRecentWord = createAsyncThunk(
   'DELETE_RECENTWORD',
   async (arg) => {
@@ -260,10 +272,6 @@ export const __getMyPostThunk = createAsyncThunk(
     }
   }
 );
-export const __getRecentWord = createAsyncThunk('GET_RECENTWORD', async () => {
-  const { data } = await getInstance().get(`${basePath}/posts/keyword/my`);
-  console.log('data찍어줘', data);
-});
 
 const initialState = {
   post: { data: {}, isLoading: false, error: null },
