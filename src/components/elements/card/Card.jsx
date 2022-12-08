@@ -46,11 +46,10 @@ export default function Card({ post, isWide }) {
   };
 
   return (
-    <CardST.Area>
+    <CardST.Area style={isWide ? { width: '100%' } : null}>
       <CardST.Box
         done={post.done}
         closed={post.closed}
-        style={isWide ? { width: '100%' } : null}
         onClick={() => {
           navigate(`/detail/${post.postId}`);
         }}

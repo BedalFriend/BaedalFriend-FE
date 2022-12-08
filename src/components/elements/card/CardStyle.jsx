@@ -137,7 +137,6 @@ export const InfoText = styled.div`
 export const Area = styled.div`
   position: relative;
   margin-top: 4px;
-
   @media screen and (min-width: 764px) {
     width: 358px;
   }
