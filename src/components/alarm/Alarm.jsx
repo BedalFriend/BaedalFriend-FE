@@ -4,9 +4,9 @@ import { AlarmContext } from '../../context/AlarmContext';
 import SVG from '../../shared/SVG';
 import * as AlaramST from './AlarmStyle';
 
-export default function Alarm(props) {
+export default function Alarm() {
   const navigate = useNavigate();
-  const { setIsDP, setIsDone, isDone } = useContext(AlarmContext);
+  const { setIsDone, isDone } = useContext(AlarmContext);
 
   return (
     <AlaramST.Area
@@ -23,8 +23,6 @@ export default function Alarm(props) {
 
         <AlaramST.Btn
           onClick={() => {
-            setIsDone(true);
-            setIsDP(false);
             navigate('/login');
           }}
         >

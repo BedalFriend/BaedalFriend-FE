@@ -19,34 +19,16 @@ export default function NearbyMap({
   searchData,
   setSearchParty,
 }) {
-  // console.log(data);
   const [kakaoMap, setKakaoMap] = useState(null);
-
-  // const user = { address: '경기 성남시 분당구 판교역로 235' };
 
   let totalData = [];
 
   const container = useRef();
+  const target = document.querySelector('#Map');
 
   //내가 선택한 마커 저장소
   const [markerInfo, setMarkerInfo] = useState('');
   const [slotManager, setSlotManager] = useState(false);
-
-  // 주소-좌표 변환 객체를 생성합니다.
-  const geocoder = new kakao.maps.services.Geocoder();
-
-  // 마커 이미지 설정
-  const markerImage = new kakao.maps.MarkerImage(
-    yellowMarker,
-    new kakao.maps.Size(36, 36),
-    new kakao.maps.Point(13, 34)
-  );
-  const checkMarkerImage = new kakao.maps.MarkerImage(
-    orangeMarker,
-    new kakao.maps.Size(36, 36),
-    new kakao.maps.Point(13, 34)
-  );
-
   const [myLocation, setMyLocation] = useState('');
 
   // 위치 가져오기 버튼 클릭시
@@ -62,6 +44,7 @@ export default function NearbyMap({
         },
         (error) => {
           console.error(error);
+          alert(error);
         },
         {
           enableHighAccuracy: true,
@@ -93,6 +76,9 @@ export default function NearbyMap({
           //setMapCenter(center);
           setKakaoMap(map);
         } else {
+          // 주소-좌표 변환 객체를 생성합니다.
+          const geocoder = new kakao.maps.services.Geocoder();
+
           // 현재위치에 대한 검색어를 좌표로 변환
           geocoder.addressSearch(user.address, function (results, status) {
             // 정상적으로 검색이 완료됐으면
@@ -118,6 +104,20 @@ export default function NearbyMap({
     if (kakaoMap === null) {
       return;
     }
+    // 주소-좌표 변환 객체를 생성합니다.
+    const geocoder = new kakao.maps.services.Geocoder();
+
+    // 마커 이미지 설정
+    const markerImage = new kakao.maps.MarkerImage(
+      yellowMarker,
+      new kakao.maps.Size(36, 36),
+      new kakao.maps.Point(13, 34)
+    );
+    const checkMarkerImage = new kakao.maps.MarkerImage(
+      orangeMarker,
+      new kakao.maps.Size(36, 36),
+      new kakao.maps.Point(13, 34)
+    );
     // save center position
     const center = kakaoMap.getCenter();
 
@@ -126,6 +126,10 @@ export default function NearbyMap({
 
     let timer = setTimeout(() => {
       const filterData = data.filter((p) => {
+        if (searchParty === '') {
+          return data;
+        }
+
         if (
           p.targetName
             .replace('', '')
@@ -206,7 +210,6 @@ export default function NearbyMap({
                   marker.setMap(null);
                 }
 
-                // setDistMarker({ coord, marker });
                 kakao.maps.event.addListener(marker, 'click', function () {
                   // 클릭된 마커가 없고, click 마커가 클릭된 마커가 아니면
                   // 마커의 이미지를 클릭 이미지로 변경합니다
@@ -231,7 +234,9 @@ export default function NearbyMap({
           });
         }
       });
-    }, 500);
+
+      target.blur();
+    }, 1000);
 
     return () => {
       clearTimeout(timer);
@@ -308,6 +313,7 @@ export default function NearbyMap({
         </NearbyST.SearchImg>
 
         <NearbyST.NearbyInput
+          id='Map'
           value={searchParty}
           placeholder='카테고리나 가게 명을 검색해주세요.'
           onChange={(e) => {
@@ -345,7 +351,7 @@ export default function NearbyMap({
       </NearbyST.BottomBtnBox>
 
       <NearbyST.ListBtnBox slotManager={slotManager}>
-        {searchData?.length > 1 || searchParty === '' ? (
+        {searchData?.length <= 1 && searchParty === '' && user.address ? (
           <NearbyST.VeiwAll
             onClick={() => {
               setIndex(true);

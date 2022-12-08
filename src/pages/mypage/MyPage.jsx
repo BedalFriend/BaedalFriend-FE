@@ -1,5 +1,6 @@
 import { React, useContext, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { TabContext } from '../../context/TabContext';
 import { AlarmContext } from '../../context/AlarmContext';
 import { getCookieToken } from '../../shared/storage/Cookie';
@@ -8,12 +9,14 @@ import Layout from '../../components/layout/Layout';
 import * as myST from './MyPageStyle'
 import ProfilePic from '../../components/elements/profilePic/ProfilePic'
 import MyPageModal from './MyPageModal'
+import QuitModal from './QuitModal'
 
 export default function MyPage() {
 
   const { setTab } = useContext(TabContext);
   const { setIsDP } = useContext(AlarmContext);
   const token = getCookieToken();
+  const navigate = useNavigate();
 
   //tab
   useEffect(() => {
@@ -21,13 +24,21 @@ export default function MyPage() {
     // eslint-disable-next-line
   }, []);
 
-  //정렬 모달창
+  //모달창
   const [isOpen, setIsOpen] = useState(false);
   const openModal = () => {
     setIsOpen(true);
   }
   const closeModal = () => {
     setIsOpen(false);
+  }
+
+  const [isOpen2, setIsOpen2] = useState(false);
+  const openModal2 = () => {
+    setIsOpen2(true);
+  }
+  const closeModal2 = () => {
+    setIsOpen2(false);
   }
 
   const user = useSelector(state => state.user);
@@ -37,6 +48,9 @@ export default function MyPage() {
   return (
     <Layout>
       <myST.SearchBg>
+        {isOpen && (<MyPageModal closeModal={closeModal}/>)}
+        {isOpen2 && (<QuitModal closeModal2={closeModal2}/>)}
+        
         {/* 프로필 */}
         { token !== null && token !== undefined ?
         (<>
@@ -46,7 +60,7 @@ export default function MyPage() {
             <myST.VerticalBox>
               <myST.FlexBox>
                 <myST.NickText>{nickname}</myST.NickText>
-                <myST.Star>
+                {/* <myST.Star>
                   <svg width="20" height="20" viewBox="0 0.5 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <mask id="mask0_1750_2458" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="20" height="20">
                       <rect width="20" height="20" fill="#D9D9D9"/>
@@ -58,7 +72,7 @@ export default function MyPage() {
                 </myST.Star>
                 <myST.StarAvg>
                   4.5
-                </myST.StarAvg>
+                </myST.StarAvg> */}
               </myST.FlexBox>
               <myST.EmailText>
                 { email !== null && email !== undefined ?
@@ -84,7 +98,7 @@ export default function MyPage() {
               </svg>
               <myST.VerticalBox>
                 <myST.ContentText>받은 리뷰</myST.ContentText>
-                <myST.CountText>0개</myST.CountText>
+                <myST.CountText>준비중</myST.CountText>
               </myST.VerticalBox>
             </myST.Content>
             {/* 배프와 만남 */}
@@ -112,12 +126,11 @@ export default function MyPage() {
               <circle cx="22" cy="22" r="2" transform="rotate(-90 22 22)" fill="#FF5B15"/>
             </svg>
           </myST.MenuDot>
-          {isOpen && (<MyPageModal closeModal={closeModal}/>)}
         </myST.MainBox>
 
         {/* 메뉴 */}
         <myST.MenuBox>
-          <myST.MenuOne>
+          <myST.MenuOne onClick={() => {navigate('/myPost')}}>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <rect width="24" height="24" rx="4" fill="#FFEAB5"/>
                 <mask id="mask0_1938_2276" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
@@ -159,7 +172,7 @@ export default function MyPage() {
         <myST.Line/>
 
         {/* 탈퇴하기 */}
-        <myST.QuitBox>
+        <myST.QuitBox onClick={openModal2}>
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
             <mask id="mask0_1249_1575" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="20" height="20">
               <rect width="20" height="20" fill="#D9D9D9"/>
@@ -218,7 +231,7 @@ export default function MyPage() {
                 <path d="M6.55556 19C6.12778 19 5.76144 18.8478 5.45656 18.5434C5.15219 18.2386 5 17.8722 5 17.4444V6.55556C5 6.12778 5.15219 5.76144 5.45656 5.45656C5.76144 5.15219 6.12778 5 6.55556 5H17.4444C17.8722 5 18.2386 5.15219 18.5434 5.45656C18.8478 5.76144 19 6.12778 19 6.55556V17.4444C19 17.8722 18.8478 18.2386 18.5434 18.5434C18.2386 18.8478 17.8722 19 17.4444 19H6.55556ZM10.0167 12.2139L12 11.2222L13.9833 12.2139C14.2426 12.3435 14.4954 12.3337 14.7417 12.1843C14.988 12.0355 15.1111 11.812 15.1111 11.5139V6.55556H8.88889V11.5139C8.88889 11.812 9.01204 12.0355 9.25833 12.1843C9.50463 12.3337 9.75741 12.3435 10.0167 12.2139ZM8.88889 15.8889H11.2222C11.4426 15.8889 11.6274 15.8142 11.7768 15.6649C11.9256 15.5161 12 15.3315 12 15.1111C12 14.8907 11.9256 14.7059 11.7768 14.5566C11.6274 14.4077 11.4426 14.3333 11.2222 14.3333H8.88889C8.66852 14.3333 8.48367 14.4077 8.33433 14.5566C8.18552 14.7059 8.11111 14.8907 8.11111 15.1111C8.11111 15.3315 8.18552 15.5161 8.33433 15.6649C8.48367 15.8142 8.66852 15.8889 8.88889 15.8889Z" fill="#FFBA09"/>
               </g>
             </svg>
-            <myST.MenuText>작성한 게시글</myST.MenuText>
+            <myST.DisabledText>작성한 게시글</myST.DisabledText>
           </myST.MenuOne>
           <myST.MenuTwo>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

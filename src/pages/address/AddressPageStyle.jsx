@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
 export const SearchMapBox = styled.div`
-  position: absolute;
+  position: relative;
   width: 100%;
-  height: 100%;
+  height: 100vh;
 
   z-index: 900;
 `;

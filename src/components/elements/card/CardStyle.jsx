@@ -5,20 +5,13 @@ export const Box = styled.div`
   flex-flow: column nowrap;
   align-items: center;
 
-  margin-top: 4px;
   padding: 20px 24px;
 
   background-color: var(--color-white);
+  opacity: ${(props) => (props.done || props.closed ? '0.5' : null)};
   box-shadow: 0px 0px 8px rgba(187, 187, 187, 0.32);
   border-radius: 12px;
-
-  @media screen and (min-width: 764px) {
-    width: 358px;
-  }
-
-  @media screen and (max-width: 763px) {
-    width: 100%;
-  }
+  width: 100%;
 `;
 
 export const Line = styled.hr`
@@ -139,4 +132,43 @@ export const InfoText = styled.div`
   font-weight: var(--weight-regular);
   font-size: var(--font-small);
   font-display: swap;
+`;
+
+export const Area = styled.div`
+  position: relative;
+  margin-top: 4px;
+  @media screen and (min-width: 764px) {
+    width: 358px;
+  }
+
+  @media screen and (max-width: 763px) {
+    width: 100%;
+  }
+`;
+
+export const Badge = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 198px;
+  height: 40px;
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: ${(props) =>
+    props.done
+      ? 'rgba(220, 220, 220, 0.8)'
+      : props.closed
+      ? 'rgba(255, 220, 205, 0.8)'
+      : null};
+  color: ${(props) =>
+    props.done
+      ? 'var(--color-grey)'
+      : props.closed
+      ? 'var(--color-orange)'
+      : null};
+  font-weight: var(--weight-bold);
+  font-size: var(--font-small);
 `;

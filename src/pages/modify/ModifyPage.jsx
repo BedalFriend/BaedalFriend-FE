@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
+  UPDATE_POST,
   __getDetailThunk,
   __modifyPostThunk,
 } from '../../redux/modules/PostSlice';
@@ -46,7 +47,6 @@ const Post = () => {
     region: '',
     content: '',
   });
-  console.log(data);
 
   // 페이지 전환
   const [index, setIndex] = useState(0);
@@ -63,9 +63,11 @@ const Post = () => {
   const onSubmitHandler = (e) => {
     e.preventDefault();
     console.log('총데이터', data);
-    dispatch(__modifyPostThunk(data));
-    navigate(`/detail/${id}`);
-    // navigate('/');
+    dispatch(__modifyPostThunk(data)).then((res) => {
+      if (res.payload.success === true) {
+        navigate(`/detail/${id}`);
+      }
+    });
   };
 
   const stepOneCheckHandler = (event) => {

@@ -7,21 +7,24 @@ export function AlarmProvider({ children }) {
   const [isDone, setIsDone] = useState(false);
 
   useEffect(() => {
-    if (isDP) {
-      window.setTimeout(() => {
-        setIsDone(true);
-      }, 2000);
-    } else {
-    }
+    const handler = setTimeout(() => {
+      if (isDP) setIsDone(true);
+    }, 2000);
+    return () => {
+      clearTimeout(handler);
+    };
   }, [isDP]);
 
   useEffect(() => {
-    if (isDone) {
-      window.setTimeout(() => {
+    const handler = setTimeout(() => {
+      if (isDone) {
         setIsDP(false);
         setIsDone(false);
-      }, 300);
-    }
+      }
+    }, 300);
+    return () => {
+      clearTimeout(handler);
+    };
   }, [isDone]);
 
   return (

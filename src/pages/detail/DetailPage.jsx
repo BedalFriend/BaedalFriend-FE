@@ -9,6 +9,7 @@ import {
   __getThunk,
   __increaseParticipantThunk,
   UPDATE_POST,
+  __completePost,
 } from '../../redux/modules/PostSlice';
 import { __enterChannel, __exitChannel } from '../../redux/modules/ChatSlice';
 
@@ -17,7 +18,7 @@ import CurrentLocation from './CurrentLocation';
 import ExitModal from './ExitModal';
 import DeleteModal from './DeleteModal';
 import CurrentMap from './CurrentMap';
-import BannerPath from '../../pages/search/banner 1.png';
+import BannerPath from '../../imgs/Banner1.png';
 
 import * as DetailST from './DetailPageStyle';
 import Timer from '../../components/elements/timer/Timer';
@@ -28,6 +29,7 @@ import { AlarmContext } from '../../context/AlarmContext';
 import { getCookieToken } from '../../shared/storage/Cookie';
 import { TabContext } from '../../context/TabContext';
 import { SocketContext } from '../../context/SocketContext';
+import CompleteModal from './CompleteModal';
 
 const DetailPage = () => {
   const { setTab } = useContext(TabContext);
@@ -65,16 +67,22 @@ const DetailPage = () => {
   //퇴장 모달창
   const [isExitOpen, setIsExitOpen] = useState(false);
 
-  const [aniState, setAniState] = useState(false);
+  //완료 모달창
+  const [isCompleteOpen, setIsCompleteOpen] = useState(false);
+
   const [isDeleteHandler, setIsDeleteHandler] = useState(false);
+  const [isCompleteHandler, setIsCompleteHandler] = useState(false);
+
   const openModal = () => {
-    setAniState(true);
     setIsOpen(true);
   };
 
   const openExitModal = () => {
-    setAniState(true);
     setIsExitOpen(true);
+  };
+
+  const openCompleteModal = () => {
+    setIsCompleteOpen(true);
   };
 
   // 삭제 핸들러
@@ -124,6 +132,17 @@ const DetailPage = () => {
     setIsExitOpen(false);
   };
 
+  const onCompleteHandler = () => {
+    dispatch(__completePost(id));
+    dispatch(
+      UPDATE_POST({
+        ...post.data,
+        closed: true,
+      })
+    );
+    setIsCompleteHandler(true);
+  };
+
   // 참여중인 인원
   const VacUser = () => {
     const result = [];
@@ -169,7 +188,9 @@ const DetailPage = () => {
   }, []);
 
   useEffect(() => {
-    if (user.id === post?.data?.memberId) {
+    if (post.data.closed === true) {
+      setCustom(5);
+    } else if (user.id === post?.data?.memberId) {
       setCustom(3);
     } else if (user.onGoing && user.onGoing !== post.data.postId) {
       setCustom(1);
@@ -180,15 +201,13 @@ const DetailPage = () => {
     } else if (user.onGoing === 0 || user.onGoing === null) {
       setCustom(0);
     }
-  }, [user.id, post?.data?.memberId, user.onGoing, custom]);
+  }, [user.id, post?.data?.memberId, user.onGoing, custom, post.data.closed]);
 
   return (
     <Layout>
       {isOpen && (
         <DeleteModal
           setIsOpen={setIsOpen}
-          aniState={aniState}
-          setAniState={setAniState}
           onDeleteHandler={onDeleteHandler}
           isDeleteHandler={isDeleteHandler}
           setIsDeleteHandler={setIsDeleteHandler}
@@ -198,10 +217,17 @@ const DetailPage = () => {
         <ExitModal
           setIsExitOpen={setIsExitOpen}
           onExitHandler={onExitHandler}
-          aniState={aniState}
-          setAniState={setAniState}
         />
       )}
+      {isCompleteOpen && (
+        <CompleteModal
+          isCompleteHandler={isCompleteHandler}
+          setIsCompleteHandler={setIsCompleteHandler}
+          setIsCompleteOpen={setIsCompleteOpen}
+          onCompleteHandler={onCompleteHandler}
+        />
+      )}
+
       {post.error === 'NOT_FOUND_POST' ? (
         <DetailST.ErrorPage>
           <DetailST.ErrorImg src={BannerPath} alt='' />
@@ -460,7 +486,6 @@ const DetailPage = () => {
               </svg>
               <DetailST.PartyTitle>만나는 장소</DetailST.PartyTitle>
             </DetailST.PtMapTitle>
-
             <div
               onClick={() => {
                 setIndex(true);
@@ -490,12 +515,17 @@ const DetailPage = () => {
           ) : null}
           {custom === 3 ? (
             <DetailST.BottomBtnBox>
-              <DetailST.PartyOutBtn>공구 완료하기</DetailST.PartyOutBtn>
+              <DetailST.PartyOutBtn onClick={openCompleteModal}>
+                공구 완료하기
+              </DetailST.PartyOutBtn>
               <DetailST.CurrentStatusBtn>진행 중</DetailST.CurrentStatusBtn>
             </DetailST.BottomBtnBox>
           ) : null}
           {custom === 4 ? (
             <DetailST.OverLapBtn>지금은 자리가 없어요</DetailST.OverLapBtn>
+          ) : null}
+          {custom === 5 ? (
+            <DetailST.OverLapBtn>이미 종료된 공구입니다</DetailST.OverLapBtn>
           ) : null}
         </DetailST.DetailBox>
       )}

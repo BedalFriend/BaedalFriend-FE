@@ -50,7 +50,7 @@ export const __addPostThunk = createAsyncThunk(
 );
 
 export const __modifyPostThunk = createAsyncThunk(
-  'PATCH_MOVIES',
+  'PATCH_POST',
   async (arg, thunkAPI) => {
     try {
       const { data } = await getInstance().put(
@@ -70,7 +70,6 @@ export const __deletePost = createAsyncThunk(
   'DELETE_POST',
   async (arg, thunkAPI) => {
     try {
-      console.log('delete', arg);
       await getInstance().delete(`${basePath}/auth/posts/${arg}`);
       return thunkAPI.fulfillWithValue(arg);
     } catch (e) {
@@ -79,8 +78,20 @@ export const __deletePost = createAsyncThunk(
   }
 );
 
+export const __completePost = createAsyncThunk(
+  'COMPLETE_POST',
+  async (arg, thunkAPI) => {
+    try {
+      await getInstance().put(`chat/channel/close/${arg}`);
+      return thunkAPI.fulfillWithValue(arg);
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.code);
+    }
+  }
+);
+
 export const __increaseParticipantThunk = createAsyncThunk(
-  'ADD_POST', //action value
+  'INCREASE_PARTICIPANT', //action value
 
   async (arg, thunkAPI) => {
     //콜백
@@ -99,7 +110,7 @@ export const __increaseParticipantThunk = createAsyncThunk(
 );
 
 export const __decreaseParticipantThunk = createAsyncThunk(
-  'ADD_POST', //action value
+  'DECREASE_PARTICIPANT', //action value
 
   async (arg, thunkAPI) => {
     //콜백
@@ -107,6 +118,24 @@ export const __decreaseParticipantThunk = createAsyncThunk(
     try {
       const { data } = await getInstance().put(
         `${basePath}/posts/participant/d/${arg}`,
+        arg
+      );
+
+      return thunkAPI.fulfillWithValue(data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.code);
+    }
+  }
+);
+
+export const __changeAddressThunk = createAsyncThunk(
+  'CHANGE_ADDRESS', //action value
+
+  async (arg, thunkAPI) => {
+    //콜백
+    try {
+      const { data } = await getInstance().put(
+        `${basePath}/mypages/address/${arg.id}`,
         arg
       );
 
@@ -176,7 +205,6 @@ export const __getReCateSearchThunk = createAsyncThunk(
 export const __getReEntireCateThunk = createAsyncThunk(
   'GET_REENTIRECATE',
   async (arg, thunkAPI) => {
-    console.log(arg);
     try {
       const { data } = await getInstance().get(
         `${basePath}/posts/regionEntireCategory/search?page=1&size=1000&${arg}`
@@ -205,26 +233,50 @@ export const __getEntireCateThunk = createAsyncThunk(
 export const __postRecentWord = createAsyncThunk(
   'POST_RECENTWORD',
   async (arg) => {
-    let payload = JSON.stringify({keyword: arg})
-    await getInstance().post(
-      `${basePath}/posts/keyword/create`, payload
-    );
+    let payload = JSON.stringify({ keyword: arg });
+    await getInstance().post(`${basePath}/posts/keyword/create`, payload);
   }
 );
 
 export const __getRecentWord = createAsyncThunk(
   'GET_RECENTWORD',
-  async () => {
-    const { data } = await getInstance().get(
-      `${basePath}/posts/keyword/my`
-    );
-    console.log("data찍어줘", data);
+  async (_, thunkAPI) => {
+    try {
+      const { data } = await getInstance().get(`${basePath}/posts/keyword/my`);
+      return thunkAPI.fulfillWithValue(data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.code);
+    }
+  }
+);
+
+export const __deleteRecentWord = createAsyncThunk(
+  'DELETE_RECENTWORD',
+  async (arg) => {
+    await getInstance().delete(`${basePath}/posts/keyword/delete`, {
+      params: { keywordId: arg },
+    });
+  }
+);
+
+export const __getMyPostThunk = createAsyncThunk(
+  'GET_MYPOST',
+  async (arg, thunkAPI) => {
+    try {
+      const { data } = await getInstance().get(
+        `${basePath}/mypages/posts/${arg}`
+      );
+      return thunkAPI.fulfillWithValue(data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.code);
+    }
   }
 );
 
 const initialState = {
   post: { data: {}, isLoading: false, error: null },
   posts: { data: [], isLoading: false, error: null },
+  keyword: { data: {} },
 };
 
 export const postsSlice = createSlice({
@@ -303,12 +355,11 @@ export const postsSlice = createSlice({
     },
     [__deletePost.fulfilled]: (state, action) => {
       state.posts.isLoading = false;
-      console.log('Delete.action.payload', action.payload);
-      console.log('state.posts.data', current(state));
+
       const target = state.posts.data.findIndex(
         (post) => post.postId === parseInt(action.payload)
       );
-      console.log('target', target);
+
       state.posts.data.splice(target, 1);
     },
     [__deletePost.rejected]: (state, action) => {
@@ -322,8 +373,6 @@ export const postsSlice = createSlice({
     },
     [__increaseParticipantThunk.fulfilled]: (state, action) => {
       state.posts.isLoading = false;
-      state.posts.data.push(action.payload);
-      // console.log('state.posts.data', current(state.posts.data));
     },
     [__increaseParticipantThunk.rejected]: (state, action) => {
       state.posts.isLoading = false;
@@ -335,9 +384,35 @@ export const postsSlice = createSlice({
     },
     [__decreaseParticipantThunk.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.searchMovies = action.payload;
     },
     [__decreaseParticipantThunk.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+
+    //Complete Post
+    [__completePost.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__completePost.fulfilled]: (state, action) => {
+      console.log(state, action);
+      state.isLoading = false;
+      state.searchMovies = action.payload;
+    },
+    [__completePost.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+
+    //change AddressThunk
+    [__changeAddressThunk.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__changeAddressThunk.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.searchMovies = action.payload;
+    },
+    [__changeAddressThunk.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },
@@ -416,6 +491,24 @@ export const postsSlice = createSlice({
       state.posts.error = action.payload;
     },
     [__getEntireCateThunk.fulfilled]: (state, action) => {
+      state.posts.isLoading = false;
+      state.posts.data = action.payload.data;
+    },
+
+    //get Recent Word
+    [__getRecentWord.fulfilled]: (state, action) => {
+      state.keywords = action.payload.data;
+    },
+
+    //get My Post
+    [__getMyPostThunk.pending]: (state) => {
+      state.posts.isLoading = true;
+    },
+    [__getMyPostThunk.rejected]: (state, action) => {
+      state.posts.isLoading = false;
+      state.posts.error = action.payload;
+    },
+    [__getMyPostThunk.fulfilled]: (state, action) => {
       state.posts.isLoading = false;
       state.posts.data = action.payload.data;
     },

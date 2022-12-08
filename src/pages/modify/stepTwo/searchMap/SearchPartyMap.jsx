@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from 'react';
+/* global kakao */
+
+import React, { useEffect, useRef, useState } from 'react';
 
 import * as SearchST from './SearchMapStyle';
 
@@ -7,10 +9,12 @@ import orangeMarker from '../../../../imgs/upload/Orange_Map_Marker.png';
 import MyMarker from '../../../../imgs/upload/Map_LocationMark.png';
 import CurrentMark from '../../../../imgs/upload/Map_MyLocation.png';
 
-//스크립트로 kakao maps api를 심어서 가져오면 window전역 객체에 들어가게 된다. 그리고 그걸 사용하려면 window에서 kakao객체를 뽑아서 사용하면 된다.
-const { kakao } = window;
+const SearchMap = ({ setIndex, data, setData }) => {
+  const target = document.querySelector('#Map');
 
-const SearchMap = ({ setIndex, data, setData, setAddressManager }) => {
+  const container = useRef();
+  const [kakaoMap, setKakaoMap] = useState(null);
+
   const [place, setPlace] = useState('');
   const [markerInfo, setMarkerInfo] = useState('');
 
@@ -74,119 +78,134 @@ const SearchMap = ({ setIndex, data, setData, setAddressManager }) => {
     script.onload = () => {
       kakao.maps.load(() => {
         //지도 생성
-        const container = document.getElementById('myMap');
+        const center = new kakao.maps.LatLng(37.50802, 127.062835);
         const options = {
-          center: new kakao.maps.LatLng(33.450701, 126.570667),
-          level: 3,
+          center: center,
+          level: 3, // 지도의 확대 레벨
         };
-        const map = new kakao.maps.Map(container, options);
+        // 지도를 생성한다
+        const map = new kakao.maps.Map(container.current, options);
 
-        //현재위치로 지도 이동
-        if (myLocation.latitude || myLocation.longitude) {
-          const currentMarkerImage = new kakao.maps.MarkerImage(
-            MyMarker,
-            new kakao.maps.Size(24, 24),
-            new kakao.maps.Point(13, 34)
-          );
-          // 현재 위치 받아오기
-          const currentPos = new kakao.maps.LatLng(
-            myLocation.latitude,
-            myLocation.longitude
-          );
-
-          // 지도 이동(기존 위치와 가깝다면 부드럽게 이동)
-          map.panTo(currentPos);
-
-          // 마커 생성
-          const CurrentMarker = new kakao.maps.Marker({
-            position: currentPos,
-            image: currentMarkerImage,
-          });
-
-          // 기존에 마커가 있다면 제거
-          CurrentMarker.setMap(null);
-          CurrentMarker.setMap(map);
-        }
-
-        if (place === '') {
-          return;
-        }
-
-        // //검색어따라 지도에서 찾기
-        let timer = setTimeout(() => {
-          const ps = new kakao.maps.services.Places();
-
-          const placesSearchCB = (data, status, pagination) => {
-            if (status === kakao.maps.services.Status.OK) {
-              let bounds = new kakao.maps.LatLngBounds();
-
-              for (let i = 0; i < data.length; i++) {
-                displayMarker(data[i]);
-                bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
-              }
-
-              map.setBounds(bounds);
-            }
-          };
-
-          ps.keywordSearch(place, placesSearchCB);
-        }, 500);
-
-        let selectedMarker = null;
-
-        // 지도에 마커를 표시하는 함수
-        const displayMarker = (place) => {
-          const markerImage = new kakao.maps.MarkerImage(
-            yellowMarker,
-            new kakao.maps.Size(36, 36),
-            new kakao.maps.Point(13, 34)
-          );
-          const checkMarkerImage = new kakao.maps.MarkerImage(
-            orangeMarker,
-            new kakao.maps.Size(36, 36),
-            new kakao.maps.Point(13, 34)
-          );
-
-          // 마커를 생성하고 지도에 표시
-          const marker = new kakao.maps.Marker({
-            map: map,
-            position: new kakao.maps.LatLng(place.y, place.x),
-            image: markerImage,
-          });
-
-          kakao.maps.event.addListener(marker, 'click', function () {
-            // 클릭된 마커가 없고, click 마커가 클릭된 마커가 아니면
-            // 마커의 이미지를 클릭 이미지로 변경합니다
-            if (!selectedMarker || selectedMarker !== marker) {
-              // 클릭된 마커 객체가 null이 아니면
-              // 클릭된 마커의 이미지를 기본 이미지로 변경하고
-              !!selectedMarker && selectedMarker.setImage(markerImage);
-
-              // 현재 클릭된 마커의 이미지는 클릭 이미지로 변경합니다
-              marker.setImage(checkMarkerImage);
-            }
-
-            // 클릭된 마커를 현재 클릭된 마커 객체로 설정합니다
-            selectedMarker = marker;
-
-            if (!selectMarker) {
-              setSelectMarker(true);
-            }
-
-            setMarkerInfo(place);
-          });
-        };
-        return () => {
-          clearTimeout(timer);
-        };
+        setKakaoMap(map);
       });
     };
-  }, [data, place, myLocation]);
+  }, [container]);
+
+  useEffect(() => {
+    if (kakaoMap === null) {
+      return;
+    }
+    if (place === '') {
+      return;
+    }
+
+    // //검색어따라 지도에서 찾기
+    let timer = setTimeout(() => {
+      const ps = new kakao.maps.services.Places();
+
+      const placesSearchCB = (data, status, pagination) => {
+        if (status === kakao.maps.services.Status.OK) {
+          let bounds = new kakao.maps.LatLngBounds();
+
+          for (let i = 0; i < data.length; i++) {
+            displayMarker(data[i]);
+            bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
+          }
+
+          kakaoMap.setBounds(bounds);
+        }
+      };
+
+      ps.keywordSearch(place, placesSearchCB);
+      target.blur();
+    }, 1000);
+
+    let selectedMarker = null;
+
+    // 지도에 마커를 표시하는 함수
+    const displayMarker = (place) => {
+      const markerImage = new kakao.maps.MarkerImage(
+        yellowMarker,
+        new kakao.maps.Size(36, 36),
+        new kakao.maps.Point(13, 34)
+      );
+      const checkMarkerImage = new kakao.maps.MarkerImage(
+        orangeMarker,
+        new kakao.maps.Size(36, 36),
+        new kakao.maps.Point(13, 34)
+      );
+
+      // 마커를 생성하고 지도에 표시
+      const marker = new kakao.maps.Marker({
+        map: kakaoMap,
+        position: new kakao.maps.LatLng(place.y, place.x),
+        image: markerImage,
+      });
+
+      kakao.maps.event.addListener(marker, 'click', function () {
+        // 클릭된 마커가 없고, click 마커가 클릭된 마커가 아니면
+        // 마커의 이미지를 클릭 이미지로 변경합니다
+        if (!selectedMarker || selectedMarker !== marker) {
+          // 클릭된 마커 객체가 null이 아니면
+          // 클릭된 마커의 이미지를 기본 이미지로 변경하고
+          !!selectedMarker && selectedMarker.setImage(markerImage);
+
+          // 현재 클릭된 마커의 이미지는 클릭 이미지로 변경합니다
+          marker.setImage(checkMarkerImage);
+        }
+
+        // 클릭된 마커를 현재 클릭된 마커 객체로 설정합니다
+        selectedMarker = marker;
+
+        if (!selectMarker) {
+          setSelectMarker(true);
+        }
+
+        setMarkerInfo(place);
+      });
+    };
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [kakaoMap, data, place]);
+
+  useEffect(() => {
+    if (kakaoMap === null) {
+      return;
+    }
+    //현재위치로 지도 이동
+    if (myLocation.latitude || myLocation.longitude) {
+      const currentMarkerImage = new kakao.maps.MarkerImage(
+        MyMarker,
+        new kakao.maps.Size(24, 24),
+        new kakao.maps.Point(13, 34)
+      );
+      // 현재 위치 받아오기
+      const currentPos = new kakao.maps.LatLng(
+        myLocation.latitude,
+        myLocation.longitude
+      );
+
+      // 지도 이동(기존 위치와 가깝다면 부드럽게 이동)
+      kakaoMap.panTo(currentPos);
+
+      // 마커 생성
+      const CurrentMarker = new kakao.maps.Marker({
+        position: currentPos,
+        image: currentMarkerImage,
+      });
+
+      // 기존에 마커가 있다면 제거
+      CurrentMarker.setMap(null);
+      CurrentMarker.setMap(kakaoMap);
+    }
+  }, [kakaoMap, myLocation]);
 
   return (
     <SearchST.SearchMapBox>
       <div
-        id='myMap'
+        id='container'
+        ref={container}
         style={{
           width: '100%',
           height: '100%',
@@ -211,6 +230,7 @@ const SearchMap = ({ setIndex, data, setData, setAddressManager }) => {
           </SearchST.SearchImage>
 
           <SearchST.SearchInput
+            id='Map'
             placeholder='만날 장소를 검색해주세요'
             onChange={onChange}
             value={place}

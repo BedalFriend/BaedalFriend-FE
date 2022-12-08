@@ -43,12 +43,12 @@ const Post = () => {
     content: '',
   });
 
-  console.log(data);
   // 페이지 전환
   const [index, setIndex] = useState(0);
   const [addressManager, setAddressManager] = useState(false);
 
   // 지도 입력시 삭제방지
+  const [isTime, setIsTime] = useState('PM');
   const [time, setTime] = useState({ hour: '', minute: '' });
   const [people, setPeople] = useState({ maxCapacity: 0 });
   const [toggle, setToggle] = useState(false);
@@ -127,6 +127,7 @@ const Post = () => {
               setData={setData}
               name='targetName'
               address='targetAddress'
+              roomTitle='roomTitle'
             />
           ) : null}
           {index === 2 ? (
@@ -142,12 +143,14 @@ const Post = () => {
                 addressManager={addressManager}
                 isSecondChecked={isSecondChecked}
                 setNextStepTwo={setNextStepTwo}
-                setPeople={setPeople}
                 people={people}
-                setTime={setTime}
+                setPeople={setPeople}
                 time={time}
-                setToggle={setToggle}
+                setTime={setTime}
                 toggle={toggle}
+                setToggle={setToggle}
+                isTime={isTime}
+                setIsTime={setIsTime}
               />
               <UploadST.ButtonBox>
                 <UploadST.CancelBtn

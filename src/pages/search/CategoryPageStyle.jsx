@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const SearchBg = styled.div`
   background-color: var(--color-white);
   width: 100%;
-  min-height: 1000px;
+  min-height: ${(props) => (props.focused ? '500px' : '100vh')};
 
   display: flex;
   flex-flow: column nowrap;
@@ -45,6 +45,7 @@ export const DropDownText = styled.div`
 export const ResultBox = styled.div`
   position: relative;
   width: calc(100% - 32px);
+  background-color: var(--color-white);
   display: flex;
   flex-flow: row wrap;
   gap: 16px;
@@ -107,11 +108,20 @@ export const NoResult = styled.div`
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
+
+  top: -20px;
+  height: calc(100vh - 428px);
   margin: auto;
+  padding-bottom: 50px;
 
   color: var(--color-grey);
   font-weight: var(--weight-regular);
   font-size: var(--font-small);
+`
+
+export const NoResultImg = styled.img`
+  width: 209px;
+  height: 209px;
 `
 
 export const NoResultText = styled.span`

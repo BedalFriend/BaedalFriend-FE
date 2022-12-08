@@ -67,6 +67,14 @@ const Nearby = () => {
   }, []);
   return (
     <Layout>
+      {!index ? null : (
+        <NearbyST.BackBtn
+          onClick={() => {
+            setIndex(false);
+            setTab('Nearby');
+          }}
+        />
+      )}
       <NearbyST.NearbyBox>
         {index ? (
           <NearbyList
