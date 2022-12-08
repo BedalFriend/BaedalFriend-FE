@@ -10,7 +10,7 @@ export const Area = styled.div`
     width: var(--responsive-width);
   }
 
-  @media screen and (max-width: 764px) {
+  @media screen and (max-width: 763px) {
     width: 100%;
   }
 `;
