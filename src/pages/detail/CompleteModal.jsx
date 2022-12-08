@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
-import { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import React, { useEffect, useRef } from 'react';
+import useOutSideClick from '../../hooks/useOutSideClick';
+
 import * as ModalST from './DeleteModalStyle';
 
 export default function CompleteModal({
@@ -9,6 +9,15 @@ export default function CompleteModal({
   setIsCompleteOpen,
   onCompleteHandler,
 }) {
+  //배경 클릭 시 모달창 닫기
+  const modalRef = useRef(null);
+
+  const handleClose = () => {
+    setIsCompleteOpen(false);
+  };
+
+  useOutSideClick(modalRef, handleClose);
+
   //외부 스크롤 막기
   useEffect(() => {
     const $body = document.querySelector('body');
@@ -20,7 +29,7 @@ export default function CompleteModal({
     <>
       {isCompleteHandler ? (
         <ModalST.Overlay>
-          <ModalST.ModalWrap>
+          <ModalST.ModalWrap ref={modalRef}>
             <ModalST.ReTopBox>
               <ModalST.ErrorSvg
                 width='24'
@@ -61,7 +70,7 @@ export default function CompleteModal({
         </ModalST.Overlay>
       ) : (
         <ModalST.Overlay>
-          <ModalST.ModalWrap>
+          <ModalST.ModalWrap ref={modalRef}>
             <ModalST.ReTopBox>
               <ModalST.ErrorSvg
                 width='24'
