@@ -340,6 +340,9 @@ export const ErrorPage = styled.div`
 export const ErrorImg = styled.img`
   position: absolute;
   top: 316px;
+
+  width: 209px;
+  height: 209px;
 `;
 export const ErrorTitle = styled.div`
   position: absolute;
