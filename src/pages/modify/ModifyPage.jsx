@@ -47,7 +47,7 @@ const Post = () => {
     region: '',
     content: '',
   });
-  console.log(data);
+
   // 페이지 전환
   const [index, setIndex] = useState(0);
   const [addressManager, setAddressManager] = useState(true);
@@ -62,7 +62,7 @@ const Post = () => {
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    console.log('총데이터', data);
+
     dispatch(__modifyPostThunk(data)).then((res) => {
       if (res.payload.success === true) {
         // navigate(`/detail/${id}`);

@@ -76,7 +76,7 @@ export default function DeleteModal({
           <ModalST.ModalWrap ref={modalRef}>
             <ModalST.ModalBox>
               <ModalST.SelectBox>
-                {data.closed || data.done ? (
+                {data.done ? (
                   <ModalST.CloseModifyText>
                     게시글 수정하기
                   </ModalST.CloseModifyText>
