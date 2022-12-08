@@ -65,7 +65,8 @@ const Post = () => {
     console.log('총데이터', data);
     dispatch(__modifyPostThunk(data)).then((res) => {
       if (res.payload.success === true) {
-        navigate(`/detail/${id}`);
+        // navigate(`/detail/${id}`);
+        window.location.replace(`/detail/${id}`);
       }
     });
   };

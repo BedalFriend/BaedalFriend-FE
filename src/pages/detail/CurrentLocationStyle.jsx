@@ -16,12 +16,13 @@ export const SelectAddressBox = styled.div`
   display: flex;
   align-items: center;
 
-  min-width: 318px;
+  width: 100%;
   height: 40px;
 
   border-radius: 25px;
 
-  background-color: var(--color-white);
+  /* background-color: var(--color-white); */
+  background-color: rebeccapurple;
   opacity: 80%;
 
   margin: 16px 20px 16px 20px;
