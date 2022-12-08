@@ -19,7 +19,7 @@ export const Box = styled.div`
     width: var(--responsive-width);
   }
 
-  @media screen and (max-width: 764px) {
+  @media screen and (max-width: 763px) {
     width: 100%;
   }
 `;
@@ -46,7 +46,7 @@ export const Bar = styled.div`
     width: calc(var(--responsive-width) - 24px);
   }
 
-  @media screen and (max-width: 764px) {
+  @media screen and (max-width: 763px) {
     width: calc(100% - 24px);
   }
 `;

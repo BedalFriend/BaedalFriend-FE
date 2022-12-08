@@ -14,20 +14,6 @@ export const __exitChannel = createAsyncThunk(
   }
 );
 
-export const __finishChannel = createAsyncThunk(
-  'FINISH_CHANNEL',
-  async (arg, thunkAPI) => {
-    try {
-      const { data } = await getInstance().delete(
-        `/chat/channel/founder/${arg}`
-      );
-      return thunkAPI.fulfillWithValue(data);
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.code);
-    }
-  }
-);
-
 //TODO: roomId를 넘겨주고 특정 채팅방 정보 받아오기
 export const __getChannel = createAsyncThunk(
   'GET_CHANNEL',

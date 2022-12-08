@@ -196,7 +196,7 @@ export default function Card({ post, isWide }) {
             navigate(`/detail/${post.postId}`);
           }}
         >
-          {post.done ? '종료된 게시글' : post.closed ? '리뷰 보내기' : null}
+          {post.closed ? '리뷰 보내기' : post.done ? '종료된 게시글' : null}
         </CardST.Badge>
       ) : null}
     </CardST.Area>
