@@ -158,16 +158,16 @@ export const Badge = styled.div`
   justify-content: center;
   align-items: center;
   background: ${(props) =>
-    props.done
-      ? 'rgba(220, 220, 220, 0.8)'
-      : props.closed
+    props.closed
       ? 'rgba(255, 220, 205, 0.8)'
+      : props.done
+      ? 'rgba(220, 220, 220, 0.8)'
       : null};
   color: ${(props) =>
-    props.done
-      ? 'var(--color-grey)'
-      : props.closed
+    props.closed
       ? 'var(--color-orange)'
+      : props.done
+      ? 'var(--color-grey)'
       : null};
   font-weight: var(--weight-bold);
   font-size: var(--font-small);
