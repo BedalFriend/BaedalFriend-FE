@@ -20,6 +20,8 @@ export default function NearbyMap({
   searchData,
   setSearchParty,
 }) {
+  // console.log('searchData', searchData?.length);
+  // console.log('searchParty', searchParty);
   const [kakaoMap, setKakaoMap] = useState(null);
 
   let totalData = [];
@@ -99,7 +101,7 @@ export default function NearbyMap({
         }
       });
     };
-  }, [container]);
+  }, [container, searchParty]);
 
   useEffect(() => {
     if (kakaoMap === null) {
@@ -201,7 +203,7 @@ export default function NearbyMap({
 
                 // 현재위치와 마커 사이의 거리 측정
                 const dist = line.getLength();
-
+                // console.log(dist.toFixed(0));
                 if (dist < radius) {
                   // 해당 marker는 원 안에 있는 것
                   marker.setMap(kakaoMap);
@@ -246,7 +248,7 @@ export default function NearbyMap({
     return () => {
       clearTimeout(timer);
     };
-  }, [kakaoMap, data?.length, searchParty]);
+  }, [kakaoMap, data?.length, container]);
 
   useEffect(() => {
     if (kakaoMap === null) {
@@ -358,7 +360,8 @@ export default function NearbyMap({
       </NearbyST.BottomBtnBox>
 
       <NearbyST.ListBtnBox slotManager={slotManager}>
-        {searchData?.length <= 1 && searchParty === '' && user.address ? (
+        {(searchData?.length > 1 || searchParty.length === 0) &&
+        user.address ? (
           <NearbyST.VeiwAll
             onClick={() => {
               setIndex(true);
