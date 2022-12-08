@@ -8,6 +8,7 @@ import Card from '../../components/elements/card/Card';
 import MyMarker from '../../imgs/upload/Map_LocationMark.png';
 import yellowMarker from '../../imgs/upload/Yellow_Marker.png';
 import orangeMarker from '../../imgs/upload/Orange_Map_Marker.png';
+import styled from 'styled-components';
 
 export default function NearbyMap({
   user,
@@ -229,6 +230,10 @@ export default function NearbyMap({
                   console.log(el);
                   setMarkerInfo(el);
                 });
+
+                kakao.maps.event.addListener(kakaoMap, 'click', function () {
+                  setSlotManager(false);
+                });
               }
             });
           });
@@ -283,7 +288,6 @@ export default function NearbyMap({
       style={{
         width: '100%',
         height: '100%',
-        background: 'white',
       }}
       // onClick={() => {
       //   setSlotManager(false);

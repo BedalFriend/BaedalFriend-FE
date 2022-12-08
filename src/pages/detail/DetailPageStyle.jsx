@@ -351,3 +351,7 @@ export const ErrorTitle = styled.div`
   font-weight: var(--weight-bold);
   font-size: var(--font-small);
 `;
+
+export const PreviewAddressBox = styled.div`
+  display: flex;
+`;
