@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+
 import * as ModalST from './DeleteModalStyle';
 
 export default function DeleteModal({
+  data,
   setIsOpen,
   onDeleteHandler,
   isDeleteHandler,
@@ -65,13 +67,20 @@ export default function DeleteModal({
           <ModalST.ModalWrap>
             <ModalST.ModalBox>
               <ModalST.SelectBox>
-                <ModalST.ModifyText
-                  onClick={() => {
-                    navigate(`/modify/${id}`);
-                  }}
-                >
-                  게시글 수정하기
-                </ModalST.ModifyText>
+                {data.closed || data.done ? (
+                  <ModalST.CloseModifyText>
+                    게시글 수정하기
+                  </ModalST.CloseModifyText>
+                ) : (
+                  <ModalST.ModifyText
+                    onClick={() => {
+                      navigate(`/modify/${id}`);
+                    }}
+                  >
+                    게시글 수정하기
+                  </ModalST.ModifyText>
+                )}
+
                 <ModalST.DeleteText
                   onClick={() => {
                     setIsDeleteHandler(true);

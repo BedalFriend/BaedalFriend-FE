@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+
 import * as ModalST from './DeleteModalStyle';
 
 export default function DeleteModal({ onExitHandler, setIsExitOpen }) {

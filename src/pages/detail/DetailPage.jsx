@@ -51,7 +51,7 @@ const DetailPage = () => {
   const posts = useSelector((state) => state.post.posts);
   const token = useSelector((state) => state.token.accessToken);
   // console.log('posts', posts);
-  // console.log('post', post.data);
+  console.log('post', post.data);
   // console.log('token', token);
   // console.log('user', user);
 
@@ -72,6 +72,7 @@ const DetailPage = () => {
 
   const [isDeleteHandler, setIsDeleteHandler] = useState(false);
   const [isCompleteHandler, setIsCompleteHandler] = useState(false);
+  const [isBtnHandler, setIsBtnHandler] = useState(false);
 
   const openModal = () => {
     setIsOpen(true);
@@ -189,24 +190,38 @@ const DetailPage = () => {
 
   useEffect(() => {
     if (post.data.closed === true) {
+      setIsBtnHandler(true);
       setCustom(5);
     } else if (user.id === post?.data?.memberId) {
+      setIsBtnHandler(true);
       setCustom(3);
     } else if (user.onGoing && user.onGoing !== post.data.postId) {
+      setIsBtnHandler(true);
       setCustom(1);
     } else if (user.onGoing === post.data.postId) {
+      setIsBtnHandler(true);
       setCustom(2);
     } else if (post.data.maxCapacity === post?.data.chatRoomMembers?.length) {
+      setIsBtnHandler(true);
       setCustom(4);
     } else if (user.onGoing === 0 || user.onGoing === null) {
+      setIsBtnHandler(true);
       setCustom(0);
     }
-  }, [user.id, post?.data?.memberId, user.onGoing, custom, post.data.closed]);
+  }, [
+    user.id,
+    post?.data?.memberId,
+    user.onGoing,
+    custom,
+    post.data.closed,
+    isBtnHandler,
+  ]);
 
   return (
     <Layout>
       {isOpen && (
         <DeleteModal
+          data={post.data}
           setIsOpen={setIsOpen}
           onDeleteHandler={onDeleteHandler}
           isDeleteHandler={isDeleteHandler}
@@ -525,7 +540,7 @@ const DetailPage = () => {
             <DetailST.OverLapBtn>지금은 자리가 없어요</DetailST.OverLapBtn>
           ) : null}
           {custom === 5 ? (
-            <DetailST.OverLapBtn>이미 종료된 공구입니다</DetailST.OverLapBtn>
+            <DetailST.CloseBtn>종료된 게시글입니다</DetailST.CloseBtn>
           ) : null}
         </DetailST.DetailBox>
       )}

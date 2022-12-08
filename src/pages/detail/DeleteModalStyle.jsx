@@ -81,6 +81,19 @@ export const ModifyText = styled.div`
   }
 `;
 
+export const CloseModifyText = styled.div`
+  font-family: 'Pretendard';
+  font-size: var(--font-small);
+  font-weight: var(--weight-regular);
+  color: var(--color-grey);
+
+  padding: 28px 119px 24px 118px;
+
+  :hover {
+    cursor: default;
+  }
+`;
+
 export const DeleteText = styled.div`
   font-family: 'Pretendard';
   font-size: var(--font-small);
@@ -91,6 +104,7 @@ export const DeleteText = styled.div`
 
   :hover {
     color: var(--color-orange);
+    cursor: pointer;
   }
 `;
 

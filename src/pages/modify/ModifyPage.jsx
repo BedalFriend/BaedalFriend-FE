@@ -47,7 +47,7 @@ const Post = () => {
     region: '',
     content: '',
   });
-
+  console.log(data);
   // 페이지 전환
   const [index, setIndex] = useState(0);
   const [addressManager, setAddressManager] = useState(true);
