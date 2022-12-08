@@ -66,10 +66,10 @@ const Post = () => {
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    console.log('총데이터', data);
+
     dispatch(__addPostThunk(data)).then((response) => {
       dispatch(UPDATE_USER({ ...user, onGoing: response.payload.data.postId }));
-      navigate(`/detail/${response.payload.data.postId}`);
+      window.location.replace(`/detail/${response.payload.data.postId}`);
     });
   };
 

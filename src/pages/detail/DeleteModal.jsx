@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-
+import useOutSideClick from '../../hooks/useOutSideClick';
 import * as ModalST from './DeleteModalStyle';
 
 export default function DeleteModal({
@@ -10,6 +10,15 @@ export default function DeleteModal({
   isDeleteHandler,
   setIsDeleteHandler,
 }) {
+  //배경 클릭 시 모달창 닫기
+  const modalRef = useRef(null);
+
+  const handleClose = () => {
+    setIsOpen(false);
+  };
+
+  useOutSideClick(modalRef, handleClose);
+
   //외부 스크롤 막기
   useEffect(() => {
     const $body = document.querySelector('body');
@@ -24,7 +33,7 @@ export default function DeleteModal({
     <>
       <ModalST.Overlay>
         {isDeleteHandler ? (
-          <ModalST.ModalWrap>
+          <ModalST.ModalWrap ref={modalRef}>
             <ModalST.ReTopBox>
               <ModalST.ErrorSvg
                 width='24'
@@ -64,10 +73,10 @@ export default function DeleteModal({
             </ModalST.BottomBtnBox>
           </ModalST.ModalWrap>
         ) : (
-          <ModalST.ModalWrap>
+          <ModalST.ModalWrap ref={modalRef}>
             <ModalST.ModalBox>
               <ModalST.SelectBox>
-                {data.closed || data.done ? (
+                {data.done ? (
                   <ModalST.CloseModifyText>
                     게시글 수정하기
                   </ModalST.CloseModifyText>

@@ -6,6 +6,7 @@ import { getCookieToken } from '../shared/storage/Cookie';
 import { ADD_CHAT, UPDATE_CHANNEL } from '../redux/modules/ChatSlice';
 import store from '../redux/config/ConfigStore';
 import { useDispatch, useSelector } from 'react-redux';
+import { UPDATE_USER } from '../redux/modules/UserSlice';
 
 export const SocketContext = createContext();
 
@@ -96,7 +97,6 @@ export function SocketProvider({ children }) {
           {
             const channel = store.getState()?.chat?.channel;
             if (channel.data.chatRoomMembers) {
-              console.log(channel.data.chatRoomMembers);
               const tempMembers = [...channel.data.chatRoomMembers];
               tempMembers.push({ member: received.member });
               dispatch(
@@ -112,16 +112,34 @@ export function SocketProvider({ children }) {
         case 'EXIT':
           {
             const channel = store.getState()?.chat?.channel;
-            const target = channel.data.chatRoomMembers.findIndex(
-              (item) => item.member.id === received.member.id
-            );
-            const tempMembers = [...channel.data.chatRoomMembers];
-            tempMembers.splice(target, 1);
-            dispatch(
-              UPDATE_CHANNEL({ ...channel.data, chatRoomMembers: tempMembers })
-            );
+            if (channel.data.chatRoomMembers) {
+              const target = channel.data.chatRoomMembers.findIndex(
+                (item) => item.member.id === received.member.id
+              );
+              const tempMembers = [...channel.data.chatRoomMembers];
+              tempMembers.splice(target, 1);
+              dispatch(
+                UPDATE_CHANNEL({
+                  ...channel.data,
+                  chatRoomMembers: tempMembers,
+                })
+              );
+              dispatch(ADD_CHAT(received));
+            }
           }
-          return dispatch(ADD_CHAT(received));
+          return;
+        case 'FINISH':
+          {
+            console.log('received: ', received);
+            const user = store.getState()?.user;
+            dispatch(UPDATE_USER({ ...user, onGoing: null }));
+            if (
+              window.location.pathname.includes('/chat') ||
+              window.location.pathname === `/detail/${received.roomId}`
+            )
+              window.location.replace('/');
+          }
+          return;
         default:
           return;
       }

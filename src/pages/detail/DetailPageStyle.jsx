@@ -340,6 +340,9 @@ export const ErrorPage = styled.div`
 export const ErrorImg = styled.img`
   position: absolute;
   top: 316px;
+
+  width: 209px;
+  height: 209px;
 `;
 export const ErrorTitle = styled.div`
   position: absolute;
@@ -350,4 +353,44 @@ export const ErrorTitle = styled.div`
   font-family: 'Pretendard';
   font-weight: var(--weight-bold);
   font-size: var(--font-small);
+`;
+
+export const PreviewAddressBox = styled.div`
+  display: flex;
+
+  width: 100%;
+  height: 72px;
+`;
+
+export const SelectAddressBox = styled.div`
+  position: absolute;
+  z-index: 3;
+
+  display: flex;
+  align-items: center;
+
+  width: calc(100% - 72px);
+  height: 40px;
+
+  border-radius: 25px;
+
+  background-color: var(--color-white);
+
+  opacity: 80%;
+
+  margin: 16px 20px 16px 20px;
+`;
+export const OrangeMarker = styled.img`
+  position: relative;
+
+  margin: 16px 13px;
+`;
+
+export const SelectAddress = styled.input`
+  position: relative;
+
+  color: var(--color-dark-grey);
+  font-size: var(--font-small);
+
+  margin: 2px 0px 0px 5px;
 `;

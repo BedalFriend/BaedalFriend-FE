@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk, current } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import getInstance from '../../shared/api/Request';
 import { basePath } from '../../shared/api/Request';
 
@@ -392,9 +392,7 @@ export const postsSlice = createSlice({
       state.isLoading = true;
     },
     [__completePost.fulfilled]: (state, action) => {
-      console.log(state, action);
       state.isLoading = false;
-      state.searchMovies = action.payload;
     },
     [__completePost.rejected]: (state, action) => {
       state.isLoading = false;
@@ -407,7 +405,7 @@ export const postsSlice = createSlice({
     },
     [__changeAddressThunk.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.searchMovies = action.payload;
+      state.post = action.payload;
     },
     [__changeAddressThunk.rejected]: (state, action) => {
       state.isLoading = false;

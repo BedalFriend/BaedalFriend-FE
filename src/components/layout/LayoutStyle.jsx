@@ -8,7 +8,7 @@ export const Box = styled.div`
   align-items: center;
 
   min-height: 100vh;
-
+  box-shadow: 0px 0px 10px rgba(187, 187, 187, 0.32);
   @media screen and (min-width: 764px) {
     width: var(--responsive-width);
     left: calc(((100vw - 764px) / 2) * 1);
