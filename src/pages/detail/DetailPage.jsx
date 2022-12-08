@@ -18,7 +18,7 @@ import CurrentLocation from './CurrentLocation';
 import ExitModal from './ExitModal';
 import DeleteModal from './DeleteModal';
 import CurrentMap from './CurrentMap';
-import BannerPath from '../../imgs/Banner1.png';
+import BannerPath from '../../imgs/character/NoResultImg.png';
 
 import * as DetailST from './DetailPageStyle';
 import Timer from '../../components/elements/timer/Timer';
