@@ -392,9 +392,7 @@ export const postsSlice = createSlice({
       state.isLoading = true;
     },
     [__completePost.fulfilled]: (state, action) => {
-      console.log(state, action);
       state.isLoading = false;
-      state.searchMovies = action.payload;
     },
     [__completePost.rejected]: (state, action) => {
       state.isLoading = false;

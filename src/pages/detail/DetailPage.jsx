@@ -13,12 +13,16 @@ import {
 } from '../../redux/modules/PostSlice';
 import { __enterChannel, __exitChannel } from '../../redux/modules/ChatSlice';
 
+import * as CtLocationST from './CurrentLocationStyle';
+import OrangeMapMarker from '../../imgs/upload/Orange_Map_Marker.png';
+
 import Layout from '../../components/layout/Layout';
 import CurrentLocation from './CurrentLocation';
 import ExitModal from './ExitModal';
 import DeleteModal from './DeleteModal';
 import CurrentMap from './CurrentMap';
 import BannerPath from '../../imgs/Banner1.png';
+import SampleMap from '../../imgs/upload/SampleMap.png';
 
 import * as DetailST from './DetailPageStyle';
 import Timer from '../../components/elements/timer/Timer';
@@ -88,9 +92,10 @@ const DetailPage = () => {
 
   // 삭제 핸들러
   const onDeleteHandler = () => {
+    // dispatch(UPDATE_USER({ ...user, onGoing: null }));
+    // navigate('/');
+    publish('', id, 'FINISH');
     dispatch(__deletePost(id));
-    dispatch(UPDATE_USER({ ...user, onGoing: null }));
-    navigate('/');
   };
 
   // 참여 핸들러
@@ -134,14 +139,15 @@ const DetailPage = () => {
   };
 
   const onCompleteHandler = () => {
+    publish('', id, 'FINISH');
     dispatch(__completePost(id));
-    dispatch(
-      UPDATE_POST({
-        ...post.data,
-        closed: true,
-      })
-    );
-    setIsCompleteHandler(true);
+    // dispatch(
+    //   UPDATE_POST({
+    //     ...post.data,
+    //     closed: true,
+    //   })
+    // );
+    // setIsCompleteHandler(true);
   };
 
   // 참여중인 인원
@@ -501,13 +507,28 @@ const DetailPage = () => {
               </svg>
               <DetailST.PartyTitle>만나는 장소</DetailST.PartyTitle>
             </DetailST.PtMapTitle>
-            <div
+            <DetailST.PreviewAddressBox
               onClick={() => {
                 setIndex(true);
               }}
             >
               <CurrentLocation data={post.data} />
-            </div>
+              {/* <img
+                src={SampleMap}
+                style={{ width: '100%', height: '72px' }}
+                alt=''
+              />
+              <CtLocationST.SelectAddressBox>
+                <CtLocationST.OrangeMarker
+                  src={OrangeMapMarker}
+                  style={{ width: '14px', height: '14px' }}
+                  alt=''
+                />
+                <CtLocationST.SelectAddress
+                  defaultValue={post.data.gatherName}
+                />
+              </CtLocationST.SelectAddressBox> */}
+            </DetailST.PreviewAddressBox>
           </DetailST.PtMapBox>
 
           {custom === 0 ? (
