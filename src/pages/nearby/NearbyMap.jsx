@@ -98,7 +98,7 @@ export default function NearbyMap({
         }
       });
     };
-  }, [container, searchParty]);
+  }, [container]);
 
   useEffect(() => {
     if (kakaoMap === null) {
@@ -168,7 +168,7 @@ export default function NearbyMap({
             strokeColor: '',
             strokeOpacity: 0.8,
             strokeStyle: 'dashed',
-            fillColor: '#00EEEE',
+            fillColor: '#79AFFF',
             fillOpacity: 0.2,
           });
 
@@ -241,7 +241,7 @@ export default function NearbyMap({
     return () => {
       clearTimeout(timer);
     };
-  }, [kakaoMap, data?.length]);
+  }, [kakaoMap, data?.length, searchParty]);
 
   useEffect(() => {
     if (kakaoMap === null) {
@@ -285,6 +285,9 @@ export default function NearbyMap({
         height: '100%',
         background: 'white',
       }}
+      // onClick={() => {
+      //   setSlotManager(false);
+      // }}
     >
       <NearbyST.InputBox>
         <NearbyST.SearchImg
