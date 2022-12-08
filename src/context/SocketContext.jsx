@@ -130,9 +130,14 @@ export function SocketProvider({ children }) {
           return;
         case 'FINISH':
           {
+            console.log('received: ', received);
             const user = store.getState()?.user;
             dispatch(UPDATE_USER({ ...user, onGoing: null }));
-            window.location.replace('/');
+            if (
+              window.location.pathname.includes('/chat') ||
+              window.location.pathname === `/detail/${received.roomId}`
+            )
+              window.location.replace('/');
           }
           return;
         default:
