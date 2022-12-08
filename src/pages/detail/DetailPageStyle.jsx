@@ -354,4 +354,40 @@ export const ErrorTitle = styled.div`
 
 export const PreviewAddressBox = styled.div`
   display: flex;
+
+  width: 100%;
+  height: 72px;
+`;
+
+export const SelectAddressBox = styled.div`
+  position: absolute;
+  z-index: 3;
+
+  display: flex;
+  align-items: center;
+
+  width: calc(100% - 72px);
+  height: 40px;
+
+  border-radius: 25px;
+
+  background-color: var(--color-white);
+
+  opacity: 80%;
+
+  margin: 16px 20px 16px 20px;
+`;
+export const OrangeMarker = styled.img`
+  position: relative;
+
+  margin: 16px 13px;
+`;
+
+export const SelectAddress = styled.input`
+  position: relative;
+
+  color: var(--color-dark-grey);
+  font-size: var(--font-small);
+
+  margin: 2px 0px 0px 5px;
 `;
