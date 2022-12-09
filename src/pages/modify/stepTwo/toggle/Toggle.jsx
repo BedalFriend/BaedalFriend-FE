@@ -27,7 +27,7 @@ const ToggleBtn = styled.button`
   border: none;
   cursor: pointer;
   background-color: ${(props) =>
-    !props.toggle ? 'var(--color-light-orange)' : 'var(--color-light-orange)'};
+    !props.toggle ? 'var(--color-dark-white)' : 'var(--color-dark-white)'};
   position: relative;
   display: flex;
   justify-content: center;
