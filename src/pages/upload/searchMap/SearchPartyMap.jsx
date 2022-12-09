@@ -62,7 +62,6 @@ const SearchMap = ({ setIndex, data, setData, setAddressManager }) => {
     setData({
       ...data,
       region: region,
-
       gatherName: gatherName.innerHTML,
       gatherAddress: gatherAddress.innerHTML,
     });
