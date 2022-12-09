@@ -228,7 +228,7 @@ export default function NearbyMap({
                   selectedMarker = marker;
 
                   setSlotManager(true);
-                  console.log(el);
+                  // console.log(el);
                   setMarkerInfo(el);
                 });
 
