@@ -4,10 +4,10 @@ import React, { useEffect, useRef, useState } from 'react';
 
 import * as SearchST from './SearchMapStyle';
 
-import yellowMarker from '../../../../imgs/upload/Yellow_Marker.png';
-import orangeMarker from '../../../../imgs/upload/Orange_Map_Marker.png';
-import MyMarker from '../../../../imgs/upload/Map_LocationMark.png';
-import CurrentMark from '../../../../imgs/upload/Map_MyLocation.png';
+import yellowMarker from '../../../imgs/upload/Yellow_Marker.png';
+import orangeMarker from '../../../imgs/upload/Orange_Map_Marker.png';
+import MyMarker from '../../../imgs/upload/Map_LocationMark.png';
+import CurrentMark from '../../../imgs/upload/Map_MyLocation.png';
 
 const SearchMap = ({ setIndex, data, setData, setAddressManager }) => {
   const target = document.querySelector('#Map');
@@ -62,7 +62,6 @@ const SearchMap = ({ setIndex, data, setData, setAddressManager }) => {
     setData({
       ...data,
       region: region,
-
       gatherName: gatherName.innerHTML,
       gatherAddress: gatherAddress.innerHTML,
     });

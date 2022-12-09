@@ -256,7 +256,7 @@ const SearchMap = ({ setIndex, setData, data, name, address, roomTitle }) => {
 
           <SearchST.SearchInput
             id='Map'
-            placeholder='만날 장소를 검색해주세요'
+            placeholder='음식점 장소를 검색해주세요'
             onChange={onChange}
             value={place}
           />

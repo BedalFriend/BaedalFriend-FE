@@ -25,7 +25,7 @@ export const MarkerInfoBox = styled.div`
   z-index: 2;
 
   border-radius: 12px;
-  box-shadow: 1px 5px 12px 1px var(--color-grey);
+  box-shadow: 0px 0px 8px 0px rgba(187, 187, 187, 0.32);
 `;
 export const InfoTitleBox = styled.div`
   display: flex;

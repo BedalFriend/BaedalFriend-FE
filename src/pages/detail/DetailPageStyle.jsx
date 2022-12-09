@@ -3,7 +3,6 @@ import styled from 'styled-components';
 export const DetailBox = styled.div`
   position: relative;
   z-index: 2;
-  /* padding-top: 60px; */
 
   width: 100%;
   height: 100vh;
@@ -341,12 +340,12 @@ export const ErrorImg = styled.img`
   position: absolute;
   top: 316px;
 
-  width: 209px;
-  height: 209px;
+  width: 82px;
+  height: 80px;
 `;
 export const ErrorTitle = styled.div`
   position: absolute;
-  top: 510px;
+  top: 410px;
 
   color: var(--color-grey);
 

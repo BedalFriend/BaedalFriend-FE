@@ -107,45 +107,35 @@ export const MiniBox = styled.div`
   width: fit-content;
   top: 138px;
   left: 140px;
-
-  display: flex;
-  flex-direction: row;
-  flex-flow: row wrap;
-  align-items: flex-start;
   padding: 8px 12px;
 
-  background: var(--color-blur-orange);
-  border-radius: 99px;
-
-  z-index: 3;
-
-  cursor: pointer;
-`;
-
-export const LoginMiniBox = styled.div`
-  position: absolute;
-  width: fit-content;
-
-  height: 33px;
-  top: 138px;
-  left: 140px;
-
-  display: flex;
-  flex-flow: row wrap;
-  align-items: flex-start;
-  padding: 8px 12px;
-
-  background: var(--color-blur-orange);
-  border-radius: 99px;
-
-  cursor: pointer;
-`;
-
-export const DesContent = styled.span`
   font-weight: var(--weight-bold);
   font-size: var(--font-small);
   color: var(--color-orange);
   word-break: keep-all;
+
+  background: var(--color-blur-orange);
+  border-radius: 99px;
+
+  cursor: pointer;
+`;
+
+export const EventMiniBox = styled.div`
+  position: absolute;
+  width: fit-content;
+  top: 138px;
+  left: 140px;
+  padding: 8px 12px;
+
+  font-weight: var(--weight-bold);
+  font-size: var(--font-small);
+  color: var(--color-white);
+  word-break: keep-all;
+
+  background: var(--color-orange);
+  border-radius: 99px;
+
+  cursor: pointer;
 `;
 
 export const TextBox = styled.span`

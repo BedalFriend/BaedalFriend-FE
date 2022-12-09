@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import * as UploadST from '../../../upload/UploadStyle';
+import * as UploadST from './UploadStyle';
 
 const UploadStepOne = ({
   data,
@@ -21,11 +21,11 @@ const UploadStepOne = ({
   const deliveryCheckHandler = (e) => {
     const { value, name } = e.target;
 
-    if (
-      value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '') &&
-      value.length < 5
-    ) {
-      setData({ ...data, [name]: parseInt(value) });
+    if (value.length < 5) {
+      setData({
+        ...data,
+        [name]: parseInt(value.replace(/[^0-9.]/g, '')),
+      });
     }
   };
 

@@ -16,11 +16,15 @@ import {
   __postRecentWord,
   __getRecentWord,
   CLEAR_POSTS,
+  UPDATE_KEYWORDS,
 } from '../../redux/modules/PostSlice';
 
 export default function SearchPage() {
   const dispatch = useDispatch();
   const { setTab } = useContext(TabContext);
+
+  const posts = useSelector((state) => state.post.posts);
+  const keywords = useSelector((state) => state.post.keyword);
 
   //tab
   useEffect(() => {
@@ -102,42 +106,42 @@ export default function SearchPage() {
   let query = '';
 
   const queryHandler = () => {
+    const keyword = searchTerm.replace(/ /g,"");
+
     if (select === '마감 임박 순') {
       if (fullAddress === null || fullAddress === undefined) {
-        query = `sortBy=limit_time&isAsc=false&keyword=${searchTerm}`;
+        query = `sortBy=limit_time&isAsc=false&keyword=${keyword}`;
       } else {
-        query = `sortBy=limit_time&isAsc=false&region=${address[0]}&keyword=${searchTerm}`;
+        query = `sortBy=limit_time&isAsc=false&region=${address[0]}&keyword=${keyword}`;
       }
     } else if (select === '신규 등록 순') {
       if (fullAddress === null || fullAddress === undefined) {
-        query = `sortBy=created_at&isAsc=false&keyword=${searchTerm}`;
+        query = `sortBy=created_at&isAsc=false&keyword=${keyword}`;
       } else {
-        query = `sortBy=created_at&isAsc=false&region=${address[0]}&keyword=${searchTerm}`;
+        query = `sortBy=created_at&isAsc=false&region=${address[0]}&keyword=${keyword}`;
       }
     } else if (select === '참여자 많은 순') {
       if (fullAddress === null || fullAddress === undefined) {
-        query = `sortBy=participant_number&isAsc=false&keyword=${searchTerm}`;
+        query = `sortBy=participant_number&isAsc=false&keyword=${keyword}`;
       } else {
-        query = `sortBy=participant_number&isAsc=false&region=${address[0]}&keyword=${searchTerm}`;
+        query = `sortBy=participant_number&isAsc=false&region=${address[0]}&keyword=${keyword}`;
       }
     } else if (select === '참여자 적은 순') {
       if (fullAddress === null || fullAddress === undefined) {
-        query = `sortBy=participant_number&isAsc=true&keyword=${searchTerm}`;
+        query = `sortBy=participant_number&isAsc=true&keyword=${keyword}`;
       } else {
-        query = `sortBy=participant_number&isAsc=true&region=${address[0]}&keyword=${searchTerm}`;
+        query = `sortBy=participant_number&isAsc=true&region=${address[0]}&keyword=${keyword}`;
       }
     } else if (select === '매너 사용자 우선 순') {
-      query = `keyword=${searchTerm}`;
+      query = `keyword=${keyword}`;
     }
   };
 
-  useEffect(() => {
-    dispatch(__getRecentWord());  
-    setSearchTerm(searchTerm.replace(/ /g,""))
+  useEffect(() => { 
     setSearched(false);
-    setIsOpen(false);
-    queryHandler();
+    
     const searchHandler = setTimeout(async () => {
+      queryHandler();
       if (searchTerm === '') {
         dispatch(CLEAR_POSTS());
       } else {
@@ -146,32 +150,32 @@ export default function SearchPage() {
           dispatch(__getSearchThunk(query));
         } else {
           dispatch(__getReSearchThunk(query));
-        }
-        setSearched(true);     
-        dispatch(__postRecentWord(`${searchTerm}`))
+        }     
+        dispatch(__postRecentWord(`${searchTerm}`));
+
+        // const tempArr = [...keywords?.data?.data];
+        // tempArr.unshift({keyword: searchTerm.replace(/ /g,"")})
+        // dispatch(UPDATE_KEYWORDS([...tempArr]));
+        setTimeout(() => {
+          dispatch(__getRecentWord());
+        }, 300)
+        setSearched(true);
       }
     }, 600);
 
     return () => {
       clearTimeout(searchHandler);
-      setSearched(false);
     };
   }, [searchTerm, select]);
 
   //clean up
   useEffect(() => {
-    window.scrollTo(0, 0);  
+    window.scrollTo(0, 0);
+    dispatch(__getRecentWord());
     return () => {
       dispatch(CLEAR_POSTS());
     };
   }, []);
-
-  const posts = useSelector((state) => state.post.posts);
-  const keywords = useSelector((state) => state.post.keywords);
-
-  useEffect(() => {
-    dispatch(__getRecentWord());          
-  }, [keywords])
 
   return (
     <Layout>
@@ -202,8 +206,8 @@ export default function SearchPage() {
         </SearchST.Search>
 
         {/* 최근 검색어 */}
-        {keywords&&keywords.length>0 ?
-        (<>
+        {keywords?.data?.data?.length > 0 ?
+        (
           <SearchST.RecentSection>
             <SearchST.RecentTitle>최근 검색어</SearchST.RecentTitle>
             <SearchST.RecentDisplay
@@ -215,16 +219,18 @@ export default function SearchPage() {
               onMouseMove={isDrag ? throttleHandler : null}
               onMouseLeave={dragEndHandler}
               >
-                { keywords && keywords.map((keyword, index) => (
+                { keywords.data.data.map((keyword, index) => {
+                  return (
                     <RecentWord
                       key={index}
                       id={keyword.id}
                       keyword={keyword.keyword}
                     />
-                ))}
+                  )
+                })}
             </SearchST.RecentDisplay>
           </SearchST.RecentSection> 
-        </>)          
+        )          
         :
         (<>
           <SearchST.RecentSection2>

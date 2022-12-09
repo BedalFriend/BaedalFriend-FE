@@ -24,7 +24,6 @@ export const Search = styled.div`
 
   padding: 0 24px;
   margin-bottom: 36px;
-
   cursor: pointer;
 `;
 
