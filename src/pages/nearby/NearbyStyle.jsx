@@ -191,20 +191,13 @@ export const SelectBox = styled.div`
   box-sizing: content-box;
   display: flex;
   flex-flow: column wrap;
-
-  /* overflow-x: auto;
-  overflow-y: scroll; */
 `;
 
 export const SelectList = styled.div`
   display: flex;
   flex-flow: row wrap;
 
-  /* width: 100%; */
-  /* height: calc(100% - 60px); */
-
   gap: 16px;
-  /* background-color: skyblue; */
 `;
 
 export const BackBtn = styled.div`

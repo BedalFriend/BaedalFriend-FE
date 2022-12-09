@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import styled, { css } from 'styled-components';
 
 export const Toggle = ({ toggle, setToggle, setIsTime }) => {
