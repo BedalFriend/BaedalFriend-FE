@@ -33,7 +33,7 @@
   "orientation": "portrait",
   "theme_color": "#FF5B15",
   "background_color": "#FF5B15",
-  "description": "배달 공동 주문 플랫폼 배달프렌드",
+  "description": "내 근처에서 만나는 배달프렌드. 배달 공동 주문 플랫폼 배프",
   "lang": "ko",
   "dir": "ltr",
   "categories": ["food", "social"]
