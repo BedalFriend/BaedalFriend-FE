@@ -38,6 +38,8 @@ export default function MyPostPage() {
   const posts = useSelector((state) => state.post.posts);
 
   const CreatedAt = ({post}) => {
+    const arr1 = [post.createdAt.split(' ', 1)]
+    console.log(arr1)
     return <MyPostST.DateText>{(post.createdAt).split(' ', 1)}</MyPostST.DateText>
   }
 
