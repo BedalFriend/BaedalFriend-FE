@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 
 import { Toggle } from './toggle/Toggle';
 
-import * as UploadST from '../../../upload/UploadStyle';
+import * as UploadST from '../../upload/UploadStyle';
 
-import Select from '../../../../components/select/Select';
-import SampleMap from '../../../../imgs/upload/SampleMap.png';
+import Select from '../../../components/select/Select';
+import SampleMap from '../../../imgs/upload/SampleMap.png';
 
 const UploadStepTwo = ({
   data,

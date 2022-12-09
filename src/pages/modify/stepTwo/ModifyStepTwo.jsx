@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { Toggle } from './toggle/Toggle';
 
 import * as ModifyST from '../ModifyPageStyle';
-
 import SampleMap from '../../../imgs/upload/SampleMap.png';
 
 const ModifySTepTwo = ({

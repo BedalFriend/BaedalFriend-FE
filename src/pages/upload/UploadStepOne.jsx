@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import * as UploadST from '../../../upload/UploadStyle';
+import * as UploadST from './UploadStyle';
 
 const UploadStepOne = ({
   data,

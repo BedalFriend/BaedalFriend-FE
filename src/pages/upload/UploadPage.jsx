@@ -3,17 +3,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { __addPostThunk } from '../../redux/modules/PostSlice';
 import { TabContext } from '../../context/TabContext';
-import Layout from '../../components/layout/Layout';
+import { UPDATE_USER } from '../../redux/modules/UserSlice';
 
 import * as UploadST from './UploadStyle';
 import useMultipleInput from '../../hooks/useMultipleInput';
-
-import SearchPartyMap from './upload/searchMap/SearchPartyMap';
-import UploadCategory from './upload/UploadCategory';
-import UploadStepTwo from './upload/stepTwo/UploadStepTwo';
-import UploadStepOne from './upload/stepOne/UploadStepOne';
+import Layout from '../../components/layout/Layout';
+import SearchPartyMap from './searchMap/SearchPartyMap';
+import UploadCategory from './UploadCategory';
+import UploadStepTwo from './stepTwo/UploadStepTwo';
+import UploadStepOne from './UploadStepOne';
 import SearchMap from '../../components/searchMap/SearchMap';
-import { UPDATE_USER } from '../../redux/modules/UserSlice';
 
 const Post = () => {
   const user = useSelector((state) => state.user);

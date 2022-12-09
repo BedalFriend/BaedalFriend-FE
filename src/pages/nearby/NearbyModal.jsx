@@ -1,5 +1,7 @@
 import React, { useEffect, useRef } from 'react';
+
 import * as ModalST from './NearbyModalStyle';
+
 import useOutSideClick from '../../hooks/useOutSideClick';
 
 export default function SearchModal({ closeModal, setSelect, select }) {
