@@ -3,19 +3,16 @@ import React, { useEffect, useState } from 'react';
 import * as NearbyST from './NearbyStyle';
 
 import Card from '../../components/elements/card/Card';
-import NearbyModal from './NearbyModal';
 
-const NearbyList = ({ searchParty, filterSearchData, setTab }) => {
-  //정렬 모달 선택
-  const [select, setSelect] = useState('마감 임박 순');
-
-  //정렬 모달창
-  const [isOpen, setIsOpen] = useState(false);
+const NearbyList = ({
+  searchParty,
+  filterSearchData,
+  setTab,
+  setIsOpen,
+  select,
+}) => {
   const openModal = () => {
     setIsOpen(true);
-  };
-  const closeModal = () => {
-    setIsOpen(false);
   };
 
   //정렬된 파티
@@ -126,14 +123,6 @@ const NearbyList = ({ searchParty, filterSearchData, setTab }) => {
           </g>
         </svg>
       </NearbyST.Select>
-
-      {isOpen && (
-        <NearbyModal
-          closeModal={closeModal}
-          setSelect={setSelect}
-          select={select}
-        />
-      )}
 
       <NearbyST.SelectBox>
         <NearbyST.SelectList>
