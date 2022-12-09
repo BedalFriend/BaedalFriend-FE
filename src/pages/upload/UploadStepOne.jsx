@@ -24,7 +24,7 @@ const UploadStepOne = ({
     if (value.length < 5) {
       setData({
         ...data,
-        [name]: parseInt(value.replace(/[^0-9.]/g, '')),
+        [name]: value.replace(/[^0-9.]/g, ''),
       });
     }
   };
