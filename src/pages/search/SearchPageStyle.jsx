@@ -42,6 +42,14 @@ export const SearchText = styled.input`
     font-size: var(--font-regular);
     font-display: swap;
   }
+
+  ::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+    width: 15px;
+    height: 15px;
+    background: url(https://velog.velcdn.com/images/mingki831/post/1a660243-c00b-4f3c-9855-5399f1f84be1/image.png) center center no-repeat;
+    cursor: pointer;
+  }
 `;
 
 export const RecentSection = styled.div`
@@ -49,6 +57,12 @@ export const RecentSection = styled.div`
   width: calc(100% - 32px);
   height: 56px;
   overflow-x: hidden;
+  background-color: var(--color-white);
+`;
+
+export const RecentSection2 = styled.div`
+  position: relative;
+  width: calc(100% - 32px);
   background-color: var(--color-white);
 `;
 
@@ -116,11 +130,10 @@ export const NoResult = styled.div`
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
+  justify-content: center;
 
-  top: -20px;
   height: calc(100vh - 428px);
   margin: auto;
-  padding-bottom: 50px;
 
   color: var(--color-grey);
   font-weight: var(--weight-regular);
@@ -128,10 +141,12 @@ export const NoResult = styled.div`
 `
 
 export const NoResultImg = styled.img`
-  width: 209px;
-  height: 209px;
+  width: 82px;
+  height: 80px;
+  margin-bottom: 20px;
 `
 
 export const NoResultText = styled.span`
   font-weight: var(--weight-bold);
+  margin-bottom: 5px;
 `;

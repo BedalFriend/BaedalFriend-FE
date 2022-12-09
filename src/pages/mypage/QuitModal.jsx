@@ -47,7 +47,6 @@ export default function QuitModal({closeModal2}) {
         } else {
           window.location.replace("/")
         }
-        console.log(res)
       });
   }
 

@@ -108,11 +108,10 @@ export const NoResult = styled.div`
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
+  justify-content: center;
 
-  top: -20px;
-  height: calc(100vh - 428px);
+  height: calc(100vh - 318px);
   margin: auto;
-  padding-bottom: 50px;
 
   color: var(--color-grey);
   font-weight: var(--weight-regular);
@@ -120,10 +119,12 @@ export const NoResult = styled.div`
 `
 
 export const NoResultImg = styled.img`
-  width: 209px;
-  height: 209px;
+  width: 82px;
+  height: 80px;
+  margin-bottom: 20px;
 `
 
 export const NoResultText = styled.span`
   font-weight: var(--weight-bold);
+  margin-bottom: 5px;
 `;

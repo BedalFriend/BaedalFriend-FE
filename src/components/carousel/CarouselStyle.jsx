@@ -79,32 +79,34 @@ export const BannerImg = styled.img`
   text-align: center;
 `;
 
-export const ImgDes = styled.div`
+export const BannerText = styled.div`
   position: absolute;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  text-align: left;
+
+  top: 56px;
+  left: 150px;
 
   width: calc(100vw - 32px);
   max-width: calc(100% - 32px);
-  height: 92px;
-  border-radius: 12px;
-  background-color: #77777778;
-  color: var(--color-orange);
 
-  top: 66%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  font-size: 24px;
+  font-weight: var(--weight-regular);
+  color: var(--color-light-black);
 
   padding: 0 auto;
   cursor: pointer;
 `;
 
+export const BannerBoldText = styled.span`
+  font-weight: var(--weight-bold);
+`;
+
 export const MiniBox = styled.div`
   position: absolute;
   width: fit-content;
-  height: 33px;
-  left: 24px;
+  top: 138px;
+  left: 140px;
 
   display: flex;
   flex-direction: row;
@@ -127,7 +129,6 @@ export const LoginMiniBox = styled.div`
   height: 33px;
   top: 138px;
   left: 140px;
-  //transform: translate(-50%, -50%);
 
   display: flex;
   flex-flow: row wrap;

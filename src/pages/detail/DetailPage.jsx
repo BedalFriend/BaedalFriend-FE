@@ -21,7 +21,7 @@ import {
 import ExitModal from './ExitModal';
 import DeleteModal from './DeleteModal';
 import CurrentMap from './CurrentMap';
-import BannerPath from '../../imgs/Banner1.png';
+import BannerPath from '../../imgs/character/NoResultImg.png';
 import SampleMap from '../../imgs/upload/SampleMap.png';
 import CompleteModal from './CompleteModal';
 import SVG from '../../shared/SVG';

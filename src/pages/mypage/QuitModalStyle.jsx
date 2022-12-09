@@ -59,7 +59,8 @@ export const ModalBtnSet = styled.div`
 
   display: flex;
   justify-content: space-between;
-  cursor: pointer;
+
+  font-family: 'Pretendard';
 `;
 
 export const ModalBtn = styled.button`
@@ -71,4 +72,5 @@ export const ModalBtn = styled.button`
 
   font-weight: var(--weight-bold);
   font-size: var(--font-small);
+  cursor: pointer;  
 `;
