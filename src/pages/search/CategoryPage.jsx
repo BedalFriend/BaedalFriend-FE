@@ -8,7 +8,7 @@ import SearchModal from './SearchModal';
 import Card from '../../components/elements/card/Card';
 import CategorySelect from './CategorySelect';
 import SVG from '../../shared/SVG';
-import NRImage from '../../imgs/Banner1.png';
+import NRImage from '../../imgs/character/NoResultImg.png';
 
 import {
   __getCateSearchThunk,

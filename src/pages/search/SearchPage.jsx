@@ -8,7 +8,7 @@ import SearchModal from './SearchModal';
 import useInput from '../../hooks/useInput';
 import Card from '../../components/elements/card/Card';
 import RecentWord from './RecentWord';
-import NRImage from '../../imgs/Banner1.png';
+import NRImage from '../../imgs/character/NoResultImg.png';
 
 import {
   __getSearchThunk,
@@ -203,31 +203,35 @@ export default function SearchPage() {
 
         {/* 최근 검색어 */}
         {keywords&&keywords.length>0 ?
-        (
-        <SearchST.RecentSection>
-          <SearchST.RecentTitle>최근 검색어</SearchST.RecentTitle>
-          <SearchST.RecentDisplay
-            ref={scrollRef}
-            onTouchStart={touchStartHandler}
-            onTouchEnd={touchEndHandler}
-            onMouseDown={dragStartHandler}
-            onMouseUp={dragEndHandler}
-            onMouseMove={isDrag ? throttleHandler : null}
-            onMouseLeave={dragEndHandler}
-            >
-              { keywords && keywords.map((keyword, index) => (
-                  <RecentWord
-                    key={index}
-                    id={keyword.id}
-                    keyword={keyword.keyword}
-                  />
-              ))}
-          </SearchST.RecentDisplay>
-        </SearchST.RecentSection>          
-        )
+        (<>
+          <SearchST.RecentSection>
+            <SearchST.RecentTitle>최근 검색어</SearchST.RecentTitle>
+            <SearchST.RecentDisplay
+              ref={scrollRef}
+              onTouchStart={touchStartHandler}
+              onTouchEnd={touchEndHandler}
+              onMouseDown={dragStartHandler}
+              onMouseUp={dragEndHandler}
+              onMouseMove={isDrag ? throttleHandler : null}
+              onMouseLeave={dragEndHandler}
+              >
+                { keywords && keywords.map((keyword, index) => (
+                    <RecentWord
+                      key={index}
+                      id={keyword.id}
+                      keyword={keyword.keyword}
+                    />
+                ))}
+            </SearchST.RecentDisplay>
+          </SearchST.RecentSection> 
+        </>)          
         :
-        ('')}
-
+        (<>
+          <SearchST.RecentSection2>
+            <SearchST.RecentTitle>최근 검색어</SearchST.RecentTitle>
+          </SearchST.RecentSection2>
+        </>)}
+         
         <SearchST.Line />
 
         {/* 필터 설정 */}
@@ -279,7 +283,6 @@ export default function SearchPage() {
             <SearchST.NoResult>
               <SearchST.NoResultImg src={NRImage} alt='결과없음' />
               <SearchST.NoResultText>'{searchTerm}'</SearchST.NoResultText>{' '}
-              <br />
               관련 배프가 없어요 :(
             </SearchST.NoResult>
           ) : (

@@ -803,7 +803,9 @@ const UploadStepTwo = ({
               />
             </g>
           </svg>
-          <UploadST.ErrorMsg>40글자가 초과하였습니다!</UploadST.ErrorMsg>
+          <UploadST.ErrorMsg>
+            2줄이하 40글자까지 작성가능합니다!
+          </UploadST.ErrorMsg>
         </UploadST.ErrorMsgBox>
       ) : null}
     </UploadST.StepTwoBox>

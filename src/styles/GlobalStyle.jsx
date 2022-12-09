@@ -56,7 +56,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    background-color: var(--color-black);
+    background-color: #FFF8E6;
     margin : 0;
     padding : 0;
     font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui,

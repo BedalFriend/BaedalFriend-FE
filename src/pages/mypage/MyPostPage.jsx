@@ -4,7 +4,7 @@ import Layout from '../../components/layout/Layout';
 import * as MyPostST from './MyPostPageStyle'
 import { useDispatch, useSelector } from 'react-redux';
 import Card from '../../components/elements/card/Card';
-import NoPostImg from '../../imgs/NoPostImg.png'
+import NoPostImg from '../../imgs/character/NoPostImg.png'
 import { 
   __getMyPostThunk,
   CLEAR_POSTS,
@@ -38,6 +38,8 @@ export default function MyPostPage() {
   const posts = useSelector((state) => state.post.posts);
 
   const CreatedAt = ({post}) => {
+    const arr1 = [post.createdAt.split(' ', 1)]
+    console.log(arr1)
     return <MyPostST.DateText>{(post.createdAt).split(' ', 1)}</MyPostST.DateText>
   }
 

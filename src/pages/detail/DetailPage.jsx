@@ -1,7 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
+import { __enterChannel, __exitChannel } from '../../redux/modules/ChatSlice';
+import { UPDATE_USER } from '../../redux/modules/UserSlice';
+import { AlarmContext } from '../../context/AlarmContext';
+import { getCookieToken } from '../../shared/storage/Cookie';
+import { TabContext } from '../../context/TabContext';
+import { SocketContext } from '../../context/SocketContext';
 import {
   __decreaseParticipantThunk,
   __deletePost,
@@ -11,25 +17,20 @@ import {
   UPDATE_POST,
   __completePost,
 } from '../../redux/modules/PostSlice';
-import { __enterChannel, __exitChannel } from '../../redux/modules/ChatSlice';
 
-import Layout from '../../components/layout/Layout';
-import CurrentLocation from './CurrentLocation';
 import ExitModal from './ExitModal';
 import DeleteModal from './DeleteModal';
 import CurrentMap from './CurrentMap';
-import BannerPath from '../../imgs/Banner1.png';
+import BannerPath from '../../imgs/character/NoResultImg.png';
+import SampleMap from '../../imgs/upload/SampleMap.png';
+import CompleteModal from './CompleteModal';
+import SVG from '../../shared/SVG';
 
 import * as DetailST from './DetailPageStyle';
 import Timer from '../../components/elements/timer/Timer';
-import SVG from '../../shared/SVG';
 import ProfilePic from '../../components/elements/profilePic/ProfilePic';
-import { UPDATE_USER } from '../../redux/modules/UserSlice';
-import { AlarmContext } from '../../context/AlarmContext';
-import { getCookieToken } from '../../shared/storage/Cookie';
-import { TabContext } from '../../context/TabContext';
-import { SocketContext } from '../../context/SocketContext';
-import CompleteModal from './CompleteModal';
+import OrangeMapMarker from '../../imgs/upload/Orange_Map_Marker.png';
+import Layout from '../../components/layout/Layout';
 
 const DetailPage = () => {
   const { setTab } = useContext(TabContext);
@@ -41,7 +42,6 @@ const DetailPage = () => {
   }, []);
 
   const { id } = useParams();
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const refreshToken = getCookieToken();
   const { setIsDP } = useContext(AlarmContext);
@@ -72,6 +72,7 @@ const DetailPage = () => {
 
   const [isDeleteHandler, setIsDeleteHandler] = useState(false);
   const [isCompleteHandler, setIsCompleteHandler] = useState(false);
+  const [isBtnHandler, setIsBtnHandler] = useState(false);
 
   const openModal = () => {
     setIsOpen(true);
@@ -87,9 +88,10 @@ const DetailPage = () => {
 
   // 삭제 핸들러
   const onDeleteHandler = () => {
+    // dispatch(UPDATE_USER({ ...user, onGoing: null }));
+    // navigate('/');
+    publish('', id, 'FINISH');
     dispatch(__deletePost(id));
-    dispatch(UPDATE_USER({ ...user, onGoing: null }));
-    navigate('/');
   };
 
   // 참여 핸들러
@@ -133,14 +135,15 @@ const DetailPage = () => {
   };
 
   const onCompleteHandler = () => {
+    publish('', id, 'FINISH');
     dispatch(__completePost(id));
-    dispatch(
-      UPDATE_POST({
-        ...post.data,
-        closed: true,
-      })
-    );
-    setIsCompleteHandler(true);
+    // dispatch(
+    //   UPDATE_POST({
+    //     ...post.data,
+    //     closed: true,
+    //   })
+    // );
+    // setIsCompleteHandler(true);
   };
 
   // 참여중인 인원
@@ -189,24 +192,39 @@ const DetailPage = () => {
 
   useEffect(() => {
     if (post.data.closed === true) {
+      setIsBtnHandler(true);
       setCustom(5);
     } else if (user.id === post?.data?.memberId) {
+      setIsBtnHandler(true);
       setCustom(3);
     } else if (user.onGoing && user.onGoing !== post.data.postId) {
+      setIsBtnHandler(true);
       setCustom(1);
     } else if (user.onGoing === post.data.postId) {
+      setIsBtnHandler(true);
       setCustom(2);
     } else if (post.data.maxCapacity === post?.data.chatRoomMembers?.length) {
+      setIsBtnHandler(true);
       setCustom(4);
     } else if (user.onGoing === 0 || user.onGoing === null) {
+      setIsBtnHandler(true);
       setCustom(0);
     }
-  }, [user.id, post?.data?.memberId, user.onGoing, custom, post.data.closed]);
+    // eslint-disable-next-line
+  }, [
+    user.id,
+    post?.data?.memberId,
+    user.onGoing,
+    custom,
+    post.data.closed,
+    isBtnHandler,
+  ]);
 
   return (
     <Layout>
       {isOpen && (
         <DeleteModal
+          data={post.data}
           setIsOpen={setIsOpen}
           onDeleteHandler={onDeleteHandler}
           isDeleteHandler={isDeleteHandler}
@@ -266,7 +284,7 @@ const DetailPage = () => {
                   {post?.data?.targetAddress}
                 </DetailST.CardAddress>
               </DetailST.AddressHeader>
-              {user.id === post.data.memberId ? (
+              {user.id === post.data.memberId && !post.data.closed ? (
                 <svg
                   onClick={openModal}
                   width='28'
@@ -486,13 +504,25 @@ const DetailPage = () => {
               </svg>
               <DetailST.PartyTitle>만나는 장소</DetailST.PartyTitle>
             </DetailST.PtMapTitle>
-            <div
+            <DetailST.PreviewAddressBox
               onClick={() => {
                 setIndex(true);
               }}
             >
-              <CurrentLocation data={post.data} />
-            </div>
+              <img
+                src={SampleMap}
+                style={{ width: '100%', height: '72px' }}
+                alt=''
+              />
+              <DetailST.SelectAddressBox>
+                <DetailST.OrangeMarker
+                  src={OrangeMapMarker}
+                  style={{ width: '14px', height: '14px' }}
+                  alt=''
+                />
+                <DetailST.SelectAddress defaultValue={post.data.gatherName} />
+              </DetailST.SelectAddressBox>
+            </DetailST.PreviewAddressBox>
           </DetailST.PtMapBox>
 
           {custom === 0 ? (
@@ -525,7 +555,7 @@ const DetailPage = () => {
             <DetailST.OverLapBtn>지금은 자리가 없어요</DetailST.OverLapBtn>
           ) : null}
           {custom === 5 ? (
-            <DetailST.OverLapBtn>이미 종료된 공구입니다</DetailST.OverLapBtn>
+            <DetailST.CloseBtn>종료된 게시글입니다</DetailST.CloseBtn>
           ) : null}
         </DetailST.DetailBox>
       )}

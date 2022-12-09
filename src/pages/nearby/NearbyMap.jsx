@@ -8,6 +8,7 @@ import Card from '../../components/elements/card/Card';
 import MyMarker from '../../imgs/upload/Map_LocationMark.png';
 import yellowMarker from '../../imgs/upload/Yellow_Marker.png';
 import orangeMarker from '../../imgs/upload/Orange_Map_Marker.png';
+import styled from 'styled-components';
 
 export default function NearbyMap({
   user,
@@ -19,6 +20,8 @@ export default function NearbyMap({
   searchData,
   setSearchParty,
 }) {
+  // console.log('searchData', searchData?.length);
+  // console.log('searchParty', searchParty);
   const [kakaoMap, setKakaoMap] = useState(null);
 
   let totalData = [];
@@ -168,7 +171,7 @@ export default function NearbyMap({
             strokeColor: '',
             strokeOpacity: 0.8,
             strokeStyle: 'dashed',
-            fillColor: '#00EEEE',
+            fillColor: '#79AFFF',
             fillOpacity: 0.2,
           });
 
@@ -200,7 +203,7 @@ export default function NearbyMap({
 
                 // 현재위치와 마커 사이의 거리 측정
                 const dist = line.getLength();
-
+                // console.log(dist.toFixed(0));
                 if (dist < radius) {
                   // 해당 marker는 원 안에 있는 것
                   marker.setMap(kakaoMap);
@@ -229,6 +232,10 @@ export default function NearbyMap({
                   console.log(el);
                   setMarkerInfo(el);
                 });
+
+                kakao.maps.event.addListener(kakaoMap, 'click', function () {
+                  setSlotManager(false);
+                });
               }
             });
           });
@@ -241,7 +248,7 @@ export default function NearbyMap({
     return () => {
       clearTimeout(timer);
     };
-  }, [kakaoMap, data?.length]);
+  }, [kakaoMap, data?.length, container]);
 
   useEffect(() => {
     if (kakaoMap === null) {
@@ -283,8 +290,10 @@ export default function NearbyMap({
       style={{
         width: '100%',
         height: '100%',
-        background: 'white',
       }}
+      // onClick={() => {
+      //   setSlotManager(false);
+      // }}
     >
       <NearbyST.InputBox>
         <NearbyST.SearchImg
@@ -351,7 +360,8 @@ export default function NearbyMap({
       </NearbyST.BottomBtnBox>
 
       <NearbyST.ListBtnBox slotManager={slotManager}>
-        {searchData?.length <= 1 && searchParty === '' && user.address ? (
+        {(searchData?.length > 1 || searchParty.length === 0) &&
+        user.address ? (
           <NearbyST.VeiwAll
             onClick={() => {
               setIndex(true);

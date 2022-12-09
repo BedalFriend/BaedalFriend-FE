@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const DetailBox = styled.div`
   position: relative;
   z-index: 2;
-  padding-top: 60px;
+  /* padding-top: 60px; */
 
   width: 100%;
   height: 100vh;
@@ -12,11 +12,14 @@ export const DetailBox = styled.div`
 
 export const CardBox = styled.div`
   width: 100%;
-  height: 284px;
+  height: 344px;
+
+  padding-top: 60px;
   background-color: var(--color-white);
   border-bottom-left-radius: 24px;
   border-bottom-right-radius: 24px;
-  box-shadow: 0px 3px 10px 0px #bbbb;
+
+  box-shadow: 0px 0px 10px 0px rgba(187, 187, 187, 0.32);
 `;
 
 export const CardAddress = styled.div`
@@ -259,6 +262,29 @@ export const OverLapBtn = styled.div`
   font-weight: var(--weight-semi-bold);
 `;
 
+export const CloseBtn = styled.div`
+  position: absolute;
+  bottom: 52px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 3;
+
+  width: calc(100% - 32px);
+  min-width: 358px;
+  height: 52px;
+  border-radius: 12px;
+  margin-left: 16px;
+
+  background-color: var(--color-blur-white);
+  color: var(--color-white);
+
+  font-family: 'Pretendard';
+  font-size: var(--font-regular);
+  font-weight: var(--weight-semi-bold);
+`;
+
 export const BottomBtnBox = styled.div`
   display: flex;
   position: absolute;
@@ -314,6 +340,9 @@ export const ErrorPage = styled.div`
 export const ErrorImg = styled.img`
   position: absolute;
   top: 316px;
+
+  width: 209px;
+  height: 209px;
 `;
 export const ErrorTitle = styled.div`
   position: absolute;
@@ -324,4 +353,44 @@ export const ErrorTitle = styled.div`
   font-family: 'Pretendard';
   font-weight: var(--weight-bold);
   font-size: var(--font-small);
+`;
+
+export const PreviewAddressBox = styled.div`
+  display: flex;
+
+  width: 100%;
+  height: 72px;
+`;
+
+export const SelectAddressBox = styled.div`
+  position: absolute;
+  z-index: 3;
+
+  display: flex;
+  align-items: center;
+
+  width: calc(100% - 72px);
+  height: 40px;
+
+  border-radius: 25px;
+
+  background-color: var(--color-white);
+
+  opacity: 80%;
+
+  margin: 16px 20px 16px 20px;
+`;
+export const OrangeMarker = styled.img`
+  position: relative;
+
+  margin: 16px 13px;
+`;
+
+export const SelectAddress = styled.input`
+  position: relative;
+
+  color: var(--color-dark-grey);
+  font-size: var(--font-small);
+
+  margin: 2px 0px 0px 5px;
 `;

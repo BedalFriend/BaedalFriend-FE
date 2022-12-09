@@ -116,7 +116,7 @@ export const VeiwAll = styled.div`
   border-radius: 12px;
   z-index: 3;
 
-  font-family: 'Pretandard';
+  font-family: 'Pretendard';
   font-weight: var(--weight-bold);
   font-size: var(--font-small);
   cursor: pointer;

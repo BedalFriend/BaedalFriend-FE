@@ -39,6 +39,7 @@ export const InfoText = styled.div`
   text-align: center;
   color: var(--color-dark-grey);
   line-height: 21px;
+  font-family: 'Pretendard';
 `;
 
 export const ErrorText = styled.div`
@@ -47,4 +48,5 @@ export const ErrorText = styled.div`
   text-align: center;
   margin-top: 10px;
   color: var(--color-system-error);
+  font-family: 'Pretendard';
 `;

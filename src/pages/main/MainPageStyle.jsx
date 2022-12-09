@@ -89,7 +89,7 @@ export const CtgVac = styled.div`
 
 export const Line = styled.hr`
   margin-bottom: 44px;
-
+  width: calc(100% - 32px);
   @media screen and (min-width: 708px) {
     margin-top: 24px;
   }

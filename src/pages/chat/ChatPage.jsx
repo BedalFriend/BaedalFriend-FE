@@ -9,15 +9,12 @@ import Notice from './Notice';
 import { SocketContext } from '../../context/SocketContext';
 import { TabContext } from '../../context/TabContext';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  __exitChannel,
-  __finishChannel,
-  __getChannel,
-} from '../../redux/modules/ChatSlice';
+import { __exitChannel, __getChannel } from '../../redux/modules/ChatSlice';
 import useInput from '../../hooks/useInput';
 import { useNavigate, useParams } from 'react-router-dom';
 import SVG from '../../shared/SVG';
 import { UPDATE_USER } from '../../redux/modules/UserSlice';
+import { __completePost } from '../../redux/modules/PostSlice';
 
 export default function ChatPage() {
   const { id } = useParams();
@@ -295,9 +292,8 @@ export default function ChatPage() {
                     <ChatST.ModalBtn
                       style={{ color: 'var(--color-system-error' }}
                       onClick={() => {
-                        dispatch(__finishChannel(id));
-                        dispatch(UPDATE_USER({ ...user, onGoing: null }));
-                        navigate('/');
+                        publish(msgInput, id, 'FINISH');
+                        dispatch(__completePost(id));
                       }}
                     >
                       완료하기
