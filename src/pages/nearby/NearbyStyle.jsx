@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const NearbyBox = styled.div`
   position: relative;
-  padding-top: 60px;
+  /* padding-top: 60px; */
   width: 100%;
   height: 100vh;
 
@@ -74,7 +74,7 @@ export const CardBox = styled.div`
   position: absolute;
   z-index: 2;
 
-  bottom: 140px;
+  bottom: 200px;
 `;
 export const BottomBtnBox = styled.div`
   position: absolute;
@@ -84,7 +84,7 @@ export const BottomBtnBox = styled.div`
   /* width: calc(100% - 32px); */
   margin-left: 16px;
   z-index: 3;
-  bottom: ${(props) => (props.slotManager ? '405px' : '156px')};
+  bottom: ${(props) => (props.slotManager ? '465px' : '216px')};
 `;
 
 export const ListBtnBox = styled.div`
@@ -95,7 +95,7 @@ export const ListBtnBox = styled.div`
   width: calc(100% - 32px);
   margin-left: 16px;
   /* z-index: 3; */
-  bottom: ${(props) => (props.slotManager ? '405px' : '156px')};
+  bottom: ${(props) => (props.slotManager ? '465px' : '216px')};
 `;
 
 export const SearchBtn = styled.svg`
@@ -125,6 +125,7 @@ export const VeiwAll = styled.div`
 //
 
 export const SearchResult = styled.div`
+  margin-top: 60px;
   position: absolute;
   width: calc(100% - 32px);
   height: calc(100% - 60px);

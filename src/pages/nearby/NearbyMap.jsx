@@ -289,6 +289,7 @@ export default function NearbyMap({
       style={{
         width: '100%',
         height: '100%',
+        marginTop: '60px',
       }}
       // onClick={() => {
       //   setSlotManager(false);

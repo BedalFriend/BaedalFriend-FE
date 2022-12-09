@@ -9,6 +9,7 @@ import {
   __getThunk,
 } from '../../redux/modules/PostSlice';
 import NearbyList from './NearbyList';
+import NearbyModal from './NearbyModal';
 
 const Nearby = () => {
   const { setTab } = useContext(TabContext);
@@ -48,6 +49,16 @@ const Nearby = () => {
       }
     });
 
+  //정렬 모달창
+  const [isOpen, setIsOpen] = useState(false);
+
+  //정렬 모달 선택
+  const [select, setSelect] = useState('마감 임박 순');
+
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+
   useEffect(() => {
     dispatch(__getThunk());
     // dispatch(__getEntireCateThunk(query));
@@ -75,12 +86,22 @@ const Nearby = () => {
           }}
         />
       )}
+
+      {isOpen && (
+        <NearbyModal
+          closeModal={closeModal}
+          setSelect={setSelect}
+          select={select}
+        />
+      )}
       <NearbyST.NearbyBox>
         {index ? (
           <NearbyList
             setTab={setTab}
             searchParty={searchParty}
             filterSearchData={filterSearchData}
+            setIsOpen={setIsOpen}
+            select={select}
           />
         ) : (
           <NearbyMap
