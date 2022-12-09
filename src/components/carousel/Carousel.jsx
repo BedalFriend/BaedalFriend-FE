@@ -182,41 +182,41 @@ export default function Carousel() {
   };
 
   //자동 슬라이드
-  // useEffect(() => {
-  //   if ((isClick&&isTouch)===false) {
-  //     const autoPage = setTimeout(() => {
-  //     //반응형 애니메이션
-  //     if(windowWidth < 400) setX(-165);
-  //     else if(windowWidth < 425) setX(-155);
-  //     else if(windowWidth < 450) setX(-147);
-  //     else if(windowWidth < 475) setX(-137);
-  //     else if(windowWidth < 500) setX(-130);
-  //     else if(windowWidth < 525) setX(-123);
-  //     else if(windowWidth < 550) setX(-116);
-  //     else if(windowWidth < 575) setX(-111);
-  //     else if(windowWidth < 600) setX(-107);
-  //     else if(windowWidth < 625) setX(-100);
-  //     else if(windowWidth < 650) setX(-99);
-  //     else if(windowWidth < 675) setX(-94);
-  //     else if(windowWidth < 700) setX(-92);
-  //     else if(windowWidth < 725) setX(-89);
-  //     else if(windowWidth < 750) setX(-86);
-  //     else if(windowWidth < 764) setX(-84);
-  //     else setX(-82);
+  useEffect(() => {
+    if ((isClick&&isTouch)===false) {
+      const autoPage = setTimeout(() => {
+      //반응형 애니메이션
+      if(windowWidth < 400) setX(-165);
+      else if(windowWidth < 425) setX(-155);
+      else if(windowWidth < 450) setX(-147);
+      else if(windowWidth < 475) setX(-137);
+      else if(windowWidth < 500) setX(-130);
+      else if(windowWidth < 525) setX(-123);
+      else if(windowWidth < 550) setX(-116);
+      else if(windowWidth < 575) setX(-111);
+      else if(windowWidth < 600) setX(-107);
+      else if(windowWidth < 625) setX(-100);
+      else if(windowWidth < 650) setX(-99);
+      else if(windowWidth < 675) setX(-94);
+      else if(windowWidth < 700) setX(-92);
+      else if(windowWidth < 725) setX(-89);
+      else if(windowWidth < 750) setX(-86);
+      else if(windowWidth < 764) setX(-84);
+      else setX(-82);
 
-  //     setIsSlide(true);
-  //     setTimeout(() => {
-  //       setIndex((prev) => (prev === (BannerImg.length-1) ? 0 : prev + 1));
-  //       setX(0);
-  //       setIsSlide(false);
-  //     }, 500);
-  //     }, 4000);
+      setIsSlide(true);
+      setTimeout(() => {
+        setIndex((prev) => (prev === (BannerImg.length-1) ? 0 : prev + 1));
+        setX(0);
+        setIsSlide(false);
+      }, 500);
+      }, 4000);
 
-  //     return () => {
-  //       clearTimeout(autoPage);
-  //     };
-  //   }
-  // }, [index, isClick, isTouch]);
+      return () => {
+        clearTimeout(autoPage);
+      };
+    }
+  }, [index, isClick, isTouch]);
 
   return (
     <CaroST.Banner>
