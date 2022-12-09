@@ -33,7 +33,7 @@
   "orientation": "portrait",
   "theme_color": "#FF5B15",
   "background_color": "#FF5B15",
-  "description": "당신의 주변에서 배달프렌드를 구해보세요!",
+  "description": "배달 공동 주문 플랫폼 배달프렌드",
   "lang": "ko",
   "dir": "ltr",
   "categories": ["food", "social"]
