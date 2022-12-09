@@ -26,9 +26,7 @@ export default function MainBannerPage1() {
       onClick={() => {
         window.location.replace("/nearby")
     }}>
-      <CaroST.DesContent>
         내 근처의 배프 만나러 가기
-      </CaroST.DesContent>
     </CaroST.MiniBox>
   </>)
 }
