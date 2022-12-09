@@ -293,6 +293,9 @@ export const postsSlice = createSlice({
     UPDATE_POST: (state, action) => {
       state.post.data = action.payload;
     },
+    UPDATE_KEYWORDS: (state, action) => {
+      state.keyword.data.data = action.payload;
+    }
   },
   extraReducers: {
     //get
@@ -492,7 +495,9 @@ export const postsSlice = createSlice({
 
     //get Recent Word
     [__getRecentWord.fulfilled]: (state, action) => {
-      state.keywords = action.payload.data;
+      state.keyword.data = action.payload;
+      console.log(action.payload);
+      console.log(state.keyword.data);
     },
 
     //get My Post
@@ -510,5 +515,5 @@ export const postsSlice = createSlice({
   },
 });
 
-export const { CLEAR_POSTS, UPDATE_POST } = postsSlice.actions;
+export const { CLEAR_POSTS, UPDATE_POST, UPDATE_KEYWORDS } = postsSlice.actions;
 export default postsSlice.reducer;

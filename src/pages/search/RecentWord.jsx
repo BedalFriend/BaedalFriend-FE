@@ -1,14 +1,29 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as RecentST from './RecentWordStyle';
-import { __deleteRecentWord } from '../../redux/modules/PostSlice'
+import {
+  UPDATE_KEYWORDS,
+  __deleteRecentWord,
+  __getRecentWord
+ } from '../../redux/modules/PostSlice'
 
 export default function RecentWord({keyword, id}) {
 
   const dispatch = useDispatch();
+  const keywords = useSelector((state) => state.post.keyword);
 
   const onDeleteHandler = () => {
+    // const tempArr = [...keywords.data.data];
+    // const target = tempArr.findIndex((item) => {
+    //   console.log(item.keyword, keyword);
+    //   return item.keyword === keyword});
+    // console.log(target);
+    // tempArr.splice(target, 1);
+    // dispatch(UPDATE_KEYWORDS([...tempArr]));
     dispatch(__deleteRecentWord(id));
+    setTimeout(() => {
+      dispatch(__getRecentWord());
+    }, 300)
   };
 
   return (
