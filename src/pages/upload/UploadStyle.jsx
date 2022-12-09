@@ -79,6 +79,8 @@ export const LongInputBox = styled.div`
 `;
 
 export const LongInput = styled.input`
+  width: calc(100% - 32px);
+  font-family: 'Pretendard';
   font-size: var(--font-small);
   color: var(--color-dark-grey);
 `;
@@ -125,9 +127,10 @@ export const ShortInputBox = styled.div`
 `;
 
 export const ShortInput = styled.input`
+  font-family: 'Pretendard';
   font-size: var(--font-small);
   color: var(--color-light-black);
-  width: 30px;
+  width: 35px;
   margin-left: 20px;
   text-align: right;
 

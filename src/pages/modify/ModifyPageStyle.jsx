@@ -142,7 +142,7 @@ export const ShortInputBox = styled.div`
 export const ShortInput = styled.input`
   font-size: var(--font-small);
   color: var(--color-light-black);
-  width: 30px;
+  width: 35px;
   margin-left: 20px;
   text-align: right;
 
