@@ -187,7 +187,7 @@ const DetailPage = () => {
 
   useEffect(() => {
     dispatch(__getDetailThunk(id));
-    dispatch(__getThunk());
+    // dispatch(__getThunk());
   }, []);
 
   useEffect(() => {
