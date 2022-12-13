@@ -202,6 +202,7 @@ export default function SearchPage() {
             type='search'
             placeholder='검색어를 입력해주세요.'
             onChange={searchHandler}
+            value={searchTerm}
           />
         </SearchST.Search>
 
