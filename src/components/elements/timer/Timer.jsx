@@ -8,6 +8,11 @@ function Timer({ limit }) {
   const [isDone, setIsDone] = useState(false);
 
   useEffect(() => {
+    setMinutes(parseInt(timeLimit / 60));
+    setSeconds(parseInt(timeLimit % 60));
+  }, [timeLimit]);
+
+  useEffect(() => {
     const countdown = setInterval(() => {
       if (seconds > 0) setSeconds(seconds - 1);
       if (seconds === 0) {
