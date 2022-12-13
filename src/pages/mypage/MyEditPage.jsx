@@ -82,9 +82,7 @@ export default function MyEditPage() {
   //수정사항 적용하기
   const onSubmitHandler = () => {
     const formData = new FormData();
-
-    console.log("profilePost?.imgUrl", profilePost?.imgUrl);
-
+    
     if(profilePost?.imgUrl === null || profilePost?.imgUrl === undefined) {
       formData.append('imgUrl', profileURL);
     } else if (profilePost?.imgUrl === "basic" && profilePost?.nickname) {
@@ -139,8 +137,8 @@ export default function MyEditPage() {
       );
     }
 
-    for (const keyValue of formData)
-    console.log(keyValue);
+    // for (const keyValue of formData)
+    // console.log(keyValue);
 
     axios
       .patch(`https://sparta-bds.shop/v1/mypages/edit/${userId}`, formData,
@@ -152,8 +150,6 @@ export default function MyEditPage() {
         if (res.data.success) {
           window.location.replace("/mypage")
         }
-        for (const keyValue of formData)
-        console.log(keyValue);
       });
   }
 

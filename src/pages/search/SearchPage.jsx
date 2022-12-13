@@ -106,40 +106,40 @@ export default function SearchPage() {
   let query = '';
 
   const queryHandler = () => {
-    const keyword = searchTerm.replace(/ /g,"");
+    const Term = searchTerm.replace(/ /g,"");
 
     if (select === '마감 임박 순') {
       if (fullAddress === null || fullAddress === undefined) {
-        query = `sortBy=limit_time&isAsc=false&keyword=${keyword}`;
+        query = `sortBy=limit_time&isAsc=false&keyword=${Term}`;
       } else {
-        query = `sortBy=limit_time&isAsc=false&region=${address[0]}&keyword=${keyword}`;
+        query = `sortBy=limit_time&isAsc=false&region=${address[0]}&keyword=${Term}`;
       }
     } else if (select === '신규 등록 순') {
       if (fullAddress === null || fullAddress === undefined) {
-        query = `sortBy=created_at&isAsc=false&keyword=${keyword}`;
+        query = `sortBy=created_at&isAsc=false&keyword=${Term}`;
       } else {
-        query = `sortBy=created_at&isAsc=false&region=${address[0]}&keyword=${keyword}`;
+        query = `sortBy=created_at&isAsc=false&region=${address[0]}&keyword=${Term}`;
       }
     } else if (select === '참여자 많은 순') {
       if (fullAddress === null || fullAddress === undefined) {
-        query = `sortBy=participant_number&isAsc=false&keyword=${keyword}`;
+        query = `sortBy=participant_number&isAsc=false&keyword=${Term}`;
       } else {
-        query = `sortBy=participant_number&isAsc=false&region=${address[0]}&keyword=${keyword}`;
+        query = `sortBy=participant_number&isAsc=false&region=${address[0]}&keyword=${Term}`;
       }
     } else if (select === '참여자 적은 순') {
       if (fullAddress === null || fullAddress === undefined) {
-        query = `sortBy=participant_number&isAsc=true&keyword=${keyword}`;
+        query = `sortBy=participant_number&isAsc=true&keyword=${Term}`;
       } else {
-        query = `sortBy=participant_number&isAsc=true&region=${address[0]}&keyword=${keyword}`;
+        query = `sortBy=participant_number&isAsc=true&region=${address[0]}&keyword=${Term}`;
       }
     } else if (select === '매너 사용자 우선 순') {
-      query = `keyword=${keyword}`;
+      query = `keyword=${Term}`;
     }
   };
 
   useEffect(() => { 
     setSearched(false);
-    
+    setIsOpen(false);
     const searchHandler = setTimeout(async () => {
       queryHandler();
       if (searchTerm === '') {
@@ -225,6 +225,7 @@ export default function SearchPage() {
                       key={index}
                       id={keyword.id}
                       keyword={keyword.keyword}
+                      setSearchTerm={setSearchTerm}
                     />
                   )
                 })}

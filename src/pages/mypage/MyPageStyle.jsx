@@ -21,7 +21,6 @@ export const MainBox = styled.div`
   margin-top: 92px;
 
   align-items: center;
-  justify-content: center;
   
   border-radius: 12px;
   box-shadow: 0px 0px 8px rgba(187, 187, 187, 0.32);
@@ -55,10 +54,10 @@ export const Profile = styled.div`
 
 export const ContentBox = styled.div`
   position: relative;
-  width: calc(100% - 48px);
-  
   display: flex;
+  align-items: center;
   justify-content: space-between;
+  width: calc(100% - 48px);
   margin: auto;
   gap: 16px;
 `
@@ -72,7 +71,6 @@ export const Content = styled.div`
   width: 100%;
   height: 93px;
   margin-top: 20px;
-  gap: 12px;
   padding: 12px;
 
   border-radius: 12px;
@@ -108,7 +106,7 @@ export const VerticalBox = styled.div`
 
   width: fit-content;
   height: fit-content;
-  margin-left: 8px;
+  margin-left: 12px;
 `
 
 export const NickText = styled.div`
