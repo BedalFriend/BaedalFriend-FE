@@ -496,8 +496,8 @@ export const postsSlice = createSlice({
     //get Recent Word
     [__getRecentWord.fulfilled]: (state, action) => {
       state.keyword.data = action.payload;
-      console.log(action.payload);
-      console.log(state.keyword.data);
+      // console.log(action.payload);
+      // console.log(state.keyword.data);
     },
 
     //get My Post
