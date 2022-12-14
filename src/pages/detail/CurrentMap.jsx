@@ -7,9 +7,12 @@ import * as CtMapST from './CurrentMapStyle';
 import orangeMarker from '../../imgs/upload/Orange_Map_Marker.png';
 import CurrentMark from '../../imgs/upload/Map_MyLocation.png';
 import MyMarker from '../../imgs/upload/Map_LocationMark.png';
+import ErrorModal from '../../components/modal/ErrorModal';
 
 const CurrentMap = ({ data, setIndex }) => {
   const container = useRef();
+  const [kakaoMap, setKakaoMap] = useState(null);
+  const [errorModal, setErrorModal] = useState(false);
 
   //선택한 위치 정보
   const [markerInfo, setMarkerInfo] = useState('');
@@ -29,7 +32,7 @@ const CurrentMap = ({ data, setIndex }) => {
           });
         },
         (error) => {
-          console.error(error);
+          setErrorModal(true);
         },
         {
           enableHighAccuracy: true,
@@ -58,70 +61,81 @@ const CurrentMap = ({ data, setIndex }) => {
         // 지도를 생성한다
         const map = new kakao.maps.Map(container.current, options);
 
-        // 주소-좌표 변환 객체를 생성합니다.
-        const geocoder = new kakao.maps.services.Geocoder();
-
-        if (data.gatherAddress === '') {
-          return;
-        }
-
-        geocoder.addressSearch(data.gatherAddress, function (result, status) {
-          // 정상적으로 검색이 완료됐으면
-          if (status === kakao.maps.services.Status.OK) {
-            const coord = new kakao.maps.LatLng(result[0].y, result[0].x);
-
-            const checkMarkerImage = new kakao.maps.MarkerImage(
-              orangeMarker,
-              new kakao.maps.Size(36, 36),
-              new kakao.maps.Point(13, 34)
-            );
-
-            // 마커를 생성하고 지도에 표시
-            const marker = new kakao.maps.Marker({
-              map: map,
-              position: new kakao.maps.LatLng(coord.Ma, coord.La),
-              image: checkMarkerImage,
-            });
-
-            // 지도 이동(기존 위치와 가깝다면 부드럽게 이동)
-            map.panTo(coord);
-
-            setMarkerInfo(data);
-          }
-        });
-
-        // 현재위치 좌표 변환
-        if (myLocation.latitude || myLocation.longitude) {
-          const currentMarkerImage = new kakao.maps.MarkerImage(
-            MyMarker,
-            new kakao.maps.Size(32, 32),
-            new kakao.maps.Point(13, 34)
-          );
-          // 현재 위치 받아오기
-          const currentPos = new kakao.maps.LatLng(
-            myLocation.latitude,
-            myLocation.longitude
-          );
-
-          // 지도 이동(기존 위치와 가깝다면 부드럽게 이동)
-          map.panTo(currentPos);
-
-          // 마커 생성
-          const CurrentMarker = new kakao.maps.Marker({
-            position: currentPos,
-            image: currentMarkerImage,
-          });
-
-          // 기존에 마커가 있다면 제거
-          CurrentMarker.setMap(null);
-          CurrentMarker.setMap(map);
-        }
+        setKakaoMap(map);
       });
     };
-  }, [data.gatherAddress, myLocation, container]);
+  }, [container]);
+
+  useEffect(() => {
+    if (kakaoMap === null) {
+      return;
+    }
+
+    if (data.gatherAddress === '') {
+      return;
+    }
+
+    // 주소-좌표 변환 객체를 생성합니다.
+    const geocoder = new kakao.maps.services.Geocoder();
+
+    geocoder.addressSearch(data.gatherAddress, function (result, status) {
+      // 정상적으로 검색이 완료됐으면
+      if (status === kakao.maps.services.Status.OK) {
+        const coord = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+        const checkMarkerImage = new kakao.maps.MarkerImage(
+          orangeMarker,
+          new kakao.maps.Size(36, 36),
+          new kakao.maps.Point(13, 34)
+        );
+
+        // 마커를 생성하고 지도에 표시
+        const marker = new kakao.maps.Marker({
+          map: kakaoMap,
+          position: new kakao.maps.LatLng(coord.Ma, coord.La),
+          image: checkMarkerImage,
+        });
+
+        // 지도 이동(기존 위치와 가깝다면 부드럽게 이동)
+        kakaoMap.panTo(coord);
+
+        setMarkerInfo(data);
+      }
+    });
+  }, [kakaoMap]);
+
+  useEffect(() => {
+    // 현재위치 좌표 변환
+    if (myLocation.latitude || myLocation.longitude) {
+      const currentMarkerImage = new kakao.maps.MarkerImage(
+        MyMarker,
+        new kakao.maps.Size(32, 32),
+        new kakao.maps.Point(13, 34)
+      );
+      // 현재 위치 받아오기
+      const currentPos = new kakao.maps.LatLng(
+        myLocation.latitude,
+        myLocation.longitude
+      );
+
+      // 지도 이동(기존 위치와 가깝다면 부드럽게 이동)
+      kakaoMap.panTo(currentPos);
+
+      // 마커 생성
+      const CurrentMarker = new kakao.maps.Marker({
+        position: currentPos,
+        image: currentMarkerImage,
+      });
+
+      // 기존에 마커가 있다면 제거
+      CurrentMarker.setMap(null);
+      CurrentMarker.setMap(kakaoMap);
+    }
+  }, [kakaoMap, myLocation]);
 
   return (
     <CtMapST.NearbyBox>
+      {errorModal ? <ErrorModal setErrorModal={setErrorModal} /> : null}
       <CtMapST.MapBox
         id='container'
         ref={container}
@@ -130,7 +144,7 @@ const CurrentMap = ({ data, setIndex }) => {
           height: '100vh',
         }}
       >
-        <div>
+        <CtMapST.BackBtnBox>
           <CtMapST.BackBtn
             onClick={() => {
               setIndex(false);
@@ -148,7 +162,7 @@ const CurrentMap = ({ data, setIndex }) => {
               />
             </g>
           </CtMapST.BackBtn>
-        </div>
+        </CtMapST.BackBtnBox>
         <CtMapST.MarkerInfoBox>
           <CtMapST.InfoTitleBox>
             <svg

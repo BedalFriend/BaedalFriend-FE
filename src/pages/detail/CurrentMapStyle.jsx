@@ -62,10 +62,19 @@ export const CurrentBox = styled.div`
     cursor: pointer;
   }
 `;
+export const BackBtnBox = styled.div`
+  position: absolute;
+  z-index: 999;
+
+  width: 100%;
+  height: 100px;
+
+  background-color: rgba(255, 255, 255, 0.6);
+`;
 
 export const BackBtn = styled.svg`
   position: absolute;
   z-index: 900;
   margin-left: 8px;
-  top: 69px;
+  top: 52px;
 `;

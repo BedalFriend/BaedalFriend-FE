@@ -8,12 +8,14 @@ import yellowMarker from '../../../imgs/upload/Yellow_Marker.png';
 import orangeMarker from '../../../imgs/upload/Orange_Map_Marker.png';
 import MyMarker from '../../../imgs/upload/Map_LocationMark.png';
 import CurrentMark from '../../../imgs/upload/Map_MyLocation.png';
+import ErrorModal from '../../../components/modal/ErrorModal';
 
 const SearchMap = ({ setIndex, data, setData, setAddressManager }) => {
   const target = document.querySelector('#Map');
 
   const container = useRef();
   const [kakaoMap, setKakaoMap] = useState(null);
+  const [errorModal, setErrorModal] = useState(false);
 
   const [place, setPlace] = useState('');
   const [markerInfo, setMarkerInfo] = useState('');
@@ -26,27 +28,27 @@ const SearchMap = ({ setIndex, data, setData, setAddressManager }) => {
 
   // 위치 가져오기 버튼 클릭시
   const getCurrentPosBtn = () => {
-    if (navigator.geolocation) {
-      // GPS를 지원하면
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setMyLocation({
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
-          });
-        },
-        (error) => {
-          console.error(error);
-        },
-        {
-          enableHighAccuracy: true,
-          maximumAge: 0,
-          timeout: Infinity,
-        }
-      );
-    } else {
-      alert('GPS를 지원하지 않습니다');
-    }
+    // GPS를 지원하면
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        setMyLocation({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+        });
+      },
+      () => {
+        navigator.permissions.query({ name: 'geolocation' }).then((res) => {
+          if (res.state === 'denied') {
+            setErrorModal(true);
+          }
+        });
+      },
+      {
+        enableHighAccuracy: true,
+        maximumAge: 0,
+        timeout: Infinity,
+      }
+    );
   };
 
   const onChange = (e) => {
@@ -204,6 +206,7 @@ const SearchMap = ({ setIndex, data, setData, setAddressManager }) => {
 
   return (
     <SearchST.SearchMapBox>
+      {errorModal ? <ErrorModal setErrorModal={setErrorModal} /> : null}
       <div
         id='container'
         ref={container}
