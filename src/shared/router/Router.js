@@ -47,7 +47,7 @@ const Router = () => {
           <Route path='/test' element={<TestPage />} />
           <Route path='/nearby' element={<NearbyPage />} />
           <Route path='/detail/:id' element={<DetailPage />} />
-          <Route path='/review' element={<ReviewPage />} />
+          <Route path='/review/:id' element={<ReviewPage />} />
           <Route path='/search' element={<SearchPage />} />
           <Route path='/category' element={<CategoryPage />} />
           <Route path='/mypage' element={<MyPage />} />

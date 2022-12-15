@@ -21,7 +21,6 @@ export const __getDetailThunk = createAsyncThunk(
       const { data } = await getInstance().get(
         `${basePath}/posts/detail/${arg}`
       );
-
       if (data.success) {
         return thunkAPI.fulfillWithValue(data.data);
       } else if (data.error.code === 'NOT_FOUND_POST') {
@@ -317,7 +316,6 @@ export const postsSlice = createSlice({
     },
     [__getDetailThunk.rejected]: (state, action) => {
       state.post.isLoading = false;
-
       state.post.error = action.payload;
     },
     [__getDetailThunk.fulfilled]: (state, action) => {

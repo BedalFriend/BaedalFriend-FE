@@ -124,8 +124,9 @@ export const VeiwAll = styled.div`
 
 export const SearchResult = styled.div`
   position: absolute;
-  background-color: white;
   padding-left: 16px;
+  background-color: white;
+
   box-shadow: 0px 0px 10px rgba(187, 187, 187, 0.32);
 `;
 
