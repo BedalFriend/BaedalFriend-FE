@@ -41,6 +41,7 @@ export default function MyEditModal({closeModal, setProfilepost, profilePost, se
         <ModalST.TopBox>
             <label htmlFor="file" style={{ cursor: 'pointer'}}>
             <ModalST.SelectText>기기에서 가져오기</ModalST.SelectText>  
+            </label>
             <input
               type="file"
               id="file"
@@ -52,7 +53,6 @@ export default function MyEditModal({closeModal, setProfilepost, profilePost, se
                 closeModal(e);
               }}
               style={{ visibility: "hidden" }}/>
-            </label>
         </ModalST.TopBox>
 
         <ModalST.BottomBox

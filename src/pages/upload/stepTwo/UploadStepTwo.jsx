@@ -467,7 +467,7 @@ const UploadStepTwo = ({
       isTextAreaFail === false &&
       nowTime.hour !== '' &&
       nowTime.minute !== '' &&
-      data.maxCapacity !== 0 &&
+      data.maxCapacity !== 1 &&
       data.gatherName !== '' &&
       data.content !== ''
     ) {

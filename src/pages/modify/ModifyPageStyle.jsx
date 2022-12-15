@@ -124,7 +124,6 @@ export const ShortInputBox = styled.div`
   background-color: var(--color-dark-white);
   border-radius: 12px;
   width: 100%;
-  max-width: 152px;
 
   height: 40px;
 
@@ -159,7 +158,7 @@ export const ShortInput = styled.input`
 export const PriceBox = styled.div`
   display: flex;
   align-items: center;
-  width: 356px;
+  width: 100%;
 
   @media screen and (min-width: 764px) {
     margin-bottom: 24px;
@@ -176,7 +175,7 @@ export const PriceInputBox = styled.div`
 
   background-color: var(--color-dark-white);
   border-radius: 12px;
-  width: 152px;
+  width: 100%;
   height: 40px;
 
   border: ${(props) =>

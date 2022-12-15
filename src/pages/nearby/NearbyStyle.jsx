@@ -84,7 +84,7 @@ export const BottomBtnBox = styled.div`
   /* width: calc(100% - 32px); */
   margin-left: 16px;
   z-index: 3;
-  bottom: ${(props) => (props.slotManager ? '405px' : '156px')};
+  bottom: ${(props) => (props.slotManager ? '401px' : '152px')};
 `;
 
 export const ListBtnBox = styled.div`
@@ -95,7 +95,7 @@ export const ListBtnBox = styled.div`
   width: calc(100% - 32px);
   margin-left: 16px;
   /* z-index: 3; */
-  bottom: ${(props) => (props.slotManager ? '405px' : '156px')};
+  bottom: ${(props) => (props.slotManager ? '408px' : '159px')};
 `;
 
 export const SearchBtn = styled.svg`

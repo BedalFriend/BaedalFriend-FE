@@ -17,9 +17,7 @@ export default function KakaoLoginPage() {
 
   const onProperCodeHandler = async () => {
     //TODO: 받은 인가코드를 서비스 서버로 보내기
-    // console.log(KAKAO_CODE);
     const response = await sendKaKaoToken(KAKAO_CODE);
-    // console.log(response);
     if (response.status) {
       setRefreshToken(response.headers.refresh_token);
       dispatch(SET_TOKEN(response.headers.authorization));

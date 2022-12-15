@@ -7,7 +7,7 @@ import {
   __getRecentWord
  } from '../../redux/modules/PostSlice'
 
-export default function RecentWord({keyword, id}) {
+export default function RecentWord({keyword, id, setSearchTerm}) {
 
   const dispatch = useDispatch();
   const keywords = useSelector((state) => state.post.keyword);
@@ -28,7 +28,7 @@ export default function RecentWord({keyword, id}) {
 
   return (
     <RecentST.Recent>
-      <RecentST.RecentBox>
+      <RecentST.RecentBox onClick={() => {setSearchTerm(keyword)}}>
         <RecentST.RecentWord>{keyword}</RecentST.RecentWord>
       </RecentST.RecentBox>
       <RecentST.Delete onClick={onDeleteHandler}>

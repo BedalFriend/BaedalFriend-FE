@@ -47,6 +47,15 @@ export const CloseSelectBox = styled.div`
   opacity: 90%;
   text-align: center;
 `;
+export const CloseGpsBox = styled.div`
+  position: relative;
+  margin-top: 12px;
+  height: 52px;
+  border-radius: 12px;
+  background-color: white;
+  opacity: 90%;
+  text-align: center;
+`;
 
 export const TopBox = styled.div`
   position: relative;
