@@ -122,9 +122,9 @@ export default function CategoryPage() {
     if (select === '마감 임박 순') {
       if (searchCate === '전체') {
         if (fullAddress === null || fullAddress === undefined) {
-          query = `keyword=&sortBy=limit_time&isAsc=false`;
+          query = `keyword=&sortBy=limit_time&isAsc=true`;
         } else {
-          query = `keyword=${address[0]}&region=${address[0]}&sortBy=limit_time&isAsc=false`;
+          query = `keyword=${address[0]}&region=${address[0]}&sortBy=limit_time&isAsc=true`;
         }
       } else {
         if (fullAddress === null || fullAddress === undefined) {

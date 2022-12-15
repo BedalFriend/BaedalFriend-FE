@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import * as ModalST from './MyEditModalStyle';
 import useOutSideClick from '../../hooks/useOutSideClick';
 import BasicPath from '../../imgs/BasicProfile.png'
+import imageCompression from 'browser-image-compression';
 
 export default function MyEditModal({closeModal, setProfilepost, profilePost, setPreviewImg, setChanged}) {
 
@@ -34,6 +35,43 @@ export default function MyEditModal({closeModal, setProfilepost, profilePost, se
     });
   };
 
+  //이미지 리사이징
+  const actionImgCompress = async (fileSrc) => {
+    const options = {
+      maxWidthOrHeight: 200,
+    }
+    try {
+      const compressedFile = await imageCompression(fileSrc, options);
+      return compressedFile;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  //이미지 디코딩
+  const onBringImg = async (e) => {
+    const compressed = await actionImgCompress(e.target.files[0]);
+
+    const reader = new FileReader();
+    reader.readAsDataURL(compressed);
+    reader.onloadend = () => {
+      const base64data = reader.result;
+      const byteString = window.atob(base64data.split(",")[1]);
+      const ab = new ArrayBuffer(byteString.length);
+      const ia = new Uint8Array(ab);
+      for (let i=0; i<byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+      }
+      const blob = new Blob([ia], {
+        type: 'image/*'
+      });
+      const file = new File([blob], "image.*");
+      setProfilepost({
+        ...profilePost,
+        imgUrl: file});
+    }
+  }
+
   return (
     <ModalST.Overlay>
       <ModalST.ModalWrap ref={modalRef}>
@@ -45,11 +83,10 @@ export default function MyEditModal({closeModal, setProfilepost, profilePost, se
             <input
               type="file"
               id="file"
+              accept="image/*"
               onChange={(e) => {
                 encodeFileToBase64(e.target.files[0]);
-                setProfilepost({
-                  ...profilePost,
-                  imgUrl: e.target.files[0]});
+                onBringImg(e);
                 closeModal(e);
               }}
               style={{ visibility: "hidden" }}/>

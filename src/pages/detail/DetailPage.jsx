@@ -15,6 +15,7 @@ import {
   __increaseParticipantThunk,
   UPDATE_POST,
   __completePost,
+  __getThunk,
 } from '../../redux/modules/PostSlice';
 
 import Layout from '../../components/layout/Layout';
@@ -137,13 +138,6 @@ const DetailPage = () => {
   const onCompleteHandler = () => {
     publish('', id, 'FINISH');
     dispatch(__completePost(id));
-    // dispatch(
-    //   UPDATE_POST({
-    //     ...post.data,
-    //     closed: true,
-    //   })
-    // );
-    // setIsCompleteHandler(true);
   };
 
   // 참여중인 인원
@@ -187,6 +181,7 @@ const DetailPage = () => {
 
   useEffect(() => {
     dispatch(__getDetailThunk(id));
+    dispatch(__getThunk());
   }, []);
 
   useEffect(() => {
@@ -518,7 +513,9 @@ const DetailPage = () => {
                   style={{ width: '14px', height: '14px' }}
                   alt=''
                 />
-                <DetailST.SelectAddress defaultValue={post.data.gatherName} />
+                <DetailST.SelectAddress>
+                  {post?.data?.gatherName}
+                </DetailST.SelectAddress>
               </DetailST.SelectAddressBox>
             </DetailST.PreviewAddressBox>
           </DetailST.PtMapBox>
