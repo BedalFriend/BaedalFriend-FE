@@ -8,7 +8,7 @@ export const NearbyBox = styled.div`
 
   z-index: 0;
 
-  overflow: auto;
+  /* overflow: hidden; */
 `;
 
 export const InputBox = styled.div`
@@ -122,14 +122,11 @@ export const VeiwAll = styled.div`
   cursor: pointer;
 `;
 
-//
-
 export const SearchResult = styled.div`
   position: absolute;
-  width: calc(100% - 32px);
-  height: calc(100% - 60px);
-
-  margin-left: 16px;
+  background-color: white;
+  box-shadow: 0px 0px 10px rgba(187, 187, 187, 0.32);
+  padding-left: 16px;
 `;
 
 export const ResultTitle = styled.div`
@@ -165,7 +162,7 @@ export const ResultNomalTitle = styled.div`
 `;
 
 export const TitleBorder = styled.div`
-  width: 100%;
+  width: calc(100% - 16px);
   min-width: 358px;
   height: 4px;
   border-radius: 12px;
@@ -188,7 +185,6 @@ export const Select = styled.div`
   font-size: var(--font-small);
 `;
 export const SelectBox = styled.div`
-  box-sizing: content-box;
   display: flex;
   flex-flow: column wrap;
 `;
