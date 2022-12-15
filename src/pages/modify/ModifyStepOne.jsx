@@ -2,18 +2,15 @@ import React, { useEffect, useState } from 'react';
 
 import * as ModifyST from './ModifyPageStyle';
 
-const ModifySTepOne = ({
+export default function ModifySTepOne({
   detailData,
   data,
   setData,
   setNextStepOne,
   isChecked,
-}) => {
+}) {
   // isFail === false 일때 error 메세지 숨김
-  const [isTargetFail, setIsTargetFail] = useState(false);
-  const [isCategoryFail, setIsCategoryFail] = useState(false);
   const [isDeliveryTimeFail, setIsDeliveryTimeFail] = useState(false);
-  const [isTargetAmountFail, setIsTargetAmountFail] = useState(false);
   const [isDeliveryFeeFail, setIsDeliveryFeeFail] = useState(false);
 
   // DeliveryTime, DeliveryFee, TotalAmount Input
@@ -36,14 +33,7 @@ const ModifySTepOne = ({
     }
   }, [data.deliveryTime, isChecked]);
 
-  // TargetAmount && DeliveryFee
-  useEffect(() => {
-    if ((data.targetAmount === 0 || data.targetAmount === '') && isChecked) {
-      setIsTargetAmountFail(true);
-    } else {
-      setIsTargetAmountFail(false);
-    }
-  }, [data.targetAmount, isChecked]);
+  // DeliveryFee
 
   useEffect(() => {
     if ((data.deliveryFee === 0 || data.deliveryFee === '') && isChecked) {
@@ -57,7 +47,6 @@ const ModifySTepOne = ({
   useEffect(() => {
     if (
       isDeliveryTimeFail === false &&
-      isTargetAmountFail === false &&
       isDeliveryFeeFail === false &&
       data.deliveryTime !== '' &&
       data.targetAmount !== '' &&
@@ -70,7 +59,6 @@ const ModifySTepOne = ({
     // eslint-disable-next-line
   }, [
     isDeliveryTimeFail,
-    isTargetAmountFail,
     isDeliveryFeeFail,
     data.deliveryTime,
     data.targetAmount,
@@ -124,7 +112,7 @@ const ModifySTepOne = ({
 
             <ModifyST.BlurMenuTitle>음식점 선택</ModifyST.BlurMenuTitle>
           </ModifyST.MenuBox>
-          <ModifyST.LongInputBox isTargetFail={isTargetFail}>
+          <ModifyST.LongInputBox>
             <ModifyST.SearchSvg
               width='20'
               height='20'
@@ -167,7 +155,7 @@ const ModifySTepOne = ({
 
             <ModifyST.BlurMenuTitle>카테고리 선택</ModifyST.BlurMenuTitle>
           </ModifyST.MenuBox>
-          <ModifyST.LongInputBox isCategoryFail={isCategoryFail}>
+          <ModifyST.LongInputBox>
             <ModifyST.DropDownSvg
               width='24'
               height='24'
@@ -262,23 +250,10 @@ const ModifySTepOne = ({
               </g>
             </svg>
 
-            <ModifyST.MenuTitle>
-              목표 금액에 따른 배달료 기준
-            </ModifyST.MenuTitle>
+            <ModifyST.MenuTitle>예상되는 총 배달비</ModifyST.MenuTitle>
           </ModifyST.MenuBox>
 
           <ModifyST.PriceBox>
-            <ModifyST.PriceInputBox isTargetAmountFail={isTargetAmountFail}>
-              <ModifyST.ShortInput
-                name='targetAmount'
-                type='text'
-                placeholder='0'
-                value={data.targetAmount}
-                onChange={deliveryCheckHandler}
-              />
-              <ModifyST.InputText>만원</ModifyST.InputText>
-            </ModifyST.PriceInputBox>
-            <div style={{ marginLeft: '8px', marginRight: '16px' }}>이상</div>
             <ModifyST.PriceInputBox isDeliveryFeeFail={isDeliveryFeeFail}>
               <ModifyST.ShortInput
                 name='deliveryFee'
@@ -291,7 +266,7 @@ const ModifySTepOne = ({
             </ModifyST.PriceInputBox>
           </ModifyST.PriceBox>
 
-          {isTargetAmountFail || isDeliveryFeeFail ? (
+          {isDeliveryFeeFail ? (
             <ModifyST.ErrorMsgBox>
               <svg
                 width='14'
@@ -314,6 +289,4 @@ const ModifySTepOne = ({
       </ModifyST.StepOneBody>
     </ModifyST.StepOneBox>
   );
-};
-
-export default ModifySTepOne;
+}

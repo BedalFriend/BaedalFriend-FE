@@ -8,7 +8,7 @@ export const NearbyBox = styled.div`
 
   z-index: 0;
 
-  overflow: auto;
+  /* overflow: hidden; */
 `;
 
 export const InputBox = styled.div`
@@ -84,7 +84,7 @@ export const BottomBtnBox = styled.div`
   /* width: calc(100% - 32px); */
   margin-left: 16px;
   z-index: 3;
-  bottom: ${(props) => (props.slotManager ? '405px' : '156px')};
+  bottom: ${(props) => (props.slotManager ? '401px' : '152px')};
 `;
 
 export const ListBtnBox = styled.div`
@@ -95,7 +95,7 @@ export const ListBtnBox = styled.div`
   width: calc(100% - 32px);
   margin-left: 16px;
   /* z-index: 3; */
-  bottom: ${(props) => (props.slotManager ? '405px' : '156px')};
+  bottom: ${(props) => (props.slotManager ? '408px' : '159px')};
 `;
 
 export const SearchBtn = styled.svg`
@@ -122,14 +122,11 @@ export const VeiwAll = styled.div`
   cursor: pointer;
 `;
 
-//
-
 export const SearchResult = styled.div`
   position: absolute;
-  width: calc(100% - 32px);
-  height: calc(100% - 60px);
-
-  margin-left: 16px;
+  background-color: white;
+  padding-left: 16px;
+  box-shadow: 0px 0px 10px rgba(187, 187, 187, 0.32);
 `;
 
 export const ResultTitle = styled.div`
@@ -165,7 +162,7 @@ export const ResultNomalTitle = styled.div`
 `;
 
 export const TitleBorder = styled.div`
-  width: 100%;
+  width: calc(100% - 16px);
   min-width: 358px;
   height: 4px;
   border-radius: 12px;
@@ -188,9 +185,11 @@ export const Select = styled.div`
   font-size: var(--font-small);
 `;
 export const SelectBox = styled.div`
-  box-sizing: content-box;
+  position: relative;
+
   display: flex;
   flex-flow: column wrap;
+  width: calc(100% - 16px);
 `;
 
 export const SelectList = styled.div`

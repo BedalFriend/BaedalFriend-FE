@@ -78,7 +78,6 @@ export const CtgSection = styled.section`
   flex-flow: row wrap;
   justify-content: space-between;
   margin: 0 14px;
-  //width: calc(100% - 28px);
 `;
 
 export const CtgVac = styled.div`

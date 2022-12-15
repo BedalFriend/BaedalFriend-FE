@@ -22,8 +22,6 @@ export default function getInstance() {
 
   return axios.create({
     baseURL: process.env.REACT_APP_API_URL,
-    // timeout: 120000,
-    //withCredentials: true,
     headers,
   });
 }

@@ -14,7 +14,9 @@ import UploadStepTwo from './stepTwo/UploadStepTwo';
 import UploadStepOne from './UploadStepOne';
 import SearchMap from '../../components/searchMap/SearchMap';
 
-const Post = () => {
+export default function UploadPage() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const { setTab } = useContext(TabContext);
 
@@ -29,7 +31,7 @@ const Post = () => {
     targetAddress: '',
     category: '',
     deliveryTime: '',
-    targetAmount: '',
+    targetAmount: 0,
     participantNumber: 1,
     hits: 0,
     deliveryFee: '',
@@ -54,15 +56,11 @@ const Post = () => {
 
   //버튼 on/off
   const [nextStepOne, setNextStepOne] = useState(false);
-
   const [nextStepTwo, setNextStepTwo] = useState(false);
-
   const [isChecked, setIsChecked] = useState(false);
   const [isSecondChecked, setIsSecondChecked] = useState(false);
 
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
+  //전송 핸들러
   const onSubmitHandler = (e) => {
     e.preventDefault();
 
@@ -72,10 +70,12 @@ const Post = () => {
     });
   };
 
+  //페이지 1 빈값 체크
   const stepOneCheckHandler = (event) => {
     setIsChecked(true);
   };
 
+  //페이지 2 빈값 체크
   const stepTwoCheckHandler = (event) => {
     setIsSecondChecked(true);
   };
@@ -183,6 +183,4 @@ const Post = () => {
       </UploadST.PostBox>
     </Layout>
   );
-};
-
-export default Post;
+}

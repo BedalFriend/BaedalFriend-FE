@@ -2,19 +2,18 @@ import React, { useEffect, useState } from 'react';
 
 import * as UploadST from './UploadStyle';
 
-const UploadStepOne = ({
+export default function UploadStepOne({
   data,
   setData,
   dataHandler,
   setIndex,
   setNextStepOne,
   isChecked,
-}) => {
+}) {
   // isFail === false 일때 error 메세지 숨김
   const [isTargetFail, setIsTargetFail] = useState(false);
   const [isCategoryFail, setIsCategoryFail] = useState(false);
   const [isDeliveryTimeFail, setIsDeliveryTimeFail] = useState(false);
-  const [isTargetAmountFail, setIsTargetAmountFail] = useState(false);
   const [isDeliveryFeeFail, setIsDeliveryFeeFail] = useState(false);
 
   // DeliveryTime, DeliveryFee, TotalAmount Input
@@ -58,15 +57,7 @@ const UploadStepOne = ({
     }
   }, [data.deliveryTime, isChecked]);
 
-  // TargetAmount && DeliveryFee
-  useEffect(() => {
-    if ((data.targetAmount === 0 || data.targetAmount === '') && isChecked) {
-      setIsTargetAmountFail(true);
-    } else {
-      setIsTargetAmountFail(false);
-    }
-  }, [data.targetAmount, isChecked]);
-
+  // DeliveryFee
   useEffect(() => {
     if ((data.deliveryFee === 0 || data.deliveryFee === '') && isChecked) {
       setIsDeliveryFeeFail(true);
@@ -81,12 +72,10 @@ const UploadStepOne = ({
       isTargetFail === false &&
       isCategoryFail === false &&
       isDeliveryTimeFail === false &&
-      isTargetAmountFail === false &&
       isDeliveryFeeFail === false &&
       data.targetName !== '' &&
       data.category !== '' &&
       data.deliveryTime !== '' &&
-      data.targetAmount !== '' &&
       data.deliveryFee !== ''
     ) {
       setNextStepOne(true);
@@ -98,12 +87,12 @@ const UploadStepOne = ({
     isTargetFail,
     isCategoryFail,
     isDeliveryTimeFail,
-    isTargetAmountFail,
+
     isDeliveryFeeFail,
     data.targetName,
     data.category,
     data.deliveryTime,
-    data.targetAmount,
+
     data.deliveryFee,
   ]);
 
@@ -340,36 +329,21 @@ const UploadStepOne = ({
               </g>
             </svg>
 
-            <UploadST.MenuTitle>
-              목표 금액에 따른 배달료 기준
-            </UploadST.MenuTitle>
+            <UploadST.MenuTitle>예상되는 총 배달비</UploadST.MenuTitle>
           </UploadST.MenuBox>
 
-          <UploadST.PriceBox>
-            <UploadST.PriceInputBox isTargetAmountFail={isTargetAmountFail}>
-              <UploadST.ShortInput
-                name='targetAmount'
-                type='text'
-                placeholder='0'
-                value={data.targetAmount}
-                onChange={deliveryCheckHandler}
-              />
-              <UploadST.InputText>만원</UploadST.InputText>
-            </UploadST.PriceInputBox>
-            <div style={{ marginLeft: '8px', marginRight: '16px' }}>이상</div>
-            <UploadST.PriceInputBox isDeliveryFeeFail={isDeliveryFeeFail}>
-              <UploadST.ShortInput
-                name='deliveryFee'
-                type='text'
-                placeholder='0'
-                value={data.deliveryFee}
-                onChange={deliveryCheckHandler}
-              />
-              <UploadST.InputText>원</UploadST.InputText>
-            </UploadST.PriceInputBox>
-          </UploadST.PriceBox>
+          <UploadST.PriceInputBox isDeliveryFeeFail={isDeliveryFeeFail}>
+            <UploadST.ShortInput
+              name='deliveryFee'
+              type='text'
+              placeholder='0'
+              value={data.deliveryFee}
+              onChange={deliveryCheckHandler}
+            />
+            <UploadST.InputText>원</UploadST.InputText>
+          </UploadST.PriceInputBox>
 
-          {isTargetAmountFail || isDeliveryFeeFail ? (
+          {isDeliveryFeeFail ? (
             <UploadST.ErrorMsgBox>
               <svg
                 width='14'
@@ -392,6 +366,4 @@ const UploadStepOne = ({
       </UploadST.StepOneBody>
     </UploadST.StepOneBox>
   );
-};
-
-export default UploadStepOne;
+}

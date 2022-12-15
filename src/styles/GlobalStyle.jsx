@@ -105,12 +105,6 @@ const GlobalStyle = createGlobalStyle`
   }
 
   /* Typography */
-/* h1 {
-  font-size: var(--font-large);
-  font-weight: var(--weight-bold);
-  margin: 0px 0px;
-} */
-
 h2 {
   font-size: var(--font-large);
   font-weight: var(--weight-regular);

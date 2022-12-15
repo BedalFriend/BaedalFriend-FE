@@ -295,7 +295,7 @@ export const postsSlice = createSlice({
     },
     UPDATE_KEYWORDS: (state, action) => {
       state.keyword.data.data = action.payload;
-    }
+    },
   },
   extraReducers: {
     //get

@@ -116,7 +116,6 @@ export const ShortInputBox = styled.div`
   background-color: var(--color-dark-white);
   border-radius: 12px;
   width: 100%;
-  max-width: 152px;
 
   height: 40px;
 
@@ -164,13 +163,21 @@ export const PriceInputBox = styled.div`
 
   background-color: var(--color-dark-white);
   border-radius: 12px;
-  width: 152px;
+  width: 100%;
   height: 40px;
 
   border: ${(props) =>
     props.isTargetAmountFail || props.isDeliveryFeeFail
       ? '1px solid var(--color-system-error)'
       : null};
+
+  @media screen and (min-width: 764px) {
+    margin-bottom: 24px;
+  }
+
+  @media screen and (max-width: 764px) {
+    margin-bottom: 12px;
+  }
 `;
 
 export const TimeInputBox = styled.div`

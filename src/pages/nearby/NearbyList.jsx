@@ -4,13 +4,13 @@ import * as NearbyST from './NearbyStyle';
 
 import Card from '../../components/elements/card/Card';
 
-const NearbyList = ({
+export default function NearbyList({
   searchParty,
   filterSearchData,
   setTab,
   setIsOpen,
   select,
-}) => {
+}) {
   const openModal = () => {
     setIsOpen(true);
   };
@@ -133,6 +133,4 @@ const NearbyList = ({
       </NearbyST.SelectBox>
     </NearbyST.SearchResult>
   );
-};
-
-export default NearbyList;
+}

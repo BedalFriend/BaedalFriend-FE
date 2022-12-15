@@ -3,7 +3,7 @@ import React from 'react';
 import * as MainST from '../main/MainPageStyle';
 import * as UploadST from './UploadStyle';
 
-const UploadCategory = ({ data, setData, setIndex }) => {
+export default function UploadCategory({ data, setData, setIndex }) {
   return (
     <div>
       <UploadST.CtgTitle>카테고리 선택</UploadST.CtgTitle>
@@ -353,6 +353,4 @@ const UploadCategory = ({ data, setData, setIndex }) => {
       </MainST.CtgSection>
     </div>
   );
-};
-
-export default UploadCategory;
+}

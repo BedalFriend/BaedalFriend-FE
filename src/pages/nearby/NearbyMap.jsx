@@ -18,17 +18,14 @@ export default function NearbyMap({
   setSearchData,
   searchData,
   setSearchParty,
+  setErrorModal,
 }) {
-  // console.log('searchData', searchData?.length);
-  // console.log('searchParty', searchParty);
+  const container = useRef();
+  const target = document.querySelector('#Map');
   const [kakaoMap, setKakaoMap] = useState(null);
 
   let totalData = [];
 
-  const container = useRef();
-  const target = document.querySelector('#Map');
-
-  //내가 선택한 마커 저장소
   const [markerInfo, setMarkerInfo] = useState('');
   const [slotManager, setSlotManager] = useState(false);
   const [myLocation, setMyLocation] = useState('');
@@ -44,9 +41,12 @@ export default function NearbyMap({
             longitude: position.coords.longitude,
           });
         },
-        (error) => {
-          console.error(error);
-          alert(error);
+        () => {
+          navigator.permissions.query({ name: 'geolocation' }).then((res) => {
+            if (res.state === 'denied') {
+              setErrorModal(true);
+            }
+          });
         },
         {
           enableHighAccuracy: true,
@@ -75,7 +75,6 @@ export default function NearbyMap({
           };
           const map = new kakao.maps.Map(container.current, options);
 
-          //setMapCenter(center);
           setKakaoMap(map);
         } else {
           // 주소-좌표 변환 객체를 생성합니다.
@@ -86,14 +85,12 @@ export default function NearbyMap({
             // 정상적으로 검색이 완료됐으면
             if (status === kakao.maps.services.Status.OK) {
               const center = new kakao.maps.LatLng(results[0].y, results[0].x);
-              // const center = new kakao.maps.LatLng(37.50802, 127.062835);
               const options = {
                 center,
                 level: 3,
               };
               const map = new kakao.maps.Map(container.current, options);
 
-              //setMapCenter(center);
               setKakaoMap(map);
             }
           });
@@ -120,10 +117,9 @@ export default function NearbyMap({
       new kakao.maps.Size(36, 36),
       new kakao.maps.Point(13, 34)
     );
-    // save center position
+
     const center = kakaoMap.getCenter();
 
-    // restore
     kakaoMap.setCenter(center);
 
     let timer = setTimeout(() => {
@@ -188,21 +184,17 @@ export default function NearbyMap({
                   image: markerImage,
                 });
 
-                // // 모든 마커 저장소로 마커를 각각 추가해줍니다.
-                // totalMarkers.push({ coord, marker });
-
                 const center = circle.getPosition();
                 const radius = circle.getRadius();
                 const line = new kakao.maps.Polyline();
 
-                // // 마커의 위치와 원의 중심을 경로로 하는 폴리라인 설정
-                // totalMarkers.forEach(function (marker) {
-                var path = [coord, center];
+                // 마커의 위치와 원의 중심을 경로로 하는 폴리라인 설정
+                const path = [coord, center];
                 line.setPath(path);
 
                 // 현재위치와 마커 사이의 거리 측정
                 const dist = line.getLength();
-                // console.log(dist.toFixed(0));
+
                 if (dist < radius) {
                   // 해당 marker는 원 안에 있는 것
                   marker.setMap(kakaoMap);
@@ -216,23 +208,22 @@ export default function NearbyMap({
                   // 클릭된 마커가 없고, click 마커가 클릭된 마커가 아니면
                   // 마커의 이미지를 클릭 이미지로 변경합니다
                   if (!selectedMarker || selectedMarker !== marker) {
-                    // 클릭된 마커 객체가 null이 아니면
-                    // 클릭된 마커의 이미지를 기본 이미지로 변경하고
                     !!selectedMarker && selectedMarker.setImage(markerImage);
-
-                    // 현재 클릭된 마커의 이미지는 클릭 이미지로 변경합니다
                     marker.setImage(checkMarkerImage);
+                    selectedMarker = marker;
+                    setMarkerInfo(el);
+                    setSlotManager(true);
+                  } else if (selectedMarker === marker) {
+                    marker.setImage(markerImage);
+                    selectedMarker = null;
+                    setSlotManager(false);
                   }
-
-                  // 클릭된 마커를 현재 클릭된 마커 객체로 설정합니다
-                  selectedMarker = marker;
-
-                  setSlotManager(true);
-                  // console.log(el);
-                  setMarkerInfo(el);
                 });
 
                 kakao.maps.event.addListener(kakaoMap, 'click', function () {
+                  //지도 클릭시 마커 해제
+                  marker.setImage(markerImage);
+                  selectedMarker = null;
                   setSlotManager(false);
                 });
               }
