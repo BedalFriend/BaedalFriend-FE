@@ -10,7 +10,7 @@ import {
 export default function RecentWord({keyword, id, setSearchTerm}) {
 
   const dispatch = useDispatch();
-  const keywords = useSelector((state) => state.post.keyword);
+  //const keywords = useSelector((state) => state.post.keyword);
 
   const onDeleteHandler = () => {
     // const tempArr = [...keywords.data.data];

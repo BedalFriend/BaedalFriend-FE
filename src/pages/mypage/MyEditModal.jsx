@@ -77,19 +77,19 @@ export default function MyEditModal({closeModal, setProfilepost, profilePost, se
       <ModalST.ModalWrap ref={modalRef}>
 
         <ModalST.TopBox>
+          <input
+            type="file"
+            id="file"
+            accept="image/*"
+            onChange={(e) => {
+              encodeFileToBase64(e.target.files[0]);
+              onBringImg(e);
+              closeModal(e);
+            }}
+            style={{ visibility: "hidden" }}/>
             <label htmlFor="file" style={{ cursor: 'pointer'}}>
-            <ModalST.SelectText>기기에서 가져오기</ModalST.SelectText>  
+            <ModalST.TopText>기기에서 가져오기</ModalST.TopText>  
             </label>
-            <input
-              type="file"
-              id="file"
-              accept="image/*"
-              onChange={(e) => {
-                encodeFileToBase64(e.target.files[0]);
-                onBringImg(e);
-                closeModal(e);
-              }}
-              style={{ visibility: "hidden" }}/>
         </ModalST.TopBox>
 
         <ModalST.BottomBox
@@ -101,7 +101,7 @@ export default function MyEditModal({closeModal, setProfilepost, profilePost, se
             setChanged(true);
             closeModal(e);}}
             >
-            <ModalST.SelectText>기본 이미지로 변경</ModalST.SelectText>
+            <ModalST.BottomText>기본 이미지로 변경</ModalST.BottomText>
         </ModalST.BottomBox>    
 
       </ModalST.ModalWrap>

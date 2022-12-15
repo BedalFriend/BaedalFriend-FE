@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import Layout from '../../components/layout/Layout';
 import { TabContext } from '../../context/TabContext';
 import { __getDetailThunk } from '../../redux/modules/PostSlice';
-import { __getReviewThunk } from '../../redux/modules/ReviewSlice';
 
 const ReviewPage = () => {
   const { setTab } = useContext(TabContext);
