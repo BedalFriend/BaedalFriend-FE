@@ -2,15 +2,15 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 
-import * as SearchST from './SearchMapStyle';
+import ErrorModal from '../../../../components/modal/ErrorModal';
 
+import * as SearchST from './SearchMapStyle';
 import yellowMarker from '../../../../imgs/upload/Yellow_Marker.png';
 import orangeMarker from '../../../../imgs/upload/Orange_Map_Marker.png';
 import MyMarker from '../../../../imgs/upload/Map_LocationMark.png';
 import CurrentMark from '../../../../imgs/upload/Map_MyLocation.png';
-import ErrorModal from '../../../../components/modal/ErrorModal';
 
-const SearchMap = ({ setIndex, data, setData }) => {
+export default function SearchMap({ setIndex, data, setData }) {
   const target = document.querySelector('#Map');
 
   const container = useRef();
@@ -338,6 +338,4 @@ const SearchMap = ({ setIndex, data, setData }) => {
       </div>
     </SearchST.SearchMapBox>
   );
-};
-
-export default SearchMap;
+}

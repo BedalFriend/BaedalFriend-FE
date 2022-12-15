@@ -10,21 +10,22 @@ import MyMarker from '../../../imgs/upload/Map_LocationMark.png';
 import CurrentMark from '../../../imgs/upload/Map_MyLocation.png';
 import ErrorModal from '../../../components/modal/ErrorModal';
 
-const SearchMap = ({ setIndex, data, setData, setAddressManager }) => {
-  const target = document.querySelector('#Map');
-
+export default function SearchMap({
+  setIndex,
+  data,
+  setData,
+  setAddressManager,
+}) {
   const container = useRef();
   const [kakaoMap, setKakaoMap] = useState(null);
+  const target = document.querySelector('#Map');
+
   const [errorModal, setErrorModal] = useState(false);
   const [hideMap, setHideMap] = useState(false);
+  const [selectMarker, setSelectMarker] = useState(false);
 
   const [place, setPlace] = useState('');
   const [markerInfo, setMarkerInfo] = useState('');
-
-  //내가 선택한 마커 저장소
-  const [selectMarker, setSelectMarker] = useState(false);
-
-  //나의 현재위치 좌표 저장소
   const [myLocation, setMyLocation] = useState('');
 
   // 위치 가져오기 버튼 클릭시
@@ -342,6 +343,4 @@ const SearchMap = ({ setIndex, data, setData, setAddressManager }) => {
       </div>
     </SearchST.SearchMapBox>
   );
-};
-
-export default SearchMap;
+}
