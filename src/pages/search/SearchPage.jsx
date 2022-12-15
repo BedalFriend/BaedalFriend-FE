@@ -110,9 +110,9 @@ export default function SearchPage() {
 
     if (select === '마감 임박 순') {
       if (fullAddress === null || fullAddress === undefined) {
-        query = `sortBy=limit_time&isAsc=false&keyword=${Term}`;
+        query = `sortBy=limit_time&isAsc=true&keyword=${Term}`;
       } else {
-        query = `sortBy=limit_time&isAsc=false&region=${address[0]}&keyword=${Term}`;
+        query = `sortBy=limit_time&isAsc=true&region=${address[0]}&keyword=${Term}`;
       }
     } else if (select === '신규 등록 순') {
       if (fullAddress === null || fullAddress === undefined) {
