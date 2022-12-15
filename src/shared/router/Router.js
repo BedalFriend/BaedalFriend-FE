@@ -4,7 +4,6 @@ import GlobalRoute from './GlobalRoute';
 import PublicRoute from './PublicRoute';
 import PrivateRoute from './PrivateRoute';
 
-import TestPage from '../../pages/TestPage';
 import KakaoLoginPage from '../../pages/KakaoLoginPage';
 import LoginPage from '../../pages/login/LoginPage';
 import SignPage from '../../pages/sign/SignPage';
@@ -44,7 +43,6 @@ const Router = () => {
 
         <Route element={<GlobalRoute />}>
           <Route path='/' element={<MainPage />} />
-          <Route path='/test' element={<TestPage />} />
           <Route path='/nearby' element={<NearbyPage />} />
           <Route path='/detail/:id' element={<DetailPage />} />
           <Route path='/review/:id' element={<ReviewPage />} />
