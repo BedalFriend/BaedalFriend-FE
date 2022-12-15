@@ -37,8 +37,7 @@ export const TopBox = styled.div`
   position: relative;
   width: 326px;
   height: 57px;
-  text-align: center;  
-  padding-top: 13px;
+  text-align: center;
 `;
 
 export const BottomBox = styled.div`
@@ -49,13 +48,20 @@ export const BottomBox = styled.div`
   padding-bottom: 13px;
 `;
 
-export const SelectText = styled.div`
+export const TopText = styled.div`
   font-size: var(--font-small);
   font-weight: var(--weight-regular);
   color: var(--color-dark-grey);
 
   position: relative;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  top: 10%;
+`;
+
+export const BottomText = styled.div`
+  font-size: var(--font-small);
+  font-weight: var(--weight-regular);
+  color: var(--color-dark-grey);
+
+  position: relative;
+  top: 35%;
 `;
