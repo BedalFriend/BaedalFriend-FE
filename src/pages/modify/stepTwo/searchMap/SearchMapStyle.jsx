@@ -138,5 +138,5 @@ export const CurrentBox = styled.div`
   position: absolute;
   z-index: 2;
   margin-left: 16px;
-  bottom: 255px;
+  bottom: ${(props) => (props.hideMap ? '255px' : '134px')};
 `;
