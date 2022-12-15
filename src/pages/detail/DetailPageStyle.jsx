@@ -392,7 +392,7 @@ export const OrangeMarker = styled.img`
   margin: 16px 13px;
 `;
 
-export const SelectAddress = styled.input`
+export const SelectAddress = styled.div`
   position: relative;
 
   color: var(--color-dark-grey);
