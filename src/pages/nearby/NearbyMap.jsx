@@ -29,7 +29,7 @@ export default function NearbyMap({
   const [markerInfo, setMarkerInfo] = useState('');
   const [slotManager, setSlotManager] = useState(false);
   const [myLocation, setMyLocation] = useState('');
-  console.log(markerInfo);
+
   // 위치 가져오기 버튼 클릭시
   const getCurrentPosBtn = () => {
     if (navigator.geolocation) {
