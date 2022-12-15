@@ -1,10 +1,24 @@
 import React, { useContext, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import Layout from '../../components/layout/Layout';
 import { TabContext } from '../../context/TabContext';
+import { __getDetailThunk } from '../../redux/modules/PostSlice';
+import { __getReviewThunk } from '../../redux/modules/ReviewSlice';
 
 const ReviewPage = () => {
   const { setTab } = useContext(TabContext);
+  const dispatch = useDispatch();
+  const { id } = useParams();
+  console.log(id);
+
+  const user = useSelector((state) => state);
+  console.log(user);
+
+  useEffect(() => {
+    dispatch(__getDetailThunk(id));
+  }, []);
 
   useEffect(() => {
     setTab('Upload');

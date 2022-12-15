@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 
 import * as ModifyST from './ModifyPageStyle';
 
-const ModifySTepOne = ({
+export default function ModifySTepOne({
   detailData,
   data,
   setData,
   setNextStepOne,
   isChecked,
-}) => {
+}) {
   // isFail === false 일때 error 메세지 숨김
   const [isDeliveryTimeFail, setIsDeliveryTimeFail] = useState(false);
   const [isDeliveryFeeFail, setIsDeliveryFeeFail] = useState(false);
@@ -289,6 +289,4 @@ const ModifySTepOne = ({
       </ModifyST.StepOneBody>
     </ModifyST.StepOneBox>
   );
-};
-
-export default ModifySTepOne;
+}

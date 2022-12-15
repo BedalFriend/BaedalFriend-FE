@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
-  UPDATE_POST,
   __getDetailThunk,
   __modifyPostThunk,
 } from '../../redux/modules/PostSlice';
@@ -16,7 +15,7 @@ import ModifySTepTwo from './stepTwo/ModifyStepTwo';
 import ModifySTepOne from './ModifyStepOne';
 import SearchPartyMap from './stepTwo/searchMap/SearchPartyMap';
 
-const Post = () => {
+export default function ModifyPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { setTab } = useContext(TabContext);
@@ -54,9 +53,7 @@ const Post = () => {
 
   //버튼 on/off
   const [nextStepOne, setNextStepOne] = useState(false);
-
   const [nextStepTwo, setNextStepTwo] = useState(false);
-
   const [isChecked, setIsChecked] = useState(false);
   const [isSecondChecked, setIsSecondChecked] = useState(false);
 
@@ -65,7 +62,6 @@ const Post = () => {
 
     dispatch(__modifyPostThunk(data)).then((res) => {
       if (res.payload.success === true) {
-        // navigate(`/detail/${id}`);
         window.location.replace(`/detail/${id}`);
       }
     });
@@ -186,6 +182,4 @@ const Post = () => {
       </ModifyST.PostBox>
     </Layout>
   );
-};
-
-export default Post;
+}
