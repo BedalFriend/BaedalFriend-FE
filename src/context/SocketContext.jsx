@@ -97,7 +97,14 @@ export function SocketProvider({ children }) {
             const channel = store.getState()?.chat?.channel;
             if (channel.data.chatRoomMembers) {
               const tempMembers = [...channel.data.chatRoomMembers];
-              tempMembers.push({ member: received.member });
+              if (
+                tempMembers.every(
+                  (item) => item.member.id !== received.member.id
+                )
+              ) {
+                tempMembers.push({ member: received.member });
+              }
+
               dispatch(
                 UPDATE_CHANNEL({
                   ...channel.data,
@@ -129,7 +136,6 @@ export function SocketProvider({ children }) {
           return;
         case 'FINISH':
           {
-            console.log('received: ', received);
             const user = store.getState()?.user;
             dispatch(UPDATE_USER({ ...user, onGoing: null }));
             if (
