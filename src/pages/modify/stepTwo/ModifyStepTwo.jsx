@@ -5,14 +5,14 @@ import { Toggle } from './toggle/Toggle';
 import * as ModifyST from '../ModifyPageStyle';
 import SampleMap from '../../../imgs/upload/SampleMap.png';
 
-const ModifySTepTwo = ({
+export default function ModifySTepTwo({
   data,
   setData,
   addressManager,
   isSecondChecked,
   setNextStepTwo,
   setIndex,
-}) => {
+}) {
   // AM PM 토글 관리
   const [toggle, setToggle] = useState(false);
 
@@ -704,6 +704,4 @@ const ModifySTepTwo = ({
       ) : null}
     </ModifyST.StepTwoBox>
   );
-};
-
-export default ModifySTepTwo;
+}

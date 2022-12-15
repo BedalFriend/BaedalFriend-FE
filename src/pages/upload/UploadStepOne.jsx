@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react';
 
 import * as UploadST from './UploadStyle';
 
-const UploadStepOne = ({
+export default function UploadStepOne({
   data,
   setData,
   dataHandler,
   setIndex,
   setNextStepOne,
   isChecked,
-}) => {
+}) {
   // isFail === false 일때 error 메세지 숨김
   const [isTargetFail, setIsTargetFail] = useState(false);
   const [isCategoryFail, setIsCategoryFail] = useState(false);
@@ -366,6 +366,4 @@ const UploadStepOne = ({
       </UploadST.StepOneBody>
     </UploadST.StepOneBox>
   );
-};
-
-export default UploadStepOne;
+}

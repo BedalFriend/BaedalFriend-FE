@@ -7,7 +7,7 @@ import * as UploadST from '../../upload/UploadStyle';
 import Select from '../../../components/select/Select';
 import SampleMap from '../../../imgs/upload/SampleMap.png';
 
-const UploadStepTwo = ({
+export default function UploadStepTwo({
   data,
   setData,
   setIndex,
@@ -22,12 +22,10 @@ const UploadStepTwo = ({
   setToggle,
   isTime,
   setIsTime,
-}) => {
+}) {
   // Select
   const optionData = [{ value: 1 }, { value: 2 }, { value: 3 }, { value: 4 }];
-
   const [currentValue, setCurrentValue] = useState(people.maxCapacity);
-
   const [showOptions, setShowOptions] = useState(false);
 
   // isFail === false 일때 error 메세지 숨김
@@ -412,8 +410,6 @@ const UploadStepTwo = ({
       }
     } else return;
   }, [nowTime.hour, isTime, nowTime.minute, currentValue, data.gatherName]);
-
-  // 에러메세지 유효성검사
 
   // MaxCapacity
   useEffect(() => {
@@ -810,6 +806,4 @@ const UploadStepTwo = ({
       ) : null}
     </UploadST.StepTwoBox>
   );
-};
-
-export default UploadStepTwo;
+}
