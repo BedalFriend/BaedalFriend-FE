@@ -77,11 +77,9 @@ export const chatSlice = createSlice({
     },
     [__getChannel.fulfilled]: (state, action) => {
       state.channel.data = action.payload.data;
-      //console.log('fullfilled', state.channel.data);
       state.channel.isLoading = false;
     },
     [__getChannel.rejected]: (state, action) => {
-      //console.log('error', action.payload);
       state.channel.isLoading = false;
       state.channel.error = action.payload;
     },

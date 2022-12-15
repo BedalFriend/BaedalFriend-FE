@@ -37,7 +37,6 @@ export function SocketProvider({ children }) {
       heartbeatOutgoing: 4000,
       onConnect: () => {
         initSub();
-        //unsubscribe();
       },
     });
 
