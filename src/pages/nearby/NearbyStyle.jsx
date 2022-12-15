@@ -125,8 +125,8 @@ export const VeiwAll = styled.div`
 export const SearchResult = styled.div`
   position: absolute;
   background-color: white;
-  box-shadow: 0px 0px 10px rgba(187, 187, 187, 0.32);
   padding-left: 16px;
+  box-shadow: 0px 0px 10px rgba(187, 187, 187, 0.32);
 `;
 
 export const ResultTitle = styled.div`
@@ -185,8 +185,11 @@ export const Select = styled.div`
   font-size: var(--font-small);
 `;
 export const SelectBox = styled.div`
+  position: relative;
+
   display: flex;
   flex-flow: column wrap;
+  width: calc(100% - 16px);
 `;
 
 export const SelectList = styled.div`
