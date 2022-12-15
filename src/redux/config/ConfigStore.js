@@ -3,6 +3,7 @@ import tokenReducer from '../modules/AuthSlice';
 import userReducer from '../modules/UserSlice';
 import postReducer from '../modules/PostSlice';
 import chatReducer from '../modules/ChatSlice';
+import ReviewSlice from '../modules/ReviewSlice';
 
 const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
     user: userReducer,
     post: postReducer,
     chat: chatReducer,
+    review: ReviewSlice,
   },
   devTools: process.env.NODE_ENV !== 'production',
 });
