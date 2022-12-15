@@ -2,6 +2,7 @@ import React from 'react';
 import * as CaroST from './CarouselStyle';
 import MainBanner1 from '../../imgs/carousel/MainBanner1.png';
 
+
 export default function MainBannerPage1() {
   return (
     <>
@@ -13,7 +14,7 @@ export default function MainBannerPage1() {
       </CaroST.TextBox>
       <CaroST.MiniBox
         onClick={() => {
-          window.location.replace('/login');
+          window.location.assign('/login');
         }}
       >
         로그인하고 내 근처 배프 만나러 가기

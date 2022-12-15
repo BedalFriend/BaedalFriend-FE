@@ -1,7 +1,6 @@
 import store from '../../redux/config/ConfigStore';
 import axios from 'axios';
 import { getCookieToken } from '../../shared/storage/Cookie';
-import { basePath } from '../../shared/api/Request';
 import { checkNickname } from '../../shared/api/Users';
 import Layout from '../../components/layout/Layout'
 
@@ -136,10 +135,8 @@ export default function MyEditPage() {
         )
       );
     }
-
     // for (const keyValue of formData)
     // console.log(keyValue);
-
     axios
       .patch(`https://sparta-bds.shop/v1/mypages/edit/${userId}`, formData,
       { headers:
