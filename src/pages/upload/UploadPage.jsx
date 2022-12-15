@@ -29,7 +29,7 @@ const Post = () => {
     targetAddress: '',
     category: '',
     deliveryTime: '',
-    targetAmount: '',
+    targetAmount: 0,
     participantNumber: 1,
     hits: 0,
     deliveryFee: '',

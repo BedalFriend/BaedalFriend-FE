@@ -84,6 +84,13 @@ export const DeliveryInfo = styled.div`
   align-items: center;
   margin-bottom: 6px;
 `;
+export const InfoBoldText = styled.div`
+  margin-left: 8px;
+  font-family: 'Pretendard';
+  font-size: var(--font-small);
+  font-weight: var(--weight-bold);
+  color: var(--color-dark-grey);
+`;
 
 export const InfoText = styled.div`
   margin-left: 8px;

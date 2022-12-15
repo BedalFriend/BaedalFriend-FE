@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { __enterChannel, __exitChannel } from '../../redux/modules/ChatSlice';
 import { UPDATE_USER } from '../../redux/modules/UserSlice';
@@ -12,25 +12,24 @@ import {
   __decreaseParticipantThunk,
   __deletePost,
   __getDetailThunk,
-  __getThunk,
   __increaseParticipantThunk,
   UPDATE_POST,
   __completePost,
 } from '../../redux/modules/PostSlice';
 
+import Layout from '../../components/layout/Layout';
+import ProfilePic from '../../components/elements/profilePic/ProfilePic';
+import Timer from '../../components/elements/timer/Timer';
 import ExitModal from './ExitModal';
 import DeleteModal from './DeleteModal';
 import CurrentMap from './CurrentMap';
-import BannerPath from '../../imgs/character/NoResultImg.png';
-import SampleMap from '../../imgs/upload/SampleMap.png';
 import CompleteModal from './CompleteModal';
 import SVG from '../../shared/SVG';
 
 import * as DetailST from './DetailPageStyle';
-import Timer from '../../components/elements/timer/Timer';
-import ProfilePic from '../../components/elements/profilePic/ProfilePic';
+import BannerPath from '../../imgs/character/NoResultImg.png';
+import SampleMap from '../../imgs/upload/SampleMap.png';
 import OrangeMapMarker from '../../imgs/upload/Orange_Map_Marker.png';
-import Layout from '../../components/layout/Layout';
 
 const DetailPage = () => {
   const { setTab } = useContext(TabContext);
@@ -43,17 +42,14 @@ const DetailPage = () => {
 
   const { id } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const refreshToken = getCookieToken();
   const { setIsDP } = useContext(AlarmContext);
 
   const user = useSelector((state) => state.user);
   let post = useSelector((state) => state.post.post);
-  const posts = useSelector((state) => state.post.posts);
-  const token = useSelector((state) => state.token.accessToken);
-  // console.log('posts', posts);
-  // console.log('post', post.data);
-  // console.log('token', token);
-  // console.log('user', user);
+
+  const [hidden, setHidden] = useState(false);
 
   //지도 화면 변환
   const [index, setIndex] = useState(false);
@@ -72,7 +68,6 @@ const DetailPage = () => {
 
   const [isDeleteHandler, setIsDeleteHandler] = useState(false);
   const [isCompleteHandler, setIsCompleteHandler] = useState(false);
-  const [isBtnHandler, setIsBtnHandler] = useState(false);
 
   const openModal = () => {
     setIsOpen(true);
@@ -97,18 +92,23 @@ const DetailPage = () => {
   // 참여 핸들러
   const onEnterHandler = () => {
     if (refreshToken) {
-      dispatch(__enterChannel(id));
-      dispatch(__increaseParticipantThunk(id));
-      dispatch(UPDATE_USER({ ...user, onGoing: post.data.postId }));
-      publish('', id, 'ENTER'); // 12.05 재명: 채팅방 입장 publish
-      const tempArr = [...post.data.chatRoomMembers];
-      tempArr.push({ member: user });
-      dispatch(
-        UPDATE_POST({
-          ...post.data,
-          chatRoomMembers: tempArr,
-        })
-      );
+      dispatch(__enterChannel(id)).then((res) => {
+        if (res.payload.success === true) {
+          dispatch(__increaseParticipantThunk(id));
+          dispatch(UPDATE_USER({ ...user, onGoing: post.data.postId }));
+          publish('', id, 'ENTER'); // 12.05 재명: 채팅방 입장 publish
+          const tempArr = [...post.data.chatRoomMembers];
+          tempArr.push({ member: user });
+          dispatch(
+            UPDATE_POST({
+              ...post.data,
+              chatRoomMembers: tempArr,
+            })
+          );
+        } else {
+          window.location.reload();
+        }
+      });
     } else {
       setIsDP(true);
     }
@@ -187,38 +187,33 @@ const DetailPage = () => {
 
   useEffect(() => {
     dispatch(__getDetailThunk(id));
-    // dispatch(__getThunk());
   }, []);
 
   useEffect(() => {
-    if (post.data.closed === true) {
-      setIsBtnHandler(true);
-      setCustom(5);
-    } else if (user.id === post?.data?.memberId) {
-      setIsBtnHandler(true);
-      setCustom(3);
-    } else if (user.onGoing && user.onGoing !== post.data.postId) {
-      setIsBtnHandler(true);
-      setCustom(1);
-    } else if (user.onGoing === post.data.postId) {
-      setIsBtnHandler(true);
-      setCustom(2);
-    } else if (post.data.maxCapacity === post?.data.chatRoomMembers?.length) {
-      setIsBtnHandler(true);
-      setCustom(4);
-    } else if (user.onGoing === 0 || user.onGoing === null) {
-      setIsBtnHandler(true);
-      setCustom(0);
-    }
+    let timer = setTimeout(() => {
+      if (post.data.closed === true) {
+        // setHidden(false);
+        setCustom(5);
+      } else if (user.id === post?.data?.memberId) {
+        setCustom(3);
+      } else if (user.onGoing && user.onGoing !== post.data.postId) {
+        setCustom(1);
+      } else if (user.onGoing === post.data.postId) {
+        setCustom(2);
+      } else if (post.data.maxCapacity === post?.data.chatRoomMembers?.length) {
+        setCustom(4);
+      } else if (user.onGoing === 0 || user.onGoing === null) {
+        setCustom(0);
+      }
+      setHidden(true);
+    }, 80);
+
+    return () => {
+      clearTimeout(timer);
+    };
+
     // eslint-disable-next-line
-  }, [
-    user.id,
-    post?.data?.memberId,
-    user.onGoing,
-    custom,
-    post.data.closed,
-    isBtnHandler,
-  ]);
+  }, [user.id, post?.data?.memberId, user.onGoing, custom, post.data.closed]);
 
   return (
     <Layout>
@@ -252,6 +247,7 @@ const DetailPage = () => {
           <DetailST.ErrorTitle>존재하지 않는 공구에요:(</DetailST.ErrorTitle>
         </DetailST.ErrorPage>
       ) : null}
+
       {index ? (
         <CurrentMap data={post.data} setIndex={setIndex} />
       ) : (
@@ -353,7 +349,7 @@ const DetailPage = () => {
                     />
                   </g>
                 </svg>
-
+                <DetailST.InfoBoldText>예상 배달 시간</DetailST.InfoBoldText>
                 <DetailST.InfoText>
                   {post?.data.deliveryTime}분 소요 예상
                 </DetailST.InfoText>
@@ -375,9 +371,9 @@ const DetailPage = () => {
                     />
                   </g>
                 </svg>
-
+                <DetailST.InfoBoldText>예상 총 배달비</DetailST.InfoBoldText>
                 <DetailST.InfoText>
-                  {post?.data.targetAmount}만원 이상 {post?.data.deliveryFee}원
+                  {post?.data.deliveryFee}원
                 </DetailST.InfoText>
               </DetailST.DeliveryInfo>
               <DetailST.DeliveryInfo>
@@ -397,6 +393,8 @@ const DetailPage = () => {
                     />
                   </g>
                 </svg>
+
+                <DetailST.InfoBoldText>신청 마감 시간</DetailST.InfoBoldText>
 
                 <DetailST.InfoText>
                   {post?.data.limitTime?.split(' ')[1].split(':')[0] > 12 ? (
@@ -525,37 +523,53 @@ const DetailPage = () => {
             </DetailST.PreviewAddressBox>
           </DetailST.PtMapBox>
 
-          {custom === 0 ? (
-            <DetailST.JoinBtn onClick={onEnterHandler}>
-              참여하기
-            </DetailST.JoinBtn>
-          ) : null}
-          {custom === 1 ? (
-            <DetailST.OverLapBtn>
-              이미 다른 공구에 참여중이에요
-            </DetailST.OverLapBtn>
-          ) : null}
-          {custom === 2 ? (
-            <DetailST.BottomBtnBox>
-              <DetailST.PartyOutBtn onClick={openExitModal}>
-                파티에서 나가기
-              </DetailST.PartyOutBtn>
-              <DetailST.CurrentStatusBtn>참여 중</DetailST.CurrentStatusBtn>
-            </DetailST.BottomBtnBox>
-          ) : null}
-          {custom === 3 ? (
-            <DetailST.BottomBtnBox>
-              <DetailST.PartyOutBtn onClick={openCompleteModal}>
-                공구 완료하기
-              </DetailST.PartyOutBtn>
-              <DetailST.CurrentStatusBtn>진행 중</DetailST.CurrentStatusBtn>
-            </DetailST.BottomBtnBox>
-          ) : null}
-          {custom === 4 ? (
-            <DetailST.OverLapBtn>지금은 자리가 없어요</DetailST.OverLapBtn>
-          ) : null}
-          {custom === 5 ? (
-            <DetailST.CloseBtn>종료된 게시글입니다</DetailST.CloseBtn>
+          {hidden ? (
+            <div>
+              {custom === 0 ? (
+                <DetailST.JoinBtn onClick={onEnterHandler}>
+                  참여하기
+                </DetailST.JoinBtn>
+              ) : null}
+              {custom === 1 ? (
+                <DetailST.OverLapBtn>
+                  이미 다른 공구에 참여중이에요
+                </DetailST.OverLapBtn>
+              ) : null}
+              {custom === 2 ? (
+                <DetailST.BottomBtnBox>
+                  <DetailST.PartyOutBtn onClick={openExitModal}>
+                    파티에서 나가기
+                  </DetailST.PartyOutBtn>
+                  <DetailST.CurrentStatusBtn
+                    onClick={() => {
+                      navigate(`/chat/${id}`);
+                    }}
+                  >
+                    채팅방 바로가기
+                  </DetailST.CurrentStatusBtn>
+                </DetailST.BottomBtnBox>
+              ) : null}
+              {custom === 3 ? (
+                <DetailST.BottomBtnBox>
+                  <DetailST.PartyOutBtn onClick={openCompleteModal}>
+                    공구 완료하기
+                  </DetailST.PartyOutBtn>
+                  <DetailST.CurrentStatusBtn
+                    onClick={() => {
+                      navigate(`/chat/${id}`);
+                    }}
+                  >
+                    채팅방 바로가기
+                  </DetailST.CurrentStatusBtn>
+                </DetailST.BottomBtnBox>
+              ) : null}
+              {custom === 4 ? (
+                <DetailST.OverLapBtn>지금은 자리가 없어요</DetailST.OverLapBtn>
+              ) : null}
+              {custom === 5 ? (
+                <DetailST.CloseBtn>종료된 게시글입니다</DetailST.CloseBtn>
+              ) : null}
+            </div>
           ) : null}
         </DetailST.DetailBox>
       )}

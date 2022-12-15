@@ -91,7 +91,7 @@ const Post = () => {
       targetAddress: detailData?.targetAddress,
       category: detailData?.category,
       deliveryTime: detailData?.deliveryTime,
-      targetAmount: detailData?.targetAmount,
+      targetAmount: 0,
       participantNumber: detailData?.participantNumber,
       hits: 0,
       deliveryFee: detailData?.deliveryFee,
